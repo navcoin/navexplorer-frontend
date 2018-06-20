@@ -1,0 +1,22 @@
+{% extends "not_found.html.twig" %}
+
+{% block title %}Block not found - {{ height }}{% endblock %}
+
+{% block page %}page-block-not-found{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Block Not Found</h1>
+
+        <h3>We cannot find a block associated with `{{ height|slice(0, 20) }}`.</h3>
+
+        <p>Things to do:</p>
+        <ol>
+            <li>Confirm you entered the hash or height correctly. Hashes are case-sensitive.</li>
+            <li>Are you exploring the correct network? Blocks on Mainnet will not exist on Testnet.</li>
+            <li>Has the Nav blockchain reached the height you expected?</li>
+        </ol>
+
+        <p>Speak to @prodpeak on <a href="https://discord.gg/y4Vu9jw">discord</a> if you need further assistance.</p>
+    </div>
+{% endblock %}

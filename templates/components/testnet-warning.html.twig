@@ -1,0 +1,5 @@
+{% set network = app.session.get('network', 'mainnet') %}
+
+{% if network == 'TEST_NET' %}
+    <div class="testnet-warning">You are currently exploring blocks on the test net</div>
+{% endif %}

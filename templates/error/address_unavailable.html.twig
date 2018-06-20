@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Error - Backend Unavailable{% endblock %}
+
+{% block page %}page-error-backend-unavailable{% endblock %}
+
+{% block body %}
+    <div class="home">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1>Address Invalid</h1>
+                    <p>You have tried to view an address that is not a valid NavCoin address.</p>
+                    <p>Addresses for testnet are not valid for mainnet, and vise versa.</p>
+                    <p>If you think this is the case, switch to the other network and try again.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% if block.signals|length %}
+    <h2>Soft fork signalling</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Signalling</th>
+                <th>Activated</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for signal in block.signals %}
+            <tr>
+                <td>{{ signal.name }}</td>
+                <td>{{ signal.signalling ? "Yes" : "No" }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

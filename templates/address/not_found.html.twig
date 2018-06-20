@@ -1,0 +1,21 @@
+{% extends "not_found.html.twig" %}
+
+{% block title %}Address not found - {{ hash }}{% endblock %}
+
+{% block page %}page-address-not-found{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Address Not Valid</h1>
+
+        <h3>`{{ hash|slice(0, 20) }}` is not a valid NavCoin address.</h3>
+
+        <p>Things to do:</p>
+        <ol>
+            <li>Confirm you entered it accurately. Addresses are case-sensitive.</li>
+            <li>Mainnet addresses are not valid for Testnet. Are you exploring the correct network?</li>
+        </ol>
+
+        <p>Speak to @prodpeak on <a href="https://discord.gg/y4Vu9jw">discord</a> if you need further assistance.</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "not_found.html.twig" %}
+
+{% block title %}Page not found{% endblock %}
+
+{% block page %}page-page-not-found{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Page not found</h1>
+
+        <p>
+            The requested page couldn't be located.<br>
+            Checkout for any URL misspelling or <a href="{{ path('app_home_index') }}">return to the homepage</a>.
+        </p>
+
+        <p>Speak to @prodpeak on <a href="https://discord.gg/y4Vu9jw">discord</a> if you need further assistance.</p>
+    </div>
+{% endblock %}

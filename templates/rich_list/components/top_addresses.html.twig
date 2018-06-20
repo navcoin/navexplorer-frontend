@@ -1,0 +1,38 @@
+<h2>Top 100 Addresses</h2>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Address</th>
+                <th class="d-none d-md-table-cell">Stake&nbsp;Rewards</th>
+                <th class="d-none d-md-table-cell">Last&nbsp;Block</th>
+                <th>Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rank, address in richList %}
+                <tr>
+                    <td>{{ rank+1 }}</td>
+                    <td>
+                        <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">
+                            {{ address.hash }}
+                        </a>
+                    </td>
+                    <td class="d-none d-md-table-cell">{{ address.staked|stake_format(false, 2) }}</td>
+                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': address.blockIndex}) }}">{{ address.blockIndex }}</a></td>
+                    <td>
+                        {{ address.balance|stake_format(false, 2) }}<br/>
+                        {% set balance = ((address.balance/62903579)*100)|round(2, 'floor') %}
+                        {% if balance == 0 %}
+                            < 0.01%
+                        {% else %}
+                            {{ balance|number_format(2) }}%
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,38 @@
+<h2>Inputs</h2>
+<table class="table table-striped table-adaptive">
+    <thead>
+        <tr>
+            <th style="width: 10%">Index</th>
+            <th style="width: 40%">Previous Output</th>
+            <th style="width: 30%">Address</th>
+            <th style="width: 20%">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, input in transaction.inputs %}
+            <tr>
+                <td data-role="index">{{ key }}</td>
+                <td data-role="previousOutput">
+                    {% if input.previousOutput %}
+                        <a href="{{ path('app_transaction_view', {'hash': input.previousOutput}) }}">{{ input.previousOutput|slice(0, 20) }}</a>...:{{ input.index }}
+                        {% if input.previousOutputBlock %}
+                            <small>in <a href="{{ path('app_block_view', {'height': input.previousOutputBlock}) }}">{{ input.previousOutputBlock }}</a></small>
+                        {% endif %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td data-role="address">
+                    {% if input.address %}
+                        <a href="{{ path('app_address_index', { 'hash': input.address }) }}" class="break-word">{{ input.address }}</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td data-role="amount">
+                    {{ input.amount|stake_format }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

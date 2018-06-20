@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Rich List{% endblock %}
+
+{% block page %}page-richList-index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Rich List</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="order-12 order-sm-12 order-md-1 col-md-12 col-lg-8">
+                {% include 'rich_list/components/top_addresses.html.twig' %}
+            </div>
+            <div class="order-md-12 col-md-6 col-lg-4">
+                {% include 'rich_list/components/wealth_distribution.html.twig' %}
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

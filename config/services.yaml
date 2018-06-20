@@ -1,0 +1,86 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    navcoin.main_net.base_uri: '%env(BACKEND_MAINNET)%'
+    navcoin.test_net.base_uri: '%env(BACKEND_TESTNET)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    # Navcoin Clients
+    App\Navcoin\Client\MainNetClient:
+        arguments: ['%navcoin.main_net.base_uri%']
+
+    App\Navcoin\Client\TestNetClient:
+        arguments: ['%navcoin.test_net.base_uri%']
+
+    # Navcoin APIs
+    App\Navcoin\Address\Api\AddressApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Address\Mapper\AddressMapper'
+
+    App\Navcoin\Address\Api\StakingApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+
+    App\Navcoin\Address\Api\TransactionApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Address\Mapper\TransactionMapper'
+        calls:
+            - method: setFilter
+              arguments: ['@App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter']
+
+    App\Navcoin\Block\Api\BlockApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Block\Mapper\BlockMapper'
+
+    App\Navcoin\Block\Api\BlockGroupApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Block\Mapper\BlockGroupMapper'
+
+    App\Navcoin\Block\Api\TransactionApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Block\Mapper\TransactionMapper'
+
+    App\Navcoin\Distribution\Api\DistributionApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Distribution\Mapper\DistributionMapper'
+
+    App\Navcoin\Search\Api\SearchApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+
+    App\Navcoin\SoftFork\Api\SoftForkApi:
+        arguments:
+            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\SoftFork\Mapper\SoftForkMapper'
+
+    # Filters
+    App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter:

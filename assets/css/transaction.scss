@@ -1,0 +1,66 @@
+.transaction-list {
+  .card {
+    margin-bottom: 1.25rem;
+
+    .card-header {
+      background-color: #eee;
+
+      small {
+        color: inherit;
+      }
+    }
+
+    .card-body {
+      padding: 0;
+
+      .row {
+
+        @media (max-width: 767px) {
+          span.caption {
+            font-size: 1rem;
+          }
+          .inputs {
+            border-bottom: 1px solid rgba(223,215,202,0.75);
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
+          }
+        }
+        @media (min-width: 768px) {
+          background: url("/images/arrow-thick-right.svg") 50% 50% no-repeat;
+          background-size: 28px;
+
+          span.caption {
+            display: none;
+          }
+
+          .inputs {
+            padding-right: 2rem;
+          }
+
+          .outputs {
+            padding-left: 2rem;
+          }
+        }
+
+        padding: 0.75rem 1.25rem;
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            overflow: hidden;
+
+            .address {
+              max-width: 65%;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+footer {
+  position: fixed;
+  //height: 20px;
+  bottom: 0;
+  width: 100%;
+  border-top: $purple 5px solid;
+  background-color: $dark-purple;
+  margin-top: 2rem;
+  padding: 0.25rem;
+  color: $off-white;
+
+  .network {
+    float:left;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: inline-block;
+        padding-right: 0.2rem;
+
+        a {
+          color: $grey;
+          text-transform: capitalize;
+        }
+        a:hover {
+          color: $white;
+        }
+        a.active {
+          pointer-events: none;
+          color: $white;
+        }
+
+      }
+
+      li:not(:first-child):before {
+        content: "| ";
+      }
+    }
+  }
+}

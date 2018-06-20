@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block page %}page-home-index{% endblock %}
+
+{% block body %}
+    <div class="home">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'search/components/form.html.twig' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% include 'home/components/overview.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,97 @@
+<div class="block-summary">
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td><strong>Hash</strong></td>
+                        <td class="text-right break-word">{{ block.hash }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Height</strong></td>
+                        <td class="text-right">{{ block.height }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Confirmations</strong></td>
+                        <td class="text-right">{{ block.confirmations }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Created At</strong></td>
+                        <td class="text-right">
+                            {{ block.created|date_localised('M jS Y, g:i:s a') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Staked By</strong></td>
+                        <td class="text-right break-word">
+                            {% if block.stakedBy %}
+                                <a href="{{ path('app_address_index', { 'hash': block.stakedBy }) }}">{{ block.stakedBy }}</a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stake Reward</strong></td>
+                        <td class="text-right">{{ block.stake|stake_format }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fees</strong></td>
+                        <td class="text-right">{{ block.fees|stake_format }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spent</strong></td>
+                        <td class="text-right">{{ block.spend|stake_format }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+            <table class="table table-striped">
+                <tbody>
+                <tr class="d-flex">
+                    <td class="col-5"><strong>Difficulty</strong></td>
+                    <td class="text-right col-7">{{ block.difficulty }}</td>
+                </tr>
+                <tr class="d-flex">
+                    <td class="col-5"><strong>Bits</strong></td>
+                    <td class="text-right col-7">{{ block.bits }}</td>
+                </tr>
+                <tr class="d-flex">
+                    <td class="col-5"><strong>Size</strong></td>
+                    <td class="text-right col-7">{{ block.size }}</td>
+                </tr>
+                <tr class="d-flex">
+                    <td class="col-5"><strong>Version</strong></td>
+                    <td class="text-right col-7">{{ block.version }}</td>
+                </tr>
+                <tr class="d-flex">
+                    <td class="col-5"><strong>Nonce</strong></td>
+                    <td class="text-right col-7">{{ block.nonce }}</td>
+                </tr>
+                <tr class="d-flex">
+                    <td class="col-5"><strong>Merkle Root</strong></td>
+                    <td class="text-right break-word col-7">
+                        {{ block.merkleRoot|slice(0,10) }}...
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="block-links">
+
+                <span class="float-left">
+                    <a href="{{ path('app_block_view', {'height': block.height-1}) }}"{% if block.height == 1 %} class="disabled"{% endif %}>Previous Block</a>
+                </span>
+
+                <span class="float-right">
+                    <a href="{{ path('app_block_view', {'height': block.height+1}) }}"{% if block.best == true %} class="disabled"{% endif %}>Next Block</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

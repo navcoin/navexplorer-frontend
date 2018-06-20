@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+    php:
+        build: docker/php7-fpm
+        volumes:
+            - ./:/var/www
+        extra_hosts:
+          - backend:172.16.222.111 #sudo ifconfig lo0 alias 172.16.222.111
+    nginx:
+        build: docker/nginx
+        ports:
+            - 80:80
+        volumes_from:
+            - php
+        volumes:
+            - ./docker/logs/nginx/:/var/log/nginx

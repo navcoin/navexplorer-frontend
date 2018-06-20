@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Block {{ block.height }} - {{ block.hash }}{% endblock %}
+
+{% block page %}page-block-view{% endblock %}
+
+{% block body %}
+    <div class="block" data-height="{{ block.height }}">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <h1>Block <small>{{ block.height }}</small></h1>
+                    </div>
+                </div>
+            </div>
+
+            {% include "block/components/view_summary.html.twig" %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% include "block/components/view_transactions.html.twig" %}
+                </div>
+            </div>
+
+            {#<div class="row">#}
+                {#<div class="col-sm-12 col-md-6">#}
+                    {#{% include "block/components/view_softforks.html.twig" %}#}
+                {#</div>#}
+            {#</div>#}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+<footer>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="network" data-network="{{ app.session.get('network') }}">
+                    {% set network = app.session.get('network', 'MAIN_NET') %}
+                    <ul>
+                        <li><a href="{{ path('app_home_network', {'network' : 'mainnet'}) }}" {{ network == 'MAIN_NET' ? 'class="active"' : '' }}>Main Net</a></li>
+                        <li><a href="{{ path('app_home_network', {'network' : 'testnet'}) }}" {{ network == 'TEST_NET' ? 'class="active"' : '' }}>Test Net</a></li>
+                    </ul>
+                </div>
+                <div class="float-right">* All times displayed in UTC</div>
+            </div>
+        </div>
+    </div>
+</footer>

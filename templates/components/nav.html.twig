@@ -1,0 +1,38 @@
+<div class="navbar navbar-expand-sm navbar-dark bg-nav mb-sm-10">
+    <div class="container-fluid">
+        <a class="navbar-brand d-xs-block d-sm-none" href="{{ path('app_home_index') }}">NavExplorer</a>
+
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a href="{{ path('app_home_index') }}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_block_index') }}" class="nav-link">Blocks</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_transaction_index') }}" class="nav-link">Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_richlist_index') }}" class="nav-link">Rich List</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_softfork_index') }}" class="nav-link">Soft Forks</a>
+                </li>
+                {#<li class="nav-item">#}
+                    {#<a href="{{ path('app_network_index') }}" class="nav-link">Network</a>#}
+                {#</li>#}
+                {#<li class="nav-item">#}
+                    {#<a href="#" class="nav-link">Community Fund</a>#}
+                {#</li>#}
+                <li class="nav-item">
+                    <a href="{{ path('app_search_search') }}" class="nav-link">Search</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

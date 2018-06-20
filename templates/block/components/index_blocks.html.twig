@@ -1,0 +1,21 @@
+<div id="block-list">
+    <h2>Latest Blocks</h2>
+
+    <table class="table table-striped table-adaptive" data-url="{{ path('app_block_blocks') }}">
+        <caption>
+            <div class="table-pagination"></div>
+        </caption>
+        <thead>
+            <tr>
+                <th>Height</th>
+                <th>Date/Time</th>
+                <th class="text-center">Transactions</th>
+                <th>Staked By</th>
+                <th class="text-right">Stake</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr><th colspan="6">Loading blocks...</th></tr>
+        </tbody>
+    </table>
+</div>

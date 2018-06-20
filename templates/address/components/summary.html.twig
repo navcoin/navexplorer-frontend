@@ -1,0 +1,57 @@
+<div class="row transaction-summary">
+    <div class="col-sm-12 col-md-8">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td><strong>Hash</strong></td>
+                    <td class="text-right break-word">
+                        {{ address.hash }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Balance</strong></td>
+                    <td class="text-right">
+                        {{ address.balance|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Sent</strong></td>
+                    <td class="text-right">
+                        <span class="badge badge-info badge-transaction-count">{{ address.sentCount }} txs</span>
+                        {{ address.sent|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Received</strong></td>
+                    <td class="text-right">
+                        <span class="badge badge-info badge-transaction-count">{{ address.receivedCount }} txs</span>
+                        {{ address.received|stake_format }}
+                    </td>
+                </tr>
+                {% if address.staked %}
+                    <tr>
+                        <td><strong>Staking</strong></td>
+                        <td class="text-right">
+                            <span class="badge badge-info badge-transaction-count">{{ address.stakedCount }} txs</span>
+                            {{ (address.staked)|stake_format }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td><strong>Transactions</strong></td>
+                    <td class="text-right">
+                        {{ address.transactions|number_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Rich list</strong></td>
+                    <td class="text-right">{{ address.richListPosition|ordinal }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3 offset-md-1 text-center">
+        <div><img src="{{ qr_code_data_uri("navcoin:"~address.hash, { writer: 'svg', size: 250 }) }}" /></div>
+        <div><a href="navcoin:{{ address.hash }}" class="btn btn-success">Send Navcoin</a></div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Blocks{% endblock %}
+
+{% block page %}page-block-index{% endblock %}
+
+{% block body %}
+    <div class="home">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'block/components/index_blocks.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

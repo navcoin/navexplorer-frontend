@@ -1,0 +1,25 @@
+.page-soft-forks-index {
+  .card {
+    margin-bottom: 1.25rem;
+  }
+
+  .progressbar-position {
+    color: #DFD7CA;
+    background-color: #DFD7CA;
+    border-right: 2px solid $grey;
+  }
+
+  .progressbar-signalled {
+    color: $purple;
+    background-color: $purple;
+  }
+
+  .threshold {
+    position: absolute;
+    margin-left: 75%;
+    height: 2rem;
+    margin-top: -0.5rem;
+    border: none;
+    border-left: $grey 2px dashed;
+  }
+}

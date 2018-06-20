@@ -1,0 +1,43 @@
+<div class="row">
+    {#<div class="col-sm-6 col-md-4 col-lg-2">#}
+        {#<div class="card card-list">#}
+            {#<div class="card-header text-center">BTC &nbsp;Price&nbsp;</div>#}
+            {#<div class="card-body text-center">{{ ticker.priceBtc*1000 }} mBTC</div>#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="col-sm-6 col-md-4 col-lg-2">#}
+        {#<div class="card card-list">#}
+            {#<div class="card-header text-center">USD Price</div>#}
+            {#<div class="card-body text-center">$ {{ ticker.priceUsd }}</div>#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="col-sm-6 col-md-4 col-lg-2">#}
+        {#<div class="card card-list">#}
+            {#<div class="card-header text-center">Market Cap</div>#}
+            {#<div class="card-body text-center">$ {{ ticker.marketCapUsd|number_format }}</div>#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="col-sm-6 col-md-4 col-lg-2">#}
+        {#<div class="card card-list">#}
+            {#<div class="card-header text-center">Known Peers</div>#}
+            {#<div class="card-body text-center">XXX</div>#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="col-sm-6 col-md-4 col-lg-2">#}
+        {#<div class="card card-list">#}
+            {#<div class="card-header text-center">24hr Volume</div>#}
+            {#<div class="card-body text-center">$ {{ ticker.volume|number_format }}</div>#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="col-sm-6 col-md-4 col-lg-2">#}
+        {#<div class="card card-list">#}
+            {#<div class="card-header text-center">Total Supply</div>#}
+            {#<div class="card-body text-center">{{ ticker.totalSupply|stake_format }}</div>#}
+        {#</div>#}
+    {#</div>#}
+</div>

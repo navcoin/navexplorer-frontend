@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Transaction {{ transaction.hash }} - {{ transaction.height }}{% endblock %}
+
+{% block page %}page-transaction-view{% endblock %}
+
+{% block body %}
+    <div class="transaction" data-height="{{ transaction.hash }}">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <h1>Transaction</h1>
+                    </div>
+                </div>
+            </div>
+
+            {% include "transaction/components/view_summary.html.twig" %}
+            {% include "transaction/components/view_inputs.html.twig" %}
+            {% include "transaction/components/view_outputs.html.twig" %}
+        </div>
+    </div>
+{% endblock %}

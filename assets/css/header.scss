@@ -1,0 +1,70 @@
+header {
+  margin-bottom: 1.25rem;
+  background-color: $light-grey;
+  border-bottom: $purple 5px solid;
+
+  @media (max-width: 575px) {
+    a {
+      display:none;
+    }
+  }
+
+  a, a:hover {
+    color: $blue;
+  }
+
+  h1 {
+    font-size: 4.4em;
+    margin-bottom: 12px;
+    padding: 0.5rem;
+
+    @media (min-width: 576px) {
+      padding: 14px 0 2px 210px;
+
+      span {
+        display: none;
+      }
+
+      background: url("/images/logo-extended.png") 0 100% no-repeat;
+      background-size: 200px 62px;
+    }
+  }
+
+  .navbar-dark .navbar-nav .nav-link {
+    color: #FFF;
+    text-shadow: 0 0.075em 0.075em rgba(0,0,0,.5);
+    font-size: 1.1em;
+    line-height: 22px;
+    font-weight: 100;
+    text-transform: inherit;
+    padding: 0.5rem 1.8rem 0.5rem 0;
+  }
+
+  .bg-nav {
+    background-color: $dark-purple;
+  }
+}
+
+
+.alpha-warning {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: $white;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+
+.testnet-warning {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-size: 14px;
+  background-color: $blue;
+  color: $white;
+  padding: 0.5rem;
+  text-align: center;
+}

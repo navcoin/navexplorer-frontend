@@ -1,0 +1,40 @@
+<h2>Outputs</h2>
+<table class="table table-striped table-adaptive">
+    <thead>
+        <tr>
+            <th style="width: 10%">Index</th>
+            <th style="width: 40%">Redeemed&nbsp;In</th>
+            <th style="width: 30%">Address</th>
+            <th style="width: 20%">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, output in transaction.outputs %}
+            <tr>
+                <td data-role="index">{{ output.index }}</td>
+                <td data-role="redeemedIn">
+                    {% if output.redeemedInTransaction %}
+                        <a href="{{ path('app_transaction_view', {'hash': output.redeemedInTransaction}) }}">{{ output.redeemedInTransaction|slice(0, 20) }}</a>...
+                        <small>in <a href="{{ path('app_block_view', {'height': output.redeemedInBlock}) }}">{{ output.redeemedInBlock }}</a></small>
+                    {% else %}
+                        {% if output.address == '' %}
+                            N/A
+                        {% else %}
+                            Unspent
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td data-role="address">
+                    {% if output.address %}
+                        <a href="{{ path('app_address_index', { 'hash': output.address }) }}" class="break-word">{{ output.address }}</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td data-role="amount">
+                    {{ output.amount|stake_format }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

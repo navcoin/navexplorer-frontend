@@ -1,0 +1,59 @@
+<div class="row transaction-summary">
+    <div class="col-sm-12 col-md-12 col-lg-8">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td><strong>Hash</strong></td>
+                    <td class="text-right break-word">
+                        {{ transaction.hash }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Total&nbsp;Output</strong></td>
+                    <td class="text-right">
+                        {{ transaction.outputs.value|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Fees</strong></td>
+                    <td class="text-right">
+                        {{ transaction.fees|stake_format }}
+                    </td>
+                </tr>
+                {% if transaction.staking %}
+                    <tr>
+                        <td><strong>Stake&nbsp;Reward</strong></td>
+                        <td class="text-right">
+                            {{ transaction.stake|stake_format }}
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-4">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td><strong>Height</strong></td>
+                    <td class="text-right">
+                        <a href="{{ path('app_block_view', {'height': transaction.height}) }}">
+                            {{ transaction.height }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Confirmations</strong></td>
+                    <td class="text-right">{{ block.confirmations }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Time</strong></td>
+                    <td class="text-right">
+                        {{ transaction.time|date_localised('M jS Y, g:i:s a') }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

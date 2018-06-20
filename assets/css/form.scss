@@ -1,0 +1,24 @@
+.form-filter {
+  float: right;
+  margin-top: 0.5rem;
+
+  span {
+    font-size: 1rem;
+  }
+
+  label {
+    padding-left: 0.5rem;
+  }
+
+  input {
+    margin-left: 0.25rem;
+  }
+}
+
+.form-filter-disabled {
+  pointer-events: none;
+
+  label, input {
+    opacity: 0.5;
+  }
+}
