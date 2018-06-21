@@ -6,9 +6,9 @@
             <tr>
                 <th>#</th>
                 <th>Address</th>
-                <th class="d-none d-md-table-cell">Stake&nbsp;Rewards</th>
-                <th class="d-none d-md-table-cell">Last&nbsp;Block</th>
                 <th>Balance</th>
+                <th class="d-none d-md-table-cell">Last&nbsp;Block</th>
+                <th class="d-none d-md-table-cell">Stake&nbsp;Rewards</th>
             </tr>
         </thead>
         <tbody>
@@ -20,8 +20,6 @@
                             {{ address.hash }}
                         </a>
                     </td>
-                    <td class="d-none d-md-table-cell">{{ address.staked|stake_format(false, 2) }}</td>
-                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': address.blockIndex}) }}">{{ address.blockIndex }}</a></td>
                     <td>
                         {{ address.balance|stake_format(false, 2) }}<br/>
                         {% set balance = ((address.balance/62903579)*100)|round(2, 'floor') %}
@@ -31,6 +29,8 @@
                             {{ balance|number_format(2) }}%
                         {% endif %}
                     </td>
+                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': address.blockIndex}) }}">{{ address.blockIndex }}</a></td>
+                    <td class="d-none d-md-table-cell">{{ address.staked|stake_format(false, 2) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
