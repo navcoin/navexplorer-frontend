@@ -2,11 +2,6 @@
 
 namespace App\Navcoin\Block\Entity;
 
-/**
- * Class Block
- *
- * @package App\Entity
- */
 class Block
 {
     /**
@@ -105,27 +100,10 @@ class Block
     private $blockCycle;
 
     /**
-     * Constructor
-     *
-     * @param String    $id
-     * @param String    $hash
-     * @param String    $merkleRoot
-     * @param String    $bits
-     * @param int       $size
-     * @param int       $version
-     * @param int       $nonce
-     * @param int       $height
-     * @param float     $difficulty
-     * @param int       $confirmations
-     * @param \DateTime $created
-     * @param float     $stake
-     * @param float     $fees
-     * @param float     $spend
-     * @param String    $stakedBy
-     * @param int       $transactions
-     * @param bool      $best
-     * @param BlockSignals $signals
+     * @var string
      */
+    private $raw;
+
     public function __construct(
         String $id,
         String $hash,
@@ -145,7 +123,8 @@ class Block
         int $transactions = 0,
         bool $best,
         BlockSignals $signals,
-        int $blockCycle
+        int $blockCycle,
+        string $raw
     ) {
         $this->id = $id;
         $this->hash = $hash;
@@ -166,205 +145,111 @@ class Block
         $this->best = $best;
         $this->signals = $signals;
         $this->blockCycle = $blockCycle;
+        $this->raw = $raw;
     }
 
-    /**
-     * Get Id
-     *
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Get Hash
-     *
-     * @return string
-     */
     public function getHash(): string
     {
         return $this->hash;
     }
 
-    /**
-     * Get MerkleRoot
-     *
-     * @return string
-     */
     public function getMerkleRoot(): string
     {
         return $this->merkleRoot;
     }
 
-    /**
-     * Get Bits
-     *
-     * @return string
-     */
     public function getBits(): string
     {
         return $this->bits;
     }
 
-    /**
-     * Get Size
-     *
-     * @return int
-     */
     public function getSize(): int
     {
         return $this->size;
     }
 
-    /**
-     * Get Version
-     *
-     * @return int
-     */
     public function getVersion(): int
     {
         return $this->version;
     }
 
-    /**
-     * Get Nonce
-     *
-     * @return int
-     */
     public function getNonce(): int
     {
         return $this->nonce;
     }
 
-    /**
-     * Get Height
-     *
-     * @return int
-     */
     public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * Get Difficulty
-     *
-     * @return float
-     */
     public function getDifficulty(): float
     {
         return $this->difficulty;
     }
 
-    /**
-     * Get Confirmations
-     *
-     * @return int
-     */
     public function getConfirmations(): int
     {
         return $this->confirmations;
     }
 
-    /**
-     * Get Created
-     *
-     * @return \DateTime
-     */
     public function getCreated(): \DateTime
     {
         return $this->created;
     }
 
-    /**
-     * Get Age
-     *
-     * @return string
-     */
     public function getAge(): string
     {
         return $this->created->diff(new \DateTime())->format("%d days, %h hours and %i minuts");
     }
 
-    /**
-     * Get Stake
-     *
-     * @return float
-     */
     public function getStake(): float
     {
         return $this->stake;
     }
 
-    /**
-     * Get Fees
-     *
-     * @return float
-     */
     public function getFees()
     {
         return $this->fees;
     }
 
-    /**
-     * Get Spend
-     *
-     * @return float
-     */
     public function getSpend()
     {
         return $this->spend;
     }
 
-    /**
-     * Get StakedBy
-     *
-     * @return string
-     */
     public function getStakedBy(): string
     {
         return $this->stakedBy;
     }
 
-    /**
-     * Get Transactions
-     *
-     * @return int
-     */
     public function getTransactions(): int
     {
         return $this->transactions;
     }
 
-    /**
-     * Get Best
-     *
-     * @return bool
-     */
     public function isBest(): bool
     {
         return $this->best;
     }
 
-    /**
-     * Get Signals
-     *
-     * @return BlockSignals
-     */
     public function getSignals()
     {
         return $this->signals;
     }
 
-    /**
-     * Get BlockCycle
-     *
-     * @return int
-     */
     public function getBlockCycle()
     {
         return $this->blockCycle;
+    }
+
+    public function getRaw()
+    {
+        return $this->raw;
     }
 }
