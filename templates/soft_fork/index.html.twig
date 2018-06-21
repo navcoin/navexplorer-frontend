@@ -81,7 +81,7 @@
                                     {{ fork.activationHeight }}
                                 {% endif %}
                             </td>
-                            <td class="text-center">{{ ((fork.blocksSignalling / (fork.blocksInCycle*0.75)) * 100)|round }}%</td>
+                            <td class="text-center">{{ ((fork.blocksSignalling / fork.blocksInCycle) * 100)|round }}%</td>
                             <td class="text-center">
                                 {% if fork.state == 'ACTIVE' %}
                                     <span class="badge badge-success">{{ fork.state|capitalize }}</span>
