@@ -1,0 +1,23 @@
+pre {
+  margin-bottom: 0;
+
+  .string {
+    color: $purple;
+  }
+
+  .number {
+    color: $blue;
+  }
+
+  .boolean {
+    color: $dark-purple;
+  }
+
+  .null {
+    color: $dark-purple;
+  }
+
+  .key {
+    color: $black;
+  }
+}

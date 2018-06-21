@@ -42,7 +42,8 @@ class BlockMapper extends BaseMapper
             $data['transactions'],
             $data['best'],
             $this->mapSignals(array_key_exists('signals', $data) ? $data['signals'] : []),
-            $data['blockCycle']
+            $data['blockCycle'],
+            array_key_exists('raw', $data) ? $data['raw'] : ''
         );
     }
 

@@ -1,0 +1,25 @@
+.nav-tabs {
+  margin-bottom: 1.0em;
+
+  .nav-item {
+    margin-right: 0.5rem;
+  }
+
+  .nav-link {
+    text-transform: capitalize;
+    font-size: 1.0em;
+    line-height: 32px;
+    font-weight: normal;
+    background-color: $light-grey;
+    color: $purple;
+  }
+
+  .nav-link:hover {
+    color: $blue;
+  }
+
+  .active {
+    pointer-events: none;
+    color: $black;
+  }
+}

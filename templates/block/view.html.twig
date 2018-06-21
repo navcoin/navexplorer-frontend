@@ -19,15 +19,30 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    {% include "block/components/view_transactions.html.twig" %}
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-toggle="collapse" data-target="#transactions" aria-expanded="true" aria-controls="transactions">
+                                Transactions ({{ block.transactions|number_format }})
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#raw-block" aria-expanded="false" aria-controls="raw-block">
+                                Raw Block
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div id="block-collapse">
+                        <div id="transactions" class="collapse show" data-parent="#block-collapse">
+                            {% include "block/components/view_transactions.html.twig" %}
+                        </div>
+
+                        <div id="raw-block" class="collapse collapsed" data-parent="#block-collapse">
+                            {% include "block/components/view_raw_block.html.twig" %}
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            {#<div class="row">#}
-                {#<div class="col-sm-12 col-md-6">#}
-                    {#{% include "block/components/view_softforks.html.twig" %}#}
-                {#</div>#}
-            {#</div>#}
         </div>
     </div>
 {% endblock %}
