@@ -34,7 +34,8 @@ class TransactionMapper extends BaseMapper
             $data['fees'] / 100000000,
             $this->mapInputs($data['inputs']),
             $this->mapOutputs($data['outputs']),
-            $data['type']
+            $data['type'],
+            array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : ''
         );
     }
 

@@ -61,18 +61,10 @@ class Transaction
     private $outputs;
 
     /**
-     * Constructor
-     *
-     * @param String    $id
-     * @param String    $hash
-     * @param int       $height
-     * @param \DateTime $time
-     * @param float     $stake
-     * @param float     $fees
-     * @param Inputs    $inputs
-     * @param Outputs   $outputs
-     * @param string    $type
+     * @var string
      */
+    private $raw;
+
     public function __construct(
         String $id,
         String $hash,
@@ -82,7 +74,8 @@ class Transaction
         float $fees,
         Inputs $inputs,
         Outputs $outputs,
-        string $type
+        string $type,
+        string $raw
     ) {
         $this->id = $id;
         $this->hash = $hash;
@@ -92,147 +85,81 @@ class Transaction
         $this->fees = $fees;
         $this->inputs = $inputs;
         $this->outputs = $outputs;
+        $this->raw = $raw;
     }
 
-    /**
-     * Get Id
-     *
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Get Hash
-     *
-     * @return string
-     */
     public function getHash(): string
     {
         return $this->hash;
     }
 
-    /**
-     * Get Height
-     *
-     * @return int
-     */
     public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * Get Time
-     *
-     * @return \DateTime
-     */
     public function getTime(): \DateTime
     {
         return $this->time;
     }
 
-    /**
-     * Get Stake
-     *
-     * @return float
-     */
     public function getStake(): float
     {
         return $this->stake;
     }
 
-    /**
-     * Is Staking?
-     *
-     * @return bool
-     */
     public function isStaking(): bool
     {
         return $this->stake ? true : false;
     }
 
-    /**
-     * Get Fees
-     *
-     * @return float
-     */
     public function getFees(): float
     {
         return $this->fees;
     }
 
-    /**
-     * Has Fees?
-     *
-     * @return bool
-     */
     public function hasFees(): bool
     {
         return $this->fees ? true : false;
     }
 
-    /**
-     * Get Inputs
-     *
-     * @return Inputs
-     */
     public function getInputs(): Inputs
     {
         return $this->inputs;
     }
 
-    /**
-     * Get Inputs
-     *
-     * @return Input[]
-     */
     public function getInputElements(): array
     {
         return $this->inputs->getElements();
     }
 
-    /**
-     * Get Outputs
-     *
-     * @return Outputs
-     */
     public function getOutputs(): Outputs
     {
         return $this->outputs;
     }
 
-    /**
-     * Get Type
-     *
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * Get Outputs
-     *
-     * @return Output[]
-     */
     public function getOutputElements(): array
     {
         return $this->outputs->getElements();
     }
 
-    /**
-     * Get Spend for address
-     *
-     * @param String $address
-     *
-     * @return float
-     */
     public function getSpendForAddress(String $address): float
     {
         return (float) $this->outputs->getBalanceForAddress($address) + $this->inputs->getBalanceForAddress($address);
+    }
+
+    public function getRaw()
+    {
+        return $this->raw;
     }
 }
