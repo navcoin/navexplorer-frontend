@@ -9,3 +9,4 @@ require('./page/BlockViewPage');
 require('./page/Home');
 require('./page/RichListIndexPage');
 require('./page/TransactionIndexPage');
+require('./page/TransactionViewPage');
