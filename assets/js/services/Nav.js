@@ -2,13 +2,25 @@ const $ = require('jquery');
 
 class Nav {
     constructor() {
-        $(function() {
-            $('.nav-item a').click(function() {
-                $(this).closest('.nav').find('.nav-item a').removeClass('active');
-                $(this).addClass('active');
-            });
-        });
-    }
+
+        this.setActiveClass();
+    };
+
+    setActiveClass() {
+
+        let currentPath = location.pathname;
+
+        $('.nav-item').each(function () {
+
+            let currentItem = $(this);
+            let currentLink = currentItem.find('.nav-link');
+
+            if (currentLink.attr('href') === currentPath) {
+
+                currentItem.addClass('active');
+            }
+        })
+    };
 }
 
 new Nav();
