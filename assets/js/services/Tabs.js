@@ -1,6 +1,6 @@
 const $ = require('jquery');
 
-class Nav {
+class Tabs {
     constructor() {
         $(function() {
             $('.nav-item a').click(function() {
@@ -11,4 +11,4 @@ class Nav {
     }
 }
 
-new Nav();
+new Tabs();
