@@ -2,7 +2,7 @@ require('../css/app.scss');
 
 require('./services/Header');
 require('./services/Timezone');
-require('./services/Nav');
+require('./services/Tabs');
 
 require('./page/AddressIndexPage');
 require('./page/BlockIndexPage');
