@@ -48,7 +48,7 @@
                                     {% if (fork.blocksInCycle*0.75) - fork.blocksSignalling > fork.blocksRemaining %}
                                         <span class="badge badge-warning">Missed</span>
                                     {% elseif (fork.blocksSignalling >= (fork.blocksInCycle*0.75)) %}
-                                        <span class="badge badge-success">Complete</span>
+                                        <span class="badge badge-success">Locked In</span>
                                     {% else %}
                                         <span class="badge badge-info">{{ fork.state|capitalize }}</span>
                                     {% endif %}
