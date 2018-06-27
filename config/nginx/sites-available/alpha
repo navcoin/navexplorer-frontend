@@ -1,0 +1,67 @@
+server {
+  listen 80 default_server;
+
+  server_name _;
+
+  return 301 https://www.navexplorer.com$request_uri;
+}
+
+server {
+    listen 80;
+
+    root /data/alpha/current/public;
+
+    server_name alpha.navexplorer.com;
+
+    location / {
+        allow   77.98.20.28;
+        deny    all;
+
+        # try to serve file directly, fallback to app.php
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ ^/index\.php(/|$) {
+        allow   77.98.20.28;
+        deny    all;
+
+        fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+
+        internal;
+    }
+
+    # return 404 for all other php files not matching the front controller
+    # this prevents access to other php files you don't want to be accessible.
+    location ~ \.php$ {
+        return 404;
+    }
+
+    error_log /var/log/nginx/alpha_navexplorer_error.log;
+    access_log /var/log/nginx/alpha_navexplorer_access.log;
+}
+server {
+    server_name navexplorer.com; # managed by Certbot
+
+  return 301 https://www.navexplorer.com$request_uri;
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/navexplorer.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/navexplorer.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}server {
+    if ($host = navexplorer.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+  listen 80 ;
+    server_name navexplorer.com;
+    return 404; # managed by Certbot
+}
