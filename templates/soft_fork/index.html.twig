@@ -54,6 +54,10 @@
                                     {% endif %}
                                 </td>
                             </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">There are no signalling soft forks</td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -85,6 +89,8 @@
                             <td class="text-center">
                                 {% if fork.state == 'ACTIVE' %}
                                     <span class="badge badge-success">{{ fork.state|capitalize }}</span>
+                                {% elseif fork.state == 'LOCKED_IN' %}
+                                    <span class="badge badge-success">Locked In</span>
                                 {% else %}
                                     <span class="badge badge-info">{{ fork.state|capitalize }}</span>
                                 {% endif %}
