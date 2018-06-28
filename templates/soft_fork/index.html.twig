@@ -90,7 +90,7 @@
                                 {% if fork.state == 'ACTIVE' %}
                                     <span class="badge badge-success">{{ fork.state|capitalize }}</span>
                                 {% elseif fork.state == 'LOCKED_IN' %}
-                                    <span class="badge badge-success">Locked In</span>
+                                    <span class="badge badge-info">Locked In</span>
                                 {% else %}
                                     <span class="badge badge-info">{{ fork.state|capitalize }}</span>
                                 {% endif %}
