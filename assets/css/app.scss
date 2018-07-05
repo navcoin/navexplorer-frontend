@@ -14,6 +14,10 @@
 @import 'soft-fork';
 @import 'distribution';
 
+html {
+  overflow-y: scroll;
+}
+
 .body {
   padding-bottom: 50px;
 }
