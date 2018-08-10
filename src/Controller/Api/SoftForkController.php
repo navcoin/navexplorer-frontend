@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Navcoin\Common\Network;
 use App\Navcoin\SoftFork\Api\SoftForkApi;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;

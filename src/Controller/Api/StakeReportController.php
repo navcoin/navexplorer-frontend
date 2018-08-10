@@ -3,7 +3,6 @@
 namespace App\Controller\Api;
 
 use App\Navcoin\Address\Api\StakingApi;
-use App\Navcoin\Common\Network;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
