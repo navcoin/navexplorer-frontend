@@ -1,8 +1,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    navcoin.main_net.base_uri: '%env(BACKEND_MAINNET)%'
-    navcoin.test_net.base_uri: '%env(BACKEND_TESTNET)%'
+    navcoin.base_uri: '%env(BACKEND_URI)%'
 
 services:
     # default configuration for services in *this* file
@@ -29,25 +28,23 @@ services:
     # please note that last definitions always *replace* previous ones
 
     # Navcoin Clients
-    App\Navcoin\Client\MainNetClient:
-        arguments: ['%navcoin.main_net.base_uri%']
-
-    App\Navcoin\Client\TestNetClient:
-        arguments: ['%navcoin.test_net.base_uri%']
+    App\Navcoin\Client\NavcoinClient:
+        arguments: ['%navcoin.base_uri%']
 
     # Navcoin APIs
     App\Navcoin\Address\Api\AddressApi:
         arguments:
-            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Address\Mapper\AddressMapper'
 
     App\Navcoin\Address\Api\StakingApi:
         arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Client\ClientManager'
 
     App\Navcoin\Address\Api\TransactionApi:
         arguments:
-            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Address\Mapper\TransactionMapper'
         calls:
             - method: setFilter
@@ -55,31 +52,31 @@ services:
 
     App\Navcoin\Block\Api\BlockApi:
         arguments:
-            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Block\Mapper\BlockMapper'
 
     App\Navcoin\Block\Api\BlockGroupApi:
         arguments:
-            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Block\Mapper\BlockGroupMapper'
 
     App\Navcoin\Block\Api\TransactionApi:
         arguments:
-            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Block\Mapper\TransactionMapper'
 
     App\Navcoin\Distribution\Api\DistributionApi:
         arguments:
-            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Distribution\Mapper\DistributionMapper'
 
     App\Navcoin\Search\Api\SearchApi:
         arguments:
-            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Client\NavcoinClient'
 
     App\Navcoin\SoftFork\Api\SoftForkApi:
         arguments:
-            - '@App\Navcoin\Client\ClientManager'
+            - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\SoftFork\Mapper\SoftForkMapper'
 
     # Filters
