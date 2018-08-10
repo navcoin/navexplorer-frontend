@@ -1,5 +1,0 @@
-.idea
-.git
-assets
-node_modules
-var
