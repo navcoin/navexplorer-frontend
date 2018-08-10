@@ -40,7 +40,6 @@ services:
     App\Navcoin\Address\Api\StakingApi:
         arguments:
             - '@App\Navcoin\Client\NavcoinClient'
-            - '@App\Navcoin\Client\ClientManager'
 
     App\Navcoin\Address\Api\TransactionApi:
         arguments:
