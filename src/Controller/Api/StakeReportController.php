@@ -64,16 +64,7 @@ class StakeReportController
             return new JsonResponse(['error' => 'enddate is invalid. Accepted format is '.$dateFormat], 400);
         }
 
-        switch ($request->headers->get('network')) {
-            case 'testnet':
-                $stakingApi = $this->stakingApi->useNetwork(Network::TEST_NET);
-                break;
-            default:
-                $stakingApi = $this->stakingApi->useNetwork(Network::MAIN_NET);
-
-        }
-
-        $stakeReport = $stakingApi->getStakingReport(
+        $stakeReport = $this->stakingApi->getStakingReport(
             $request->get('navaddress'),
             \DateTime::createFromFormat('Y-m-d H:i:s', $request->get('startdate')),
             \DateTime::createFromFormat('Y-m-d H:i:s', $request->get('enddate'))
