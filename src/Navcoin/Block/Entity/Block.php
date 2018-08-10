@@ -123,7 +123,7 @@ class Block
         int $transactions = 0,
         bool $best,
         BlockSignals $signals,
-        int $blockCycle,
+        ?int $blockCycle,
         string $raw
     ) {
         $this->id = $id;

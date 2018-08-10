@@ -22,7 +22,7 @@ class Output
     /**
      * @var string
      */
-    private $address;
+    private $addresses;
 
     /**
      * @var string
@@ -35,21 +35,18 @@ class Output
     private $redeemedInBlock;
 
     /**
-     * Constructor
-     *
-     * @param int    $index
-     * @param float  $amount
-     * @param string $address
-     * @param string $redeemedInTransaction
-     * @param int    $redeemedInBlock
+     * @var string
      */
-    public function __construct(int $index, float $amount, ?string $address, ?string $redeemedInTransaction, ?int $redeemedInBlock)
+    private $type;
+
+    public function __construct(int $index, float $amount, ?array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock, ?string $type)
     {
         $this->index = $index;
         $this->amount = $amount;
-        $this->address = $address;
+        $this->addresses = $addresses;
         $this->redeemedInTransaction = $redeemedInTransaction;
         $this->redeemedInBlock = $redeemedInBlock;
+        $this->type = $type;
     }
 
     /**
@@ -77,9 +74,9 @@ class Output
      *
      * @return string
      */
-    public function getAddress()
+    public function getAddresses()
     {
-        return $this->address;
+        return $this->addresses;
     }
 
     /**
@@ -100,5 +97,15 @@ class Output
     public function getRedeemedInBlock()
     {
         return $this->redeemedInBlock;
+    }
+
+    /**
+     * Get Type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

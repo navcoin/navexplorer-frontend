@@ -4,71 +4,68 @@ namespace App\Navcoin\Address\Entity;
 
 use App\Navcoin\Address\Type\AddressTransactionType;
 
-/**
- * Class Transaction
- *
- * @package App\Navcoin\Address\Entity
- */
-class Transaction
+class AddressTransaction
 {
     /**
      * @var String
      */
-    private $id;
+    protected $id;
 
     /**
      * @var String
      */
-    private $transaction;
+    protected $transaction;
 
     /**
      * @var \DateTime
      */
-    private $time;
+    protected $time;
 
     /**
      * @var int
      */
-    private $height;
+    protected $height;
 
     /**
      * @var float
      */
-    private $balance;
+    protected $balance;
 
     /**
      * @var float
      */
-    private $amount;
+    protected $sent;
 
     /**
      * @var float
      */
-    private $sent;
-
-    /**
-     * @var float
-     */
-    private $received;
+    protected $received;
 
     /**
      * @var String
      */
-    private $type;
+    protected $type;
 
     /**
-     * Constructor
-     *
-     * @param String $id
-     * @param String $transaction
-     * @param int    $time
-     * @param int    $height
-     * @param float  $balance
-     * @param float  $sent
-     * @param float  $received
-     * @param float  $amount
-     * @param string $type
+     * @var String
      */
+    protected $address;
+
+    /**
+     * @var bool
+     */
+    protected $coldStaking;
+
+    /**
+     * @var String
+     */
+    protected $coldStakingAddress;
+
+    /**
+     * @var float
+     */
+    protected $amount;
+
     public function __construct(
         String $id,
         String $transaction,
@@ -77,8 +74,10 @@ class Transaction
         float $balance,
         float $sent,
         float $received,
-        float $amount,
-        String $type
+        String $type,
+        String $address,
+        bool $coldStaking,
+        ?String $coldStakingAddress
     ) {
         $this->id = $id;
         $this->transaction = $transaction;
@@ -88,107 +87,89 @@ class Transaction
         $this->balance = $balance;
         $this->sent = $sent;
         $this->received = $received;
-        $this->amount = $amount;
         $this->type = $type;
+        $this->address = $address;
+        $this->coldStaking = $coldStaking;
+        $this->coldStakingAddress = $coldStakingAddress;
+
+        switch ($this->type) {
+            case 'SEND':
+            case 'RECEIVE':
+                $this->amount = $this->received - $this->sent;
+                break;
+            case 'STAKING':
+                $this->amount = $this->received - $this->sent;
+                break;
+            case 'COMMUNITY_FUND':
+                $this->amount = $this->received;
+                break;
+            default:
+                $this->amount = 0;
+        }
     }
 
-    /**
-     * Get Id
-     *
-     * @return string
-     */
     public function getId(): String
     {
         return $this->id;
     }
 
-    /**
-     * Get Transaction
-     *
-     * @return string
-     */
     public function getTransaction(): string
     {
         return $this->transaction;
     }
 
-    /**
-     * Get Time
-     *
-     * @return \DateTime
-     */
     public function getTime(): \DateTime
     {
         return $this->time;
     }
 
-    /**
-     * Get Height
-     *
-     * @return int
-     */
     public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * Get Balance
-     *
-     * @return float
-     */
     public function getBalance(): float
     {
         return $this->balance;
     }
 
-    /**
-     * Get Amount
-     *
-     * @return float
-     */
-    public function getAmount(): float
-    {
-        return $this->amount;
-    }
-
-    /**
-     * Get Sent
-     *
-     * @return float
-     */
     public function getSent(): float
     {
         return $this->sent;
     }
 
-    /**
-     * Get Received
-     *
-     * @return float
-     */
     public function getReceived(): float
     {
         return $this->received;
     }
 
-    /**
-     * Get Staking
-     *
-     * @return bool
-     */
     public function isStaking(): bool
     {
         return $this->type == AddressTransactionType::STAKING;
     }
 
-    /**
-     * Get Type
-     *
-     * @return String
-     */
     public function getType(): String
     {
         return $this->getType();
+    }
+
+    public function getAddress(): String
+    {
+        return $this->address;
+    }
+
+    public function isColdStaking(): bool
+    {
+        return $this->coldStaking;
+    }
+
+    public function getColdStakingAddress(): String
+    {
+        return $this->coldStakingAddress;
+    }
+
+    public function getAmount(): float
+    {
+        return $this->amount;
     }
 }

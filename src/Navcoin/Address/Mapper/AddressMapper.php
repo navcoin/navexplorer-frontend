@@ -50,7 +50,11 @@ class AddressMapper implements MapperInterface
             $data['stakedSent'] / 100000000,
             $data['balance'] / 100000000,
             $data['blockIndex'],
-            $data['richListPosition']
+            $data['richListPosition'],
+            $data['coldStakedBalance'] / 100000000,
+            $data['coldStaked'] / 100000000,
+            $data['coldStakedCount'],
+            $data['coldStakedSent'] / 100000000
         );
     }
 }

@@ -49,9 +49,21 @@ export default class TransactionLoader {
                 inputs.forEach(function (input, index) {
                     let address = $(document.createElement('div'));
                     address.attr('class', 'address float-left');
-                    if (typeof input.address !== 'undefined') {
-                        let a = $(document.createElement('a')).attr('href', '/address/' + input.address).html(input.address);
-                        address.append(a);
+                    if (typeof input.addresses !== 'undefined') {
+                        if (input.addresses.length === 2) {
+                            address.append('<span class="break-word">' +
+                                '  <a href="/address/' + input.addresses[0] + '">' + input.addresses[0] + '</a>' +
+                                '  <small>Staking Address</small>' +
+                                '</span>' +
+                                '<span class="break-word">' +
+                                '  <a href="/address/' + input.addresses[1] + '">' + input.addresses[1] + '</a>' +
+                                '  <small>Spending Address</small>' +
+                                '</span>');
+                        } else if (input.addresses.length === 1) {
+                            address.append($(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]));
+                        } else {
+                            address.html('N/A');
+                        }
                     } else {
                         address.html('N/A');
                     }

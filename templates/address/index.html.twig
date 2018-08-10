@@ -17,8 +17,38 @@
                 </div>
             </div>
 
-            {% include "address/components/summary.html.twig" %}
-            {% include "address/components/transactions.html.twig" %}
+            {% include "address/components/index_summary.html.twig" %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-toggle="collapse" data-target="#transactions" aria-expanded="true" aria-controls="transactions">
+                                Transactions
+                            </a>
+                        </li>
+                        {% if address.coldStakedBalance %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" data-target="#cold-staking" aria-expanded="false" aria-controls="cold-staking">
+                                    Cold Staking
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <div id="block-collapse">
+                        <div id="transactions" class="collapse show" data-parent="#block-collapse">
+                            {% include "address/components/index_transactions.html.twig" %}
+                        </div>
+
+                        {% if address.coldStakedBalance %}
+                            <div id="cold-staking" class="collapse collapsed" data-parent="#block-collapse">
+                                {#{% include "address/components/index_cold_staking.html.twig" %}#}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

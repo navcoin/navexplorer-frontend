@@ -9,6 +9,8 @@ class AddressIndexPage {
         console.log("Page: Address Index");
 
         this.tableManager = new TableManager('#transaction-list table', 'transactions', this.createTableRow);
+        this.hash = $('.address').data('hash');
+        console.log(this.hash);
     }
 
     createTableRow(data) {
@@ -32,11 +34,20 @@ class AddressIndexPage {
             .append('<a href="/tx/'+data.transaction+'">' + data.transaction.substr(0, 15) + '...</a>')
         );
 
-        $row.append($(document.createElement('td'))
+        let amountTd = $(document.createElement('td'))
             .attr('data-role', 'amount')
-            .append(numberFormatter.format(data.amount) + '&nbsp;NAV')
-            .append(data.type === "STAKING" ? '&nbsp;<span class="badge badge-info">Stake</span>' : '')
-        );
+            .append(numberFormatter.format(data.amount) + '&nbsp;NAV');
+            if (data.type === "STAKING") {
+                if (data.cold_staking === true) {
+                    amountTd.append(
+                        '&nbsp;<span class="badge badge-info">Cold Stake</span><br>' +
+                        '<small><a href="/address/' + data.cold_staking_address + '">' + data.cold_staking_address + '</a></small>'
+                    );
+                } else {
+                    amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
+                }
+            }
+        $row.append(amountTd);
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'balance')

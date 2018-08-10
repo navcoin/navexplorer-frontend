@@ -33,15 +33,15 @@ abstract class IteratorEntity implements  \IteratorAggregate
      */
     public function add($element): self
     {
-        if (!in_array(get_class($element), $this->supportedTypes)) {
-            throw new \InvalidArgumentException(
-                sprintf('Cannot add a %s to %s', get_class($element), __CLASS__)
-            );
+        foreach ($this->supportedTypes as $supportedType) {
+            if ($element instanceof $supportedType) {
+                array_push($this->elements, $element);
+                return $this;
+            }
         }
-
-        array_push($this->elements, $element);
-
-        return $this;
+        throw new \InvalidArgumentException(
+            sprintf('Cannot add a %s to %s', get_class($element), __CLASS__)
+        );
     }
 
     public function getElements(): array

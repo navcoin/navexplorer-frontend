@@ -2,8 +2,10 @@
 
 namespace App\Navcoin\Address\Mapper;
 
-use App\Navcoin\Address\Entity\Transaction;
-use App\Navcoin\Address\Entity\Transactions;
+use App\Navcoin\Address\Entity\AddressTransaction;
+use App\Navcoin\Address\Entity\ColdStakingTransaction;
+use App\Navcoin\Address\Entity\SpendingTransaction;
+use App\Navcoin\Address\Entity\TransactionInterface;
 use App\Navcoin\Common\Mapper\BaseMapper;
 
 /**
@@ -18,11 +20,11 @@ class TransactionMapper extends BaseMapper
      *
      * @param array $data
      *
-     * @return Transaction
+     * @return AddressTransaction
      */
-    public function mapEntity(array $data): Transaction
+    public function mapEntity(array $data): AddressTransaction
     {
-        return new Transaction(
+        return new AddressTransaction(
             $data['id'],
             $data['transaction'],
             $data['time']/1000,
@@ -30,8 +32,10 @@ class TransactionMapper extends BaseMapper
             $data['balance'] / 100000000,
             $data['sent'] / 100000000,
             $data['received'] / 100000000,
-            $data['amount'] / 100000000,
-            $data['type']
+            $data['type'],
+            $data['address'],
+            $data['coldStaking'],
+            $data['coldStakingAddress']
         );
     }
 }

@@ -14,6 +14,6 @@ class Transactions extends IteratorEntity implements IteratorEntityInterface
 {
     public function setSupportedTypes()
     {
-        $this->supportedTypes = [Transaction::class];
+        $this->supportedTypes = [AddressTransaction::class];
     }
 }

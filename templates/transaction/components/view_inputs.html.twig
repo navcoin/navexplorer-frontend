@@ -2,16 +2,39 @@
 <table class="table table-striped table-adaptive">
     <thead>
         <tr>
-            <th style="width: 10%">Index</th>
-            <th style="width: 40%">Previous Output</th>
-            <th style="width: 30%">Address</th>
-            <th style="width: 20%">Amount</th>
+            <th style="width: 20%">Index</th>
+            <th style="width: 35%">Address</th>
+            <th style="width: 30%">Previous Output</th>
+            <th style="width: 15%" class="text-right">Amount</th>
         </tr>
     </thead>
     <tbody>
         {% for key, input in transaction.inputs %}
             <tr>
                 <td data-role="index">{{ key }}</td>
+                <td data-role="address">
+                    {% if transaction.staking %}
+                        <span class="break-word">
+                            <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
+                            <small>Staking Address</small>
+                        </span>
+                    {% elseif input.addresses|length > 1 %}
+                        <span class="break-word">
+                            <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
+                            <small>Staking Address</small>
+                        </span>
+                        <span class="break-word">
+                            <a href="{{ path('app_address_index', { 'hash': input.addresses[1] }) }}">{{ input.addresses[1] }}</a>
+                            <small>Spending Address</small>
+                        </span>
+                    {% elseif input.addresses|length == 1 %}
+                        <span class="break-word">
+                            <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
+                        </span>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
                 <td data-role="previousOutput">
                     {% if input.previousOutput %}
                         <a href="{{ path('app_transaction_view', {'hash': input.previousOutput}) }}">{{ input.previousOutput|slice(0, 20) }}</a>...:{{ input.index }}
@@ -22,14 +45,7 @@
                         N/A
                     {% endif %}
                 </td>
-                <td data-role="address">
-                    {% if input.address %}
-                        <a href="{{ path('app_address_index', { 'hash': input.address }) }}" class="break-word">{{ input.address }}</a>
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </td>
-                <td data-role="amount">
+                <td data-role="amount" class="text-right">
                     {{ input.amount|stake_format }}
                 </td>
             </tr>

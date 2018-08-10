@@ -7,7 +7,6 @@ use App\Navcoin\Address\Api\AddressApi;
 use App\Navcoin\Address\Api\TransactionApi;
 use App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter;
 use JMS\Serializer\SerializerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
