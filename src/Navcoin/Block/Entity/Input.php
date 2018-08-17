@@ -43,7 +43,7 @@ class Input
      *
      * @return string
      */
-    public function getAddress(): string
+    public function getAddress(): ?string
     {
         if (count($this->addresses) == 0) {
             return null;
