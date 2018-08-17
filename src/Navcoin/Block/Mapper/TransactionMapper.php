@@ -81,7 +81,7 @@ class TransactionMapper extends BaseMapper
                 new Output(
                     $outputData['index'],
                     $outputData['amount'] / 100000000,
-                    array_key_exists('address', $outputData) ? $outputData['address'] : '',
+                    $outputData['addresses'],
                     $outputData['redeemedIn']['hash'],
                     $outputData['redeemedIn']['height']
                 )
