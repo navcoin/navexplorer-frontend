@@ -17,6 +17,10 @@ class SearchApi extends NavcoinApi
             throw new SearchResultMissException("No results for hash: ".$hash);
         }
 
+        if (array_key_exists('error', $data)) {
+            throw new SearchResultMissException($data['message']);
+        }
+
         return new SearchResult($data['type'], $data['value']);
     }
 }
