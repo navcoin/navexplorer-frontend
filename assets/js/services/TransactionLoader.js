@@ -63,8 +63,8 @@ export default class TransactionLoader {
                     amount.html((input.amount ? self.numberWithCommas(input.amount) : '0') + ' NAV');
 
                     let item = $(document.createElement('li'));
-                    item.append(address)
-                    item.append(amount)
+                    item.append(address);
+                    item.append(amount);
 
                     list.append(item);
                 });
