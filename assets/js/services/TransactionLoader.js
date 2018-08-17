@@ -49,7 +49,10 @@ export default class TransactionLoader {
                 inputs.forEach(function (input, index) {
                     let address = $(document.createElement('div'));
                     address.attr('class', 'address float-left');
-                    if (typeof input.address !== 'undefined') {
+                    if (typeof input.addresses !== 'undefined') {
+                        let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
+                        address.append(a);
+                    } else if (typeof input.address !== 'undefined') {
                         let a = $(document.createElement('a')).attr('href', '/address/' + input.address).html(input.address);
                         address.append(a);
                     } else {
