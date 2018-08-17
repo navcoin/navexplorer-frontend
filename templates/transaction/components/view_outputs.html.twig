@@ -25,7 +25,7 @@
                     {% endif %}
                 </td>
                 <td data-role="address">
-                    {% if output.addresses and output.addresses.length %}
+                    {% if output.addresses and output.addresses|length %}
                         <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
                     {% elseif output.address %}
                         <a href="{{ path('app_address_index', { 'hash': output.address }) }}" class="break-word">{{ output.address }}</a>
