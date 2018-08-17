@@ -53,7 +53,7 @@ class TransactionMapper extends BaseMapper
         foreach ($data as $inputData) {
             $inputs->add(
                 new Input(
-                    $inputData['address'],
+                    $inputData['addresses'],
                     $inputData['amount'] / 100000000,
                     $inputData['index'],
                     $inputData['previousOutput'],
