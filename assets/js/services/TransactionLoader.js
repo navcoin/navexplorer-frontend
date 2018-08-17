@@ -56,6 +56,11 @@ export default class TransactionLoader {
                             let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
                             address.append(a);
                         }
+                    } else if (typeof input.address !== 'undefined') {
+                        let a = $(document.createElement('a')).attr('href', '/address/' + input.address).html(input.address);
+                        address.append(a);
+                    } else {
+                        address.html('N/A');
                     }
 
                     let amount = $(document.createElement('div'));
