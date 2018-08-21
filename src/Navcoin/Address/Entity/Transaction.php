@@ -56,19 +56,6 @@ class Transaction
      */
     private $type;
 
-    /**
-     * Constructor
-     *
-     * @param String $id
-     * @param String $transaction
-     * @param int    $time
-     * @param int    $height
-     * @param float  $balance
-     * @param float  $sent
-     * @param float  $received
-     * @param float  $amount
-     * @param string $type
-     */
     public function __construct(
         String $id,
         String $transaction,
@@ -77,7 +64,6 @@ class Transaction
         float $balance,
         float $sent,
         float $received,
-        float $amount,
         String $type
     ) {
         $this->id = $id;
@@ -88,105 +74,55 @@ class Transaction
         $this->balance = $balance;
         $this->sent = $sent;
         $this->received = $received;
-        $this->amount = $amount;
+        $this->amount = $this->received - $this->sent;
         $this->type = $type;
     }
 
-    /**
-     * Get Id
-     *
-     * @return string
-     */
     public function getId(): String
     {
         return $this->id;
     }
 
-    /**
-     * Get Transaction
-     *
-     * @return string
-     */
     public function getTransaction(): string
     {
         return $this->transaction;
     }
 
-    /**
-     * Get Time
-     *
-     * @return \DateTime
-     */
     public function getTime(): \DateTime
     {
         return $this->time;
     }
 
-    /**
-     * Get Height
-     *
-     * @return int
-     */
     public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * Get Balance
-     *
-     * @return float
-     */
     public function getBalance(): float
     {
         return $this->balance;
     }
 
-    /**
-     * Get Amount
-     *
-     * @return float
-     */
     public function getAmount(): float
     {
         return $this->amount;
     }
 
-    /**
-     * Get Sent
-     *
-     * @return float
-     */
     public function getSent(): float
     {
         return $this->sent;
     }
 
-    /**
-     * Get Received
-     *
-     * @return float
-     */
     public function getReceived(): float
     {
         return $this->received;
     }
 
-    /**
-     * Get Staking
-     *
-     * @return bool
-     */
     public function isStaking(): bool
     {
         return $this->type == AddressTransactionType::STAKING;
     }
 
-    /**
-     * Get Type
-     *
-     * @return String
-     */
     public function getType(): String
     {
         return $this->getType();

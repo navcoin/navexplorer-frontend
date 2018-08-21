@@ -2,17 +2,12 @@
 
 namespace App\Navcoin\Block\Entity;
 
-/**
- * Class Input
- *
- * @package App\Navcoin\Block\Entity
- */
 class Input
 {
     /**
-     * @var string
+     * @var string[]
      */
-    private $address;
+    private $addresses;
 
     /**
      * @var float
@@ -34,17 +29,9 @@ class Input
      */
     private $previousOutputBlock;
 
-    /**
-     * Constructor
-     * @param string $address
-     * @param float  $amount
-     * @param int    $index
-     * @param string $previousOutput
-     * @param int $previousOutputBlock
-     */
-    public function __construct(?string $address, ?float $amount, ?int $index, ?string $previousOutput, ?int $previousOutputBlock)
+    public function __construct(array $addresses, ?float $amount, ?int $index, ?string $previousOutput, ?int $previousOutputBlock)
     {
-        $this->address = $address;
+        $this->addresses = $addresses;
         $this->amount = $amount;
         $this->index = $index;
         $this->previousOutput = $previousOutput;
@@ -56,9 +43,18 @@ class Input
      *
      * @return string
      */
-    public function getAddress(): string
+    public function getAddress(): ?string
     {
-        return $this->address ?: '';
+        if (count($this->addresses) == 0) {
+            return null;
+        }
+
+        return $this->addresses[0];
+    }
+
+    public function getAddresses(): array
+    {
+        return $this->addresses;
     }
 
     /**

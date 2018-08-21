@@ -1,4 +1,4 @@
-<h2>Outputs</h2>
+<h2><br>Outputs</h2>
 <table class="table table-striped table-adaptive">
     <thead>
         <tr>
@@ -25,7 +25,9 @@
                     {% endif %}
                 </td>
                 <td data-role="address">
-                    {% if output.address %}
+                    {% if output.addresses and output.addresses|length %}
+                        <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
+                    {% elseif output.address %}
                         <a href="{{ path('app_address_index', { 'hash': output.address }) }}" class="break-word">{{ output.address }}</a>
                     {% else %}
                         N/A

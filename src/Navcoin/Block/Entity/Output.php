@@ -2,11 +2,6 @@
 
 namespace App\Navcoin\Block\Entity;
 
-/**
- * Class Output
- *
- * @package App\Navcoin\Block\Entity
- */
 class Output
 {
     /**
@@ -20,9 +15,9 @@ class Output
     private $amount;
 
     /**
-     * @var string
+     * @var string[]
      */
-    private $address;
+    private $addresses = [];
 
     /**
      * @var string
@@ -34,70 +29,45 @@ class Output
      */
     private $redeemedInBlock;
 
-    /**
-     * Constructor
-     *
-     * @param int    $index
-     * @param float  $amount
-     * @param string $address
-     * @param string $redeemedInTransaction
-     * @param int    $redeemedInBlock
-     */
-    public function __construct(int $index, float $amount, ?string $address, ?string $redeemedInTransaction, ?int $redeemedInBlock)
+    public function __construct(int $index, float $amount, array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock)
     {
         $this->index = $index;
         $this->amount = $amount;
-        $this->address = $address;
+        $this->addresses = $addresses;
         $this->redeemedInTransaction = $redeemedInTransaction;
         $this->redeemedInBlock = $redeemedInBlock;
     }
 
-    /**
-     * Get Index
-     *
-     * @return int
-     */
-    public function getIndex()
+    public function getIndex(): int
     {
         return $this->index;
     }
 
-    /**
-     * Get Amount
-     *
-     * @return float
-     */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
 
-    /**
-     * Get Address
-     *
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): ?string
     {
-        return $this->address;
+        if (count($this->addresses) == 0) {
+            return null;
+        }
+
+        return $this->addresses[0];
     }
 
-    /**
-     * Get RedeemedInTransaction
-     *
-     * @return string
-     */
-    public function getRedeemedInTransaction()
+    public function getAddresses(): array
+    {
+        return $this->addresses;
+    }
+
+    public function getRedeemedInTransaction(): ?string
     {
         return $this->redeemedInTransaction;
     }
 
-    /**
-     * Get RedeemedInBlock
-     *
-     * @return int
-     */
-    public function getRedeemedInBlock()
+    public function getRedeemedInBlock(): ?int
     {
         return $this->redeemedInBlock;
     }

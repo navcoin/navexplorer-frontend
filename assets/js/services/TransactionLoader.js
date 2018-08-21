@@ -49,7 +49,14 @@ export default class TransactionLoader {
                 inputs.forEach(function (input, index) {
                     let address = $(document.createElement('div'));
                     address.attr('class', 'address float-left');
-                    if (typeof input.address !== 'undefined') {
+                    if (typeof input.addresses !== 'undefined') {
+                        if (input.addresses.length === 0) {
+                            address.html('N/A');
+                        } else {
+                            let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
+                            address.append(a);
+                        }
+                    } else if (typeof input.address !== 'undefined') {
                         let a = $(document.createElement('a')).attr('href', '/address/' + input.address).html(input.address);
                         address.append(a);
                     } else {
@@ -61,8 +68,8 @@ export default class TransactionLoader {
                     amount.html((input.amount ? self.numberWithCommas(input.amount) : '0') + ' NAV');
 
                     let item = $(document.createElement('li'));
-                    item.append(address)
-                    item.append(amount)
+                    item.append(address);
+                    item.append(amount);
 
                     list.append(item);
                 });

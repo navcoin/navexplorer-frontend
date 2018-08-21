@@ -1,5 +1,3 @@
-{% set network = app.session.get('network', 'mainnet') %}
-
-{% if network == 'TEST_NET' %}
+{% if (app.request.getSchemeAndHttpHost() == 'https://testnet.navexplorer.com') %}
     <div class="testnet-warning">You are currently exploring blocks on the test net</div>
 {% endif %}
