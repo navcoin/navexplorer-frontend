@@ -2,15 +2,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="network" data-network="{{ app.session.get('network') }}">
-                    {% if (app.request.getSchemeAndHttpHost() == 'https://testnet.navexplorer.com') %}
-                        {% set network = 'TEST_NET' %}
-                    {% else %}
-                        {% set network = 'MAIN_NET' %}
-                    {% endif %}
+                <div class="network" data-network="{{ network }}">
                     <ul>
-                        <li><a href="http://www.navexplorer.com" {{ network == 'MAIN_NET' ? 'class="active"' : '' }}>Main Net</a></li>
-                        <li><a href="http://testnet.navexplorer.com" {{ network == 'TEST_NET' ? 'class="active"' : '' }}>Test Net</a></li>
+                        <li><a href="http://www.navexplorer.com" {{ network == 'MAINNET' ? 'class="active"' : '' }}>Main Net</a></li>
+                        <li><a href="http://testnet.navexplorer.com" {{ network == 'TESTNET' ? 'class="active"' : '' }}>Test Net</a></li>
                     </ul>
                 </div>
                 <div class="float-right">* All times displayed in UTC</div>

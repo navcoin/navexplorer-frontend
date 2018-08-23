@@ -1,3 +1,3 @@
-{% if (app.request.getSchemeAndHttpHost() == 'https://testnet.navexplorer.com') %}
+{% if network == 'TESTNET' %}
     <div class="testnet-warning">You are currently exploring blocks on the test net</div>
 {% endif %}
