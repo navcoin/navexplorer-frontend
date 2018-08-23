@@ -79,5 +79,9 @@ services:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\SoftFork\Mapper\SoftForkMapper'
 
+    App\Navcoin\Network\Service\NetworkService:
+        arguments:
+            - '%navcoin.network%'
+
     # Filters
     App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter:
