@@ -7,20 +7,8 @@ use App\Navcoin\Block\Entity\BlockSignal;
 use App\Navcoin\Block\Entity\BlockSignals;
 use App\Navcoin\Common\Mapper\BaseMapper;
 
-/**
- * Class BlockMapper
- *
- * @package App\Navcoin\Mapper
- */
 class BlockMapper extends BaseMapper
 {
-    /**
-     * Map block
-     *
-     * @param array $data
-     *
-     * @return Block
-     */
     public function mapEntity(array $data): Block
     {
         return new Block(
@@ -47,13 +35,6 @@ class BlockMapper extends BaseMapper
         );
     }
 
-    /**
-     * Map Inputs
-     *
-     * @param array $data
-     *
-     * @return BlockSignals
-     */
     private function mapSignals(array $data): BlockSignals
     {
         $signals = new BlockSignals();

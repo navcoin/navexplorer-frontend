@@ -1,0 +1,11 @@
+.progress {
+  border-radius: 0;
+  background-color: $light-grey;
+  border-color: $grey;
+
+  .progress-bar {
+    .bg-nav {
+      background-color: $dark-purple !important;
+    }
+  }
+}

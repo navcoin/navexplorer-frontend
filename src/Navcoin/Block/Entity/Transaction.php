@@ -65,6 +65,11 @@ class Transaction
      */
     private $raw;
 
+    /**
+     * @var ProposalVotes
+     */
+    private $proposalVotes;
+
     public function __construct(
         String $id,
         String $hash,
@@ -75,7 +80,8 @@ class Transaction
         Inputs $inputs,
         Outputs $outputs,
         string $type,
-        string $raw
+        string $raw,
+        ?ProposalVotes $proposalVotes
     ) {
         $this->id = $id;
         $this->hash = $hash;
@@ -85,7 +91,12 @@ class Transaction
         $this->fees = $fees;
         $this->inputs = $inputs;
         $this->outputs = $outputs;
+        $this->type = $type;
         $this->raw = $raw;
+
+        if (!is_null($proposalVotes)) {
+            $this->proposalVotes = $proposalVotes;
+        }
     }
 
     public function getId(): string
@@ -161,5 +172,10 @@ class Transaction
     public function getRaw()
     {
         return $this->raw;
+    }
+
+    public function getProposalVotes(): ProposalVotes
+    {
+        return $this->proposalVotes;
     }
 }

@@ -5,6 +5,11 @@ namespace App\Navcoin\Block\Entity;
 class Output
 {
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
      * @var int
      */
     private $index;
@@ -29,13 +34,24 @@ class Output
      */
     private $redeemedInBlock;
 
-    public function __construct(int $index, float $amount, array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock)
+    /**
+     * @var string
+     */
+    private $hash;
+
+    public function __construct(string $type, int $index, float $amount, array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock)
     {
+        $this->type = $type;
         $this->index = $index;
         $this->amount = $amount;
         $this->addresses = $addresses;
         $this->redeemedInTransaction = $redeemedInTransaction;
         $this->redeemedInBlock = $redeemedInBlock;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     public function getIndex(): int
@@ -70,5 +86,16 @@ class Output
     public function getRedeemedInBlock(): ?int
     {
         return $this->redeemedInBlock;
+    }
+
+    public function getHash(): string
+    {
+        return $this->hash;
+    }
+
+    public function setHash(string $hash): self
+    {
+        $this->hash = $hash;
+        return $this;
     }
 }

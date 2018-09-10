@@ -79,6 +79,11 @@ services:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\SoftFork\Mapper\SoftForkMapper'
 
+    App\Navcoin\CommunityFund\Api\CommunityFundApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\CommunityFund\Mapper\ProposalMapper'
+
     App\Navcoin\Network\Service\NetworkService:
         arguments:
             - '%navcoin.network%'

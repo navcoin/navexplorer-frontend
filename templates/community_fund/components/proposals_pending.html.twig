@@ -1,0 +1,34 @@
+<div class="row">
+{% for proposal in proposals %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ proposal.description }}<br>
+
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ proposal.requestedAmount|stake_format }}</h6>
+
+                <p>
+                    Total Votes
+                    <div class="progress">
+                        <div class="progress-bar bg-nav" role="progressbar" style="width: {{ proposalVotesTotal(proposal, blockCycle) }}%" aria-valuenow="{{ proposalVotesTotal(proposal, blockCycle) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </p>
+                <p>
+                    Yes Votes
+                    <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ proposalVotesYes(proposal, blockCycle) }}%" aria-valuenow="{{ proposalVotesYes(proposal, blockCycle) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </p>
+                <p>
+                    No Votes
+                    <div class="progress">
+                    <div class="progress-bar bg-failure" role="progressbar" style="width: {{ proposalVotesNo(proposal, blockCycle) }}%" aria-valuenow="{{ proposalVotesNo(proposal, blockCycle) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>

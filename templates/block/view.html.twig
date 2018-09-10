@@ -26,6 +26,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#community-fund-votes" aria-expanded="false" aria-controls="community-fund-votes">
+                                Community Fund Votes
+                            </a>
+                        </li>
+                        <li class="nav-item pull-right">
                             <a class="nav-link" href="#" data-toggle="collapse" data-target="#raw-block" aria-expanded="false" aria-controls="raw-block">
                                 Raw Block
                             </a>
@@ -39,6 +44,10 @@
 
                         <div id="raw-block" class="collapse collapsed" data-parent="#block-collapse">
                             {% include "block/components/view_raw_block.html.twig" %}
+                        </div>
+
+                        <div id="community-fund-votes" class="collapse collapsed" data-parent="#block-collapse">
+                            {#{% include "block/components/view_community_fund_votes.html.twig" %}#}
                         </div>
                     </div>
                 </div>
