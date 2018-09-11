@@ -26,5 +26,9 @@
                 {% include "community_fund/components/proposal/proposal-footer.html.twig" %}
             </div>
         </div>
+    {% else %}
+        <div class="col-md-12">
+            <p>There are no accepted proposals</p>
+        </div>
     {% endfor %}
 </div>

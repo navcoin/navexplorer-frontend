@@ -25,5 +25,13 @@
                 {% include "community_fund/components/proposal/proposal-footer.html.twig" %}
             </div>
         </div>
+    {% else %}
+        <div class="col-md-12">
+            {% if active == 'pending-funds' %}
+                <p>There are no proposals pending funding</p>
+            {% else %}
+                <p>There are no {{ active }} proposals</p>
+            {% endif %}
+        </div>
     {% endfor %}
 </div>

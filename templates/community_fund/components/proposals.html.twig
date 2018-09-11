@@ -2,50 +2,40 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" href="#" data-toggle="collapse" data-target="#proposalsPending" aria-expanded="true" aria-controls="proposalsPending">
+        <a class="nav-link {{ active == 'pending' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'pending'}) }}">
             Pending
         </a>
     </li>
+
     <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#proposalsAccepted" aria-expanded="true" aria-controls="proposalsAccepted">
+        <a class="nav-link {{ active == 'accepted' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'accepted'}) }}">
             Accepted
         </a>
     </li>
+
     <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#proposalsRejected" aria-expanded="true" aria-controls="proposalsRejected">
+        <a class="nav-link {{ active == 'rejected' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'rejected'}) }}">
             Rejected
         </a>
     </li>
+
     <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#proposalsExpired" aria-expanded="true" aria-controls="proposalsExpired">
+        <a class="nav-link {{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'expired'}) }}">
             Expired
         </a>
     </li>
+
     <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#proposalsPendingFunds" aria-expanded="true" aria-controls="proposalsPendingFunds">
+        <a class="nav-link {{ active == 'pending-funds' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'pending-funds'}) }}">
             Pending Funds
         </a>
     </li>
 </ul>
 
-<div id="block-collapse">
-    <div id="proposalsPending" class="collapse show" data-parent="#block-collapse">
-        {% include "community_fund/components/proposals_pending.html.twig" with {'proposals': proposals.pending} %}
-    </div>
-
-    <div id="proposalsAccepted" class="collapse collapsed" data-parent="#block-collapse">
-        {% include "community_fund/components/proposals_accepted.html.twig" with {'proposals': proposals.accepted} %}
-    </div>
-
-    <div id="proposalsRejected" class="collapse collapsed" data-parent="#block-collapse">
-        {% include "community_fund/components/proposals_rejected.html.twig" with {'proposals': proposals.rejected} %}
-    </div>
-
-    <div id="proposalsExpired" class="collapse collapsed" data-parent="#block-collapse">
-        {% include "community_fund/components/proposals_expired.html.twig" with {'proposals': proposals.expired} %}
-    </div>
-
-    <div id="proposalsPendingFunds" class="collapse collapsed" data-parent="#block-collapse">
-        {% include "community_fund/components/proposals_pending_funds.html.twig" with {'proposals': proposals.pendingFunds} %}
-    </div>
+<div>
+    {% if active == 'accepted' %}
+        {% include "community_fund/components/proposals_accepted.html.twig" %}
+    {% else %}
+        {% include "community_fund/components/proposals_default.html.twig"%}
+    {% endif %}
 </div>
