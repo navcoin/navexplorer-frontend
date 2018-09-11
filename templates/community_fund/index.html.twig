@@ -14,10 +14,13 @@
 
         <div class="row">
             <div class="col-md-12">
-
                 <div class="alert alert-info">
-                    Voting for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ blockCycle.cycle|ordinal }} block cycle.<br/>
-                    There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining.
+                    Votes counted for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ blockCycle.cycle|ordinal }} block cycle.<br/>
+                    {% if blockCycle.remainingBlocks == 1 %}
+                        There is <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> block remaining.
+                    {% else %}
+                        There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining.
+                    {% endif %}
                 </div>
 
                 {% include 'community_fund/components/proposals.html.twig' %}

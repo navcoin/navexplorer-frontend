@@ -32,16 +32,20 @@
     <div id="proposalsPending" class="collapse show" data-parent="#block-collapse">
         {% include "community_fund/components/proposals_pending.html.twig" with {'proposals': proposals.pending} %}
     </div>
+
     <div id="proposalsAccepted" class="collapse collapsed" data-parent="#block-collapse">
-        {% include "community_fund/components/proposals_table.html.twig" with {'proposals': proposals.accepted} %}
+        {% include "community_fund/components/proposals_accepted.html.twig" with {'proposals': proposals.accepted} %}
     </div>
+
     <div id="proposalsRejected" class="collapse collapsed" data-parent="#block-collapse">
-        {#{% include "community_fund/components/proposals_table.html.twig" with {'state': 'REJECTED'} %}#}
+        {% include "community_fund/components/proposals_rejected.html.twig" with {'proposals': proposals.rejected} %}
     </div>
+
     <div id="proposalsExpired" class="collapse collapsed" data-parent="#block-collapse">
-        {#{% include "community_fund/components/proposals_table.html.twig" with {'state': 'EXPIRED'} %}#}
+        {% include "community_fund/components/proposals_expired.html.twig" with {'proposals': proposals.expired} %}
     </div>
+
     <div id="proposalsPendingFunds" class="collapse collapsed" data-parent="#block-collapse">
-        {#{% include "community_fund/components/proposals_table.html.twig" with {'state': 'PENDING_FUNDS'} %}#}
+        {% include "community_fund/components/proposals_pending_funds.html.twig" with {'proposals': proposals.pendingFunds} %}
     </div>
 </div>

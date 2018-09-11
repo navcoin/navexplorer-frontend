@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Community Fund{% endblock %}
+
+{% block page %}page-communityFund-index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Community Fund</h1>
+                <h3>{{ proposal.description|capitalize }}</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-info" href="{{ path('app_communityfund_index') }}">Back to Proposals</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

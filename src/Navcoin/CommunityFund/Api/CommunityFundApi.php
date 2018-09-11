@@ -31,14 +31,14 @@ class CommunityFundApi extends NavcoinApi
         );
     }
 
-    public function getProposal(String $id): Proposal
+    public function getProposal(String $hash): Proposal
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal/'.$id);
+            $data = $this->getClient()->get('/api/community-fund/proposal/'.$hash);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
-                    throw new CommunityFundProposalNotFound(sprintf("The `%s` proposal does not exist.", $id), 0, $e);
+                    throw new CommunityFundProposalNotFound(sprintf("The `%s` proposal does not exist.", $hash), 0, $e);
                 default:
                     throw $e;
             }
@@ -47,10 +47,10 @@ class CommunityFundApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    public function getProposalsByStatus($status): Proposals
+    public function getProposalsByState($state): Proposals
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal?status='.$status);
+            $data = $this->getClient()->get('/api/community-fund/proposal?state='.$state);
         } catch (ServerRequestException $e) {
             return new Proposals();
         }

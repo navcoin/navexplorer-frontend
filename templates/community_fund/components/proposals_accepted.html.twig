@@ -14,11 +14,12 @@
                         <span class="float-right">{{ proposal.requestedAmount|stake_format }}</span>
                     </li>
                     <li class="list-group-item">
-                        {{ proposalVoteProgress(proposal, blockCycle) }}
-                        <p class="text-muted">
-                            <span class="float-left">Votes to Accept: {{ proposal.votesYes }}</span>
-                            <span class="float-right">Votes to Reject: {{ proposal.votesNo }}</span>
-                        </p>
+                        NAV Paid
+                        <span class="float-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        Expiry Date
+                        <span class="float-right">{{ proposal.expiresOn|date_localised('M jS Y, g:i:s a') }}</span>
                     </li>
                 </ul>
 

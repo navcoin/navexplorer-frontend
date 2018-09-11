@@ -1,9 +1,10 @@
 .progress {
-  border-radius: 0;
   background-color: $light-grey;
-  border-color: $grey;
+  border: $mid-grey 1px solid;
 
   .progress-bar {
+    color: $white;
+
     .bg-nav {
       background-color: $dark-purple !important;
     }

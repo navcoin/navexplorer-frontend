@@ -12,24 +12,47 @@ class ProposalExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('proposalVotesTotal', [$this, 'getProposalVotesTotal'], ['is_safe' => ['html']]),
-            new TwigFunction('proposalVotesYes', [$this, 'getProposalVotesYes'], ['is_safe' => ['html']]),
-            new TwigFunction('proposalVotesNo', [$this, 'getProposalVotesNo'], ['is_safe' => ['html']]),
+            new TwigFunction('proposalVoteProgress', [$this, 'getProposalVoteProgress'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function getProposalVotesTotal(Proposal $proposal, BlockCycle $blockCycle): int
+    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
     {
-        return ($proposal->getVotesTotal() / ($blockCycle->getBlocksInCycle() * $blockCycle->getMinQuorum())) * 100;
+        $minimumVotes = $blockCycle->getBlocksInCycle() * $blockCycle->getMinQuorum();
+        $totalVotes =  $proposal->getVotesTotal() < $minimumVotes ? $minimumVotes : $proposal->getVotesTotal();
+        $yesVotes = (int) round(($proposal->getVotesYes() / $totalVotes) * 100);
+        $noVotes = (int) round(($proposal->getVotesNo() / $totalVotes) * 100);
+
+        return '
+<div class="progress">
+    '.$this->getProgressBar($this->getProgressBarClass($proposal, true), $yesVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal, false), $noVotes).'
+</div>';
     }
 
-    public function getProposalVotesYes(Proposal $proposal, BlockCycle $blockCycle): int
+    private function getProgressBar(string $classes, int $votes): string
     {
-        return ($proposal->getVotesYes() / ($blockCycle->getBlocksInCycle() * $blockCycle->getProposalVoting()->getAccept())) * 100;
+        return sprintf(
+            '<div class="%s" role="progressbar" style="%s" aria-valuenow="%d" aria-valuemin="0" aria-valuemax="100">%s</div>',
+            $classes,
+            sprintf('width: %s&percnt;', $votes),
+            $votes,
+            ($votes > 10 ? sprintf('%s&percnt;', $votes) : null)
+        );
     }
 
-    public function getProposalVotesNo(Proposal $proposal, BlockCycle $blockCycle): int
+    private function getProgressBarClass(Proposal $proposal, bool $vote): string
     {
-        return ($proposal->getVotesNo() / ($blockCycle->getBlocksInCycle() * $blockCycle->getProposalVoting()->getReject())) * 100;
+        $classes = [
+            'progress-bar',
+            $vote ? 'bg-success' : 'bg-danger',
+        ];
+
+        if ($proposal->getState() == 'PENDING') {
+            $classes[] = 'progress-bar-striped';
+            $classes[] = 'progress-bar-animated';
+        }
+
+        return implode(' ', $classes);
     }
 }

@@ -9,9 +9,10 @@ class ProposalMapper extends BaseMapper
 {
     public function mapEntity(array $data): Proposal
     {
-        return new Proposal(
+        $proposal = new Proposal(
             $data['version'],
             $data['hash'],
+            $data['blockHash'],
             $data['description'],
             $data['requestedAmount'],
             $data['notPaidYet'],
@@ -20,7 +21,17 @@ class ProposalMapper extends BaseMapper
             $data['proposalDuration'],
             $data['votesYes'],
             $data['votesNo'],
-            $data['status']
+            $data['votingCycle'],
+            $data['state'],
+            $data['status'],
+            (new \DateTime())->setTimestamp($data['createdAt']/1000)
         );
+
+        if ($data['state'] == "ACCEPTED") {
+            $proposal->setApprovedOnBlock($data['approvedOnBlock']);
+            $proposal->setExpiresOn((new \DateTime())->setTimestamp($data['expiresOn']));
+        }
+
+        return $proposal;
     }
 }

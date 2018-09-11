@@ -17,6 +17,11 @@ class Proposal
     /**
      * @var string
      */
+    private $blockHash;
+
+    /**
+     * @var string
+     */
     private $description;
 
     /**
@@ -55,13 +60,44 @@ class Proposal
     private $votesNo;
 
     /**
+     * @var int
+     */
+    private $votingCycle;
+
+    /**
+     * @var string
+     */
+    private $state;
+
+    /**
      * @var string
      */
     private $status;
 
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var string
+     */
+    private $approvedOnBlock;
+
+    /**
+     * @var \DateTime
+     */
+    private $expiresOn;
+
+    /**
+     * @var PaymentRequests
+     */
+    private $paymentRequests;
+
     public function __construct(
         int $version,
         string $hash,
+        string $blockHash,
         string $description,
         float $requestedAmount,
         float $notYetPaid,
@@ -70,10 +106,15 @@ class Proposal
         int $proposalDuration,
         int $votesYes,
         int $votesNo,
-        string $status
+        int $votingCycle,
+        string $state,
+        string $status,
+        \DateTime $createdAt,
+        PaymentRequests $paymentRequests = null
     ) {
         $this->version = $version;
         $this->hash = $hash;
+        $this->blockHash = $blockHash;
         $this->description = $description;
         $this->requestedAmount = $requestedAmount;
         $this->notYetPaid = $notYetPaid;
@@ -82,7 +123,11 @@ class Proposal
         $this->proposalDuration = $proposalDuration;
         $this->votesYes = $votesYes;
         $this->votesNo = $votesNo;
+        $this->votingCycle = $votingCycle;
+        $this->state = $state;
         $this->status = $status;
+        $this->createdAt = $createdAt;
+        $this->paymentRequests = $paymentRequests ?: new PaymentRequests();
     }
 
     public function getVersion(): int
@@ -93,6 +138,11 @@ class Proposal
     public function getHash(): string
     {
         return $this->hash;
+    }
+
+    public function getBlockHash(): string
+    {
+        return $this->blockHash;
     }
 
     public function getDescription(): string
@@ -140,8 +190,59 @@ class Proposal
         return $this->votesYes + $this->votesNo;
     }
 
+    public function getVotingCycle(): int
+    {
+        return $this->votingCycle;
+    }
+
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function getApprovedOnBlock(): string
+    {
+        return $this->approvedOnBlock;
+    }
+
+    public function setApprovedOnBlock(string $approvedOnBlock): self
+    {
+        $this->approvedOnBlock = $approvedOnBlock;
+
+        return $this;
+    }
+
+    public function getExpiresOn(): \DateTime
+    {
+        return $this->expiresOn;
+    }
+
+    public function setExpiresOn(\DateTime $expiresOn): self
+    {
+        $this->expiresOn = $expiresOn;
+
+        return $this;
+    }
+
+    public function getPaymentRequests(): PaymentRequests
+    {
+        return $this->paymentRequests;
+    }
+
+    public function setPaymentRequests(PaymentRequests $paymentRequests): self
+    {
+        $this->paymentRequests = $paymentRequests;
+
+        return $this;
     }
 }
