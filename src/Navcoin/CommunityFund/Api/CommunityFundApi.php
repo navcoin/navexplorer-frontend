@@ -47,10 +47,10 @@ class CommunityFundApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    public function getProposalsByState($state): Proposals
+    public function getProposalsByState($state, $order = 'id'): Proposals
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal?state='.$state);
+            $data = $this->getClient()->get('/api/community-fund/proposal?state='.$state.'&order='.$order);
         } catch (ServerRequestException $e) {
             return new Proposals();
         }

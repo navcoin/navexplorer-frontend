@@ -31,7 +31,7 @@ class CommunityFundController extends Controller
         return [
             'blockCycle' => $this->communityFundApi->getBlockCycle(),
             'proposals' => [
-                'pending' => $this->communityFundApi->getProposalsByState("PENDING"),
+                'pending' => $this->communityFundApi->getProposalsByState("PENDING", "votes"),
                 'accepted' => $this->communityFundApi->getProposalsByState("ACCEPTED"),
                 'rejected' => $this->communityFundApi->getProposalsByState("REJECTED"),
                 'expired' => $this->communityFundApi->getProposalsByState("EXPIRED"),
