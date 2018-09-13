@@ -22,9 +22,9 @@
                         There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining.
                     {% endif %}
                 </div>
-
-                {% include 'community_fund/components/proposals.html.twig' %}
             </div>
         </div>
+
+        {% include 'community_fund/components/index_proposals.html.twig' %}
     </div>
 {% endblock %}

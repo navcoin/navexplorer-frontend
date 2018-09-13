@@ -50,19 +50,9 @@ class Proposal
     private $proposalDuration;
 
     /**
-     * @var int
+     * @var ProposalVote[]
      */
-    private $votesYes;
-
-    /**
-     * @var int
-     */
-    private $votesNo;
-
-    /**
-     * @var int
-     */
-    private $votingCycle;
+    private $proposalVotes;
 
     /**
      * @var string
@@ -104,9 +94,7 @@ class Proposal
         float $userPaidFee,
         string $paymentAddress,
         int $proposalDuration,
-        int $votesYes,
-        int $votesNo,
-        int $votingCycle,
+        ProposalVotes $proposalVotes,
         string $state,
         string $status,
         \DateTime $createdAt,
@@ -121,9 +109,7 @@ class Proposal
         $this->userPaidFee = $userPaidFee;
         $this->paymentAddress = $paymentAddress;
         $this->proposalDuration = $proposalDuration;
-        $this->votesYes = $votesYes;
-        $this->votesNo = $votesNo;
-        $this->votingCycle = $votingCycle;
+        $this->proposalVotes = $proposalVotes;
         $this->state = $state;
         $this->status = $status;
         $this->createdAt = $createdAt;
@@ -175,24 +161,9 @@ class Proposal
         return $this->proposalDuration;
     }
 
-    public function getVotesYes(): int
+    public function getProposalVotes(): ProposalVotes
     {
-        return $this->votesYes;
-    }
-
-    public function getVotesNo(): int
-    {
-        return $this->votesNo;
-    }
-
-    public function getVotesTotal(): int
-    {
-        return $this->votesYes + $this->votesNo;
-    }
-
-    public function getVotingCycle(): int
-    {
-        return $this->votingCycle;
+        return $this->proposalVotes;
     }
 
     public function getState(): string
@@ -210,7 +181,7 @@ class Proposal
         return $this->createdAt;
     }
 
-    public function getApprovedOnBlock(): string
+    public function getApprovedOnBlock(): ?string
     {
         return $this->approvedOnBlock;
     }
@@ -222,7 +193,7 @@ class Proposal
         return $this;
     }
 
-    public function getExpiresOn(): \DateTime
+    public function getExpiresOn(): ?\DateTime
     {
         return $this->expiresOn;
     }

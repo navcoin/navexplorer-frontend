@@ -1,5 +1,5 @@
 .card-proposal {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 
   .card-header {
     h5 {
@@ -16,5 +16,39 @@
 
   .card-footer {
     border-top: 0;
+  }
+}
+
+.filters {
+  .filters-label {
+    float: left;
+    margin-right: 0.5rem;
+  }
+  ul {
+    margin-top : 0.75rem;
+    margin-bottom: 0;
+
+    li.list-inline-item {
+      margin-right: 0;
+      padding-right: 0;
+
+
+      a.active {
+        pointer-events: none;
+        color: inherit;
+      }
+    }
+
+    li:not(:first-child):before {
+      content: "| ";
+    }
+  }
+}
+
+.row-proposal-description {
+  margin-bottom: 2rem;
+
+  p {
+    font-size: 1.2em;
   }
 }

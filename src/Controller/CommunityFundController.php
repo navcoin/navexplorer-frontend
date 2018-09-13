@@ -58,7 +58,6 @@ class CommunityFundController extends Controller
                 break;
             default:
                 return $this->redirectToRoute('app_communityfund_index', ['state' => 'pending']);
-
         }
 
         return [
@@ -77,6 +76,7 @@ class CommunityFundController extends Controller
     public function viewAction(Request $request)
     {
         return [
+            'blockCycle' => $this->communityFundApi->getBlockCycle(),
             'proposal' => $this->communityFundApi->getProposal($request->get('hash')),
         ];
     }

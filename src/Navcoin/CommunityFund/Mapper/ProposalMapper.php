@@ -4,6 +4,8 @@ namespace App\Navcoin\CommunityFund\Mapper;
 
 use App\Navcoin\Common\Mapper\BaseMapper;
 use App\Navcoin\CommunityFund\Entity\Proposal;
+use App\Navcoin\CommunityFund\Entity\ProposalVote;
+use App\Navcoin\CommunityFund\Entity\ProposalVotes;
 
 class ProposalMapper extends BaseMapper
 {
@@ -19,9 +21,7 @@ class ProposalMapper extends BaseMapper
             $data['userPaidFee'],
             $data['paymentAddress'],
             $data['proposalDuration'],
-            $data['votesYes'],
-            $data['votesNo'],
-            $data['votingCycle'],
+            $this->mapProposalVotes($data['proposalVotes']),
             $data['state'],
             $data['status'],
             (new \DateTime())->setTimestamp($data['createdAt']/1000)
@@ -33,5 +33,18 @@ class ProposalMapper extends BaseMapper
         }
 
         return $proposal;
+    }
+
+    public function mapProposalVotes(array $data): ProposalVotes
+    {
+        $proposalVotes = new ProposalVotes();
+
+        foreach ($data as $voteData) {
+            $proposalVotes->add(
+                new ProposalVote($voteData['votesYes'], $voteData['votesNo'], $voteData['votingCycle'])
+            );
+        }
+
+        return $proposalVotes;
     }
 }
