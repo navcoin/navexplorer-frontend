@@ -16,9 +16,13 @@ class ProposalExtension extends AbstractExtension
         ];
     }
 
-    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
+    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle, int $cycle = null): string
     {
-        $proposalVote = $proposal->getProposalVotes()->getLatestVotes();
+        if ($cycle === null) {
+            $proposalVote = $proposal->getProposalVotes()->getLatestVotes();
+        } else {
+            $proposalVote = $proposal->getProposalVotes()->getVotingCycle($cycle);
+        }
 
         $minimumVotes = $blockCycle->getBlocksInCycle() * $blockCycle->getMinQuorum();
         $totalVotes =  $proposalVote->getVotesTotal() < $minimumVotes ? $minimumVotes : $proposalVote->getVotesTotal();

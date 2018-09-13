@@ -20,4 +20,14 @@ class ProposalVotes extends IteratorEntity implements IteratorEntityInterface
 
         return $this->getElements()[count($this->getElements()) -1];
     }
+
+    public function getVotingCycle(int $votingCycle): ?ProposalVote
+    {
+        /** @var ProposalVote $element */
+        foreach ($this->getElements() as $element) {
+            if ($element->getVotingCycle() == $votingCycle) {
+                return $element;
+            }
+        }
+    }
 }
