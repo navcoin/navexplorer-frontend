@@ -2,7 +2,9 @@
     {% for proposal in proposals %}
         <div class="col-sm-6 col-md-4 col-lg-4">
             <div class="card card-proposal">
-                {% include "community_fund/components/proposal/proposal-header.html.twig" %}
+                <div class="card-header">
+                    <h5>{{ proposal.description|capitalize }}</h5>
+                </div>
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
@@ -26,18 +28,22 @@
                             <span class="float-right">Cycle: {{ proposal.proposalVotes.latestVotes.votingCycle }}</span>
                         </p>
                     </li>
+                    <li class="list-group-item">
+                        Status
+                        <span class="float-right">{{ proposal.status|title }}</span>
+                    </li>
                 </ul>
 
-                {% include "community_fund/components/proposal/proposal-footer.html.twig" %}
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="btn btn-info">View Proposal</a>
+                    </div>
+                </div>
             </div>
         </div>
     {% else %}
         <div class="col-md-12">
-            {% if active == 'pending-funds' %}
-                <p>There are no proposals pending funding</p>
-            {% else %}
-                <p>There are no {{ active }} proposals</p>
-            {% endif %}
+            <p>There are no {{ active|proposalState }} proposals</p>
         </div>
     {% endfor %}
 </div>

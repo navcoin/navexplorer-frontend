@@ -11,3 +11,9 @@
     }
   }
 }
+
+.table-striped tbody tr:nth-of-type(odd) {
+  .progress {
+    background-color: #fff;
+  }
+}

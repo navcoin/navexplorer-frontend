@@ -50,7 +50,7 @@ class Proposal
     private $proposalDuration;
 
     /**
-     * @var ProposalVote[]
+     * @var ProposalVotes
      */
     private $proposalVotes;
 
@@ -79,11 +79,6 @@ class Proposal
      */
     private $expiresOn;
 
-    /**
-     * @var PaymentRequests
-     */
-    private $paymentRequests;
-
     public function __construct(
         int $version,
         string $hash,
@@ -97,8 +92,7 @@ class Proposal
         ProposalVotes $proposalVotes,
         string $state,
         string $status,
-        \DateTime $createdAt,
-        PaymentRequests $paymentRequests = null
+        \DateTime $createdAt
     ) {
         $this->version = $version;
         $this->hash = $hash;
@@ -113,7 +107,6 @@ class Proposal
         $this->state = $state;
         $this->status = $status;
         $this->createdAt = $createdAt;
-        $this->paymentRequests = $paymentRequests ?: new PaymentRequests();
     }
 
     public function getVersion(): int
@@ -205,15 +198,8 @@ class Proposal
         return $this;
     }
 
-    public function getPaymentRequests(): PaymentRequests
+    public function wasApproved(): bool
     {
-        return $this->paymentRequests;
-    }
-
-    public function setPaymentRequests(PaymentRequests $paymentRequests): self
-    {
-        $this->paymentRequests = $paymentRequests;
-
-        return $this;
+        return $this->approvedOnBlock != null;
     }
 }

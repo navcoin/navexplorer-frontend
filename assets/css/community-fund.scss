@@ -1,3 +1,7 @@
+.proposals-list {
+  margin-top: 1rem;
+}
+
 .card-proposal {
   margin-bottom: 2rem;
 
@@ -25,8 +29,7 @@
     margin-right: 0.5rem;
   }
   ul {
-    margin-top : 0.75rem;
-    margin-bottom: 0;
+    margin-top : 0;
 
     li.list-inline-item {
       margin-right: 0;
@@ -45,16 +48,6 @@
   }
 }
 
-.row-proposal-description {
+.payment-requests, .proposal-vote {
   margin-bottom: 2rem;
-
-  p {
-    font-size: 1.2em;
-  }
-}
-
-.proposal-voting {
-  .voting-cycle {
-    margin-bottom: 2rem;
-  }
 }

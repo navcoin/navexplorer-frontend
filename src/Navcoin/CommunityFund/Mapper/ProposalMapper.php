@@ -27,9 +27,12 @@ class ProposalMapper extends BaseMapper
             (new \DateTime())->setTimestamp($data['createdAt']/1000)
         );
 
-        if ($data['state'] == "ACCEPTED") {
+        if (array_key_exists('approvedOnBlock', $data)) {
             $proposal->setApprovedOnBlock($data['approvedOnBlock']);
-            $proposal->setExpiresOn((new \DateTime())->setTimestamp($data['expiresOn']));
+        }
+
+        if (array_key_exists('expiresOn', $data)) {
+            $proposal->setExpiresOn((new \DateTime())->setTimestamp($data['expiresOn']/1000));
         }
 
         return $proposal;

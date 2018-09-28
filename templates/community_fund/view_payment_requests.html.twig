@@ -1,0 +1,77 @@
+{% extends "community_fund/view.html.twig" %}
+
+{% block view_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="filters float-right">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a class="{{ active == 'pending' ? 'active' : '' }}" href="{{ path('app_communityfund_viewpaymentrequests', {'hash': proposal.hash, 'state': 'pending'}) }}">Pending</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="{{ active == 'accepted' ? 'active' : '' }}" href="{{ path('app_communityfund_viewpaymentrequests', {'hash': proposal.hash, 'state': 'accepted'}) }}">Accepted</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="{{ active == 'rejected' ? 'active' : '' }}" href="{{ path('app_communityfund_viewpaymentrequests', {'hash': proposal.hash, 'state': 'rejected'}) }}">Rejected</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_communityfund_viewpaymentrequests', {'hash': proposal.hash, 'state': 'expired'}) }}">Expired</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <h2>{{ active|title }} Payment Requests</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for paymentRequest in paymentRequests %}
+            <div class="col-sm-6 col-md-4 col-lg-4">
+                <div class="card card-proposal">
+                    <div class="card-header">
+                        <h5>{{ paymentRequest.description|capitalize }}</h5>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            NAV Available
+                            <span class="float-right">{{ (proposal.notYetPaid)|stake_format }}</span>
+                        </li>
+
+                        <li class="list-group-item">
+                            NAV Requested
+                            <span class="float-right">{{ paymentRequest.requestedAmount|stake_format }}</span>
+                        </li>
+
+                        <li class="list-group-item">
+                            {{ paymentRequestVoteProgress(paymentRequest, blockCycle) }}
+                            <p class="text-muted">
+                                <span class="float-left">
+                                    Accept {{ paymentRequest.paymentRequestVotes.latestVotes.votesYes }} / Reject {{ paymentRequest.paymentRequestVotes.latestVotes.votesNo }}
+                                </span>
+                                <span class="float-right">Cycle: {{ paymentRequest.paymentRequestVotes.latestVotes.votingCycle }}</span>
+                            </p>
+                        </li>
+
+                        <li class="list-group-item">
+                            State
+                            <span class="float-right">{{ paymentRequest.state }}</span>
+                        </li>
+                    </ul>
+
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-center">
+                            {#<a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="btn btn-info">View Payment Request</a>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-md-12">
+                <p>There are no {{ active }} payment requests</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

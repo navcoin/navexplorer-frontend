@@ -6,13 +6,14 @@ use App\Exception\ServerRequestException;
 use App\Navcoin\Common\NavcoinApi;
 use App\Navcoin\CommunityFund\Entity\BlockCycle;
 use App\Navcoin\CommunityFund\Entity\BlockCycleVoting;
+use App\Navcoin\CommunityFund\Entity\PaymentRequests;
 use App\Navcoin\CommunityFund\Entity\Proposals;
 use App\Navcoin\CommunityFund\Exception\CommunityFundProposalNotFound;
 use App\Navcoin\CommunityFund\Entity\Proposal;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 
-class CommunityFundApi extends NavcoinApi
+class ProposalApi extends NavcoinApi
 {
     public function getBlockCycle(): BlockCycle
     {
@@ -47,7 +48,7 @@ class CommunityFundApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    public function getProposalsByState($state, $order = 'id'): Proposals
+    public function getProposalsByState(string $state, $order = 'id'): Proposals
     {
         try {
             $data = $this->getClient()->get('/api/community-fund/proposal?state='.$state.'&order='.$order);

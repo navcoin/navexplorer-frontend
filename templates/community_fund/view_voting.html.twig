@@ -1,0 +1,40 @@
+{% extends "community_fund/view.html.twig" %}
+
+{% block view_content %}
+    <div class="row">
+        <div class="col-md-8">
+            {% for proposalVote in proposal.proposalVotes|reverse %}
+                <div class="proposal-vote">
+                    <h3>Voting cycle {{ proposalVote.votingCycle }}</h3>
+                    {{ proposalVoteProgress(proposal, blockCycle, proposalVote.votingCycle) }}
+                    <p class="text-muted">Accept {{ proposalVote.votesYes }} / Reject {{ proposalVote.votesNo }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Voting Rules</h3>
+                    <dl>
+                        <dt>Voting cycle size</dt>
+                        <dd>{{ blockCycle.blocksInCycle }} blocks</dd>
+
+                        <dt>Minimum quorum required</dt>
+                        <dd>{{ blockCycle.minQuorum * 100 }}% - {{ blockCycle.blocksInCycle * blockCycle.minQuorum}} blocks</dd>
+
+                        <dt>Voting cycles per proposal</dt>
+                        <dd>{{ blockCycle.proposalVoting.cycles }}</dd>
+
+                        <dt>Vote percentage required to accept</dt>
+                        <dd>{{ blockCycle.proposalVoting.accept * 100}}%</dd>
+
+                        <dt>Vote percentage required to Reject</dt>
+                        <dd>{{ blockCycle.proposalVoting.reject * 100}}%</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
