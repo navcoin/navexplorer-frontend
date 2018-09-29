@@ -52,7 +52,7 @@ class CommunityFundController
         return new Response(
             $this->serializer->serialize($proposals->getElements(), 'json'),
             200,
-            ['Content-Type', 'application/json']
+            ['Content-Type' => 'application/json']
         );
     }
 
@@ -70,7 +70,7 @@ class CommunityFundController
         return new Response(
             $this->serializer->serialize($proposal, 'json'),
             200,
-            ['Content-Type', 'application/json']
+            ['Content-Type' => 'application/json']
         );
     }
 
@@ -94,7 +94,7 @@ class CommunityFundController
         return new Response(
             $this->serializer->serialize($paymentRequests->getElements(), 'json'),
             200,
-            ['Content-Type', 'application/json']
+            ['Content-Type' => 'application/json']
         );
     }
 }
