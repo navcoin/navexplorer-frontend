@@ -26,46 +26,31 @@ class ProposalExtension extends AbstractExtension
         );
     }
 
-    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle, int $cycle = null): string
+    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
     {
-        if ($cycle === null) {
-            $proposalVote = $proposal->getProposalVotes()->getLatestVotes();
-        } else {
-            $proposalVote = $proposal->getProposalVotes()->getVotingCycle($cycle);
-        }
-
         $minimumVotes = $blockCycle->getBlocksInCycle() * $blockCycle->getMinQuorum();
-        $totalVotes =  $proposalVote->getVotesTotal() < $minimumVotes ? $minimumVotes : $proposalVote->getVotesTotal();
-        $yesVotes = (int) round(($proposalVote->getVotesYes() / $totalVotes) * 100);
-        $noVotes = (int) round(($proposalVote->getVotesNo() / $totalVotes) * 100);
+        $totalVotes =  $proposal->getVotesTotal() < $minimumVotes ? $minimumVotes : $proposal->getVotesTotal();
+        $yesVotes = (int) round(($proposal->getVotesYes() / $totalVotes) * 100);
+        $noVotes = (int) round(($proposal->getVotesNo() / $totalVotes) * 100);
 
-        $votingCycle = $proposal->getProposalVotes()->getLatestVotes()->getVotingCycle();
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), $votingCycle, true, $cycle), $yesVotes).'
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), $votingCycle, false, $cycle), $noVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $yesVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $noVotes).'
 </div>';
     }
 
-    public function getPaymentRequestVoteProgress(PaymentRequest $paymentRequest, BlockCycle $blockCycle, int $cycle = null): string
+    public function getPaymentRequestVoteProgress(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
     {
-        if ($cycle === null) {
-            $paymentVote = $paymentRequest->getPaymentRequestVotes()->getLatestVotes();
-        } else {
-            $paymentVote = $paymentRequest->getPaymentRequestVotes()->getVotingCycle($cycle);
-        }
-
         $minimumVotes = $blockCycle->getBlocksInCycle() * $blockCycle->getMinQuorum();
-        $totalVotes =  $paymentVote->getVotesTotal() < $minimumVotes ? $minimumVotes : $paymentVote->getVotesTotal();
-        $yesVotes = (int) round(($paymentVote->getVotesYes() / $totalVotes) * 100);
-        $noVotes = (int) round(($paymentVote->getVotesNo() / $totalVotes) * 100);
-
-        $votingCycle = $paymentRequest->getPaymentRequestVotes()->getLatestVotes()->getVotingCycle();
+        $totalVotes =  $paymentRequest->getVotesTotal() < $minimumVotes ? $minimumVotes : $paymentRequest->getVotesTotal();
+        $yesVotes = (int) round(($paymentRequest->getVotesYes() / $totalVotes) * 100);
+        $noVotes = (int) round(($paymentRequest->getVotesNo() / $totalVotes) * 100);
 
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), $votingCycle, true, $cycle), $yesVotes).'
-    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), $votingCycle, false, $cycle), $noVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), true), $yesVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), false), $noVotes).'
 </div>';
     }
 
@@ -85,14 +70,14 @@ class ProposalExtension extends AbstractExtension
         );
     }
 
-    private function getProgressBarClass(String $state, int $votingCycle, bool $vote, int $cycle = null): string
+    private function getProgressBarClass(String $state, bool $vote): string
     {
         $classes = [
             'progress-bar',
             $vote ? 'bg-success' : 'bg-danger',
         ];
 
-        if ($state == 'PENDING' && $cycle == $votingCycle) {
+        if ($state == 'PENDING') {
             $classes[] = 'progress-bar-striped';
             $classes[] = 'progress-bar-animated';
         }

@@ -1,5 +1,5 @@
 .proposals-list {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .card-proposal {
@@ -30,6 +30,7 @@
   }
   ul {
     margin-top : 0;
+    margin-bottom: 0;
 
     li.list-inline-item {
       margin-right: 0;
@@ -50,4 +51,18 @@
 
 .payment-requests, .proposal-vote {
   margin-bottom: 2rem;
+}
+
+.list-payment-requests {
+  list-style: none;
+  padding: 0;
+
+  li {
+    border-top: $mid-grey 1px solid;
+    padding: 0.75rem 1.25rem;
+  }
+
+  li:nth-child(odd) {
+    background: $light-grey;
+  }
 }

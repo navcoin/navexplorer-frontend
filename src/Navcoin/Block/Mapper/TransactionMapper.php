@@ -15,7 +15,7 @@ class TransactionMapper extends BaseMapper
 {
     public function mapEntity(array $data): Transaction
     {
-        return new Transaction(
+        $transaction = new Transaction(
             $data['id'],
             $data['hash'],
             $data['height'],
@@ -28,6 +28,8 @@ class TransactionMapper extends BaseMapper
             array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
             $this->mapProposalVotes(array_key_exists('proposalVotes', $data) && $data['proposalVotes'] ? $data['proposalVotes'] : [])
         );
+
+        return $transaction;
     }
 
     private function mapInputs(array $data): Inputs

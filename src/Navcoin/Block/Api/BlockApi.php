@@ -11,20 +11,8 @@ use App\Navcoin\Common\NavcoinApi;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class BlockApi
- *
- * @package App\Navcoin\Block\Api
- */
 class BlockApi extends NavcoinApi
 {
-    /**
-     * Get block
-     *
-     * @param String $height
-     *
-     * @return Block
-     */
     public function getBlock(String $height): Block
     {
         try {
@@ -41,11 +29,6 @@ class BlockApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    /**
-     * Get best block
-     *
-     * @return Block
-     */
     public function getBestBlock(): Block
     {
         try {
@@ -57,15 +40,6 @@ class BlockApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    /**
-     * Get all block transactions
-     *
-     * @param int         $size
-     * @param String|null $from
-     * @param String|null $to
-     *
-     * @return IteratorEntityInterface
-     */
     public function getBlocks(int $size = 50, String $from = null, String $to = null): IteratorEntityInterface
     {
         $url = sprintf('/api/block/?page=%d&size=%d',0, $size);

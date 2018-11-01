@@ -21,15 +21,14 @@ class ProposalMapper extends BaseMapper
             $data['userPaidFee'],
             $data['paymentAddress'],
             $data['proposalDuration'],
-            $this->mapProposalVotes($data['proposalVotes']),
+            $data['votesYes'],
+            $data['votesNo'],
+            $data['votingCycle'],
             $data['state'],
+            $data['stateChangedOnBlock'],
             $data['status'],
             (new \DateTime())->setTimestamp($data['createdAt']/1000)
         );
-
-        if (array_key_exists('approvedOnBlock', $data) && $data['approvedOnBlock'] != null) {
-            $proposal->setApprovedOnBlock($data['approvedOnBlock']);
-        }
 
         if (array_key_exists('expiresOn', $data) && $data['expiresOn'] != null) {
             $proposal->setExpiresOn((new \DateTime())->setTimestamp($data['expiresOn']/1000));

@@ -20,12 +20,23 @@ class PaymentRequestApi extends NavcoinApi
         return $this->getMapper()->mapIterator($data, PaymentRequests::class);
     }
 
-    public function getPaymentRequestsForProposalByState(Proposal $proposal, string $state, string $order = 'id'): PaymentRequests
+    public function getPaymentRequests(Proposal $proposal): PaymentRequests
+    {
+        try {
+            $data = $this->getClient()->get('/api/community-fund/proposal/'.$proposal->getHash().'/payment-request');
+        } catch (ServerRequestException $e) {
+            return new PaymentRequests();
+        }
+
+        return $this->getMapper()->mapIterator($data, PaymentRequests::class);
+    }
+
+    public function getPaymentRequestsForProposalByState(Proposal $proposal, string $state): PaymentRequests
     {
         $state = strtoupper($state);
 
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal/'.$proposal->getHash().'/payment-request/state/'.$state.'?order='.$order);
+            $data = $this->getClient()->get('/api/community-fund/proposal/'.$proposal->getHash().'/payment-request/state/' . $state);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
         }

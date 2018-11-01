@@ -50,14 +50,29 @@ class Proposal
     private $proposalDuration;
 
     /**
-     * @var ProposalVotes
+     * @var int
      */
-    private $proposalVotes;
+    private $votesYes;
+
+    /**
+     * @var int
+     */
+    private $votesNo;
+
+    /**
+     * @var int
+     */
+    private $votingCycle;
 
     /**
      * @var string
      */
     private $state;
+
+    /**
+     * @var string
+     */
+    private $stateChangedOnBlock;
 
     /**
      * @var string
@@ -68,11 +83,6 @@ class Proposal
      * @var \DateTime
      */
     private $createdAt;
-
-    /**
-     * @var string
-     */
-    private $approvedOnBlock;
 
     /**
      * @var \DateTime
@@ -89,8 +99,11 @@ class Proposal
         float $userPaidFee,
         string $paymentAddress,
         int $proposalDuration,
-        ProposalVotes $proposalVotes,
+        int $votesYes,
+        int $votesNo,
+        int $votingCycle,
         string $state,
+        ?string $stateChangedOnBlock,
         string $status,
         \DateTime $createdAt
     ) {
@@ -103,8 +116,11 @@ class Proposal
         $this->userPaidFee = $userPaidFee;
         $this->paymentAddress = $paymentAddress;
         $this->proposalDuration = $proposalDuration;
-        $this->proposalVotes = $proposalVotes;
+        $this->votesYes = $votesYes;
+        $this->votesNo = $votesNo;
+        $this->votingCycle = $votingCycle;
         $this->state = $state;
+        $this->stateChangedOnBlock = $stateChangedOnBlock;
         $this->status = $status;
         $this->createdAt = $createdAt;
     }
@@ -154,14 +170,34 @@ class Proposal
         return $this->proposalDuration;
     }
 
-    public function getProposalVotes(): ProposalVotes
+    public function getVotesYes(): int
     {
-        return $this->proposalVotes;
+        return $this->votesYes;
+    }
+
+    public function getVotesNo(): int
+    {
+        return $this->votesNo;
+    }
+
+    public function getVotesTotal(): int
+    {
+        return $this->votesYes + $this->votesNo;
+    }
+
+    public function getVotingCycle(): int
+    {
+        return $this->votingCycle;
     }
 
     public function getState(): string
     {
         return $this->state;
+    }
+
+    public function getStateChangedOnBlock(): ?string
+    {
+        return $this->stateChangedOnBlock;
     }
 
     public function getStatus(): string
@@ -174,18 +210,6 @@ class Proposal
         return $this->createdAt;
     }
 
-    public function getApprovedOnBlock(): ?string
-    {
-        return $this->approvedOnBlock;
-    }
-
-    public function setApprovedOnBlock(string $approvedOnBlock): self
-    {
-        $this->approvedOnBlock = $approvedOnBlock;
-
-        return $this;
-    }
-
     public function getExpiresOn(): ?\DateTime
     {
         return $this->expiresOn;
@@ -196,10 +220,5 @@ class Proposal
         $this->expiresOn = $expiresOn;
 
         return $this;
-    }
-
-    public function wasApproved(): bool
-    {
-        return $this->approvedOnBlock != null;
     }
 }

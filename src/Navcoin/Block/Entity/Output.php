@@ -96,6 +96,7 @@ class Output
     public function setHash(string $hash): self
     {
         $this->hash = $hash;
+
         return $this;
     }
 }

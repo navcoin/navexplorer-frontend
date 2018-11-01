@@ -20,7 +20,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                {{ include('community_fund/components/view_alert.html.twig') }}
+                {{ include('community_fund/components/view_proposal_details.html.twig') }}
             </div>
         </div>
 
@@ -28,31 +28,52 @@
             <div class="col-md-12">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link {% if tab == "details" %}active{% endif %}" href="{{ path("app_communityfund_view", {"hash": proposal.hash}) }}">
-                            Proposal
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if tab == "voting" %}active{% endif %}" href="{{ path("app_communityfund_viewvoting", {"hash": proposal.hash}) }}">
+                        <a class="nav-link active" href="#" data-toggle="collapse" data-target="#voting" aria-expanded="true" aria-controls="voting">
                             Voting
                         </a>
                     </li>
-                    {% if proposal.wasApproved %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if tab == "payments" %}active{% endif %}" href="{{ path("app_communityfund_viewpaymentrequests", {"hash": proposal.hash, 'state': 'pending'}) }}">
-                                Payment Requests
-                            </a>
-                        </li>
-                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#payment-requests" aria-expanded="false" aria-controls="payment-requests">
+                            Payment&nbsp;Requests
+                        </a>
+                    </li>
                 </ul>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                {% block view_content %}
-                    {{ include('community_fund/components/view_proposal_details.html.twig') }}
-                {% endblock %}
+                <div id="block-collapse">
+                    <div id="voting" class="collapse show" data-parent="#block-collapse">
+                        <h3>Voting cycle {{ proposal.votingCycle }}</h3>
+                        {{ proposalVoteProgress(proposal, blockCycle, proposal.votingCycle) }}
+                        <p class="text-muted">Accept {{ proposal.votesYes }} / Reject {{ proposal.votesNo }}</p>
+                    </div>
+
+                    {#<div class="col-md-4">#}
+                    {#<div class="card">#}
+                    {#<div class="card-body">#}
+                    {#<h3>Voting Rules</h3>#}
+                    {#<dl>#}
+                    {#<dt>Voting cycle size</dt>#}
+                    {#<dd>{{ blockCycle.blocksInCycle }} blocks</dd>#}
+
+                    {#<dt>Minimum quorum required</dt>#}
+                    {#<dd>{{ blockCycle.minQuorum * 100 }}% - {{ blockCycle.blocksInCycle * blockCycle.minQuorum}} blocks</dd>#}
+
+                    {#<dt>Voting cycles per proposal</dt>#}
+                    {#<dd>{{ blockCycle.proposalVoting.cycles }}</dd>#}
+
+                    {#<dt>Vote percentage required to accept</dt>#}
+                    {#<dd>{{ blockCycle.proposalVoting.accept * 100}}%</dd>#}
+
+                    {#<dt>Vote percentage required to Reject</dt>#}
+                    {#<dd>{{ blockCycle.proposalVoting.reject * 100}}%</dd>#}
+                    {#</dl>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</div>#}
+
+                    <div id="payment-requests" class="collapse collapsed" data-parent="#block-collapse">
+                        {% include "community_fund/components/view_payment_requests.html.twig" %}
+                    </div>
+                </div>
             </div>
         </div>
 

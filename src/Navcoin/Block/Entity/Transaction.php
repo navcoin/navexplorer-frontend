@@ -4,11 +4,6 @@ namespace App\Navcoin\Block\Entity;
 
 use JMS\Serializer\Annotation\Accessor;
 
-/**
- * Class Transaction
- *
- * @package App\Navcoin\Block\Entity
- */
 class Transaction
 {
     /**

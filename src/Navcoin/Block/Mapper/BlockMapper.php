@@ -38,14 +38,8 @@ class BlockMapper extends BaseMapper
     private function mapSignals(array $data): BlockSignals
     {
         $signals = new BlockSignals();
-
         foreach ($data as $signalData) {
-            $signals->add(
-                new BlockSignal(
-                    $signalData['name'],
-                    $signalData['signalling']
-                )
-            );
+            $signals->add(new BlockSignal($signalData['name'], $signalData['signalling']));
         }
 
         return $signals;

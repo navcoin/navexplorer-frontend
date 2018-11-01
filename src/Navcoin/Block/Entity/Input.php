@@ -38,11 +38,6 @@ class Input
         $this->previousOutputBlock = $previousOutputBlock;
     }
 
-    /**
-     * Get Address
-     *
-     * @return string
-     */
     public function getAddress(): ?string
     {
         if (count($this->addresses) == 0) {
@@ -57,42 +52,22 @@ class Input
         return $this->addresses;
     }
 
-    /**
-     * Get Amount
-     *
-     * @return float
-     */
     public function getAmount(): float
     {
         return $this->amount;
     }
 
-    /**
-     * Get Index
-     *
-     * @return int
-     */
     public function getIndex(): ?int
     {
         return $this->index;
     }
 
-    /**
-     * Get PreviousOutput
-     *
-     * @return string
-     */
     public function getPreviousOutput(): ?string
     {
         return $this->previousOutput;
     }
 
-    /**
-     * Get PreviousOutputBlock
-     *
-     * @return int
-     */
-    public function getPreviousOutputBlock()
+    public function getPreviousOutputBlock(): ?int
     {
         return $this->previousOutputBlock;
     }

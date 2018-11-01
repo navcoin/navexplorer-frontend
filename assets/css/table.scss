@@ -85,20 +85,24 @@
     td[data-role="block"]:before { content: "Block"; }
     td[data-role="blocks"]:before { content: "Blocks"; }
     td[data-role="date/time"]:before { content: "Date/Time"; }
+    td[data-role="description"]:before { content: "Description"; }
     td[data-role="hourlyPeriod"]:before { content: "Period"; }
     td[data-role="hash"]:before { content: "Hash"; }
     td[data-role="height"]:before { content: "Height"; }
     td[data-role="index"]:before { content: "Index"; }
     td[data-role="lastBlock"]:before { content: "Last Block"; }
+    td[data-role="navRequested"]:before { content: "NAV Requested"; }
+    td[data-role="navSpent"]:before { content: "NAV Spent"; }
     td[data-role="percentageOfCoins"]:before { content: "% of Coins"; }
     td[data-role="previousOutput"]:before { content: "Previous Output"; }
-    td[data-role="stakedBy"]:before { content: "Staked By"; }
-    td[data-role="stakeRewards"]:before { content: "Stake Rewards"; }
     td[data-role="rank"]:before { content: "Rank"; }
     td[data-role="redeemedIn"]:before { content: "Redeemed In"; }
+    td[data-role="stakedBy"]:before { content: "Staked By"; }
+    td[data-role="stakeRewards"]:before { content: "Stake Rewards"; }
     td[data-role="stake"]:before { content: "Stake"; }
-    td[data-role="navSpent"]:before { content: "NAV Spent"; }
+    td[data-role="status"]:before { content: "Status"; }
     td[data-role="transactions"]:before { content: "Transactions"; }
+    td[data-role="votingStatus"]:before { content: "Voting Status"; }
   }
 }
 

@@ -35,9 +35,19 @@ class PaymentRequest
     private $requestedAmount;
 
     /**
-     * @var PaymentRequestVotes
+     * @var int
      */
-    private $paymentRequestVotes;
+    private $votesYes;
+
+    /**
+     * @var int
+     */
+    private $votesNo;
+
+    /**
+     * @var int
+     */
+    private $votingCycle;
 
     /**
      * @var string
@@ -47,12 +57,17 @@ class PaymentRequest
     /**
      * @var string
      */
-    private $status;
+    private $stateChangedOnBlock;
 
     /**
      * @var string
      */
-    private $approvedOnBlock;
+    private $status;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
 
     /**
      * @var string
@@ -66,9 +81,13 @@ class PaymentRequest
         string $proposalHash,
         string $description,
         float $requestedAmount,
-        PaymentRequestVotes $paymentRequestVotes,
+        int $votesYes,
+        int $votesNo,
+        int $votingCycle,
         string $state,
-        string $status
+        ?string $stateChangedOnBlock,
+        string $status,
+        \DateTime $createdAt
     ) {
         $this->version = $version;
         $this->hash = $hash;
@@ -76,9 +95,13 @@ class PaymentRequest
         $this->proposalHash = $proposalHash;
         $this->description = $description;
         $this->requestedAmount = $requestedAmount;
-        $this->paymentRequestVotes = $paymentRequestVotes;
+        $this->votesYes = $votesYes;
+        $this->votesNo = $votesNo;
+        $this->votingCycle = $votingCycle;
         $this->state = $state;
+        $this->stateChangedOnBlock = $stateChangedOnBlock;
         $this->status = $status;
+        $this->createdAt = $createdAt;
     }
 
     public function getVersion(): int
@@ -111,9 +134,24 @@ class PaymentRequest
         return $this->requestedAmount;
     }
 
-    public function getPaymentRequestVotes(): PaymentRequestVotes
+    public function getVotesYes(): int
     {
-        return $this->paymentRequestVotes;
+        return $this->votesYes;
+    }
+
+    public function getVotesNo(): int
+    {
+        return $this->votesNo;
+    }
+
+    public function getVotesTotal(): int
+    {
+        return $this->votesYes + $this->votesNo;
+    }
+
+    public function getVotingCycle(): int
+    {
+        return $this->votingCycle;
     }
 
     public function getState(): string
@@ -121,25 +159,27 @@ class PaymentRequest
         return $this->state;
     }
 
+    public function getStateChangedOnBlock(): string
+    {
+        return $this->stateChangedOnBlock;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
     }
 
-    public function getApprovedOnBlock(): string
+    public function getCreatedAt(): \DateTime
     {
-        return $this->approvedOnBlock;
+        return $this->createdAt;
     }
 
-    public function setApprovedOnBlock(string $approvedOnBlock): self
+    public function getPaidOnBlock(): ?string
     {
-        $this->approvedOnBlock = $approvedOnBlock;
+        if ($this->paidOnBlock == "0000000000000000000000000000000000000000000000000000000000000000") {
+            return null;
+        }
 
-        return $this;
-    }
-
-    public function getPaidOnBlock(): string
-    {
         return $this->paidOnBlock;
     }
 

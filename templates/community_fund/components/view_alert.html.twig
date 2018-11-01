@@ -4,11 +4,11 @@
     </div>
 {% elseif proposal.state == "ACCEPTED" %}
     <div class="alert alert-success">
-        The community accepted this proposal on the {{ (proposal.proposalVotes.latestVotes.votingCycle+1)|ordinal }} voting cycle
+        The community accepted this proposal on the {{ (proposal.votingCycle+1)|ordinal }} voting cycle
     </div>
 {% elseif proposal.state == "REJECTED" %}
     <div class="alert alert-danger">
-        The community rejected this proposal on the {{ (proposal.proposalVotes.latestVotes.votingCycle+1)|ordinal }} voting cycle
+        The community rejected this proposal on the {{ (proposal.votingCycle+1)|ordinal }} voting cycle
     </div>
 {% elseif proposal.state == "EXPIRED" %}
     <div class="alert alert-danger">
