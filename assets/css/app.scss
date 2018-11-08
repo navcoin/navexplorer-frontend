@@ -9,10 +9,12 @@
 @import 'footer';
 @import 'transaction';
 @import 'form';
+@import 'progress';
 @import 'chart';
 @import 'search';
 @import 'soft-fork';
 @import 'distribution';
+@import 'community-fund';
 
 html {
   overflow-y: scroll;
@@ -20,6 +22,18 @@ html {
 
 .body {
   padding-bottom: 50px;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+  margin: 2rem 0 1rem;
+}
+
+p, li {
+  font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -58,6 +72,9 @@ small {
   max-width: 1200px;
 }
 
+.content {
+  margin: 2rem 0 1rem;
+}
 
 .badge-transaction-count {
   margin-right: 1rem;

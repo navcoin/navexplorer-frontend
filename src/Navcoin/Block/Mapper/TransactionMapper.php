@@ -6,26 +6,16 @@ use App\Navcoin\Block\Entity\Input;
 use App\Navcoin\Block\Entity\Inputs;
 use App\Navcoin\Block\Entity\Output;
 use App\Navcoin\Block\Entity\Outputs;
+use App\Navcoin\Block\Entity\ProposalVote;
+use App\Navcoin\Block\Entity\ProposalVotes;
 use App\Navcoin\Block\Entity\Transaction;
 use App\Navcoin\Common\Mapper\BaseMapper;
 
-/**
- * Class TransactionMapper
- *
- * @package App\Navcoin\Mapper
- */
 class TransactionMapper extends BaseMapper
 {
-    /**
-     * Map transaction
-     *
-     * @param array $data
-     *
-     * @return Transaction
-     */
     public function mapEntity(array $data): Transaction
     {
-        return new Transaction(
+        $transaction = new Transaction(
             $data['id'],
             $data['hash'],
             $data['height'],
@@ -35,17 +25,13 @@ class TransactionMapper extends BaseMapper
             $this->mapInputs($data['inputs']),
             $this->mapOutputs($data['outputs']),
             $data['type'],
-            array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : ''
+            array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
+            $this->mapProposalVotes(array_key_exists('proposalVotes', $data) && $data['proposalVotes'] ? $data['proposalVotes'] : [])
         );
+
+        return $transaction;
     }
 
-    /**
-     * Map Inputs
-     *
-     * @param array $data
-     *
-     * @return Inputs
-     */
     private function mapInputs(array $data): Inputs
     {
         $inputs = new Inputs();
@@ -65,29 +51,37 @@ class TransactionMapper extends BaseMapper
         return $inputs;
     }
 
-    /**
-     * Map Outputs
-     *
-     * @param array $data
-     *
-     * @return Outputs
-     */
     private function mapOutputs(array $data): Outputs
     {
         $outputs = new Outputs();
 
         foreach ($data as $outputData) {
-            $outputs->add(
-                new Output(
-                    $outputData['index'],
-                    $outputData['amount'] / 100000000,
-                    array_key_exists('addresses', $outputData) ? $outputData['addresses'] : (array_key_exists('address', $outputData) ? [$outputData['address']] : []),
-                    $outputData['redeemedIn']['hash'],
-                    $outputData['redeemedIn']['height']
-                )
+            $output = new Output(
+                $outputData['type'],
+                $outputData['index'],
+                $outputData['amount'] / 100000000,
+                array_key_exists('addresses', $outputData) ? $outputData['addresses'] : (array_key_exists('address', $outputData) ? [$outputData['address']] : []),
+                $outputData['redeemedIn']['hash'],
+                $outputData['redeemedIn']['height']
             );
+
+            if (in_array($output->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE'])) {
+                $output->setHash($outputData['hash']);
+            }
+
+            $outputs->add($output);
         }
 
         return $outputs;
+    }
+
+    private function mapProposalVotes(array $data): ProposalVotes
+    {
+        $proposalVotes = new ProposalVotes();
+        foreach ($data as $voteData) {
+            $proposalVotes->add(new ProposalVote($voteData['hash'], $voteData['vote']));
+        }
+
+        return $proposalVotes;
     }
 }

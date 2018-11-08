@@ -1,5 +1,6 @@
 .nav-tabs {
-  margin-bottom: 1.0em;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
 
   .nav-item {
     margin-right: 0.5rem;
@@ -16,6 +17,10 @@
 
   .nav-link:hover {
     color: $blue;
+  }
+
+  .nav-link.disabled {
+    color: $black;
   }
 
   .active {

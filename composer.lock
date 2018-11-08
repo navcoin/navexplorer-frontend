@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d2237c08e5406bdc122d8a9091039dc",
+    "content-hash": "4f33602bab867bbbd7252db25bca91d5",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -4166,7 +4166,7 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.4.14",
+            "version": "v3.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",

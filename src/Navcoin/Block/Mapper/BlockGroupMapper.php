@@ -5,18 +5,8 @@ namespace App\Navcoin\Block\Mapper;
 use App\Navcoin\Block\Entity\BlockGroup;
 use App\Navcoin\Common\Mapper\BaseMapper;
 
-/**
- * Class BlockGroupMapper
- *
- * @package App\Navcoin\Block\Mapper
- */
 class BlockGroupMapper extends BaseMapper
 {
-    /**
-     * @param array $data
-     *
-     * @return BlockGroup
-     */
     public function mapEntity(array $data): BlockGroup
     {
         return new BlockGroup(

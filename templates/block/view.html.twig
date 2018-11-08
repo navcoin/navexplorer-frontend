@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div>
-                        <h1>Block <small>{{ block.height }}</small></h1>
+                        <h1>Block {{ block.height }}</h1>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                                 Transactions ({{ block.transactions|number_format }})
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item pull-right">
                             <a class="nav-link" href="#" data-toggle="collapse" data-target="#raw-block" aria-expanded="false" aria-controls="raw-block">
                                 Raw Block
                             </a>
@@ -39,6 +39,10 @@
 
                         <div id="raw-block" class="collapse collapsed" data-parent="#block-collapse">
                             {% include "block/components/view_raw_block.html.twig" %}
+                        </div>
+
+                        <div id="community-fund-votes" class="collapse collapsed" data-parent="#block-collapse">
+                            {#{% include "block/components/view_community_fund_votes.html.twig" %}#}
                         </div>
                     </div>
                 </div>

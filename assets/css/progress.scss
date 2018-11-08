@@ -1,0 +1,19 @@
+.progress {
+  background-color: $light-grey;
+  border: $mid-grey 1px solid;
+  height: 1.25rem;
+
+  .progress-bar {
+    color: $white;
+
+    .bg-nav {
+      background-color: $dark-purple !important;
+    }
+  }
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  .progress {
+    background-color: #fff;
+  }
+}

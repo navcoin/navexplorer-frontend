@@ -32,11 +32,16 @@ class AddressIndexPage {
             .append('<a href="/tx/'+data.transaction+'">' + data.transaction.substr(0, 15) + '...</a>')
         );
 
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'amount')
-            .append(numberFormatter.format(data.amount) + '&nbsp;NAV')
-            .append(data.type === "STAKING" ? '&nbsp;<span class="badge badge-info">Stake</span>' : '')
-        );
+        let $amountTd = $(document.createElement('td')).attr('data-role', 'amount')
+            .append(numberFormatter.format(data.amount) + '&nbsp;NAV');
+        if (data.type === "STAKING") {
+            $amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
+        }
+        if (data.type === "COMMUNITY_FUND_PAYOUT") {
+            $amountTd.append('&nbsp;<span class="badge badge-info">Community Fund Payout</span>');
+        }
+
+        $row.append($amountTd);
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'balance')

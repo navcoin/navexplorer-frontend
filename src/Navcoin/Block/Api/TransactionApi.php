@@ -12,20 +12,8 @@ use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\NavcoinApi;
 use App\Navcoin\Common\NavcoinClient;
 
-/**
- * Class TransactionApi
- *
- * @package App\Navcoin
- */
 class TransactionApi extends NavcoinApi
 {
-    /**
-     * Get transactions
-     *
-     * @param String $hash
-     *
-     * @return Transaction
-     */
     public function getTransaction(String $hash): Transaction
     {
         try {
@@ -37,15 +25,6 @@ class TransactionApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    /**
-     * Get all block transactions
-     *
-     * @param int         $size
-     * @param String|null $from
-     * @param String|null $to
-     *
-     * @return IteratorEntityInterface
-     */
     public function getTransactions(int $size = 50, String $from = null, String $to = null): IteratorEntityInterface
     {
         $url = sprintf('/api/tx/?page=%d&size=%d',0, $size);
@@ -61,13 +40,6 @@ class TransactionApi extends NavcoinApi
         return $this->getMapper()->mapIterator($data, Transactions::class);
     }
 
-    /**
-     * Get transactions for block
-     *
-     * @param String $height
-     *
-     * @return IteratorEntityInterface
-     */
     public function getTransactionsForBlock(String $height): IteratorEntityInterface
     {
         try {

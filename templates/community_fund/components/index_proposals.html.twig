@@ -1,0 +1,27 @@
+<div class="row proposals-list">
+    <div class="col-md-12">
+        <h2 class="float-left">Proposals</h2>
+
+        <div class="filters float-right">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a class="{{ active == 'pending' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'pending'}) }}">Pending</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="{{ active == 'accepted' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'accepted'}) }}">Accepted</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="{{ active == 'rejected' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'rejected'}) }}">Rejected</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'expired'}) }}">Expired</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="{{ active == 'pending-funds' ? 'active' : '' }}" href="{{ path('app_communityfund_index', {'state': 'pending-funds'}) }}">Pending Funds</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% include "community_fund/components/index_proposals_list.html.twig"%}

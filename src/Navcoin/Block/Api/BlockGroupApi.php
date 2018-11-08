@@ -7,21 +7,8 @@ use App\Navcoin\Block\Entity\BlockGroups;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\NavcoinApi;
 
-/**
- * Class BlockGroupApi
- *
- * @package App\Navcoin\Block\Api
- */
 class BlockGroupApi extends NavcoinApi
 {
-    /**
-     * Get block groups by category
-     *
-     * @param string $category
-     * @param int    $count
-     *
-     * @return IteratorEntityInterface
-     */
     public function getGroupByCategory(string $category, $count = 10): IteratorEntityInterface
     {
         try {
