@@ -15,6 +15,7 @@ class ProposalMapper extends BaseMapper
             $data['version'],
             $data['hash'],
             $data['blockHash'],
+            $data['height'],
             $data['description'],
             $data['requestedAmount'],
             $data['notPaidYet'],

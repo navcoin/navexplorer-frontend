@@ -20,6 +20,11 @@ class Proposal
     private $blockHash;
 
     /**
+     * @var integer
+     */
+    private $height;
+
+    /**
      * @var string
      */
     private $description;
@@ -93,6 +98,7 @@ class Proposal
         int $version,
         string $hash,
         string $blockHash,
+        int $height,
         string $description,
         float $requestedAmount,
         float $notYetPaid,
@@ -110,6 +116,7 @@ class Proposal
         $this->version = $version;
         $this->hash = $hash;
         $this->blockHash = $blockHash;
+        $this->height = $height;
         $this->description = $description;
         $this->requestedAmount = $requestedAmount;
         $this->notYetPaid = $notYetPaid;
@@ -138,6 +145,11 @@ class Proposal
     public function getBlockHash(): string
     {
         return $this->blockHash;
+    }
+
+    public function getHeight(): int
+    {
+        return $this->height;
     }
 
     public function getDescription(): string
