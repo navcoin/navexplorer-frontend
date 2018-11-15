@@ -1,0 +1,68 @@
+.proposals-list {
+  margin-top: 2rem;
+}
+
+.card-proposal {
+  margin-bottom: 2rem;
+
+  .card-header {
+    h5 {
+      margin-bottom: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-height: 1.2;
+      height: 3.6em;
+    }
+  }
+
+  .card-footer {
+    border-top: 0;
+  }
+}
+
+.filters {
+  .filters-label {
+    float: left;
+    margin-right: 0.5rem;
+  }
+  ul {
+    margin-top : 0;
+    margin-bottom: 0;
+
+    li.list-inline-item {
+      margin-right: 0;
+      padding-right: 0;
+
+
+      a.active {
+        pointer-events: none;
+        color: inherit;
+      }
+    }
+
+    li:not(:first-child):before {
+      content: "| ";
+    }
+  }
+}
+
+.payment-requests, .proposal-vote {
+  margin-bottom: 2rem;
+}
+
+.list-payment-requests {
+  list-style: none;
+  padding: 0;
+
+  li {
+    border-top: $mid-grey 1px solid;
+    padding: 0.75rem 1.25rem;
+  }
+
+  li:nth-child(odd) {
+    background: $light-grey;
+  }
+}

@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="card-body">
+        <h4>Accepting a proposal</h4>
+        <p>At least {{ blockCycle.minQuorum * 100 }}% of blocks in the cycle must have voted for the proposal.</p>
+        <p>At least {{ blockCycle.proposalVoting.accept*100 }}% if those voting blocks must have voted `YES` for the proposal.</p>
+        <p>A proposal has {{ blockCycle.proposalVoting.cycles }} full block cycles opportunities to be accepted.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Rejecting a proposal</h4>
+        <p>At least {{ blockCycle.minQuorum * 100 }}% of blocks in the cycle must have voted for the proposal.</p>
+        <p>At least {{ blockCycle.proposalVoting.reject*100 }}% if those voting blocks must have voted `NO` for the proposal.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Voting Rules</h4>
+        <h5 class="card-subtitle mb-2">Proposal </h5>
+
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+    </div>
+</div>

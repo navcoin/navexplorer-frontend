@@ -29,13 +29,22 @@ class Input
      */
     private $previousOutputBlock;
 
-    public function __construct(?array $addresses, ?float $amount, ?int $index, ?string $previousOutput, ?int $previousOutputBlock)
+    public function __construct(array $addresses, ?float $amount, ?int $index, ?string $previousOutput, ?int $previousOutputBlock)
     {
         $this->addresses = $addresses;
         $this->amount = $amount;
         $this->index = $index;
         $this->previousOutput = $previousOutput;
         $this->previousOutputBlock = $previousOutputBlock;
+    }
+
+    public function getAddress(): ?string
+    {
+        if (count($this->addresses) == 0) {
+            return null;
+        }
+
+        return $this->addresses[0];
     }
 
     public function getAddresses(): array
@@ -58,7 +67,7 @@ class Input
         return $this->previousOutput;
     }
 
-    public function getPreviousOutputBlock()
+    public function getPreviousOutputBlock(): ?int
     {
         return $this->previousOutputBlock;
     }

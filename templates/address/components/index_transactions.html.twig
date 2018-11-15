@@ -1,6 +1,5 @@
 <div id="transaction-list">
     <form class="form-filter" action="{{ path('app_address_index', {hash: address.hash}) }}">
-        <span class="legend">Filter</span>
         {% for filter in filter.filters %}
             <label>
                 {{ filter|capitalize }}

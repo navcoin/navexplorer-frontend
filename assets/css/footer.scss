@@ -9,6 +9,14 @@ footer {
   padding: 0.25rem;
   color: $off-white;
 
+  a {
+    color: $white;
+  }
+
+  a:hover {
+    color: $off-white;
+  }
+
   .network {
     float:left;
 
@@ -25,14 +33,15 @@ footer {
           color: $grey;
           text-transform: capitalize;
         }
+
         a:hover {
           color: $white;
         }
+
         a.active {
           pointer-events: none;
           color: $white;
         }
-
       }
 
       li:not(:first-child):before {

@@ -1,10 +1,11 @@
 .btn-info {
-  color: #fff;
-  background-color: $purple;
+  color: $white;
+  background-color: $dark-purple;
   border-color: $purple;
 }
 
 .btn-info:hover {
+  color: $off-white;
   background-color: $dark-purple;
-  border-color: $dark-purple;
+  border-color: $purple;
 }

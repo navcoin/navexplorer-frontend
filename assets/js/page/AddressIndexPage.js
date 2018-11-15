@@ -34,20 +34,24 @@ class AddressIndexPage {
             .append('<a href="/tx/'+data.transaction+'">' + data.transaction.substr(0, 15) + '...</a>')
         );
 
-        let amountTd = $(document.createElement('td'))
-            .attr('data-role', 'amount')
+        let $amountTd = $(document.createElement('td')).attr('data-role', 'amount')
             .append(numberFormatter.format(data.amount) + '&nbsp;NAV');
-            if (data.type === "STAKING") {
-                if (data.cold_staking === true) {
-                    amountTd.append(
-                        '&nbsp;<span class="badge badge-info">Cold Stake</span><br>' +
-                        '<small><a href="/address/' + data.cold_staking_address + '">' + data.cold_staking_address + '</a></small>'
-                    );
-                } else {
-                    amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
-                }
+        if (data.type === "STAKING") {
+            if (data.cold_staking === true) {
+                amountTd.append(
+                    '&nbsp;<span class="badge badge-info">Cold Stake</span><br>' +
+                    '<small><a href="/address/' + data.cold_staking_address + '">' + data.cold_staking_address + '</a></small>'
+                );
+            } else {
+                amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
             }
-        $row.append(amountTd);
+            $amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
+        }
+        if (data.type === "COMMUNITY_FUND_PAYOUT") {
+            $amountTd.append('&nbsp;<span class="badge badge-info">Community Fund Payout</span>');
+        }
+
+        $row.append($amountTd);
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'balance')

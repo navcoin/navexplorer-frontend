@@ -2,29 +2,14 @@
 
 namespace App\Navcoin\Address\Mapper;
 
-use App\Navcoin\Address\Entity\AddressTransaction;
-use App\Navcoin\Address\Entity\ColdStakingTransaction;
-use App\Navcoin\Address\Entity\SpendingTransaction;
-use App\Navcoin\Address\Entity\TransactionInterface;
+use App\Navcoin\Address\Entity\Transaction;
 use App\Navcoin\Common\Mapper\BaseMapper;
 
-/**
- * Class TransactionMapper
- *
- * @package App\Navcoin\Address\Mapper
- */
 class TransactionMapper extends BaseMapper
 {
-    /**
-     * Map Address
-     *
-     * @param array $data
-     *
-     * @return AddressTransaction
-     */
-    public function mapEntity(array $data): AddressTransaction
+    public function mapEntity(array $data): Transaction
     {
-        return new AddressTransaction(
+        return new Transaction(
             $data['id'],
             $data['transaction'],
             $data['time']/1000,

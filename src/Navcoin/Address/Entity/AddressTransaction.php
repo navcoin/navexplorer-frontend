@@ -9,42 +9,47 @@ class AddressTransaction
     /**
      * @var String
      */
-    protected $id;
+    private $id;
 
     /**
      * @var String
      */
-    protected $transaction;
+    private $transaction;
 
     /**
      * @var \DateTime
      */
-    protected $time;
+    private $time;
 
     /**
      * @var int
      */
-    protected $height;
+    private $height;
 
     /**
      * @var float
      */
-    protected $balance;
+    private $balance;
 
     /**
      * @var float
      */
-    protected $sent;
+    private $amount;
 
     /**
      * @var float
      */
-    protected $received;
+    private $sent;
+
+    /**
+     * @var float
+     */
+    private $received;
 
     /**
      * @var String
      */
-    protected $type;
+    private $type;
 
     /**
      * @var String
@@ -60,11 +65,6 @@ class AddressTransaction
      * @var String
      */
     protected $coldStakingAddress;
-
-    /**
-     * @var float
-     */
-    protected $amount;
 
     public function __construct(
         String $id,
@@ -87,25 +87,11 @@ class AddressTransaction
         $this->balance = $balance;
         $this->sent = $sent;
         $this->received = $received;
+        $this->amount = $this->received - $this->sent;
         $this->type = $type;
         $this->address = $address;
         $this->coldStaking = $coldStaking;
         $this->coldStakingAddress = $coldStakingAddress;
-
-        switch ($this->type) {
-            case 'SEND':
-            case 'RECEIVE':
-                $this->amount = $this->received - $this->sent;
-                break;
-            case 'STAKING':
-                $this->amount = $this->received - $this->sent;
-                break;
-            case 'COMMUNITY_FUND':
-                $this->amount = $this->received;
-                break;
-            default:
-                $this->amount = 0;
-        }
     }
 
     public function getId(): String
@@ -131,6 +117,11 @@ class AddressTransaction
     public function getBalance(): float
     {
         return $this->balance;
+    }
+
+    public function getAmount(): float
+    {
+        return $this->amount;
     }
 
     public function getSent(): float

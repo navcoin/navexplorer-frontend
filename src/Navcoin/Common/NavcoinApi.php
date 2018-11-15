@@ -2,15 +2,9 @@
 
 namespace App\Navcoin\Common;
 
-use App\Navcoin\Client\ClientManager;
-use App\Navcoin\Client\NavcoinClient;
+use App\Navcoin\Client\NavcoinClientInterface;
 use App\Navcoin\Common\Mapper\MapperInterface;
 
-/**
- * Class NavcoinApi
- *
- * @package App\Navcoin\Common
- */
 abstract class NavcoinApi
 {
     /**
@@ -19,63 +13,26 @@ abstract class NavcoinApi
     private $mapper;
 
     /**
-     * @var ClientManager
+     * @var NavcoinClientInterface
      */
-    private $clientManager;
+    private $client;
 
-    /**
-     * Constructor
-     *
-     * @param ClientManager   $clientManager
-     * @param MapperInterface $mapper
-     */
-    public function __construct(ClientManager $clientManager, MapperInterface $mapper = null)
+    public function __construct(NavcoinClientInterface $client, MapperInterface $mapper = null)
     {
-        $this->clientManager = $clientManager;
+        $this->client = $client;
 
         if ($mapper !== null) {
             $this->mapper = $mapper;
         }
     }
 
-    /**
-     * Get Client
-     *
-     * @return NavcoinClient
-     */
     public function getClient()
     {
-        return $this->clientManager->getClient();
+        return $this->client;
     }
 
-    /**
-     * Get Mapper
-     *
-     * @return MapperInterface
-     */
     public function getMapper()
     {
         return $this->mapper;
-    }
-
-
-    /**
-     * Set Network
-     *
-     * @param String $network
-     *
-     * @return $this
-     */
-    public function useNetwork(String $network)
-    {
-        switch ($network) {
-            case Network::TEST_NET:
-                $this->client = $this->clientManager->useNetwork($network);
-                break;
-            default:
-                $this->client = $this->clientManager->useNetwork(Network::MAIN_NET);
-        }
-
-        return $this;
     }
 }

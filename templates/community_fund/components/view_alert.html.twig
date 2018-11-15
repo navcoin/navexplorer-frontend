@@ -1,0 +1,25 @@
+{% if proposal.state == "PENDING" %}
+    <div class="alert alert-info">
+        The community are currently voting to accept or reject this proposal
+    </div>
+{% elseif proposal.state == "ACCEPTED" %}
+    <div class="alert alert-success">
+        The community accepted this proposal on the {{ (proposal.votingCycle+1)|ordinal }} voting cycle
+    </div>
+{% elseif proposal.state == "REJECTED" %}
+    <div class="alert alert-danger">
+        The community rejected this proposal on the {{ (proposal.votingCycle+1)|ordinal }} voting cycle
+    </div>
+{% elseif proposal.state == "EXPIRED" %}
+    <div class="alert alert-danger">
+        {% if proposal.wasApproved %}
+            The proposal has reached it's deadline and has now expired. No further payment requests can be made
+        {% else %}
+            The community failed to reach voting consensus on this proposal. It has therefore expired and will not progress
+        {% endif %}
+    </div>
+{% elseif proposal.state == "PENDING_FUNDS" %}
+    <div class="alert alert-info">
+        This proposal is waiting for sufficient funds in the community fund to progress to accepted
+    </div>
+{% endif %}

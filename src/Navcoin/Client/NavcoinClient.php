@@ -4,24 +4,13 @@ namespace App\Navcoin\Client;
 
 use GuzzleHttp\Client;
 
-/**
- * Class NavcoinClient
- *
- * @package App\Navcoin
- */
-abstract class NavcoinClient
+class NavcoinClient implements NavcoinClientInterface
 {
     /**
      * @var Client
      */
     private $client;
 
-    /**
-     * Constructor
-     *
-     * @param String      $baseUri
-     * @param Client|null $client
-     */
     public function __construct(String $baseUri, Client $client = null)
     {
         $this->client = $client ?: new Client([
@@ -29,13 +18,6 @@ abstract class NavcoinClient
         ]);
     }
 
-    /**
-     * Get
-     *
-     * @param string $uri
-     *
-     * @return array
-     */
     public function get(string $uri): array
     {
         $response = $this->client->request('GET', $uri, [

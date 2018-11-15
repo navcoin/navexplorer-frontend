@@ -4,20 +4,12 @@ namespace App\Navcoin\SoftFork\Api;
 
 use App\Exception\ServerRequestException;
 use App\Navcoin\Common\NavcoinApi;
+use App\Navcoin\SoftFork\Entity\SoftFork;
 use App\Navcoin\SoftFork\Entity\SoftForks;
+use App\Navcoin\SoftFork\Exception\SoftForkNotFoundException;
 
-/**
- * Class SoftForkApi
- *
- * @package App\Navcoin\SoftFork\Api
- */
 class SoftForkApi extends NavcoinApi
 {
-    /**
-     * Get All
-     *
-     * @return SoftForks
-     */
     public function getAll(): SoftForks
     {
         try {
@@ -27,5 +19,16 @@ class SoftForkApi extends NavcoinApi
         }
 
         return $this->getMapper()->mapIterator($data, SoftForks::class);
+    }
+
+    public function getByName(string $name): SoftFork
+    {
+        foreach ($this->getAll() as $element) {
+            if ($element->getName() == $name) {
+                return $element;
+            }
+        }
+
+        throw new SoftForkNotFoundException(sprintf("Could not find soft fork: %s", $name));
     }
 }

@@ -59,11 +59,15 @@ export default class TransactionLoader {
                                 '  <a href="/address/' + input.addresses[1] + '">' + input.addresses[1] + '</a>' +
                                 '  <small>Spending Address</small>' +
                                 '</span>');
-                        } else if (input.addresses.length === 1) {
-                            address.append($(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]));
-                        } else {
+                        } if (input.addresses.length === 0) {
                             address.html('N/A');
+                        } else {
+                            let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
+                            address.append(a);
                         }
+                    } else if (typeof input.address !== 'undefined') {
+                        let a = $(document.createElement('a')).attr('href', '/address/' + input.address).html(input.address);
+                        address.append(a);
                     } else {
                         address.html('N/A');
                     }
@@ -73,8 +77,8 @@ export default class TransactionLoader {
                     amount.html((input.amount ? self.numberWithCommas(input.amount) : '0') + ' NAV');
 
                     let item = $(document.createElement('li'));
-                    item.append(address)
-                    item.append(amount)
+                    item.append(address);
+                    item.append(amount);
 
                     list.append(item);
                 });
