@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Exception\BlockNotFoundException;
+use App\Navcoin\Address\Api\AddressApi;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\CommunityFund\Api\PaymentRequestApi;
 use App\Navcoin\CommunityFund\Api\ProposalApi;
+use App\Navcoin\SoftFork\Api\SoftForkApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -42,18 +44,22 @@ class CommunityFundController extends Controller
      *
      * @return RedirectResponse
      */
-    public function redirectAction()
+    public function redirectAction(): RedirectResponse
     {
-        return $this->redirectToRoute('app_communityfund_index', ['state' => 'pending']);
+        return $this->redirectToRoute('app_communityfund_proposals', ['state' => 'pending']);
     }
 
     /**
      * @Route("/community-fund/proposals/{state}")
      * @Template()
      *
+     * @param Request $request
+     * @param AddressApi $addressApi
+     * @param SoftForkApi $softForkApi
+     *
      * @return array|RedirectResponse
      */
-    public function indexAction(Request $request)
+    public function proposalsAction(Request $request, AddressApi $addressApi, SoftForkApi $softForkApi)
     {
         switch($request->get('state')) {
             case 'pending':
@@ -72,10 +78,13 @@ class CommunityFundController extends Controller
                 $proposals = $this->proposalApi->getProposalsByState("PENDING_FUNDS");
                 break;
             default:
-                return $this->redirectToRoute('app_communityfund_index', ['state' => 'pending']);
+                return $this->redirectToRoute('app_communityfund_proposals', ['state' => 'pending']);
         }
 
         return [
+            'communityFund' => $addressApi->getAddress("Community Fund"),
+            'softFork' => $softForkApi->getByName("C FUND"),
+            'blockHeight' => $this->blockApi->getBestBlock()->getHeight(),
             'blockCycle' => $this->proposalApi->getBlockCycle(),
             'proposals' => $proposals,
             'active' => $request->get('state'),
@@ -86,6 +95,7 @@ class CommunityFundController extends Controller
      * @Route("/community-fund/proposal/{hash}")
      * @Template()
      *
+     * @param Request $request
      * @return array
      */
     public function viewAction(Request $request)
@@ -113,6 +123,7 @@ class CommunityFundController extends Controller
      * @Route("/community-fund/proposal/{hash}/payment-requests")
      * @Template()
      *
+     * @param Request $request
      * @return array|RedirectResponse
      */
     public function viewPaymentRequestsAction(Request $request)

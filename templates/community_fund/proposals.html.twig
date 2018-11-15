@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Community Fund{% endblock %}
+
+{% block page %}page-communityFund-proposals{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Community Fund</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    {% if softFork.state == 'LOCKED_IN' %}
+                        The community fund has been accepted and was locked in on block {{ softFork.lockedInHeight|number_format }}<br>
+                        The fund will activate on block {{ softFork.activationHeight|number_format }} at which point community members can begin creating and voting for their proposals
+                    {% else %}
+                        Votes counted for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ blockCycle.cycle|ordinal }} block cycle.<br/>
+                        {% if blockCycle.remainingBlocks == 1 %}
+                            There is <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> block remaining.
+                        {% else %}
+                            There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining.
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% include "community_fund/components/proposals_summary.html.twig" %}
+
+        <div class="row proposals-list">
+            <div class="col-md-12">
+                <h2 class="float-left">Proposals</h2>
+
+                <div class="filters float-right">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'pending' ? 'active' : '' }}" href="{{ path('app_communityfund_proposals', {'state': 'pending'}) }}">Pending</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'accepted' ? 'active' : '' }}" href="{{ path('app_communityfund_proposals', {'state': 'accepted'}) }}">Accepted</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'rejected' ? 'active' : '' }}" href="{{ path('app_communityfund_proposals', {'state': 'rejected'}) }}">Rejected</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_communityfund_proposals', {'state': 'expired'}) }}">Expired</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'pending-funds' ? 'active' : '' }}" href="{{ path('app_communityfund_proposals', {'state': 'pending-funds'}) }}">Pending Funds</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {% include "community_fund/components/proposals_list.html.twig"%}
+    </div>
+{% endblock %}

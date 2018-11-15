@@ -6,11 +6,6 @@ use App\Navcoin\Address\Api\AddressApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class RichListController
- *
- * @package App\Controller
- */
 class RichListController
 {
     /**
@@ -18,16 +13,10 @@ class RichListController
      */
     private $addressApi;
 
-    /**
-     * Constructor
-     *
-     * @param AddressApi $addressApi
-     */
     public function __construct(AddressApi $addressApi)
     {
         $this->addressApi = $addressApi;
     }
-
 
     /**
      * @Route("/rich-list")

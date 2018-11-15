@@ -22,6 +22,7 @@ class ProposalMapper extends BaseMapper
             $data['userPaidFee'],
             $data['paymentAddress'],
             $data['proposalDuration'],
+
             $data['votesYes'],
             $data['votesNo'],
             $data['votingCycle'],
