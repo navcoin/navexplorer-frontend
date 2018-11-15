@@ -1,0 +1,34 @@
+<div class="row transaction-summary">
+    <div class="col-sm-12 col-md-12">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td><strong>Balance</strong></td>
+                    <td class="text-right">
+                        {{ communityFund.balance|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Received</strong></td>
+                    <td class="text-right">
+                        <span class="badge badge-info badge-transaction-count">{{ communityFund.receivedCount|number_format }} txs</span>
+                        {{ communityFund.received|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Spent</strong></td>
+                    <td class="text-right">
+                        <span class="badge badge-info badge-transaction-count">{{ communityFund.sentCount|number_format }} txs</span>
+                        {{ communityFund.sent|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Locked</strong></td>
+                    <td class="text-right">
+                        {{ 0|stake_format }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
