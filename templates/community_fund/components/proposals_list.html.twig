@@ -3,13 +3,13 @@
         <div class="col-sm-6 col-md-4 col-lg-4">
             <div class="card card-proposal">
                 <div class="card-header">
-                    <h5>{{ proposal.description|capitalize }}</h5>
+                    <h5>{{ proposal.description|capitalize}}</h5>
                 </div>
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         Payment Address<br>
-                        <a href="#" class="break-word">{{ proposal.paymentAddress }}</a>
+                        <a href="{{ path('app_address_index', {'hash': proposal.paymentAddress}) }}" class="break-word">{{ proposal.paymentAddress }}</a>
                     </li>
                     <li class="list-group-item">
                         NAV Requested

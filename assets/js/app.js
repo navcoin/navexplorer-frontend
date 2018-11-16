@@ -7,6 +7,7 @@ require('./services/Tabs');
 require('./page/AddressIndexPage');
 require('./page/BlockIndexPage');
 require('./page/BlockViewPage');
+require('./page/CommunityFundProposalViewPage');
 require('./page/Home');
 require('./page/RichListIndexPage');
 require('./page/TransactionIndexPage');
