@@ -158,9 +158,4 @@ class AddressTransaction
     {
         return $this->coldStakingAddress;
     }
-
-    public function getAmount(): float
-    {
-        return $this->amount;
-    }
 }

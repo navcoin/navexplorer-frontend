@@ -2,7 +2,7 @@
 
 namespace App\Navcoin\Address\Mapper;
 
-use App\Navcoin\Address\Entity\Transaction;
+use App\Navcoin\Address\Entity\AddressTransaction as Transaction;
 use App\Navcoin\Common\Mapper\BaseMapper;
 
 class TransactionMapper extends BaseMapper

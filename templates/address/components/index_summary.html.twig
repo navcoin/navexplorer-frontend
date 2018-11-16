@@ -60,7 +60,7 @@
         </table>
     </div>
     <div class="col-md-3 offset-md-1 text-center">
-        <div><img src="{{ qr_code_data_uri("navcoin:"~address.hash, { writer: 'svg', size: 250 }) }}" /></div>
+        <div><img src="{{ qr_code_data_uri("navcoin:"~address.hash) }}" /></div>
         <div><a href="navcoin:{{ address.hash }}" class="btn btn-success">Send Navcoin</a></div>
     </div>
 </div>
