@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block title %}Community Fund Proposal - {{ proposal.hash }}{% endblock %}
-{% block description %}proposal.description{% endblock %}
+{% block description %}{{ proposal.description|capitalize }}{% endblock %}
 
 {% block page %}page-communityfund-proposal-view{% endblock %}
 
