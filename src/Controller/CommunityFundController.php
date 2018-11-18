@@ -7,6 +7,7 @@ use App\Navcoin\Address\Api\AddressApi;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\CommunityFund\Api\PaymentRequestApi;
 use App\Navcoin\CommunityFund\Api\ProposalApi;
+use App\Navcoin\CommunityFund\Api\VotersApi;
 use App\Navcoin\SoftFork\Api\SoftForkApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,14 +28,24 @@ class CommunityFundController extends Controller
     private $paymentRequestApi;
 
     /**
+     * @var VotersApi
+     */
+    private $votersApi;
+
+    /**
      * @var BlockApi
      */
     private $blockApi;
 
-    public function __construct(ProposalApi $proposalApi, PaymentRequestApi $paymentRequestApi, BlockApi $blockApi)
-    {
+    public function __construct(
+        ProposalApi $proposalApi,
+        PaymentRequestApi $paymentRequestApi,
+        VotersApi $votersApi,
+        BlockApi $blockApi
+    ) {
         $this->proposalApi = $proposalApi;
         $this->paymentRequestApi = $paymentRequestApi;
+        $this->votersApi = $votersApi;
         $this->blockApi = $blockApi;
     }
 
@@ -116,6 +127,8 @@ class CommunityFundController extends Controller
             'proposal' => $this->proposalApi->getProposal($request->get('hash')),
             'paymentRequests' => $this->paymentRequestApi->getPaymentRequests($proposal),
             'block' => $block,
+            'votesYes' => $this->votersApi->getProposalVotes($request->get('hash'), true),
+            'votesNo' => $this->votersApi->getProposalVotes($request->get('hash'), false),
         ];
     }
 

@@ -6,7 +6,6 @@ use App\Exception\ServerRequestException;
 use App\Navcoin\Common\NavcoinApi;
 use App\Navcoin\CommunityFund\Entity\BlockCycle;
 use App\Navcoin\CommunityFund\Entity\BlockCycleVoting;
-use App\Navcoin\CommunityFund\Entity\PaymentRequests;
 use App\Navcoin\CommunityFund\Entity\Proposals;
 use App\Navcoin\CommunityFund\Exception\CommunityFundProposalNotFound;
 use App\Navcoin\CommunityFund\Entity\Proposal;
