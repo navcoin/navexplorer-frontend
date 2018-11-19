@@ -66,12 +66,12 @@ class DateExtension extends AbstractExtension
     {
         switch ($index) {
             case 0:
-                return sprintf("%s - %s", $block->getStart()->format('g:i a'), $block->getEnd()->format('g:i a'));
+                return sprintf("%s - %s", $block->getEnd()->format('g:i a'), $block->getStart()->format('g:i a'));
             default:
                 $start = clone $block->getEnd();
                 $start->add(new \DateInterval('PT1H'));
 
-                return sprintf("%s - %s", $start->format('g:i a'), $block->getEnd()->format('g:i a'));
+                return sprintf("%s - %s", $block->getEnd()->format('g:i a'), $start->format('g:i a'));
         }
     }
 
