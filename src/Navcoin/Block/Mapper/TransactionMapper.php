@@ -56,20 +56,28 @@ class TransactionMapper extends BaseMapper
         $outputs = new Outputs();
 
         foreach ($data as $outputData) {
-            $output = new Output(
-                $outputData['type'],
-                $outputData['index'],
-                $outputData['amount'] / 100000000,
-                array_key_exists('addresses', $outputData) ? $outputData['addresses'] : (array_key_exists('address', $outputData) ? [$outputData['address']] : []),
-                $outputData['redeemedIn']['hash'],
-                $outputData['redeemedIn']['height']
-            );
-
-            if (in_array($output->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE'])) {
-                $output->setHash($outputData['hash']);
+            if ($outputData['type'] == null) {
+                continue;
             }
 
-            $outputs->add($output);
+            try {
+                $output = new Output(
+                    $outputData['type'],
+                    $outputData['index'],
+                    $outputData['amount'] / 100000000,
+                    array_key_exists('addresses', $outputData) ? $outputData['addresses'] : (array_key_exists('address', $outputData) ? [$outputData['address']] : []),
+                    is_array($outputData['redeemedIn']) ? $outputData['redeemedIn']['hash'] : null,
+                    is_array($outputData['redeemedIn']['height']) ? $outputData['redeemedIn']['height'] : null
+                );
+
+                if (in_array($output->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE'])) {
+                    $output->setHash($outputData['hash']);
+                }
+
+                $outputs->add($output);
+            } catch (\Exception $e) {
+                //
+            }
         }
 
         return $outputs;
