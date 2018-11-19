@@ -34,28 +34,25 @@ class ProposalExtension extends AbstractExtension
     public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
     {
         $this->blockCycle = $blockCycle;
-        $yesVotes = (int) round(($proposal->getVotesYes() / $blockCycle->getBlocksInCycle()) * 100);
-        $noVotes = (int) round(($proposal->getVotesNo() / $blockCycle->getBlocksInCycle()) * 100);
-        $abstentionVotes = (int) round((($blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks()) / $blockCycle->getBlocksInCycle()) * 100);
+        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks();
 
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $yesVotes).'
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $noVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $proposal->getVotesYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $proposal->getVotesNo()).'
     '.$this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false).'
 </div>';
     }
 
     public function getPaymentRequestVoteProgress(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
     {
-        $yesVotes = (int) round(($paymentRequest->getVotesYes() / $blockCycle->getBlocksInCycle()) * 100);
-        $noVotes = (int) round(($paymentRequest->getVotesNo() / $blockCycle->getBlocksInCycle()) * 100);
-        $abstentionVotes = (int) round((($blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks()) / $blockCycle->getBlocksInCycle()) * 100);
+        $this->blockCycle = $blockCycle;
+        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks();
 
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), true), $yesVotes).'
-    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), false), $noVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), true), $paymentRequest->getVotesYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), false), $paymentRequest->getVotesNo()).'
     '.$this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false).'
 </div>';
     }
@@ -67,12 +64,13 @@ class ProposalExtension extends AbstractExtension
 
     private function getProgressBar(string $classes, int $votes, bool $showPercent = true): string
     {
+        $votesPercent = (int) round(($votes / $this->blockCycle->getBlocksInCycle()) * 100);
         return sprintf(
             '<div class="%s" role="progressbar" style="%s" aria-valuenow="%d" aria-valuemin="0" aria-valuemax="100">%s</div>',
             $classes,
-            sprintf('width: %s&percnt;', $votes),
-            $this->blockCycle->getBlocksInCycle(),
-            ($showPercent && $votes > 10 ? sprintf('%s&percnt;', $votes) : null)
+            sprintf('width: %s&percnt;', $votesPercent),
+            $votes,
+            ($showPercent && $votesPercent > 10 ? sprintf('%s&percnt;', $votesPercent) : null)
         );
     }
 
