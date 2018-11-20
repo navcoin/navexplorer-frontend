@@ -2,20 +2,17 @@
 
 namespace App\Controller;
 
+use App\Exception\TransactionNotFoundException;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\TransactionApi;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class TransactionController
- *
- * @package App\Controller
- */
-class TransactionController
+class TransactionController extends Controller
 {
     /**
      * @var int
@@ -32,12 +29,6 @@ class TransactionController
      */
     private $transactionApi;
 
-    /**
-     * Constructor
-     *
-     * @param BlockApi       $blockApi
-     * @param TransactionApi $transactionApi
-     */
     public function __construct(BlockApi $blockApi, TransactionApi $transactionApi)
     {
         $this->blockApi = $blockApi;
@@ -81,12 +72,20 @@ class TransactionController
      *
      * @param Request $request
      *
-     * @return array
+     * @return array|Response
      */
-    public function view(Request $request): array
+    public function view(Request $request)
     {
-        $transaction = $this->transactionApi->getTransaction($request->get('hash'));
-        $block = $this->blockApi->getBlock($transaction->getHeight());
+        try {
+            $transaction = $this->transactionApi->getTransaction($request->get('hash'));
+            $block = $this->blockApi->getBlock($transaction->getHeight());
+        } catch(TransactionNotFoundException $e) {
+            return $this->render(
+                'transaction/not_found.html.twig',
+                ['hash' => $request->get('hash')],
+                new Response(null, 404)
+            );
+        }
 
         return [
             'transaction' => $transaction,

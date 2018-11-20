@@ -12,11 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use JMS\Serializer\SerializerInterface;
 
-/**
- * Class BlockController
- *
- * @package App\Controller
- */
 class BlockController extends Controller
 {
     /**
@@ -34,12 +29,6 @@ class BlockController extends Controller
      */
     private $transactionApi;
 
-    /**
-     * Constructor
-     *
-     * @param BlockApi       $blockApi
-     * @param TransactionApi $transactionApi
-     */
     public function __construct(BlockApi $blockApi, TransactionApi $transactionApi)
     {
         $this->blockApi = $blockApi;
@@ -82,21 +71,23 @@ class BlockController extends Controller
      *
      * @param Request $request
      *
-     * @return Response
+     * @return array|Response
      */
-    public function view(Request $request): Response
+    public function view(Request $request)
     {
         try {
             $block = $this->blockApi->getBlock($request->get('height'));
         } catch (BlockNotFoundException $e) {
-            return $this->render('block/not_found.html.twig', [
-                'height' => $request->get('height'),
-            ]);
+            return $this->render(
+                'block/not_found.html.twig',
+                ['height' => $request->get('height')],
+                new Response(null, 404)
+            );
         }
 
-        return $this->render('block/view.html.twig', [
+        return [
             'block' => $block,
-        ]);
+        ];
     }
 
     /**
