@@ -40,9 +40,7 @@ class SearchController extends Controller
      */
     public function searchAction()
     {
-        return [
-
-        ];
+        return [];
     }
 
     /**
@@ -67,6 +65,8 @@ class SearchController extends Controller
                         return $this->redirectToRoute('app_transaction_view', ['hash' => $result->getValue()]);
                     case 'address':
                         return $this->redirectToRoute('app_address_index', ['hash' => $result->getValue()]);
+                    case 'cfund':
+                        return $this->redirectToRoute('app_communityfund_view', ['hash' => $result->getValue()]);
                 }
             }
         } catch (SearchResultMissException $e) {
