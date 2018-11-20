@@ -93,7 +93,7 @@ class CommunityFundController extends Controller
         }
 
         return [
-            'communityFund' => $addressApi->getAddress("Community Fund"),
+            'stats' => $this->proposalApi->getStats(),
             'softFork' => $softForkApi->getByName("C FUND"),
             'blockHeight' => $this->blockApi->getBestBlock()->getHeight(),
             'blockCycle' => $this->proposalApi->getBlockCycle(),
