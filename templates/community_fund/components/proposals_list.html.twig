@@ -43,7 +43,9 @@
         </div>
     {% else %}
         <div class="col-md-12">
-            <p>There are no {{ active|proposalState }} proposals</p>
+            <div class="alert alert-info">
+                There are no {{ active|proposalState }} proposals
+            </div>
         </div>
     {% endfor %}
 </div>

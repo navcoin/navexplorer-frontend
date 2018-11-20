@@ -8,7 +8,7 @@
 }
 
 .card-proposal {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 
   .card-header {
     h5 {
@@ -70,8 +70,4 @@
   li:nth-child(odd) {
     background: $light-grey;
   }
-}
-
-#voting {
-  margin-bottom: 2rem;
 }
