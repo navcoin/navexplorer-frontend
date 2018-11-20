@@ -34,7 +34,7 @@ class ProposalExtension extends AbstractExtension
     public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
     {
         $this->blockCycle = $blockCycle;
-        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks();
+        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $proposal->getVotesTotal();
 
         return '
 <div class="progress">
@@ -47,7 +47,7 @@ class ProposalExtension extends AbstractExtension
     public function getPaymentRequestVoteProgress(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
     {
         $this->blockCycle = $blockCycle;
-        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks();
+        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $paymentRequest->getVotesTotal();
 
         return '
 <div class="progress">
