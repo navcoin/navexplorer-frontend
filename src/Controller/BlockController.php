@@ -85,9 +85,9 @@ class BlockController extends Controller
             );
         }
 
-        return [
+        return $this->render('block/view.html.twig', [
             'block' => $block,
-        ];
+        ]);
     }
 
     /**
