@@ -13,11 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class AddressController
- *
- * @package App\Controller
- */
 class AddressController extends Controller
 {
     /**
@@ -35,12 +30,6 @@ class AddressController extends Controller
      */
     private $pageSize = 50;
 
-    /**
-     * Constructor
-     *
-     * @param AddressApi     $addressApi
-     * @param TransactionApi $transactionApi
-     */
     public function __construct(AddressApi $addressApi, TransactionApi $transactionApi)
     {
         $this->addressApi = $addressApi;
@@ -58,6 +47,10 @@ class AddressController extends Controller
      */
     public function index(Request $request, String $hash, AddressTransactionTypeFilter $filter): Response
     {
+        if ($hash == 'Community Fund') {
+            return $this->redirectToRoute('app_communityfund_redirect');
+        }
+
         try {
             $address = $this->addressApi->getAddress($hash);
         } catch (AddressInvalidException $e) {
