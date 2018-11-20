@@ -3,7 +3,7 @@
         <table class="table table-striped margin-bottom">
             <tbody>
                 <tr>
-                    <td><strong>Balance</strong></td>
+                    <td><strong>Available</strong></td>
                     <td class="text-right">
                         {{ stats.available|stake_format }}
                     </td>
@@ -12,6 +12,12 @@
                     <td><strong>Locked</strong></td>
                     <td class="text-right">
                         {{ stats.locked|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Spent</strong></td>
+                    <td class="text-right">
+                        0
                     </td>
                 </tr>
             </tbody>
