@@ -36,6 +36,9 @@ class ProposalApi extends NavcoinApi
     {
         try {
             $data = $this->getClient()->get('/api/community-fund/stats');
+            if (!array_key_exists( 'available', $data) || !array_key_exists('locked', $data)) {
+                throw new \Exception("Invalid api response: " . \GuzzleHttp\json_encode($data));
+            }
             $stats = new Stats($data['available'], $data['locked']);
         } catch (\Exception $e) {
             $stats = new Stats(0, 0);
