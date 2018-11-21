@@ -39,4 +39,15 @@ class Outputs extends IteratorEntity implements IteratorEntityInterface
 
         return $addresses;
     }
+
+    public function hasCommunityFundVotes() {
+        /** @var Output $output */
+        foreach ($this->getElements() as $output) {
+            if (in_array($output->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

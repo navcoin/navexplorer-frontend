@@ -54,7 +54,6 @@ class TransactionMapper extends BaseMapper
     private function mapOutputs(array $data): Outputs
     {
         $outputs = new Outputs();
-
         foreach ($data as $outputData) {
             if ($outputData['type'] == null) {
                 continue;
@@ -67,7 +66,7 @@ class TransactionMapper extends BaseMapper
                     $outputData['amount'] / 100000000,
                     array_key_exists('addresses', $outputData) ? $outputData['addresses'] : (array_key_exists('address', $outputData) ? [$outputData['address']] : []),
                     is_array($outputData['redeemedIn']) ? $outputData['redeemedIn']['hash'] : null,
-                    is_array($outputData['redeemedIn']['height']) ? $outputData['redeemedIn']['height'] : null
+                    is_array($outputData['redeemedIn']) ? $outputData['redeemedIn']['height'] : null
                 );
 
                 if (in_array($output->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE'])) {

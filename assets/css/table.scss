@@ -95,6 +95,7 @@
     td[data-role="navSpent"]:before { content: "NAV Spent"; }
     td[data-role="percentageOfCoins"]:before { content: "% of Coins"; }
     td[data-role="previousOutput"]:before { content: "Previous Output"; }
+    td[data-role="proposal"]:before { content: "Proposal"; }
     td[data-role="rank"]:before { content: "Rank"; }
     td[data-role="redeemedIn"]:before { content: "Redeemed In"; }
     td[data-role="stakedBy"]:before { content: "Staked By"; }
@@ -102,6 +103,8 @@
     td[data-role="stake"]:before { content: "Stake"; }
     td[data-role="status"]:before { content: "Status"; }
     td[data-role="transactions"]:before { content: "Transactions"; }
+    td[data-role="type"]:before { content: "Type"; }
+    td[data-role="vote"]:before { content: "Vote"; }
     td[data-role="votingStatus"]:before { content: "Voting Status"; }
   }
 }

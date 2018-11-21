@@ -39,6 +39,11 @@ class Output
      */
     private $hash;
 
+    /**
+     * @var bool
+     */
+    private $proposalVote;
+
     public function __construct(string $type, int $index, float $amount, array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock)
     {
         $this->type = $type;
@@ -98,5 +103,22 @@ class Output
         $this->hash = $hash;
 
         return $this;
+    }
+
+    public function getProposalVote(): ?bool
+    {
+        switch (true) {
+            case $this->getType() == 'PROPOSAL_YES_VOTE':
+                return true;
+            case $this->getType() == 'PROPOSAL_NO_VOTE':
+                return false;
+            default:
+                return null;
+        }
+    }
+
+    public function isCommunityFund(): bool
+    {
+        return in_array($this->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE']);
     }
 }
