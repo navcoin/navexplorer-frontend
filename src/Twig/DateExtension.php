@@ -8,18 +8,8 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-/**
- * Class DateLocalisedExtension
- *
- * @package App\Twig
- */
 class DateExtension extends AbstractExtension
 {
-    /**
-     * Get filters
-     *
-     * @return array
-     */
     public function getFilters(): array
     {
         return array(
@@ -34,14 +24,6 @@ class DateExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * Date Localised
-     *
-     * @param \DateTime $date
-     * @param string    $format
-     *
-     * @return string
-     */
     public function dateLocalised(\DateTime $date, string $format): string
     {
         return sprintf(
@@ -66,12 +48,12 @@ class DateExtension extends AbstractExtension
     {
         switch ($index) {
             case 0:
-                return sprintf("%s - %s", $block->getEnd()->format('g:i a'), $block->getStart()->format('g:i a'));
+                return sprintf("%s - %s", $block->getEnd()->format('H:i'), $block->getStart()->format('H:i'));
             default:
                 $start = clone $block->getEnd();
                 $start->add(new \DateInterval('PT1H'));
 
-                return sprintf("%s - %s", $block->getEnd()->format('g:i a'), $start->format('g:i a'));
+                return sprintf("%s - %s", $block->getEnd()->format('H:i'), $start->format('H:i'));
         }
     }
 

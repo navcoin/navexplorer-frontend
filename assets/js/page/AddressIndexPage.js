@@ -24,7 +24,7 @@ class AddressIndexPage {
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'date/time')
-            .append(moment(data.time).utc().format('MMM[&nbsp;]Do[&nbsp;]YYYY, h:mm:ss[&nbsp;]a'))
+            .append(moment(data.created).utc().format('YYYY-MM-DD[&nbsp;] H:mm:ss'))
         );
 
         $row.append($(document.createElement('td'))

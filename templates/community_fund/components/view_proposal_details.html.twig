@@ -21,12 +21,12 @@
             {% if proposal.expiresOn %}
                 <tr>
                     <td><strong>Expiry Date</strong></td>
-                    <td class="text-right break-word">{{ proposal.expiresOn|date_localised('M jS Y, g:i:s a') }}</td>
+                    <td class="text-right break-word">{{ proposal.expiresOn|date_localised('Y-m-d, H:i:s') }}</td>
                 </tr>
             {% endif %}
             <tr>
                 <td><strong>Creation Date</strong></td>
-                <td class="text-right break-word">{{ proposal.createdAt|date_localised('M jS Y, g:i:s a') }}</td>
+                <td class="text-right break-word">{{ proposal.createdAt|date_localised('Y-m-d, H:i:s') }}</td>
             </tr>
             </tbody>
         </table>
@@ -55,7 +55,7 @@
                 <tr>
                     <td><strong>Acception Date</strong></td>
                     <td class="text-right break-word">
-                        {{ block.created|date_localised('M jS Y, g:i:s a') }}
+                        {{ block.created|date_localised('Y-m-d, H:i:s') }}
                     </td>
                 </tr>
             {% endif %}
