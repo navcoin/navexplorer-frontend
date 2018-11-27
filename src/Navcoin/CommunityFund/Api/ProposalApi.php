@@ -82,6 +82,13 @@ class ProposalApi extends NavcoinApi
             return new Proposals();
         }
 
-        return $this->getMapper()->mapIterator($data, Proposals::class);
+        $proposals = $this->getMapper()->mapIterator($data, Proposals::class);
+
+        if ($order == 'votes') {
+            $proposals->sortByVotes();
+        }
+
+
+        return $proposals;
     }
 }
