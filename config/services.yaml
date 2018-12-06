@@ -89,6 +89,16 @@ services:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\CommunityFund\Mapper\PaymentRequestMapper'
 
+    App\Navcoin\CommunityFund\Api\VotersApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\CommunityFund\Mapper\VoterMapper'
+
+    App\Navcoin\CommunityFund\Api\TrendApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\CommunityFund\Mapper\TrendMapper'
+
     App\Navcoin\Network\Service\NetworkService:
         arguments:
             - '%navcoin.network%'

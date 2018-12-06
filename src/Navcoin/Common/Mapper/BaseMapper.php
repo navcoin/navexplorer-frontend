@@ -7,10 +7,17 @@ use App\Navcoin\Common\Entity\IteratorEntityInterface;
 
 abstract class BaseMapper implements MapperInterface
 {
+    /**
+     * @var array
+     */
+    protected $options;
+
     abstract function mapEntity(array $data);
 
-    public function mapIterator(array $data, String $class = null): IteratorEntityInterface
+    public function mapIterator(array $data, String $class = null, array $options = []): IteratorEntityInterface
     {
+        $this->options = $options;
+
         $container = $this->isPaginated($data) ? $this->createPaginator($data, $class) : new $class;
 
         foreach ($this->getElements($data) as $entity) {

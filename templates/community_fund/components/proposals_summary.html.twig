@@ -1,29 +1,21 @@
-<div class="row transaction-summary">
+<div class="row ">
     <div class="col-sm-12 col-md-12">
-        <table class="table table-striped">
+        <table class="table table-striped margin-bottom">
             <tbody>
                 <tr>
-                    <td><strong>Balance</strong></td>
+                    <td><strong>Available</strong></td>
                     <td class="text-right">
-                        {{ communityFund.balance|stake_format }}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Received</strong></td>
-                    <td class="text-right">
-                        <span class="badge badge-info badge-transaction-count">{{ communityFund.receivedCount|number_format }} txs</span>
-                        {{ communityFund.received|stake_format }}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Spent</strong></td>
-                    <td class="text-right">
-                        <span class="badge badge-info badge-transaction-count">{{ communityFund.sentCount|number_format }} txs</span>
-                        {{ communityFund.sent|stake_format }}
+                        {{ stats.available|stake_format }}
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Locked</strong></td>
+                    <td class="text-right">
+                        {{ stats.locked|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Spent</strong></td>
                     <td class="text-right">
                         {{ 0|stake_format }}
                     </td>

@@ -6,8 +6,8 @@ use App\Exception\ServerRequestException;
 use App\Navcoin\Common\NavcoinApi;
 use App\Navcoin\CommunityFund\Entity\BlockCycle;
 use App\Navcoin\CommunityFund\Entity\BlockCycleVoting;
-use App\Navcoin\CommunityFund\Entity\PaymentRequests;
 use App\Navcoin\CommunityFund\Entity\Proposals;
+use App\Navcoin\CommunityFund\Entity\Stats;
 use App\Navcoin\CommunityFund\Exception\CommunityFundProposalNotFound;
 use App\Navcoin\CommunityFund\Entity\Proposal;
 use GuzzleHttp\Exception\ClientException;
@@ -30,6 +30,21 @@ class ProposalApi extends NavcoinApi
             $data['currentBlock'],
             $data['remainingBlocks']
         );
+    }
+
+    public function getStats(): Stats
+    {
+        try {
+            $data = $this->getClient()->get('/api/community-fund/stats');
+            if (!array_key_exists( 'available', $data) || !array_key_exists('locked', $data)) {
+                throw new \Exception("Invalid api response: " . \GuzzleHttp\json_encode($data));
+            }
+            $stats = new Stats($data['available'], $data['locked']);
+        } catch (\Exception $e) {
+            $stats = new Stats(0, 0);
+        }
+
+        return $stats;
     }
 
     public function getProposal(String $hash): Proposal
@@ -67,6 +82,13 @@ class ProposalApi extends NavcoinApi
             return new Proposals();
         }
 
-        return $this->getMapper()->mapIterator($data, Proposals::class);
+        $proposals = $this->getMapper()->mapIterator($data, Proposals::class);
+
+        if ($order == 'votes') {
+            $proposals->sortByVotes();
+        }
+
+
+        return $proposals;
     }
 }

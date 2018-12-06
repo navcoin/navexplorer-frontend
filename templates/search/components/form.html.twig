@@ -1,10 +1,10 @@
-<div class="search-form">
+<div class="search-form margin-top">
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Search the blockchain</h5>
             <form action="{{ path('app_search_results') }}" method="POST">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="hash" name="hash" placeholder="Search by block/transaction/address hash or block height">
+                    <input type="text" class="form-control" id="hash" name="hash" placeholder="Search by block, transaction, address, or community fund proposal hash">
                     <button type="submit" class="btn btn-info">Search</button>
                 </div>
             </form>

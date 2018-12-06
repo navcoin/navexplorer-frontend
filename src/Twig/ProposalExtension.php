@@ -11,6 +11,11 @@ use Twig\TwigFunction;
 
 class ProposalExtension extends AbstractExtension
 {
+    /**
+     * @var BlockCycle
+     */
+    private $blockCycle;
+
     public function getFunctions(): array
     {
         return [
@@ -28,29 +33,27 @@ class ProposalExtension extends AbstractExtension
 
     public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
     {
-        $minimumVotes = $blockCycle->getBlocksInCycle() * $blockCycle->getMinQuorum();
-        $totalVotes =  $proposal->getVotesTotal() < $minimumVotes ? $minimumVotes : $proposal->getVotesTotal();
-        $yesVotes = (int) round(($proposal->getVotesYes() / $totalVotes) * 100);
-        $noVotes = (int) round(($proposal->getVotesNo() / $totalVotes) * 100);
+        $this->blockCycle = $blockCycle;
+        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $proposal->getVotesTotal();
 
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $yesVotes).'
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $noVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $proposal->getVotesYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $proposal->getVotesNo()).'
+    '.$this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false).'
 </div>';
     }
 
     public function getPaymentRequestVoteProgress(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
     {
-        $minimumVotes = $blockCycle->getBlocksInCycle() * $blockCycle->getMinQuorum();
-        $totalVotes =  $paymentRequest->getVotesTotal() < $minimumVotes ? $minimumVotes : $paymentRequest->getVotesTotal();
-        $yesVotes = (int) round(($paymentRequest->getVotesYes() / $totalVotes) * 100);
-        $noVotes = (int) round(($paymentRequest->getVotesNo() / $totalVotes) * 100);
+        $this->blockCycle = $blockCycle;
+        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $paymentRequest->getVotesTotal();
 
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), true), $yesVotes).'
-    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), false), $noVotes).'
+    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), true), $paymentRequest->getVotesYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), false), $paymentRequest->getVotesNo()).'
+    '.$this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false).'
 </div>';
     }
 
@@ -59,23 +62,29 @@ class ProposalExtension extends AbstractExtension
         return preg_replace('/(-|_)/', ' ', $state);
     }
 
-    private function getProgressBar(string $classes, int $votes): string
+    private function getProgressBar(string $classes, int $votes, bool $showPercent = true): string
     {
+        $votesPercent = (int) round(($votes / $this->blockCycle->getBlocksInCycle()) * 100);
         return sprintf(
             '<div class="%s" role="progressbar" style="%s" aria-valuenow="%d" aria-valuemin="0" aria-valuemax="100">%s</div>',
             $classes,
-            sprintf('width: %s&percnt;', $votes),
+            sprintf('width: %s&percnt;', $votesPercent),
             $votes,
-            ($votes > 10 ? sprintf('%s&percnt;', $votes) : null)
+            ($showPercent && $votesPercent > 10 ? sprintf('%s&percnt;', $votesPercent) : null)
         );
     }
 
-    private function getProgressBarClass(String $state, bool $vote): string
+    private function getProgressBarClass(String $state, $vote): string
     {
-        $classes = [
-            'progress-bar',
-            $vote ? 'bg-success' : 'bg-danger',
-        ];
+        $classes = ['progress-bar'];
+
+        if ($vote === true) {
+             array_push($classes, 'bg-success');
+        } elseif ($vote === false) {
+            array_push($classes, 'bg-danger');
+        } else {
+            array_push($classes, 'bg-grey');
+        }
 
         if ($state == 'PENDING') {
             $classes[] = 'progress-bar-striped';

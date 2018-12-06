@@ -23,12 +23,19 @@
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link active" href="#" data-toggle="collapse" data-target="#transaction-details" aria-expanded="true" aria-controls="transaction-details">
-                                Transaction Details
+                                Details
                             </a>
                         </li>
+                        {% if transaction.outputs.communityFundVotes %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" data-target="#cfund-votes" aria-expanded="false" aria-controls="cfund-votes">
+                                    Community Fund
+                                </a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-toggle="collapse" data-target="#raw-transaction" aria-expanded="false" aria-controls="raw-transaction">
-                                Raw Transaction
+                                Raw Data
                             </a>
                         </li>
                     </ul>
@@ -41,6 +48,9 @@
 
                         <div id="raw-transaction" class="collapse collapsed" data-parent="#block-collapse">
                             {% include "transaction/components/view_raw_transaction.html.twig" %}
+                        </div>
+                        <div id="cfund-votes" class="collapse collapsed" data-parent="#block-collapse">
+                            {% include "transaction/components/view_cfund_votes.html.twig" %}
                         </div>
                     </div>
                 </div>

@@ -7,11 +7,15 @@ use App\Navcoin\Address\Api\AddressApi;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\CommunityFund\Api\PaymentRequestApi;
 use App\Navcoin\CommunityFund\Api\ProposalApi;
+use App\Navcoin\CommunityFund\Api\TrendApi;
+use App\Navcoin\CommunityFund\Api\VotersApi;
 use App\Navcoin\SoftFork\Api\SoftForkApi;
+use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CommunityFundController extends Controller
@@ -27,14 +31,31 @@ class CommunityFundController extends Controller
     private $paymentRequestApi;
 
     /**
+     * @var VotersApi
+     */
+    private $votersApi;
+
+    /**
+     * @var TrendApi
+     */
+    private $trendApi;
+
+    /**
      * @var BlockApi
      */
     private $blockApi;
 
-    public function __construct(ProposalApi $proposalApi, PaymentRequestApi $paymentRequestApi, BlockApi $blockApi)
-    {
+    public function __construct(
+        ProposalApi $proposalApi,
+        PaymentRequestApi $paymentRequestApi,
+        VotersApi $votersApi,
+        TrendApi $trendApi,
+        BlockApi $blockApi
+    ) {
         $this->proposalApi = $proposalApi;
         $this->paymentRequestApi = $paymentRequestApi;
+        $this->votersApi = $votersApi;
+        $this->trendApi = $trendApi;
         $this->blockApi = $blockApi;
     }
 
@@ -82,7 +103,7 @@ class CommunityFundController extends Controller
         }
 
         return [
-            'communityFund' => $addressApi->getAddress("Community Fund"),
+            'stats' => $this->proposalApi->getStats(),
             'softFork' => $softForkApi->getByName("C FUND"),
             'blockHeight' => $this->blockApi->getBestBlock()->getHeight(),
             'blockCycle' => $this->proposalApi->getBlockCycle(),
@@ -116,6 +137,8 @@ class CommunityFundController extends Controller
             'proposal' => $this->proposalApi->getProposal($request->get('hash')),
             'paymentRequests' => $this->paymentRequestApi->getPaymentRequests($proposal),
             'block' => $block,
+            'votesYes' => $this->votersApi->getProposalVotes($request->get('hash'), true),
+            'votesNo' => $this->votersApi->getProposalVotes($request->get('hash'), false),
         ];
     }
 
@@ -140,5 +163,21 @@ class CommunityFundController extends Controller
             'proposal' => $proposal,
             'paymentRequests' => $this->paymentRequestApi->getPaymentRequests($proposal),
         ];
+    }
+
+    /**
+     * @Route("/community-fund/proposal/{hash}/trend.json")
+     *
+     *
+     * @param Request             $request
+     * @param SerializerInterface $serializer
+     *
+     * @return Response
+     */
+    public function transactions(Request $request, SerializerInterface $serializer): Response
+    {
+        $transactions = $this->trendApi->getProposalVotingTrend($request->get('hash'));
+
+        return new Response($serializer->serialize($transactions, 'json'));
     }
 }

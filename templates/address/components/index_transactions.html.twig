@@ -1,4 +1,6 @@
-<div id="transaction-list">
+<div id="transaction-list" class="margin-top">
+    <h2 class="float-left">Transactions</h2>
+
     <form class="form-filter" action="{{ path('app_address_index', {hash: address.hash}) }}">
         {% for filter in filter.filters %}
             <label>

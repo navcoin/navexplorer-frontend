@@ -7,10 +7,10 @@ use App\Navcoin\Block\Entity\Transactions;
 use App\Exception\BlockNotFoundException;
 use App\Exception\ServerRequestException;
 use App\Exception\TransactionNotFoundException;
-use App\Navcoin\Block\Mapper\TransactionMapper;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\NavcoinApi;
-use App\Navcoin\Common\NavcoinClient;
+use GuzzleHttp\Exception\ClientException;
+use Symfony\Component\HttpFoundation\Response;
 
 class TransactionApi extends NavcoinApi
 {
@@ -18,8 +18,14 @@ class TransactionApi extends NavcoinApi
     {
         try {
             $data = $this->getClient()->get('/api/tx/'.$hash);
-        } catch (ServerRequestException $e) {
-            throw new TransactionNotFoundException(sprintf("The transaction %s does not exist.", $hash), 0, $e);
+        } catch (ClientException $e) {
+            switch ($e->getResponse()->getStatusCode()) {
+                case Response::HTTP_NOT_FOUND:
+                    throw new TransactionNotFoundException(sprintf("The transaction %s does not exist.", $hash), 0, $e);
+                default:
+                    throw $e;
+            }
+
         }
 
         return $this->getMapper()->mapEntity($data);
