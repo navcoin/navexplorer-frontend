@@ -2,6 +2,7 @@ const $ = require('jquery');
 
 import anchorme from "anchorme";
 import Chart from 'chart.js';
+import 'chartjs-plugin-annotation';
 import axios from "axios";
 
 class CommunityFundProposalViewPage {
@@ -46,8 +47,6 @@ class CommunityFundProposalViewPage {
             no[i] = elements[i].trend_no;
             abstain[i] = elements[i].trend_abstain;
         }
-        console.log(yes);
-        console.log(no);
 
         let ctx = document.getElementById("trendChart");
         var options = {
@@ -68,6 +67,29 @@ class CommunityFundProposalViewPage {
             },
             tooltips: {enabled: false},
             hover: {mode: null},
+            annotation: {
+                annotations: [
+                    {
+                        drawTime: "afterDatasetsDraw",
+                        id: "hline",
+                        type: "line",
+                        mode: "horizontal",
+                        scaleID: "y-axis-0",
+                        value: 50,
+                        borderColor: "rgb(222,214,201)",
+                        borderWidth: 3
+                    },
+                    {
+                        drawTime: "beforeDatasetsDraw",
+                        type: "box",
+                        yScaleID: "y-axis-0",
+                        yMin: 0,
+                        yMax: 50,
+                        backgroundColor: "rgba(222,214,201,0.5)",
+                        borderWidth: 0,
+                    }
+                ]
+            }
         };
 
         let data = {
@@ -97,23 +119,6 @@ class CommunityFundProposalViewPage {
                     borderJoinStyle: 'miter',
                     pointRadius: 0,
                     data: yes,
-                    spanGaps: false,
-                    scaleOverride : true,
-                    scaleSteps : 20,
-                    scaleStepWidth : 50,
-                    scaleStartValue : 0
-                },
-                {
-                    fill: true,
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(222,214,201,0.5)",
-                    borderColor: "rgba(222,214,201,1)",
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointRadius: 0,
-                    data: abstain,
                     spanGaps: false,
                     scaleOverride : true,
                     scaleSteps : 20,
