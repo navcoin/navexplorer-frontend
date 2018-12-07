@@ -37,16 +37,10 @@ class AddressIndexPage {
         let $amountTd = $(document.createElement('td')).attr('data-role', 'amount')
             .append(numberFormatter.format(data.amount) + '&nbsp;NAV');
         if (data.type === "STAKING") {
-            if (data.cold_staking === true) {
-                $amountTd.append(
-                    '&nbsp;<span class="badge badge-info">Cold Stake</span><br>' +
-                    '<small><a href="/address/' + data.cold_staking_address + '">' + data.cold_staking_address + '</a></small>'
-                );
-            } else {
-                $amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
-            }
-        }
-        if (data.type === "COMMUNITY_FUND_PAYOUT") {
+            $amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
+        } else if (data.type === "COLD_STAKING") {
+            $amountTd.append('&nbsp;<span class="badge badge-info">Cold Stake</span>');
+        } else if (data.type === "COMMUNITY_FUND_PAYOUT") {
             $amountTd.append('&nbsp;<span class="badge badge-info">Community Fund Payout</span>');
         }
 

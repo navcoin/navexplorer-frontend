@@ -5,9 +5,9 @@
         <thead>
             <tr>
                 <th style="width: 5%">Index</th>
-                <th style="width: 15%">Type</th>
+                <th style="width: 10%">Type</th>
                 <th style="width: 30%">Redeemed&nbsp;In</th>
-                <th style="width: 30%">Address</th>
+                <th style="width: 35%">Address</th>
                 <th style="width: 20%">Amount</th>
             </tr>
         </thead>
@@ -20,19 +20,18 @@
                         {% if output.redeemedInTransaction and output.redeemedInBlock %}
                             <a href="{{ path('app_transaction_view', {'hash': output.redeemedInTransaction}) }}">{{ output.redeemedInTransaction|slice(0, 20) }}</a>...
                             <small>in <a href="{{ path('app_block_view', {'height': output.redeemedInBlock}) }}">{{ output.redeemedInBlock }}</a></small>
-                        {% elseif output.addresses|length == 1 %}
-                            <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
+                        {% elseif output.type == 'CFUND_CONTRIBUTION' or output.address == '' %}
+                            N/A
                         {% else %}
-                            {% if output.type == 'CFUND_CONTRIBUTION' or output.address == '' %}
-                                N/A
-                            {% else %}
-                                Unspent
-                            {% endif %}
+                            Unspent
                         {% endif %}
                     </td>
                     <td data-role="address">
                         {% if output.type == 'CFUND_CONTRIBUTION' %}
                             N/A
+                        {% elseif output.type == "COLD_STAKING" %}
+                            <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
+                            <a href="{{ path('app_address_index', { 'hash': output.addresses[1] }) }}" class="break-word">{{ output.addresses[1] }}</a>
                         {% elseif output.addresses and output.addresses|length %}
                             <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
                         {% elseif output.address %}

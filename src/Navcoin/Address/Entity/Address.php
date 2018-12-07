@@ -64,6 +64,21 @@ class Address
      */
     private $coldStakedBalance;
 
+    /**
+     * @var float
+     */
+    private $coldStaked;
+
+    /**
+     * @var int
+     */
+    private $coldStakedCount;
+
+    /**
+     * @var float
+     */
+    private $coldStakedSent;
+
     public function __construct(
         string $hash,
         float $received,

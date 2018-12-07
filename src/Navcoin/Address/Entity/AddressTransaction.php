@@ -75,9 +75,7 @@ class AddressTransaction
         float $sent,
         float $received,
         String $type,
-        String $address,
-        bool $coldStaking,
-        ?String $coldStakingAddress
+        String $address
     ) {
         $this->id = $id;
         $this->transaction = $transaction;
@@ -90,8 +88,6 @@ class AddressTransaction
         $this->amount = $this->received - $this->sent;
         $this->type = $type;
         $this->address = $address;
-        $this->coldStaking = $coldStaking;
-        $this->coldStakingAddress = $coldStakingAddress;
     }
 
     public function getId(): String

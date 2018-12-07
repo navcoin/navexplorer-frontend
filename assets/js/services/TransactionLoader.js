@@ -50,19 +50,19 @@ export default class TransactionLoader {
                     let address = $(document.createElement('div'));
                     address.attr('class', 'address float-left');
 
-                    if (typeof input.type !== 'undefined' && input.type !== 'PUBKEY' && input.type !== 'PUBKEYHASH') {
+                    if (typeof input.type !== 'undefined' && input.type === 'COLD_STAKING') {
+                        address.append('<span class="break-word">' +
+                            '  <a href="/address/' + input.addresses[0] + '">' + input.addresses[0] + '</a>' +
+                            '  <small>Staking</small>' +
+                            '</span>' +
+                            '<span class="break-word">' +
+                            '  <a href="/address/' + input.addresses[1] + '">' + input.addresses[1] + '</a>' +
+                            '  <small>Spending</small>' +
+                            '</span>');
+                    } else if (typeof input.type !== 'undefined' && input.type !== 'PUBKEY' && input.type !== 'PUBKEYHASH') {
                         address.html(input.type.toLowerCase());
                     } else if (typeof input.addresses !== 'undefined') {
-                        if (input.addresses.length === 2) {
-                            address.append('<span class="break-word">' +
-                                '  <a href="/address/' + input.addresses[0] + '">' + input.addresses[0] + '</a>' +
-                                '  <small>Staking Address</small>' +
-                                '</span>' +
-                                '<span class="break-word">' +
-                                '  <a href="/address/' + input.addresses[1] + '">' + input.addresses[1] + '</a>' +
-                                '  <small>Spending Address</small>' +
-                                '</span>');
-                        } if (input.addresses.length === 0) {
+                        if (input.addresses.length === 0) {
                             address.html('N/A');
                         } else {
                             let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
