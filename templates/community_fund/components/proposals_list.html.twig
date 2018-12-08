@@ -19,6 +19,10 @@
                         <span class="float-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</span>
                     </li>
                     <li class="list-group-item">
+                        Duration
+                        <span class="float-right">{{ proposal.duration }}</span>
+                    </li>
+                    <li class="list-group-item">
                         {{ proposalVoteProgress(proposal, blockCycle) }}
                         <p class="text-muted">
                             <span class="float-left">
