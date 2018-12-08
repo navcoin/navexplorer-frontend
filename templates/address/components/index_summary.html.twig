@@ -37,12 +37,12 @@
                         </td>
                     </tr>
                 {% endif %}
-                {% if address.coldStaked %}
+                {% if address.coldStaked or address.coldStakedBalance != 0 %}
                     <tr>
                         <td><strong>Cold Staking</strong></td>
                         <td class="text-right">
                             <span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>
-                            {{ (address.coldStaked)|stake_format }}
+                            {{ (address.coldStakedBalance)|stake_format }}
                         </td>
                     </tr>
                 {% endif %}

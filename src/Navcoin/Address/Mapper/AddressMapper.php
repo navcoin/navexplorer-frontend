@@ -5,21 +5,8 @@ namespace App\Navcoin\Address\Mapper;
 use App\Navcoin\Address\Entity\Address;
 use App\Navcoin\Common\Mapper\MapperInterface;
 
-/**
- * Class AddressMapper
- *
- * @package App\Navcoin\Address\Mapper
- */
 class AddressMapper implements MapperInterface
 {
-    /**
-     * Map Addresses
-     *
-     * @param array       $data
-     * @param String|null $class
-     *
-     * @return array
-     */
     public function mapIterator(array $data, String $class = null): array
     {
         $addresses = [];
@@ -30,13 +17,6 @@ class AddressMapper implements MapperInterface
         return $addresses;
     }
 
-    /**
-     * Map Address
-     *
-     * @param array $data
-     *
-     * @return Address
-     */
     public function mapEntity(array $data): Address
     {
         return new Address(
