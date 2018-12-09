@@ -55,6 +55,7 @@ class Trend
     {
         $this->votesYes = $votesYes;
         $this->votesNo = $votesNo;
+        $totalVotes = $votesYes - $votesNo;
         $this->segment = $segment;
         $this->start = $start;
         $this->end = $end;
@@ -62,8 +63,7 @@ class Trend
 
         $this->trendYes = round($this->blocksCounted ? ($this->votesYes / $this->blocksCounted) * 100 : 0, 2);
         $this->trendNo = round($this->blocksCounted ? ($this->votesNo / $this->blocksCounted) * 100 : 0, 2);
-        $this->trendAbstain = round($this->blocksCounted ? ((($this->blocksCounted - $this->votesYes - $this->votesNo) / $this->blocksCounted) * 100) - 50 : 0, 2);
-
+        $this->trendAbstain = round($this->blocksCounted ? ((($this->blocksCounted - $totalVotes) / $this->blocksCounted) * 100) : 0, 2);
     }
 
     public function getVotesYes(): int

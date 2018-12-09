@@ -8,8 +8,7 @@
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        Payment Address<br>
-                        <a href="{{ path('app_address_index', {'hash': proposal.paymentAddress}) }}" class="break-word">{{ proposal.paymentAddress }}</a>
+                        <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="break-word">{{ proposal.hash }}</a>
                     </li>
                     <li class="list-group-item">
                         NAV Requested
@@ -18,6 +17,10 @@
                     <li class="list-group-item">
                         NAV Paid
                         <span class="float-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        Duration
+                        <span class="float-right">{{ proposal.duration }}</span>
                     </li>
                     <li class="list-group-item">
                         {{ proposalVoteProgress(proposal, blockCycle) }}
