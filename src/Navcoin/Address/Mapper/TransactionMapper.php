@@ -18,7 +18,10 @@ class TransactionMapper extends BaseMapper
             $data['sent'] / 100000000,
             $data['received'] / 100000000,
             $data['type'],
-            $data['address']
+            $data['address'],
+            $data['coldStakingBalance'] / 100000000,
+            $data['coldStakingSent'] / 100000000,
+            $data['coldStakingReceived'] / 100000000
         );
     }
 }

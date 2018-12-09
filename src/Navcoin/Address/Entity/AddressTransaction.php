@@ -66,6 +66,26 @@ class AddressTransaction
      */
     protected $coldStakingAddress;
 
+    /**
+     * @var float
+     */
+    private $coldStakingBalance;
+
+    /**
+     * @var float
+     */
+    private $coldStakingAmount;
+
+    /**
+     * @var float
+     */
+    private $coldStakingSent;
+
+    /**
+     * @var float
+     */
+    private $coldStakingReceived;
+
     public function __construct(
         String $id,
         String $transaction,
@@ -75,7 +95,10 @@ class AddressTransaction
         float $sent,
         float $received,
         String $type,
-        String $address
+        String $address,
+        float $coldStakingBalance,
+        float $coldStakingSent,
+        float $coldStakingReceived
     ) {
         $this->id = $id;
         $this->transaction = $transaction;
@@ -88,6 +111,10 @@ class AddressTransaction
         $this->amount = $this->received - $this->sent;
         $this->type = $type;
         $this->address = $address;
+        $this->coldStakingBalance = $coldStakingBalance;
+        $this->coldStakingSent = $coldStakingSent;
+        $this->coldStakingReceived = $coldStakingReceived;
+        $this->coldStakingAmount = $this->coldStakingReceived - $this->coldStakingSent;
     }
 
     public function getId(): String
@@ -153,5 +180,25 @@ class AddressTransaction
     public function getColdStakingAddress(): String
     {
         return $this->coldStakingAddress;
+    }
+
+    public function getColdStakingBalance(): float
+    {
+        return $this->coldStakingBalance;
+    }
+
+    public function getColdStakingAmount(): float
+    {
+        return $this->coldStakingAmount;
+    }
+
+    public function getColdStakingSent(): float
+    {
+        return $this->coldStakingSent;
+    }
+
+    public function getColdStakingReceived(): float
+    {
+        return $this->coldStakingReceived;
     }
 }

@@ -87,4 +87,26 @@ class AddressController extends Controller
 
         return new Response($serializer->serialize($addressTransactions, 'json'));
     }
+
+    /**
+     * @Route("/address/{hash}/cold-tx.json")
+     *
+     * @param Request             $request
+     * @param string              $hash
+     * @param SerializerInterface $serializer
+     *
+     * @return Response
+     */
+    public function coldTransactions(Request $request, String $hash, SerializerInterface $serializer): Response
+    {
+        $addressTransactions = $this->transactionApi->getColdTransactionsForAddress(
+            $hash,
+            $request->get('size', $this->pageSize),
+            $request->get('filters', []),
+            $request->get('from', null),
+            $request->get('to', null)
+        );
+
+        return new Response($serializer->serialize($addressTransactions, 'json'));
+    }
 }
