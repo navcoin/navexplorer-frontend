@@ -234,6 +234,6 @@ class Address
 
     public function getLabel(): string
     {
-        return $this->getLabel() ?: "";
+        return $this->label ?: "";
     }
 }
