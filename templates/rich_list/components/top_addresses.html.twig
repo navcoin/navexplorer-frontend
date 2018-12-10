@@ -19,6 +19,9 @@
                         <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">
                             {{ address.hash }}
                         </a>
+                        {% if address.label %}
+                            <br><span class="badge badge-info">{{ address.label }}</span>
+                        {% endif %}
                     </td>
                     <td>
                         {{ address.balance|stake_format(false, 2) }}<br/>
