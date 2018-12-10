@@ -14,6 +14,15 @@
                         {{ address.balance|stake_format }}
                     </td>
                 </tr>
+                {% if address.coldStaked or address.coldStakedBalance != 0 %}
+                    <tr>
+                        <td><strong>Cold Staking Balance</strong></td>
+                        <td class="text-right">
+                            {#<span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>#}
+                            {{ (address.coldStakedBalance)|stake_format }}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td><strong>Sent</strong></td>
                     <td class="text-right">
@@ -30,7 +39,7 @@
                 </tr>
                 {% if address.staked %}
                     <tr>
-                        <td><strong>Staking</strong></td>
+                        <td><strong>Staked</strong></td>
                         <td class="text-right">
                             <span class="badge badge-info badge-transaction-count">{{ address.stakedCount }} txs</span>
                             {{ (address.staked)|stake_format }}
@@ -39,10 +48,10 @@
                 {% endif %}
                 {% if address.coldStaked or address.coldStakedBalance != 0 %}
                     <tr>
-                        <td><strong>Cold Staking</strong></td>
+                        <td><strong>Cold Staked</strong></td>
                         <td class="text-right">
                             <span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>
-                            {{ (address.coldStakedBalance)|stake_format }}
+                            {{ (address.coldStaked)|stake_format }}
                         </td>
                     </tr>
                 {% endif %}
