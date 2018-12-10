@@ -55,7 +55,7 @@ class Trend
     {
         $this->votesYes = $votesYes;
         $this->votesNo = $votesNo;
-        $totalVotes = $votesYes - $votesNo;
+        $totalVotes = $votesYes + $votesNo;
         $this->segment = $segment;
         $this->start = $start;
         $this->end = $end;
