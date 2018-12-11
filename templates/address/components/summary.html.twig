@@ -6,6 +6,9 @@
                     <td><strong>Hash</strong></td>
                     <td class="text-right break-word">
                         {{ address.hash }}
+                        {% if address.label %}
+                            <br><span class="badge badge-info">{{ address.label }}</span>
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>

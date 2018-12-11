@@ -65,6 +65,11 @@ class Address
     private $richListPosition;
 
     /**
+     * @var null|string
+     */
+    private $label;
+
+    /**
      * Constructor
      *
      * @param string $hash
@@ -90,7 +95,8 @@ class Address
         float $stakeSent,
         float $balance,
         int $blockIndex,
-        int $richListPosition
+        int $richListPosition,
+        ?string $label
     ) {
         $this->hash = $hash;
         $this->received = $received;
@@ -103,6 +109,7 @@ class Address
         $this->balance = $balance;
         $this->blockIndex = $blockIndex;
         $this->richListPosition = $richListPosition;
+        $this->label = $label;
     }
 
     /**
@@ -223,5 +230,10 @@ class Address
     public function getTransactions(): int
     {
         return $this->sentCount + $this->receivedCount + $this->stakedCount;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label ?: "";
     }
 }
