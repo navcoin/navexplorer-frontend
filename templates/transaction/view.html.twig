@@ -1,6 +1,7 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Transaction {{ transaction.hash }} - {{ transaction.height }}{% endblock %}
+{% block title %}Navcoin Transaction{% endblock %}
+{% block description %}{{ transaction.hash }} - {{ transaction.height }}{% endblock %}
 
 {% block page %}page-transaction-view{% endblock %}
 

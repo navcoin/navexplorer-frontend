@@ -60,6 +60,11 @@ class Address
     private $richListPosition;
 
     /**
+     * @var null|string
+     */
+    private $label;
+
+    /**
      * @var float
      */
     private $coldStakedBalance;
@@ -94,7 +99,8 @@ class Address
         float $coldStakedBalance,
         float $coldStaked,
         int $coldStakedCount,
-        float $coldStakeSent
+        float $coldStakeSent,
+        ?string $label
     ) {
         $this->hash = $hash;
         $this->received = $received;
@@ -111,6 +117,7 @@ class Address
         $this->coldStaked = $coldStaked;
         $this->coldStakedCount = $coldStakedCount;
         $this->coldStakedSent = $coldStakeSent;
+        $this->label = $label;
     }
 
     public function getHash(): string
@@ -191,5 +198,10 @@ class Address
     public function getColdStakedSent()
     {
         return $this->coldStakedSent;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label ?: "";
     }
 }

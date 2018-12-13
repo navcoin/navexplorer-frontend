@@ -18,6 +18,12 @@
                     <a href="{{ path('app_address_index', {'hash': proposal.paymentAddress}) }}">{{ proposal.paymentAddress }}</a>
                 </td>
             </tr>
+            <tr>
+                <td><strong>Duration</strong></td>
+                <td class="text-right break-word">
+                    {{ proposal.duration }}
+                </td>
+            </tr>
             {% if proposal.expiresOn %}
                 <tr>
                     <td><strong>Expiry Date</strong></td>
