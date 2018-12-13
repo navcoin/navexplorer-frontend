@@ -18,7 +18,6 @@ class CommunityFundProposalViewPage {
         let $proposalDescription = $('.proposal-description');
         $proposalDescription.html(
             anchorme($proposalDescription.html(), {
-                truncate: 35,
                 attributes:[
                     {
                         name:"target",
