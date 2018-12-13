@@ -1,6 +1,7 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Address {{ address.hash }} - {{ address.balance }}{% endblock %}
+{% block title %}Address {{ address.hash }}{% endblock %}
+{% block description %}Transaction data for the {{ address.hash }} address{% endblock %}
 
 {% block page %}page-address-index{% endblock %}
 
