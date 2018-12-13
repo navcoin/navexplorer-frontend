@@ -17,6 +17,15 @@
                         {{ address.balance|stake_format }}
                     </td>
                 </tr>
+                {% if address.coldStaked or address.coldStakedBalance != 0 %}
+                    <tr>
+                        <td><strong>Cold Staking Balance</strong></td>
+                        <td class="text-right">
+                            {#<span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>#}
+                            {{ (address.coldStakedBalance)|stake_format }}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td><strong>Sent</strong></td>
                     <td class="text-right">
@@ -33,10 +42,19 @@
                 </tr>
                 {% if address.staked %}
                     <tr>
-                        <td><strong>Staking</strong></td>
+                        <td><strong>Staked</strong></td>
                         <td class="text-right">
                             <span class="badge badge-info badge-transaction-count">{{ address.stakedCount }} txs</span>
                             {{ (address.staked)|stake_format }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if address.coldStaked or address.coldStakedBalance != 0 %}
+                    <tr>
+                        <td><strong>Cold Staked</strong></td>
+                        <td class="text-right">
+                            <span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>
+                            {{ (address.coldStaked)|stake_format }}
                         </td>
                     </tr>
                 {% endif %}
@@ -54,7 +72,7 @@
         </table>
     </div>
     <div class="col-md-3 offset-md-1 text-center">
-        <div><img src="{{ qr_code_data_uri("navcoin:"~address.hash, { writer: 'svg', size: 250 }) }}" /></div>
+        <div><img src="{{ qr_code_data_uri("navcoin:"~address.hash) }}" /></div>
         <div><a href="navcoin:{{ address.hash }}" class="btn btn-success">Send Navcoin</a></div>
     </div>
 </div>

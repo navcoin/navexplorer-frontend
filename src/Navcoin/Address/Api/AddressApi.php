@@ -10,20 +10,8 @@ use App\Navcoin\Common\NavcoinApi;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class AddressApi
- *
- * @package App\Navcoin
- */
 class AddressApi extends NavcoinApi
 {
-    /**
-     * Get address
-     *
-     * @param String $hash
-     *
-     * @return Address
-     */
     public function getAddress(String $hash): Address
     {
         try {
@@ -40,11 +28,6 @@ class AddressApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    /**
-     * Get top 100 addresses
-     *
-     * @return Address[]
-     */
     public function getTop100Addresses(): array
     {
         try {

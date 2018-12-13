@@ -21,7 +21,12 @@ abstract class BaseMapper implements MapperInterface
         $container = $this->isPaginated($data) ? $this->createPaginator($data, $class) : new $class;
 
         foreach ($this->getElements($data) as $entity) {
-            $container->add($this->mapEntity($entity));
+            $element = $this->mapEntity($entity);
+
+            if ($element !== null) {
+                $container->add($element);
+
+            }
         }
 
         return $container;

@@ -2,11 +2,6 @@
 
 namespace App\Navcoin\Address\Entity;
 
-/**
- * Class Address
- *
- * @package App\Navcoin\Address\Entity
- */
 class Address
 {
     /**
@@ -70,20 +65,25 @@ class Address
     private $label;
 
     /**
-     * Constructor
-     *
-     * @param string $hash
-     * @param float  $received
-     * @param int    $receivedCount
-     * @param float  $sent
-     * @param int    $sentCount
-     * @param float  $staked
-     * @param int    $stakedCount
-     * @param float  $stakeSent
-     * @param float  $balance
-     * @param int    $blockIndex
-     * @param int    $richListPosition
+     * @var float
      */
+    private $coldStakedBalance;
+
+    /**
+     * @var float
+     */
+    private $coldStaked;
+
+    /**
+     * @var int
+     */
+    private $coldStakedCount;
+
+    /**
+     * @var float
+     */
+    private $coldStakedSent;
+
     public function __construct(
         string $hash,
         float $received,
@@ -96,6 +96,10 @@ class Address
         float $balance,
         int $blockIndex,
         int $richListPosition,
+        float $coldStakedBalance,
+        float $coldStaked,
+        int $coldStakedCount,
+        float $coldStakeSent,
         ?string $label
     ) {
         $this->hash = $hash;
@@ -109,127 +113,91 @@ class Address
         $this->balance = $balance;
         $this->blockIndex = $blockIndex;
         $this->richListPosition = $richListPosition;
+        $this->coldStakedBalance = $coldStakedBalance;
+        $this->coldStaked = $coldStaked;
+        $this->coldStakedCount = $coldStakedCount;
+        $this->coldStakedSent = $coldStakeSent;
         $this->label = $label;
     }
 
-    /**
-     * Get Hash
-     *
-     * @return string
-     */
     public function getHash(): string
     {
         return $this->hash;
     }
 
-    /**
-     * Get Received
-     *
-     * @return float
-     */
     public function getReceived(): float
     {
         return $this->received;
     }
 
-    /**
-     * Get ReceivedCount
-     *
-     * @return int
-     */
     public function getReceivedCount(): int
     {
         return $this->receivedCount;
     }
 
-    /**
-     * Get Sent
-     *
-     * @return float
-     */
     public function getSent(): float
     {
         return $this->sent;
     }
 
-    /**
-     * Get SentCount
-     *
-     * @return int
-     */
     public function getSentCount(): int
     {
         return $this->sentCount;
     }
 
-    /**
-     * Get Staked
-     *
-     * @return float
-     */
     public function getStaked(): float
     {
         return $this->staked;
     }
 
-    /**
-     * Get StakedCount
-     *
-     * @return int
-     */
     public function getStakedCount(): int
     {
         return $this->stakedCount;
     }
 
-    /**
-     * Get StakedSent
-     *
-     * @return float
-     */
     public function getStakedSent(): float
     {
         return $this->stakedSent;
     }
 
-    /**
-     * Get Balance
-     *
-     * @return float
-     */
     public function getBalance(): float
     {
         return $this->balance;
     }
 
-    /**
-     * Get BlockIndex
-     *
-     * @return int
-     */
     public function getBlockIndex(): int
     {
         return $this->blockIndex;
     }
 
-    /**
-     * Get RichListPosition
-     *
-     * @return int
-     */
     public function getRichListPosition(): int
     {
         return $this->richListPosition;
     }
 
-    /**
-     * Get Transactions
-     *
-     * @return int
-     */
     public function getTransactions(): int
     {
         return $this->sentCount + $this->receivedCount + $this->stakedCount;
+    }
+
+    public function getColdStakedBalance(): float
+    {
+        return $this->coldStakedBalance;
+    }
+
+    public function getColdStaked(): float
+    {
+        return $this->coldStaked;
+    }
+
+    public function getColdStakedCount(): int
+    {
+        return $this->coldStakedCount;
+    }
+
+    public function getColdStakedSent()
+    {
+        return $this->coldStakedSent;
     }
 
     public function getLabel(): string

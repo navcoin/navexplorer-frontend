@@ -7,7 +7,6 @@ use App\Navcoin\Address\Api\AddressApi;
 use App\Navcoin\Address\Api\TransactionApi;
 use App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter;
 use JMS\Serializer\SerializerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,6 +78,28 @@ class AddressController extends Controller
     public function transactions(Request $request, String $hash, SerializerInterface $serializer): Response
     {
         $addressTransactions = $this->transactionApi->getTransactionsForAddress(
+            $hash,
+            $request->get('size', $this->pageSize),
+            $request->get('filters', []),
+            $request->get('from', null),
+            $request->get('to', null)
+        );
+
+        return new Response($serializer->serialize($addressTransactions, 'json'));
+    }
+
+    /**
+     * @Route("/address/{hash}/cold-tx.json")
+     *
+     * @param Request             $request
+     * @param string              $hash
+     * @param SerializerInterface $serializer
+     *
+     * @return Response
+     */
+    public function coldTransactions(Request $request, String $hash, SerializerInterface $serializer): Response
+    {
+        $addressTransactions = $this->transactionApi->getColdTransactionsForAddress(
             $hash,
             $request->get('size', $this->pageSize),
             $request->get('filters', []),

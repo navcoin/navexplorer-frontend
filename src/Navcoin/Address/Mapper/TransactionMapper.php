@@ -2,7 +2,7 @@
 
 namespace App\Navcoin\Address\Mapper;
 
-use App\Navcoin\Address\Entity\Transaction;
+use App\Navcoin\Address\Entity\AddressTransaction as Transaction;
 use App\Navcoin\Common\Mapper\BaseMapper;
 
 class TransactionMapper extends BaseMapper
@@ -17,7 +17,11 @@ class TransactionMapper extends BaseMapper
             $data['balance'] / 100000000,
             $data['sent'] / 100000000,
             $data['received'] / 100000000,
-            $data['type']
+            $data['type'],
+            $data['address'],
+            $data['coldStakingBalance'] / 100000000,
+            $data['coldStakingSent'] / 100000000,
+            $data['coldStakingReceived'] / 100000000
         );
     }
 }

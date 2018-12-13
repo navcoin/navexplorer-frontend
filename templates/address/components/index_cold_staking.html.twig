@@ -1,0 +1,30 @@
+<div id="cold-transaction-list" class="margin-top">
+    <h2 class="float-left">Cold Staking Transactions</h2>
+
+    <form class="form-filter" action="{{ path('app_address_index', {hash: address.hash}) }}">
+        {% for filter in filter.filters %}
+            <label>
+                {{ filter|capitalize }}
+                <input type="checkbox" name="{{ filter }}" {{ filters is empty or filter in filters ? 'checked' : ''}}/>
+            </label>
+        {% endfor %}
+    </form>
+
+    <table class="table table-striped table-adaptive" data-url="{{ path('app_address_coldtransactions', {'hash': address.hash, filters: filters }) }}">
+        <caption>
+            <div class="table-pagination"></div>
+        </caption>
+        <thead>
+        <tr>
+            <th>Block</th>
+            <th>Date/Time</th>
+            <th>Hash</th>
+            <th>Amount</th>
+            <th class="text-right">Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><th colspan="5">Loading cold staking transactions...</th></tr>
+        </tbody>
+    </table>
+</div>

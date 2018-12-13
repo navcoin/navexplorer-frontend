@@ -4,12 +4,7 @@ namespace App\Navcoin\Address\Entity;
 
 use App\Navcoin\Address\Type\AddressTransactionType;
 
-/**
- * Class Transaction
- *
- * @package App\Navcoin\Address\Entity
- */
-class Transaction
+class AddressTransaction
 {
     /**
      * @var String
@@ -56,6 +51,41 @@ class Transaction
      */
     private $type;
 
+    /**
+     * @var String
+     */
+    protected $address;
+
+    /**
+     * @var bool
+     */
+    protected $coldStaking;
+
+    /**
+     * @var String
+     */
+    protected $coldStakingAddress;
+
+    /**
+     * @var float
+     */
+    private $coldStakingBalance;
+
+    /**
+     * @var float
+     */
+    private $coldStakingAmount;
+
+    /**
+     * @var float
+     */
+    private $coldStakingSent;
+
+    /**
+     * @var float
+     */
+    private $coldStakingReceived;
+
     public function __construct(
         String $id,
         String $transaction,
@@ -64,7 +94,11 @@ class Transaction
         float $balance,
         float $sent,
         float $received,
-        String $type
+        String $type,
+        String $address,
+        float $coldStakingBalance,
+        float $coldStakingSent,
+        float $coldStakingReceived
     ) {
         $this->id = $id;
         $this->transaction = $transaction;
@@ -76,6 +110,11 @@ class Transaction
         $this->received = $received;
         $this->amount = $this->received - $this->sent;
         $this->type = $type;
+        $this->address = $address;
+        $this->coldStakingBalance = $coldStakingBalance;
+        $this->coldStakingSent = $coldStakingSent;
+        $this->coldStakingReceived = $coldStakingReceived;
+        $this->coldStakingAmount = $this->coldStakingReceived - $this->coldStakingSent;
     }
 
     public function getId(): String
@@ -126,5 +165,40 @@ class Transaction
     public function getType(): String
     {
         return $this->getType();
+    }
+
+    public function getAddress(): String
+    {
+        return $this->address;
+    }
+
+    public function isColdStaking(): bool
+    {
+        return $this->coldStaking;
+    }
+
+    public function getColdStakingAddress(): String
+    {
+        return $this->coldStakingAddress;
+    }
+
+    public function getColdStakingBalance(): float
+    {
+        return $this->coldStakingBalance;
+    }
+
+    public function getColdStakingAmount(): float
+    {
+        return $this->coldStakingAmount;
+    }
+
+    public function getColdStakingSent(): float
+    {
+        return $this->coldStakingSent;
+    }
+
+    public function getColdStakingReceived(): float
+    {
+        return $this->coldStakingReceived;
     }
 }

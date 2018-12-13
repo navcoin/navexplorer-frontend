@@ -1,6 +1,6 @@
 endroid_qr_code:
     writer: 'png'
-    size: 300
+    size: 250
     margin: 0
     error_correction_level: 'high'
     validate_result: false
