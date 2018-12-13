@@ -26,16 +26,13 @@
                     {% if transaction.staking %}
                         <span class="break-word">
                             <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
-                            <small>Staking Address</small>
                         </span>
                     {% elseif input.addresses|length > 1 %}
                         <span class="break-word">
                             <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
-                            <small>Staking Address</small>
                         </span>
                         <span class="break-word">
                             <a href="{{ path('app_address_index', { 'hash': input.addresses[1] }) }}">{{ input.addresses[1] }}</a>
-                            <small>Spending Address</small>
                         </span>
                     {% elseif input.addresses|length == 1 %}
                         <span class="break-word">
