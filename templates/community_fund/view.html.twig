@@ -42,71 +42,11 @@
 
                 <div id="block-collapse">
                     <div id="voting" class="collapse show" data-parent="#block-collapse">
-                        <div class="margin-bottom row">
-                            <div class="col-md-6 col-sm-12 margin-bottom">
-                                <h3>Voting cycle {{ proposal.votingCycle }}</h3>
-                                {{ proposalVoteProgress(proposal, blockCycle, proposal.votingCycle) }}
-                                <p class="text-muted">Accept {{ proposal.votesYes }} / Reject {{ proposal.votesNo }}</p>
-                            </div>
-                            <div class="col-md-6 col-sm-12">
-                                <h3>Voting Trend</h3>
-                                <canvas id="trendChart" class="margin-top"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12 margin-bottom">
-                                <h4>Voters For</h4>
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Address</th>
-                                            <th>Votes</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for vote in votesYes %}
-                                            <tr>
-                                                <td>
-                                                    <a href="{{ path('app_address_index', {'hash': vote.address }) }}">{{ vote.address }}</a>
-                                                </td>
-                                                <td>{{ vote.votes }}</td>
-                                            </tr>
-                                        {% else %}
-                                            <tr>
-                                                <td colspan="2">Nobody has voted for this proposal</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <div class="col-md-6 col-sm-12">
-                                <h4>Voters Against</h4>
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Address</th>
-                                        <th>Votes</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for vote in votesNo %}
-                                        <tr>
-                                            <td>
-                                                <a href="{{ path('app_address_index', {'hash': vote.address }) }}">{{ vote.address }}</a>
-                                            </td>
-                                            <td>{{ vote.votes }}</td>
-                                        </tr>
-                                    {% else %}
-                                        <tr>
-                                            <td colspan="2">Nobody has voted against this proposal</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        {% if proposal.state == "PENDING" %}
+                            {% include "community_fund/components/view_proposal_voting_pending.html.twig" %}
+                        {% elseif proposal.state == "ACCEPTED" %}
+                            {% include "community_fund/components/view_proposal_voting_accepted.html.twig" %}
+                        {% endif %}
                     </div>
 
                     <div id="payment-requests" class="collapse collapsed" data-parent="#block-collapse">
