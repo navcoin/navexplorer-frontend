@@ -31,10 +31,6 @@ class AddressMapper implements MapperInterface
             $data['balance'] / 100000000,
             $data['blockIndex'],
             $data['richListPosition'],
-            $data['coldStakedBalance'] / 100000000,
-            $data['coldStaked'] / 100000000,
-            $data['coldStakedCount'],
-            $data['coldStakedSent'] / 100000000,
             array_key_exists('label', $data) ? $data['label'] : null
         );
     }
