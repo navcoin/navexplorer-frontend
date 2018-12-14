@@ -54,8 +54,8 @@
                 <td class="text-right break-word">{{ proposal.userPaidFee|stake_format }}</td>
             </tr>
             <tr>
-                <td><strong>State</strong></td>
-                <td class="text-right break-word">{{ proposal.state|capitalize|replace({"_": " "}) }}</td>
+                <td><strong>Status</strong></td>
+                <td class="text-right break-word">{{ proposal.status|title }}</td>
             </tr>
             {% if proposal.stateChangedOnBlock and proposal.state == "ACCEPTED" %}
                 <tr>
