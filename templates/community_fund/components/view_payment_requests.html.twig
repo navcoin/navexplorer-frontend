@@ -9,8 +9,7 @@
                 <ul class="list-group list-group-flush">
 
                     <li class="list-group-item">
-                        Payment Request Hash<br>
-                        <a href="#" class="break-word">{{ paymentRequest.hash }}</a>
+                        <a href="{{ path('app_communityfund_viewpaymentrequest', {'hash': paymentRequest.hash}) }}" class="break-word">{{ paymentRequest.hash }}</a>
                     </li>
 
                     <li class="list-group-item">
@@ -29,8 +28,8 @@
                     </li>
 
                     <li class="list-group-item">
-                        State
-                        <span class="float-right">{{ paymentRequest.state|capitalize }}</span>
+                        Status
+                        <span class="float-right">{{ paymentRequest.status|capitalize }}</span>
                     </li>
 
                     {% if paymentRequest.state == "ACCEPTED" %}
@@ -44,11 +43,11 @@
                         </li>
                     {% endif %}
                 </ul>
-                {#<div class="card-footer">#}
-                    {#<div class="d-flex justify-content-center">#}
-                        {#<a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="btn btn-info">View Payment Request</a>#}
-                    {#</div>#}
-                {#</div>#}
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ path('app_communityfund_viewpaymentrequest', {'hash': paymentRequest.hash}) }}" class="btn btn-info">View Payment Request</a>
+                    </div>
+                </div>
             </div>
         </div>
     {% else %}
