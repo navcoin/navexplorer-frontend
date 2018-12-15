@@ -166,6 +166,36 @@ class CommunityFundController extends Controller
     }
 
     /**
+     * @Route("/community-fund/payment-request/{hash}")
+     * @Template()
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function viewPaymentRequestAction(Request $request)
+    {
+        $paymentRequest = $this->paymentRequestApi->getPaymentRequest($request->get('hash'));
+
+        $block = null;
+        if ($paymentRequest->getState() == 'ACCEPTED' && $paymentRequest->getStateChangedOnBlock()) {
+            try {
+                $block = $this->blockApi->getBlock($paymentRequest->getStateChangedOnBlock());
+            } catch (BlockNotFoundException $e) {
+                //
+            }
+        }
+
+        return [
+            'blockCycle' => $this->proposalApi->getBlockCycle(),
+            'proposal' => $this->proposalApi->getProposal($paymentRequest->getProposalHash()),
+            'paymentRequest' => $paymentRequest,
+            'block' => $block,
+            'votesYes' => $this->votersApi->getPaymentRequestVotes($request->get('hash'), true),
+            'votesNo' => $this->votersApi->getPaymentRequestVotes($request->get('hash'), false),
+        ];
+    }
+
+    /**
      * @Route("/community-fund/proposal/{hash}/trend.json")
      *
      *
@@ -174,9 +204,25 @@ class CommunityFundController extends Controller
      *
      * @return Response
      */
-    public function transactions(Request $request, SerializerInterface $serializer): Response
+    public function proposalVoteTrends(Request $request, SerializerInterface $serializer): Response
     {
         $transactions = $this->trendApi->getProposalVotingTrend($request->get('hash'));
+
+        return new Response($serializer->serialize($transactions, 'json'));
+    }
+
+    /**
+     * @Route("/community-fund/payment-request/{hash}/trend.json")
+     *
+     *
+     * @param Request             $request
+     * @param SerializerInterface $serializer
+     *
+     * @return Response
+     */
+    public function paymentRequestVoteTrends(Request $request, SerializerInterface $serializer): Response
+    {
+        $transactions = $this->trendApi->getPaymentRequestVotingTrend($request->get('hash'));
 
         return new Response($serializer->serialize($transactions, 'json'));
     }

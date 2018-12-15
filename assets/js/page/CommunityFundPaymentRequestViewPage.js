@@ -5,17 +5,17 @@ import Chart from 'chart.js';
 import 'chartjs-plugin-annotation';
 import axios from "axios";
 
-class CommunityFundProposalViewPage {
+class CommunityFundPaymentRequestViewPage {
     constructor()
     {
-        console.log("CommunityFund Proposal View");
+        console.log("CommunityFund Payment Request View");
 
         this.autoLinkDescription();
         this.createTrendGraph();
     }
 
     autoLinkDescription() {
-        let $proposalDescription = $('.proposal-description');
+        let $proposalDescription = $('.paymentrequest-description');
         $proposalDescription.html(
             anchorme($proposalDescription.html(), {
                 attributes:[
@@ -29,7 +29,7 @@ class CommunityFundProposalViewPage {
     }
 
     createTrendGraph() {
-        axios.get('/community-fund/proposal/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
+        axios.get('/community-fund/payment-request/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
     }
 
     loadChartData(response) {
@@ -135,6 +135,6 @@ class CommunityFundProposalViewPage {
     }
 }
 
-if ($('body').is('.page-communityfund-proposal-view')) {
-    new CommunityFundProposalViewPage();
+if ($('body').is('.page-communityfund-paymentrequest-view')) {
+    new CommunityFundPaymentRequestViewPage();
 }

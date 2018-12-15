@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Community Fund Payment Request - {{ paymentRequest.hash }}{% endblock %}
+{% block description %}{{ paymentRequest.description|capitalize }}{% endblock %}
+
+{% block page %}page-communityfund-paymentrequest-view{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Community&nbsp;Fund Payment Request</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="paymentrequest-description">{{ paymentRequest.description|capitalize }}</h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                {{ include('community_fund/components/view_paymentrequest_details.html.twig') }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-toggle="collapse" data-target="#voting" aria-expanded="true" aria-controls="voting">
+                            Voting
+                        </a>
+                    </li>
+                </ul>
+
+                <div id="block-collapse">
+                    <div id="voting" class="collapse show" data-parent="#block-collapse">
+                        {% if paymentRequest.state == "PENDING" %}
+                            {% include "community_fund/components/view_paymentrequest_voting_pending.html.twig" %}
+                        {% elseif paymentRequest.state == "ACCEPTED" %}
+                            {% include "community_fund/components/view_proposal_voting_accepted.html.twig" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <a class="btn btn-info" href="{{ path('app_communityfund_view', {'hash': paymentRequest.proposalHash}) }}">Back to Proposal</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
