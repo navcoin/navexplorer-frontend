@@ -68,13 +68,16 @@ class CommunityFundController extends Controller
     public function indexAction(): array
     {
         $proposals = $this->proposalApi->getProposalsByState("PENDING", "id");
-        $proposals->limit(3);
+        $proposals->limit(5);
+
+        $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("PENDING", "id");
+        $proposals->limit(5);
 
         return [
             'stats' => $this->proposalApi->getStats(),
             'blockCycle' => $this->proposalApi->getBlockCycle(),
             'proposals' => $proposals,
-            'paymentRequests' => $this->paymentRequestApi->getPaymentRequestsByState("PENDING", "id"),
+            'paymentRequests' => $paymentRequests,
         ];
     }
 
