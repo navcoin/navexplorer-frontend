@@ -24,7 +24,7 @@ class BlockIndexPage {
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'date/time')
-            .append(moment(data.created).utc().format('YYYY-MM-DD[,] H:mm:ss'))
+            .append(moment(data.created).utc().format('YYYY-MM-DD[,] HH:mm:ss'))
         );
 
         $row.append($(document.createElement('td'))

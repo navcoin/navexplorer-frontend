@@ -29,7 +29,7 @@ class AddressIndexPage {
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'date/time')
-            .append(moment(data.time).utc().format('YYYY-MM-DD[,] H:mm:ss'))
+            .append(moment(data.time).utc().format('YYYY-MM-DD[,] HH:mm:ss'))
         );
 
         $row.append($(document.createElement('td'))
@@ -44,7 +44,7 @@ class AddressIndexPage {
         } else if (data.type === "COLD_STAKING") {
             $amountTd.append('&nbsp;<span class="badge badge-info">Cold Stake</span>');
         } else if (data.type === "COMMUNITY_FUND_PAYOUT") {
-            $amountTd.append('&nbsp;<span class="badge badge-info">Community Fund Payout</span>');
+            $amountTd.append('&nbsp;<span class="badge badge-info">Community Fund</span>');
         }
 
         $row.append($amountTd);
@@ -71,7 +71,7 @@ class AddressIndexPage {
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'date/time')
-            .append(moment(data.time).utc().format('YYYY-MM-DD[,] H:mm:ss'))
+            .append(moment(data.time).utc().format('YYYY-MM-DD[,] HH:mm:ss'))
         );
 
         $row.append($(document.createElement('td'))

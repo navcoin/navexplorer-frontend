@@ -88,7 +88,6 @@ class ProposalApi extends NavcoinApi
             $proposals->sortByVotes();
         }
 
-
         return $proposals;
     }
 }

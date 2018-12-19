@@ -60,14 +60,22 @@ class CommunityFundController extends Controller
     }
 
     /**
-     * @Route("/community-fund/proposals")
+     * @Route("/community-fund")
      * @Template()
      *
-     * @return RedirectResponse
+     * @return array
      */
-    public function redirectAction(): RedirectResponse
+    public function indexAction(): array
     {
-        return $this->redirectToRoute('app_communityfund_proposals', ['state' => 'pending']);
+        $proposals = $this->proposalApi->getProposalsByState("PENDING", "id");
+        $proposals->limit(3);
+
+        return [
+            'stats' => $this->proposalApi->getStats(),
+            'blockCycle' => $this->proposalApi->getBlockCycle(),
+            'proposals' => $proposals,
+            'paymentRequests' => $this->paymentRequestApi->getPaymentRequestsByState("PENDING", "id"),
+        ];
     }
 
     /**
@@ -75,12 +83,10 @@ class CommunityFundController extends Controller
      * @Template()
      *
      * @param Request $request
-     * @param AddressApi $addressApi
-     * @param SoftForkApi $softForkApi
      *
      * @return array|RedirectResponse
      */
-    public function proposalsAction(Request $request, AddressApi $addressApi, SoftForkApi $softForkApi)
+    public function proposalsAction(Request $request)
     {
         switch($request->get('state')) {
             case 'pending':
@@ -104,7 +110,6 @@ class CommunityFundController extends Controller
 
         return [
             'stats' => $this->proposalApi->getStats(),
-            'softFork' => $softForkApi->getByName("C FUND"),
             'blockHeight' => $this->blockApi->getBestBlock()->getHeight(),
             'blockCycle' => $this->proposalApi->getBlockCycle(),
             'proposals' => $proposals,
@@ -139,6 +144,44 @@ class CommunityFundController extends Controller
             'block' => $block,
             'votesYes' => $this->votersApi->getProposalVotes($request->get('hash'), true),
             'votesNo' => $this->votersApi->getProposalVotes($request->get('hash'), false),
+        ];
+    }
+
+
+
+    /**
+     * @Route("/community-fund/payment-requests/{state}")
+     * @Template()
+     *
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
+    public function paymentRequestsAction(Request $request)
+    {
+        switch($request->get('state')) {
+            case 'pending':
+                $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("PENDING", "votes");
+                break;
+            case 'accepted':
+                $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("ACCEPTED");
+                break;
+            case 'rejected':
+                $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("REJECTED");
+                break;
+            case 'expired':
+                $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("EXPIRED");
+                break;
+            default:
+                return $this->redirectToRoute('app_communityfund_paymentrequests', ['state' => 'pending']);
+        }
+
+        return [
+            'stats' => $this->proposalApi->getStats(),
+            'blockHeight' => $this->blockApi->getBestBlock()->getHeight(),
+            'blockCycle' => $this->proposalApi->getBlockCycle(),
+            'paymentRequests' => $paymentRequests,
+            'active' => $request->get('state'),
         ];
     }
 

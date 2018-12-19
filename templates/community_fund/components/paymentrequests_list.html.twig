@@ -1,12 +1,12 @@
 <div class="row">
-    {% for proposal in proposals %}
+    {% for paymentRequest in paymentRequests %}
         <div class="col-sm-6 col-md-4 col-lg-4">
-            {% include "community_fund/components/proposal_card.html.twig" %}
+            {% include "community_fund/components/paymentrequest_card.html.twig" %}
         </div>
     {% else %}
         <div class="col-md-12">
             <div class="alert alert-info">
-                There are no {{ active|proposalState }} proposals
+                There are no {{ active|proposalState }} payment requests
             </div>
         </div>
     {% endfor %}

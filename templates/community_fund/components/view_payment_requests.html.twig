@@ -36,7 +36,7 @@
                         <li class="list-group-item">
                             Paid in Block<br>
                             {% if paymentRequest.paidOnBlock %}
-                                <a href="{{ path("app_block_view", {height: paymentRequest.paidOnBlock}) }}" class="break-word">{{ paymentRequest.paidOnBlock }}
+                                <a href="{{ path("app_block_view", {height: paymentRequest.paidOnBlock}) }}" class="break-word">{{ paymentRequest.paidOnBlock }}</a>
                             {% else %}
                                 <span class="float-right">Pending</span>
                             {% endif %}

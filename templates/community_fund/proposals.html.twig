@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Community Fund{% endblock %}
-{% block description %}NavCoin Community Fund, Proposals and Payment Requests{% endblock %}
+{% block title %}Community Fund Proposals{% endblock %}
+{% block description %}NavCoin Community Fund Proposals{% endblock %}
 
 {% block page %}page-communityFund-proposals{% endblock %}
 
@@ -10,32 +10,14 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Community Fund</h1>
+
+                {% include "community_fund/components/blockcycle_stats.html.twig" %}
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-info">
-                    {% if softFork.state == 'LOCKED_IN' %}
-                        The community fund has been accepted and was locked in on block {{ softFork.lockedInHeight|number_format }}<br>
-                        The fund will activate on block {{ softFork.activationHeight|number_format }} at which point community members can begin creating and voting for their proposals
-                    {% else %}
-                        Votes counted for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ blockCycle.cycle|ordinal }} block cycle.<br/>
-                        {% if blockCycle.remainingBlocks == 1 %}
-                            There is <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> block remaining.
-                        {% else %}
-                            There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining.
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        {% include "community_fund/components/proposals_summary.html.twig" %}
 
         <div class="row proposals-list">
             <div class="col-md-12">
-                <h2 class="float-left">Proposals</h2>
+                <h2 class="float-left">{{ active|replace({'-': ' '})|capitalize }} proposals</h2>
 
                 <div class="filters float-right">
                     <ul class="list-inline">

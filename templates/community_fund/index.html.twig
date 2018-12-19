@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Community Fund{% endblock %}
+{% block description %}View all proposals on the NavCoin blockchain{% endblock %}
+
+{% block page %}page-communityFund-index{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Community Fund</h1>
+
+            {% include "community_fund/components/blockcycle_stats.html.twig" %}
+
+            {% include "community_fund/components/proposals_summary.html.twig" %}
+        </div>
+    </div>
+
+    <div class="row margin-top">
+        <div class="col-md-6 col-sm-12 margin-bottom">
+            <h2>Pending Proposals</h2>
+
+            {% if proposals %}
+                <table class="table table-striped">
+                    <tbody>
+                        {% for proposal in proposals %}
+                            <tr><td>{% include "community_fund/components/proposal_card_slim.html.twig" %}</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info">There are no pending proposals</div>
+            {% endif %}
+
+            <p class="margin-top"><a href="{{ path('app_communityfund_proposals', {'state': 'pending'}) }}" class="btn btn-info">View all proposals</a></p>
+        </div>
+
+        <div class="col-md-6 col-sm-12 margin-bottom">
+            <h2>Pending Payment Requests</h2>
+
+            {% if paymentRequests %}
+                <table class="table table-striped">
+                    <tbody>
+                    {% for paymentRequest in paymentRequests %}
+                        <tr><td>{% include "community_fund/components/paymentRequest_card_slim.html.twig" %}</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info">There are no pending payment requests</div>
+            {% endif %}
+
+            <p class="margin-top"><a href="{{ path('app_communityfund_paymentrequests', {'state': 'pending'}) }}" class="btn btn-info">View all payment requests</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

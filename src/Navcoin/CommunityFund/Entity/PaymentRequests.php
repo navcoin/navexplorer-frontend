@@ -11,4 +11,17 @@ class PaymentRequests extends IteratorEntity implements IteratorEntityInterface
     {
         $this->supportedTypes = [PaymentRequest::class];
     }
+
+    public function sortByVotes() {
+        $paymentRequests = $this->getElements();
+        usort($paymentRequests, function (PaymentRequest $a, PaymentRequest $b) {
+            return -1 * ($a->getVotesTotal() - $b->getVotesTotal());
+        });
+
+        $this->setElements($paymentRequests);
+    }
+
+    public function limit(int $limit) {
+        $this->setElements(array_slice($this->getElements(), 0, $limit));
+    }
 }

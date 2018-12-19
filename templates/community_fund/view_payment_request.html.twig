@@ -9,12 +9,19 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
-                <h1>Community&nbsp;Fund Payment Request</h1>
+                <h1>Community&nbsp;Fund Proposal</h1>
+            </div>
+        </div>
+
+        <div class="row margin-bottom-half">
+            <div class="col-md-12">
+                <h4 class="proposal-description break-word">{{ proposal.description|capitalize }}</h4>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
+                <h2>Payment Request</h2>
                 <h4 class="paymentrequest-description">{{ paymentRequest.description|capitalize }}</h4>
             </div>
         </div>
@@ -50,7 +57,7 @@
         <div class="row">
             <div class="col-md-12">
                 <br>
-                <a class="btn btn-info" href="{{ path('app_communityfund_view', {'hash': paymentRequest.proposalHash}) }}">Back to Proposal</a>
+                <a class="btn btn-info" href="{{ path('app_communityfund_view', {'hash': paymentRequest.proposalHash}) }}">Back to proposal</a>
             </div>
         </div>
     </div>
