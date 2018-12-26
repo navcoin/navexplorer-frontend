@@ -39,9 +39,9 @@ class ProposalApi extends NavcoinApi
             if (!array_key_exists( 'available', $data) || !array_key_exists('locked', $data)) {
                 throw new \Exception("Invalid api response: " . \GuzzleHttp\json_encode($data));
             }
-            $stats = new Stats($data['available'], $data['locked']);
+            $stats = new Stats($data['available'], $data['locked'], $data['spent']);
         } catch (\Exception $e) {
-            $stats = new Stats(0, 0);
+            $stats = new Stats(0, 0, 0);
         }
 
         return $stats;

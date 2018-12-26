@@ -14,10 +14,16 @@ class Stats
      */
     private $locked;
 
-    public function __construct(float $available, float $locked)
+    /**
+     * @var float
+     */
+    private $spent;
+
+    public function __construct(float $available, float $locked, float $spent)
     {
         $this->available = $available;
         $this->locked = $locked;
+        $this->spent = $spent;
     }
 
     public function getAvailable(): float
@@ -28,5 +34,10 @@ class Stats
     public function getLocked(): float
     {
         return $this->locked;
+    }
+
+    public function getSpent(): float
+    {
+        return $this->spent;
     }
 }
