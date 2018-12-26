@@ -42,7 +42,7 @@ class ProposalExtension extends AbstractExtension
 <div class="progress">
     '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $proposal->getVotesYes()).'
     '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $proposal->getVotesNo()).'
-    '.($proposal->getStatus() == 'pending' ? $abstentionBar : '').'
+    '.($proposal->getState() == 'PENDING' ? $abstentionBar : '').'
 </div>';
     }
 
@@ -56,7 +56,7 @@ class ProposalExtension extends AbstractExtension
 <div class="progress">
     '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), true), $paymentRequest->getVotesYes()).'
     '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), false), $paymentRequest->getVotesNo()).'
-    '.($paymentRequest->getStatus() == 'pending' ? $abstentionBar : '').'
+    '.($paymentRequest->getState() == 'PENDING' ? $abstentionBar : '').'
 </div>';
     }
 
