@@ -96,6 +96,10 @@ class Address
         float $balance,
         int $blockIndex,
         int $richListPosition,
+        float $coldStakedBalance,
+        float $coldStaked,
+        int $coldStakedCount,
+        float $coldStakeSent,
         ?string $label
     ) {
         $this->hash = $hash;
@@ -109,6 +113,10 @@ class Address
         $this->balance = $balance;
         $this->blockIndex = $blockIndex;
         $this->richListPosition = $richListPosition;
+        $this->coldStakedBalance = $coldStakedBalance;
+        $this->coldStaked = $coldStaked;
+        $this->coldStakedCount = $coldStakedCount;
+        $this->coldStakedSent = $coldStakeSent;
         $this->label = $label;
     }
 
