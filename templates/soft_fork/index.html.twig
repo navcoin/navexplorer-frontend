@@ -45,7 +45,7 @@
                                     <td class="text-center">{{ fork.blocksSignalling|number_format }}</td>
                                     <td class="text-center d-none d-sm-table-cell">{{ (fork.blocksInCycle*0.75)|number_format }}</td>
                                     <td class="text-center d-none d-sm-table-cell">{{ fork.blocksRemaining|number_format }}</td>
-                                    <td class="text-center">{{ ((fork.blocksSignalling / currentBlock) * 100)|round }}%</td>
+                                    <td class="text-center">{{ ((fork.blocksSignalling / currentBlock) * 100)|number_format(1) }}%</td>
                                     <td class="text-center">
                                         {% if (fork.blocksInCycle*0.75) - fork.blocksSignalling > fork.blocksRemaining %}
                                             <span class="badge badge-warning">Missed</span>
@@ -78,6 +78,7 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         {% for fork in softForks if fork.state in ['ACTIVE', 'LOCKED_IN'] %}
                             <tr>
                                 <td>{{ fork.name }}</td>
@@ -89,7 +90,7 @@
                                         {{ fork.activationHeight }}
                                     {% endif %}
                                 </td>
-                                <td class="text-center">{{ ((fork.blocksSignalling / fork.blocksInCycle) * 100)|round }}%</td>
+                                <td class="text-center">{{ ((fork.blocksSignalling / fork.blocksInCycle) * 100)|number_format(1) }}%</td>
                                 <td class="text-center">
                                     {% if fork.state == 'ACTIVE' %}
                                         <span class="badge badge-success">{{ fork.state|capitalize }}</span>

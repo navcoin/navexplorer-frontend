@@ -96,7 +96,7 @@ class SoftFork
 
     public function getLockedInHeight(): int
     {
-        return $this->lockedInHeight;
+        return $this->lockedInHeight ?: 0;
     }
 
     public function getActivationHeight(): int

@@ -45,9 +45,12 @@ class SoftForkController
      */
     public function index()
     {
+        $softForks = $this->softForkApi->getAll();
+        $softForks->sortByLockedInHeight();
+
         return [
             'block' => $this->blockApi->getBestBlock(),
-            'softForks' => $this->softForkApi->getAll(),
+            'softForks' => $softForks,
         ];
     }
 }

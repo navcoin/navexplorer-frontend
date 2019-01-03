@@ -12,5 +12,14 @@ class SoftForks extends IteratorEntity implements IteratorEntityInterface
     {
         $this->supportedTypes = [SoftFork::class];
     }
+
+    public function sortByLockedInHeight() {
+        $softForks = $this->getElements();
+        usort($softForks, function (SoftFork $a, SoftFork $b) {
+            return -1 * ($a->getLockedInHeight() - $b->getLockedInHeight());
+        });
+
+        $this->setElements($softForks);
+    }
 }
 
