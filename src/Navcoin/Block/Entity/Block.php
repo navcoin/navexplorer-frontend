@@ -104,6 +104,11 @@ class Block
      */
     private $raw;
 
+    /**
+     * @var float
+     */
+    private $balance;
+
     public function __construct(
         String $id,
         String $hash,
@@ -124,7 +129,8 @@ class Block
         bool $best,
         BlockSignals $signals,
         ?int $blockCycle,
-        string $raw
+        string $raw,
+        float $balance
     ) {
         $this->id = $id;
         $this->hash = $hash;
@@ -146,6 +152,7 @@ class Block
         $this->signals = $signals;
         $this->blockCycle = $blockCycle;
         $this->raw = $raw;
+        $this->balance = $balance;
     }
 
     public function getId(): string
@@ -251,5 +258,10 @@ class Block
     public function getRaw()
     {
         return $this->raw;
+    }
+
+    public function getBalance(): float
+    {
+        return $this->balance;
     }
 }

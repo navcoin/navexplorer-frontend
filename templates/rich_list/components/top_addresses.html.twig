@@ -25,7 +25,7 @@
                     </td>
                     <td>
                         {{ address.balance|stake_format(false, 2) }}<br/>
-                        {% set balance = ((address.balance/63616082)*100)|round(2, 'floor') %}
+                        {% set balance = ((address.balance/bestBlock.balance)*100)|round(2, 'floor') %}
                         {% if balance == 0 %}
                             < 0.01%
                         {% else %}
