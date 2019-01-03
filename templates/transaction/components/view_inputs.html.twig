@@ -46,6 +46,10 @@
                     {{ input.amount|stake_format }}
                 </td>
             </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">There are no transaction inputs</td>
+            </tr>
         {% endfor %}
     </tbody>
 </table>

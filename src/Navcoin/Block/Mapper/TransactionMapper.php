@@ -69,7 +69,7 @@ class TransactionMapper extends BaseMapper
                     is_array($outputData['redeemedIn']) ? $outputData['redeemedIn']['height'] : null
                 );
 
-                if (in_array($output->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE'])) {
+                if ($output->isCommunityFund()) {
                     $output->setHash($outputData['hash']);
                 }
 

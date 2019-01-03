@@ -15,29 +15,25 @@
             {% for key, output in transaction.outputs %}
                 <tr>
                     <td data-role="index">{{ output.index }}</td>
-                    <td data-role="type">{{ output.type|lower }}</td>
+                    <td data-role="type">{{ output.type|capitalize }}</td>
                     <td data-role="redeemedIn">
                         {% if output.redeemedInTransaction and output.redeemedInBlock %}
                             <a href="{{ path('app_transaction_view', {'hash': output.redeemedInTransaction}) }}">{{ output.redeemedInTransaction|slice(0, 20) }}</a>...
                             <small>in <a href="{{ path('app_block_view', {'height': output.redeemedInBlock}) }}">{{ output.redeemedInBlock }}</a></small>
                         {% elseif output.type == 'CFUND_CONTRIBUTION' or output.address == '' %}
-                            N/A
+
                         {% else %}
                             Unspent
                         {% endif %}
                     </td>
                     <td data-role="address">
-                        {% if output.type == 'CFUND_CONTRIBUTION' %}
-                            N/A
-                        {% elseif output.type == "COLD_STAKING" %}
+                        {% if output.type == "COLD_STAKING" %}
                             <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
                             <a href="{{ path('app_address_index', { 'hash': output.addresses[1] }) }}" class="break-word">{{ output.addresses[1] }}</a>
                         {% elseif output.addresses and output.addresses|length %}
                             <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
                         {% elseif output.address %}
                             <a href="{{ path('app_address_index', { 'hash': output.address }) }}" class="break-word">{{ output.address }}</a>
-                        {% else %}
-                            N/A
                         {% endif %}
                     </td>
                     <td data-role="amount">

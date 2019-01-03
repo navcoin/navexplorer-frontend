@@ -1,0 +1,32 @@
+<h2>Coinbase</h2>
+
+<table class="table table-striped table-adaptive">
+    <thead>
+    <tr>
+        <th style="width: 5%">Index</th>
+        <th style="width: 20%">Type</th>
+        <th colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for output in transaction.outputs %}
+        {% if output.communityFund %}
+            <tr>
+                <td data-role="index">{{ output.index }}</td>
+                <td data-role="type">{{ output.type|capitalize|replace({'_': ' '}) }}</td>
+                <td data-role="proposal" colspan="2"><a class="break-word" href="{{ path('app_communityfund_view', {'hash': output.hash}) }}">{{ output.hash }}</a></td>
+            </tr>
+        {% elseif output.type == "NONSTANDARD" %}
+            <td data-role="index">{{ output.index }}</td>
+            <td data-role="type" colspan="3">{{ output.type|capitalize }}</td>
+        {% else %}
+            <tr>
+                <td data-role="index">{{ output.index }}</td>
+                <td data-role="type">Community fund payout</td>
+                <td data-role="address"><a class="break-word" href="">{{ output.address }}</a></td>
+                <td data-role="amount">{{ output.amount|stake_format }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>

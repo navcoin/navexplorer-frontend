@@ -27,13 +27,6 @@
                                 Details
                             </a>
                         </li>
-                        {% if transaction.outputs.communityFundVotes %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" data-target="#cfund-votes" aria-expanded="false" aria-controls="cfund-votes">
-                                    Community Fund
-                                </a>
-                            </li>
-                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-toggle="collapse" data-target="#raw-transaction" aria-expanded="false" aria-controls="raw-transaction">
                                 Raw Data
@@ -43,8 +36,12 @@
 
                     <div id="block-collapse">
                         <div id="transaction-details" class="collapse show" data-parent="#block-collapse">
-                            {% include "transaction/components/view_inputs.html.twig" %}
-                            {% include "transaction/components/view_outputs.html.twig" %}
+                            {% if transaction.coinbase %}
+                                {% include "transaction/components/view_coinbase.html.twig" %}
+                            {% else %}
+                                {% include "transaction/components/view_inputs.html.twig" %}
+                                {% include "transaction/components/view_outputs.html.twig" %}
+                            {% endif %}
                         </div>
 
                         <div id="raw-transaction" class="collapse collapsed" data-parent="#block-collapse">

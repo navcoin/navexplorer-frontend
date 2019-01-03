@@ -119,6 +119,6 @@ class Output
 
     public function isCommunityFund(): bool
     {
-        return in_array($this->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE']);
+        return in_array($this->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE', 'PAYMENT_REQUEST_YES_VOTE', 'PAYMENT_REQUEST_NO_VOTE']);
     }
 }

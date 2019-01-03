@@ -173,4 +173,9 @@ class Transaction
     {
         return $this->proposalVotes;
     }
+
+    public function isCoinbase(): bool
+    {
+        return $this->type == "COINBASE" || $this->type == "EMPTY";
+    }
 }
