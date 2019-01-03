@@ -26,6 +26,7 @@ class BlockMapper extends BaseMapper
             $data['stake'] / 100000000,
             $data['fees'] / 100000000,
             $data['spend'] / 100000000,
+            $data['cfundPayout'] / 100000000,
             $data['stakedBy'] ?: '',
             $data['transactions'],
             $data['best'],

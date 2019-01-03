@@ -16,12 +16,6 @@
                         <td class="text-right">{{ block.confirmations }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Created At</strong></td>
-                        <td class="text-right">
-                            {{ block.created|date_localised('Y-m-d, H:i:s') }}
-                        </td>
-                    </tr>
-                    <tr>
                         <td><strong>Staked By</strong></td>
                         <td class="text-right break-word">
                             {% if block.stakedBy %}
@@ -35,6 +29,12 @@
                         <td><strong>Stake Reward</strong></td>
                         <td class="text-right">{{ block.stake|stake_format }}</td>
                     </tr>
+                    {% if block.cfundPayout %}
+                    <tr>
+                        <td><strong>Community Fund Payout</strong></td>
+                        <td class="text-right">{{ block.cfundPayout|stake_format }}</td>
+                    </tr>
+                    {% endif %}
                     <tr>
                         <td><strong>Fees</strong></td>
                         <td class="text-right">{{ block.fees|stake_format }}</td>
@@ -50,6 +50,12 @@
         <div class="col-sm-12 col-md-4">
             <table class="table table-striped">
                 <tbody>
+                <tr class="d-flex">
+                    <td class="col-5"><strong>Created At</strong></td>
+                    <td class="text-right col-7">
+                        {{ block.created|date_localised('Y-m-d, H:i:s') }}
+                    </td>
+                </tr>
                 <tr class="d-flex">
                     <td class="col-5"><strong>Difficulty</strong></td>
                     <td class="text-right col-7">{{ block.difficulty }}</td>

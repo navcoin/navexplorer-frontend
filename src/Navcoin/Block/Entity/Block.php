@@ -75,6 +75,11 @@ class Block
     private $spend;
 
     /**
+     * @var float
+     */
+    private $cfundPayout;
+
+    /**
      * @var string
      */
     private $stakedBy;
@@ -124,6 +129,7 @@ class Block
         float $stake = 0.0,
         float $fees = 0.0,
         float $spend = 0.0,
+        float $cfundPayout = 0.0,
         String $stakedBy = '',
         int $transactions = 0,
         bool $best,
@@ -146,6 +152,7 @@ class Block
         $this->stake = $stake;
         $this->fees = $fees;
         $this->spend = $spend;
+        $this->cfundPayout = $cfundPayout;
         $this->stakedBy = $stakedBy;
         $this->transactions = $transactions;
         $this->best = $best;
@@ -228,6 +235,11 @@ class Block
     public function getSpend()
     {
         return $this->spend;
+    }
+
+    public function getCfundPayout(): float
+    {
+        return $this->cfundPayout;
     }
 
     public function getStakedBy(): string
