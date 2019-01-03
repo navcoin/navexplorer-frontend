@@ -17,25 +17,15 @@
                 <td class="text-right break-word">
                     <a href="{{ path('app_search_results', {'hash': paymentRequest.blockHash}) }}">{{ paymentRequest.blockHash }}</a>
                 </td>
-            {#</tr>#}
-            {#<tr>#}
-                {#<td><strong>Payment&nbsp;Address</strong></td>#}
-                {#<td class="text-right break-word">#}
-                    {#<a href="{{ path('app_address_index', {'hash': proposal.paymentAddress}) }}">{{ proposal.paymentAddress }}</a>#}
-                {#</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<td><strong>Duration</strong></td>#}
-                {#<td class="text-right break-word">#}
-                    {#{{ proposal.duration }}#}
-                {#</td>#}
-            {#</tr>#}
-            {#{% if proposal.expiresOn %}#}
-                {#<tr>#}
-                    {#<td><strong>Expiry Date</strong></td>#}
-                    {#<td class="text-right break-word">{{ proposal.expiresOn|date_localised('Y-m-d, H:i:s') }}</td>#}
-                {#</tr>#}
-            {#{% endif %}#}
+            </tr>
+            {% if paymentRequest.paidOnBlock %}
+                <tr>
+                    <td><strong>Paid On Block</strong></td>
+                    <td class="text-right break-word">
+                        <a href="{{ path('app_search_results', {'hash': paymentRequest.paidOnBlock}) }}">{{ paymentRequest.paidOnBlock }}</a>
+                    </td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><strong>Creation Date</strong></td>
                 <td class="text-right break-word">{{ paymentRequest.createdAt|date_localised('Y-m-d, H:i:s') }}</td>
@@ -63,14 +53,6 @@
                 <td><strong>Status</strong></td>
                 <td class="text-right break-word">{{ paymentRequest.status|title }}</td>
             </tr>
-            {#{% if proposal.stateChangedOnBlock and proposal.state == "ACCEPTED" %}#}
-                {#<tr>#}
-                    {#<td><strong>Acception Date</strong></td>#}
-                    {#<td class="text-right break-word">#}
-                        {#{{ block.created|date_localised('Y-m-d, H:i:s') }}#}
-                    {#</td>#}
-                {#</tr>#}
-            {#{% endif %}#}
             </tbody>
         </table>
 
