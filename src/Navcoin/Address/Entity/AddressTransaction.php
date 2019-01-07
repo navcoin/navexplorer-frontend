@@ -114,7 +114,7 @@ class AddressTransaction
         $this->coldStakingBalance = $coldStakingBalance;
         $this->coldStakingSent = $coldStakingSent;
         $this->coldStakingReceived = $coldStakingReceived;
-        $this->coldStakingAmount = $this->coldStakingReceived - $this->coldStakingSent;
+        $this->coldStakingAmount = $this->coldStakingReceived - ($this->type !== 'RECEIVE' ? $this->coldStakingSent : 0);
     }
 
     public function getId(): String
