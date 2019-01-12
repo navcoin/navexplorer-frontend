@@ -14,7 +14,11 @@
             <tr>
                 <td data-role="index">{{ output.index }}</td>
                 <td data-role="type">{{ output.type|capitalize|replace({'_': ' '}) }}</td>
-                <td data-role="proposal" colspan="2"><a class="break-word" href="{{ path('app_communityfund_view', {'hash': output.hash}) }}">{{ output.hash }}</a></td>
+                {% if output.type ==  'PROPOSAL_NO_VOTE' or output.type == 'PROPOSAL_YES_VOTE' %}
+                    <td data-role="proposal" colspan="2"><a class="break-word" href="{{ path('app_communityfund_view', {'hash': output.hash}) }}">{{ output.hash }}</a></td>
+                {% elseif output.type ==  'PAYMENT_REQUEST_NO_VOTE' or output.type == 'PAYMENT_REQUEST_YES_VOTE' %}
+                    <td data-role="proposal" colspan="2"><a class="break-word" href="{{ path('app_communityfund_viewpaymentrequest', {'hash': output.hash}) }}">{{ output.hash }}</a></td>
+                {% endif %}
             </tr>
         {% elseif output.type == "NONSTANDARD" %}
             <td data-role="index">{{ output.index }}</td>
