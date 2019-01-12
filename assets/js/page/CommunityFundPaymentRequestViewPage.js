@@ -15,8 +15,19 @@ class CommunityFundPaymentRequestViewPage {
     }
 
     autoLinkDescription() {
-        let $proposalDescription = $('.paymentrequest-description');
+        let $proposalDescription = $('.proposal-description');
         $proposalDescription.html(
+            anchorme($proposalDescription.html(), {
+                attributes:[
+                    {
+                        name:"target",
+                        value:"_blank"
+                    }
+                ]
+            })
+        );
+        let $paymentRequestDescription = $('.paymentrequest-description');
+        $paymentRequestDescription.html(
             anchorme($proposalDescription.html(), {
                 attributes:[
                     {

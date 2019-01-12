@@ -5,6 +5,8 @@
 .proposal-description {
   margin-bottom: 2rem;
   line-height: 1.7rem;
+  word-break: break-all;
+
   a {
     display: block;
   }
@@ -13,6 +15,7 @@
 .paymentrequest-description {
   margin-bottom: 2rem;
   line-height: 1.7rem;
+  word-break: break-all;
 }
 
 .card-proposal {
