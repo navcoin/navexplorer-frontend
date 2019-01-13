@@ -28,7 +28,7 @@ class CommunityFundPaymentRequestViewPage {
         );
         let $paymentRequestDescription = $('.paymentrequest-description');
         $paymentRequestDescription.html(
-            anchorme($proposalDescription.html(), {
+            anchorme($paymentRequestDescription.html(), {
                 attributes:[
                     {
                         name:"target",
