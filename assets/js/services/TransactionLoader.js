@@ -30,8 +30,8 @@ export default class TransactionLoader {
                 '  </div>\n' +
                 '  <div class="card-body">\n' +
                 '    <div class="row">\n' +
-                '      <div class="col-sm-12 col-md-6 inputs"><span class="caption">Inputs</span>' + self.inputList(tx.inputs) + '</div>\n' +
-                '      <div class="col-sm-12 col-md-6 outputs"><span class="caption">Outputs</span>' + self.inputList(tx.outputs) + '</div>\n' +
+                '      <div class="col-sm-12 col-md-6 inputs"><span class="caption">Inputs</span>' + self.inputList(tx.inputs, tx) + '</div>\n' +
+                '      <div class="col-sm-12 col-md-6 outputs"><span class="caption">Outputs</span>' + self.inputList(tx.outputs, tx) + '</div>\n' +
                 '    </div>\n' +
                 '  </div>\n' +
                 '</div>'
@@ -39,12 +39,16 @@ export default class TransactionLoader {
         });
     }
 
-    inputList(inputs) {
+    inputList(inputs, tx) {
         let BreakException = {};
         let list = $(document.createElement('ul'));
         let self = this;
 
-        if (inputs) {
+        if (tx.type === "PRIVATE_STAKING") {
+            let item = $(document.createElement('li'));
+            item.html("<em>Private Staker</em>");
+            list.append(item);
+        } else if (inputs) {
             try {
                 inputs.forEach(function (input, index) {
                     let address = $(document.createElement('div'));
