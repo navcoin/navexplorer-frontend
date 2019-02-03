@@ -44,11 +44,7 @@ export default class TransactionLoader {
         let list = $(document.createElement('ul'));
         let self = this;
 
-        if (tx.type === "PRIVATE_STAKING") {
-            let item = $(document.createElement('li'));
-            item.html("<em>Private Staker</em>");
-            list.append(item);
-        } else if (inputs) {
+        if (inputs) {
             try {
                 inputs.forEach(function (input, index) {
                     let address = $(document.createElement('div'));
@@ -57,17 +53,19 @@ export default class TransactionLoader {
                     if (typeof input.type !== 'undefined' && input.type === 'COLD_STAKING') {
                         address.append('<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[0] + '">' + input.addresses[0] + '</a>' +
-                            '  <small>Staking</small>' +
                             '</span>' +
                             '<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[1] + '">' + input.addresses[1] + '</a>' +
-                            '  <small>Spending</small>' +
                             '</span>');
                     } else if (typeof input.type !== 'undefined' && input.type !== 'PUBKEY' && input.type !== 'PUBKEYHASH') {
                         address.html(input.type.toLowerCase());
                     } else if (typeof input.addresses !== 'undefined') {
                         if (input.addresses.length === 0) {
-                            address.html('N/A');
+                            if (tx.type === "PRIVATE_STAKING") {
+                                address.html('<em>Private staker</em>');
+                            } else {
+                                address.html('N/A');
+                            }
                         } else {
                             let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
                             address.append(a);
