@@ -37,7 +37,7 @@ class BlockIndexPage {
         if (data.staked_by) {
             stakedBy = '<a href="/address/' + data.staked_by + '" class="break-word">' + data.staked_by + '</a>';
         } else if (data.stake !== 0) {
-            stakedBy = '<em>Private Staker</em>';
+            stakedBy = 'Private Address';
         }
 
         $row.append($(document.createElement('td'))
