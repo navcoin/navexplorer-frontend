@@ -62,7 +62,7 @@ export default class TransactionLoader {
                     } else if (typeof input.addresses !== 'undefined') {
                         if (input.addresses.length === 0) {
                             if (tx.type === "PRIVATE_STAKING") {
-                                address.html('<em>Private staker</em>');
+                                address.html('Private address');
                             } else {
                                 address.html('N/A');
                             }
@@ -94,6 +94,10 @@ export default class TransactionLoader {
                 } else {
                     throw e;
                 }
+            }
+        } else {
+            if (tx.type === "COINBASE") {
+                return "Coinbase";
             }
         }
 
