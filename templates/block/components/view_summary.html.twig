@@ -21,7 +21,7 @@
                             {% if block.stakedBy %}
                                 <a href="{{ path('app_address_index', { 'hash': block.stakedBy }) }}">{{ block.stakedBy }}</a>
                             {% elseif block.stake != 0 %}
-                                Private Stake
+                                <em>Private Staker</em>
                             {% else %}
                                 N/A
                             {% endif %}
