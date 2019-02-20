@@ -25,7 +25,7 @@ export default class Pagination {
         this.state = {};
         this.state.first = typeof data.first !== "undefined" ? data.first : true;
         this.state.last = typeof data.last !== "undefined" ? data.last : true;
-        this.state.page = typeof data.number !== "undefined" ? data.number : 0;
+        this.state.page = typeof data.number !== "undefined" ? data.number : 1;
         this.state.size = typeof data.size !== "undefined" ? data.size : 50;
         this.state.numberOfElements = typeof data.number_of_elements !== "undefined" ? data.number_of_elements : 0;
         this.state.totalElements = typeof data.total_elements !== "undefined" ? data.total_elements : 0;
@@ -72,36 +72,37 @@ export default class Pagination {
 
     clickPrevious() {
         let urlSplit = this.tableManager.dataUrl.split('?');
-        let queryParam = (urlSplit.length > 1 && urlSplit[1] !== '') ? '&' : '?';
-        let id = this.tableManager.table.find('tbody tr:first').attr('data-id');
+        let queryParam = (urlSplit.length > 1 && urlSplit[1] !== '') ? '&' : '?'
 
-        this.tableManager.loadNextPage(this.tableManager.dataUrl + queryParam + 'to=' + id);
         this.state.page--;
+
+        this.tableManager.loadNextPage(this.tableManager.dataUrl + queryParam + 'page=' + this.state.page);
     }
 
     clickNext() {
         let urlSplit = this.tableManager.dataUrl.split('?');
-        let queryParam = (urlSplit.length > 1 && urlSplit[1] !== '') ? '&' : '?';
-        let id = this.tableManager.table.find('tbody tr:last').attr('data-id');
+        let queryParam = (urlSplit.length > 1 && urlSplit[1] !== '') ? '&' : '?'
 
-        this.tableManager.loadNextPage(this.tableManager.dataUrl + queryParam + 'from=' + id);
         this.state.page++;
+
+        this.tableManager.loadNextPage(this.tableManager.dataUrl + queryParam + 'page=' + this.state.page);
     }
 
     clickLast() {
         let urlSplit = this.tableManager.dataUrl.split('?');
-        let queryParam = (urlSplit.length > 1 && urlSplit[1] !== '') ? '&' : '?';
+        let queryParam = (urlSplit.length > 1 && urlSplit[1] !== '') ? '&' : '?'
 
-        this.tableManager.loadNextPage(this.tableManager.dataUrl + queryParam + 'to=last&size='+this.state.lastPageElements);
-        this.state.page = this.state.totalPages - 1;
+        this.state.page = this.state.totalPages;
+
+        this.tableManager.loadNextPage(this.tableManager.dataUrl + queryParam + 'page=' + this.state.page);
     }
 
     updateStateFirstPage() {
-        this.state.first = (this.state.page === 0);
+        this.state.first = (this.state.page === 1);
     }
 
     updateStateLastPage() {
-        this.state.last = (this.state.page === this.state.totalPages - 1);
+        this.state.last = (this.state.page === this.state.totalPages);
     }
 
     render() {
@@ -113,7 +114,7 @@ export default class Pagination {
 
             let details = $(document.createElement('span'));
             details.addClass('pagination-details');
-            details.html("Showing page " + (pagination.state.page+1) + " of " + pagination.state.totalPages);
+            details.html("Showing page " + (pagination.state.page) + " of " + pagination.state.totalPages);
 
             let buttons = $(document.createElement('span'));
             buttons.addClass('float-right');

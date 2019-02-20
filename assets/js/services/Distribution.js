@@ -27,17 +27,20 @@ export default class Distribution {
         if (typeof this.rawData.segments === "undefined") {
             return;
         }
+
         this.buildChart(this.rawData.segments);
         this.buildTable(this.rawData.segments);
     }
 
     buildChart(segments) {
         let navNumberFormat = new NavNumberFormat();
+        let excluded = 0
         segments.forEach(function (segment) {
             this.dataSet.push({
-                'label': segment.position ? 'Top ' + segment.position + ' (' + segment.percentage.toFixed(2) + '%) - ' + navNumberFormat.formatNav(segment.total, false) : 'All - ' + navNumberFormat.formatNav(segment.total, false),
-                'count': segment.value,
+                'label': segment.group ? 'Top ' + segment.group + ' (' + segment.percentage + '%) - ' + navNumberFormat.formatNav(segment.balance, false) : 'All - ' + navNumberFormat.formatNav(segment.balance, false),
+                'count': segment.balance - excluded,
             });
+            excluded = segment.balance;
         }.bind(this));
 
         let width = 290;
@@ -86,11 +89,11 @@ export default class Distribution {
             );
 
             $row.append($(document.createElement('td'))
-                .append(segment.position ? numberFormatter.format(segment.position) : 'All')
+                .append(segment.group ? numberFormatter.format(segment.group) : 'All')
             );
 
             $row.append($(document.createElement('td'))
-                .append(numberFormatter.formatNav(segment.value, false))
+                .append(numberFormatter.formatNav(segment.balance, false))
             );
 
             $row.append($(document.createElement('td'))

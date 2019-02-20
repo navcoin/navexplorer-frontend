@@ -17,22 +17,7 @@ class SoftFork
     /**
      * @var int
      */
-    private $blocksInCycle;
-
-    /**
-     * @var int
-     */
-    private $blockRequired;
-
-    /**
-     * @var int
-     */
     private $blocksSignalling;
-
-    /**
-     * @var int
-     */
-    private $blocksRemaining;
 
     /**
      * @var int
@@ -47,19 +32,13 @@ class SoftFork
     public function __construct(
         String $name,
         String $state,
-        int $blocksInCycle,
-        ?int $blockRequired,
         ?int $blocksSignalling,
-        ?int $blocksRemaining,
         ?int $lockedInHeight,
         ?int $activationHeight
     ) {
         $this->name = $name;
         $this->state = $state;
-        $this->blocksInCycle = $blocksInCycle;
-        $this->blockRequired = $blockRequired;
         $this->blocksSignalling = $blocksSignalling;
-        $this->blocksRemaining = $blocksRemaining;
         $this->lockedInHeight = $lockedInHeight;
         $this->activationHeight = $activationHeight;
     }
@@ -74,42 +53,18 @@ class SoftFork
         return $this->state;
     }
 
-    public function getBlocksInCycle(): int
-    {
-        return $this->blocksInCycle;
-    }
-
-    public function getBlockRequired()
-    {
-        return $this->blockRequired;
-    }
-
     public function getBlocksSignalling(): int
     {
         return $this->blocksSignalling;
     }
 
-    public function getBlocksRemaining(): int
+    public function getLockedInHeight(): ?int
     {
-        return $this->blocksRemaining;
+        return $this->lockedInHeight;
     }
 
-    public function getLockedInHeight(): int
-    {
-        return $this->lockedInHeight ?: 0;
-    }
-
-    public function getActivationHeight(): int
+    public function getActivationHeight(): ?int
     {
         return $this->activationHeight;
-    }
-
-    public function getPercentComplete(): int
-    {
-        if ($this->blocksSignalling == 0) {
-            return 0;
-        }
-
-        return ($this->blocksSignalling / $this->blocksInCycle) * 100;
     }
 }

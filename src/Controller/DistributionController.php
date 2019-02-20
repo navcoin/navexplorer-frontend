@@ -41,7 +41,7 @@ class DistributionController
     {
         return new Response(
             $serializer->serialize(
-                $this->distributionApi->getBalanceDistribution("10,100,1000"),
+                $this->distributionApi->getBalanceDistribution(),
                 'json'
             )
         );

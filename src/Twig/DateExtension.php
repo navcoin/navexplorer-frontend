@@ -36,46 +36,26 @@ class DateExtension extends AbstractExtension
     public function period(String $period, int $index, BlockGroup $block) {
         switch ($period) {
             case 'hourly':
-                return $this->hourly($index, $block);
+                return $this->hourly($block);
             case 'daily':
-                return $this->daily($index, $block);
+                return $this->daily($block);
             case 'monthly':
-                return $this->monthly($index, $block);
+                return $this->monthly($block);
         }
     }
 
-    public function hourly(int $index, BlockGroup $block)
+    public function hourly(BlockGroup $block)
     {
-        switch ($index) {
-            case 0:
-                return sprintf("%s - %s", $block->getEnd()->format('H:i'), $block->getStart()->format('H:i'));
-            default:
-                $start = clone $block->getEnd();
-                $start->add(new \DateInterval('PT1H'));
-
-                return sprintf("%s - %s", $block->getEnd()->format('H:i'), $start->format('H:i'));
-        }
+        return sprintf("%s - %s", $block->getStart()->format('H:i'), $block->getEnd()->format('H:i'));
     }
 
-    public function daily(int $index, BlockGroup $block)
+    public function daily(BlockGroup $block)
     {
-        switch ($index) {
-            case 0:
-                return 'Today';
-            case 1:
-                return 'Yesterday';
-            default:
-                return $block->getEnd()->format('D jS M');
-        }
+        return $block->getStart()->format('D jS M');
     }
 
-    public function monthly(int $index, BlockGroup $block)
+    public function monthly(BlockGroup $block)
     {
-        switch ($index) {
-            case 0:
-                return 'This month';
-            default:
-                return $block->getEnd()->format('F');
-        }
+        return $block->getStart()->format('F Y');
     }
 }

@@ -40,7 +40,9 @@ class CommunityFundPaymentRequestViewPage {
     }
 
     createTrendGraph() {
-        axios.get('/community-fund/payment-request/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
+        if ($('#votes').length) {
+            axios.get('/community-fund/payment-request/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
+        }
     }
 
     loadChartData(response) {

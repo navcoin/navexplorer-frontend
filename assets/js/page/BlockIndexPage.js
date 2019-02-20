@@ -15,7 +15,6 @@ class BlockIndexPage {
         let numberFormatter = new NavNumberFormat();
 
         let $row = $(document.createElement('tr'));
-        $row.attr('data-id', data.id);
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'height')

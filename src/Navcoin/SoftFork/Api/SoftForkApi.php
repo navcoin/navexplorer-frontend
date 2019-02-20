@@ -13,12 +13,13 @@ class SoftForkApi extends NavcoinApi
     public function getAll(): SoftForks
     {
         try {
-            $data = $this->getClient()->get('/api/soft-fork');
+            $response = $this->getClient()->get('/api/soft-fork');
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
-            return new SoftForks();
+            throw new \RuntimeException("Could not load soft forks");
         }
 
-        return $this->getMapper()->mapIterator($data, SoftForks::class);
+        return $this->getMapper()->mapIterator( SoftForks::class, $data);
     }
 
     public function getByName(string $name): SoftFork

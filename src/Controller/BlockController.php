@@ -17,7 +17,7 @@ class BlockController extends Controller
     /**
      * @var int
      */
-    private $pageSize = 10;
+    private $pageSize = 100;
 
     /**
      * @var BlockApi
@@ -59,8 +59,7 @@ class BlockController extends Controller
     {
         $blocks = $this->blockApi->getBlocks(
             $request->get('size', $this->pageSize),
-            $request->get('from', null),
-            $request->get('to', null)
+            $request->get('page', 1)
         );
 
         return new Response($serializer->serialize($blocks, 'json'));

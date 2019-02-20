@@ -15,7 +15,7 @@
             <tr>
                 <td><strong>Block&nbsp;Hash</strong></td>
                 <td class="text-right break-word">
-                    <a href="{{ path('app_search_results', {'hash': paymentRequest.blockHash}) }}">{{ paymentRequest.blockHash }}</a>
+                    <a href="{{ path('app_block_view', {'height': paymentRequest.blockHash}) }}">{{ paymentRequest.blockHash }}</a>
                 </td>
             </tr>
             {% if paymentRequest.paidOnBlock %}

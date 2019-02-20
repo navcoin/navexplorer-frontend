@@ -9,6 +9,7 @@ use App\Navcoin\CommunityFund\Entity\PaymentRequests;
 use App\Navcoin\CommunityFund\Entity\Proposal;
 use App\Navcoin\CommunityFund\Exception\CommunityFundPaymentRequestNotFound;
 use App\Navcoin\CommunityFund\Exception\CommunityFundProposalNotFound;
+use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentRequestApi extends NavcoinApi
@@ -16,19 +17,21 @@ class PaymentRequestApi extends NavcoinApi
     public function getAll(Proposal $proposal): PaymentRequests
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal/'.$proposal->getHash().'/payment-request');
+            $response = $this->getClient()->get('/api/community-fund/proposal/'.$proposal->getHash().'/payment-request');
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
         }
 
-        return $this->getMapper()->mapIterator($data, PaymentRequests::class);
+        return $this->getMapper()->mapIterator(PaymentRequests::class, $data);
     }
 
     public function getPaymentRequest(String $hash): PaymentRequest
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/payment-request/'.$hash);
-        } catch (ServerRequestException $e) {
+            $response = $this->getClient()->get('/api/community-fund/payment-request/'.$hash);
+            $data = $this->getClient()->getJsonBody($response);
+        } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
                     throw new CommunityFundPaymentRequestNotFound(sprintf("The `%s` payment request does not exist.", $hash), 0, $e);
@@ -43,23 +46,25 @@ class PaymentRequestApi extends NavcoinApi
     public function getPaymentRequests(Proposal $proposal): PaymentRequests
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal/'.$proposal->getHash().'/payment-request');
+            $response = $this->getClient()->get('/api/community-fund/proposal/' . $proposal->getHash() . '/payment-request');
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
         }
 
-        return $this->getMapper()->mapIterator($data, PaymentRequests::class);
+        return $this->getMapper()->mapIterator(PaymentRequests::class, $data);
     }
 
     public function getPaymentRequestsByState(string $state, $order = 'id'): PaymentRequests
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/payment-request/state/'.$state.'?order='.$order);
+            $response = $this->getClient()->get('/api/community-fund/payment-request?state='.$state);
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
         }
 
-        $paymentRequests = $this->getMapper()->mapIterator($data, PaymentRequests::class);
+        $paymentRequests = $this->getMapper()->mapIterator(PaymentRequests::class, $data);
 
         if ($order == 'votes') {
             $paymentRequests->sortByVotes();

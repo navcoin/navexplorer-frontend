@@ -17,7 +17,8 @@ class ProposalApi extends NavcoinApi
 {
     public function getBlockCycle(): BlockCycle
     {
-        $data = $this->getClient()->get('/api/community-fund/block-cycle');
+        $response = $this->getClient()->get('/api/community-fund/block-cycle');
+        $data = $this->getClient()->getJsonBody($response);
 
         return new BlockCycle(
             $data['blocksInCycle'],
@@ -27,21 +28,19 @@ class ProposalApi extends NavcoinApi
             $data['height'],
             $data['cycle'],
             $data['firstBlock'],
-            $data['currentBlock'],
-            $data['remainingBlocks']
+            $data['currentBlock']
         );
     }
 
     public function getStats(): Stats
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/stats');
-            if (!array_key_exists( 'available', $data) || !array_key_exists('locked', $data)) {
-                throw new \Exception("Invalid api response: " . \GuzzleHttp\json_encode($data));
-            }
-            $stats = new Stats($data['available'], $data['locked'], $data['spent']);
+            $response = $this->getClient()->get('/api/community-fund/stats');
+            $data = $this->getClient()->getJsonBody($response);
+
+            $stats = new Stats($data['contributed'], $data['requested'], $data['paid'], $data['locked']);
         } catch (\Exception $e) {
-            $stats = new Stats(0, 0, 0);
+            $stats = new Stats(0, 0, 0, 0);
         }
 
         return $stats;
@@ -50,7 +49,8 @@ class ProposalApi extends NavcoinApi
     public function getProposal(String $hash): Proposal
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal/'.$hash);
+            $response = $this->getClient()->get('/api/community-fund/proposal/' . $hash);
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
@@ -77,12 +77,13 @@ class ProposalApi extends NavcoinApi
     public function getProposalsByState(string $state, $order = 'id'): Proposals
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal/state/'.$state.'?order='.$order);
+            $response = $this->getClient()->get('/api/community-fund/proposal?state='.$state);
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new Proposals();
         }
 
-        $proposals = $this->getMapper()->mapIterator($data, Proposals::class);
+        $proposals = $this->getMapper()->mapIterator(Proposals::class, $data);
 
         if ($order == 'votes') {
             $proposals->sortByVotes();

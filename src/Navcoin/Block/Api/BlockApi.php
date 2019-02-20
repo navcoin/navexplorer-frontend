@@ -6,6 +6,7 @@ use App\Exception\BlockNotFoundException;
 use App\Exception\ServerRequestException;
 use App\Navcoin\Block\Entity\Block;
 use App\Navcoin\Block\Entity\Blocks;
+use App\Navcoin\Common\Entity\IteratorEntity;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\NavcoinApi;
 use GuzzleHttp\Exception\ClientException;
@@ -16,7 +17,8 @@ class BlockApi extends NavcoinApi
     public function getBlock(String $height): Block
     {
         try {
-            $data = $this->getClient()->get('/api/block/'.$height);
+            $response = $this->getClient()->get('/api/block/'.$height);
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
@@ -31,27 +33,20 @@ class BlockApi extends NavcoinApi
 
     public function getBestBlock(): Block
     {
-        try {
-            $data = $this->getClient()->get('/api/block/best');
-        } catch (ServerRequestException $e) {
-            throw new BlockNotFoundException("Could not find the best block");
-        }
+        $blocks = $this->getBlocks(1);
 
-        return $this->getMapper()->mapEntity($data);
+        return $blocks->getElement(0);
     }
 
-    public function getBlocks(int $size = 50, String $from = null, String $to = null): IteratorEntityInterface
+    public function getBlocks(int $size = 50, int $page = 1): IteratorEntityInterface
     {
-        $url = sprintf('/api/block/?page=%d&size=%d',0, $size);
-        $url .= ($from !== null) ? sprintf('&from=%s', $from) : '';
-        $url .= ($to !== null) ? sprintf('&to=%s', $to) : '';
-
         try {
-            $data = $this->getClient()->get($url);
+            $response = $this->getClient()->get(sprintf('/api/block?size=%d&page=%d', $size, $page));
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new Blocks();
         }
 
-        return $this->getMapper()->mapIterator($data, Blocks::class);
+        return $this->getMapper()->mapIterator(Blocks::class, $data, $this->getClient()->getPaginator($response));
     }
 }

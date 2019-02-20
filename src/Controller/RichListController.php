@@ -20,8 +20,11 @@ class RichListController
      */
     public function index(AddressApi $addressApi, BlockApi $blockApi)
     {
+        $count = 100;
+
         return [
-            'richList' => $addressApi->getTop100Addresses(),
+            'count' => $count,
+            'richList' => $addressApi->getTopAddresses($count),
             'bestBlock' => $blockApi->getBestBlock()
         ];
     }

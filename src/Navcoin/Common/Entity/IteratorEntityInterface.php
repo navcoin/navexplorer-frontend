@@ -2,12 +2,12 @@
 
 namespace App\Navcoin\Common\Entity;
 
-/**
- * Interface IteratorEntityInterface
- *
- * @package App\Navcoin\Common
- */
 interface IteratorEntityInterface
 {
-
+    public function add($element): self;
+    public function getElement(int $index);
+    public function getElements(): array;
+    public function countElements(): int;
+    public function setElements(array $elements): self;
+    public function getIterator(): \ArrayIterator;
 }

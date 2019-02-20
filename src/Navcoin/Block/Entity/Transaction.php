@@ -9,11 +9,6 @@ class Transaction
     /**
      * @var String
      */
-    private $id;
-
-    /**
-     * @var String
-     */
     private $hash;
 
     /**
@@ -66,7 +61,6 @@ class Transaction
     private $proposalVotes;
 
     public function __construct(
-        String $id,
         String $hash,
         int $height,
         \DateTime $time,
@@ -78,7 +72,6 @@ class Transaction
         string $raw,
         ?ProposalVotes $proposalVotes
     ) {
-        $this->id = $id;
         $this->hash = $hash;
         $this->height = $height;
         $this->time = $time;

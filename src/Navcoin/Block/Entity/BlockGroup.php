@@ -5,11 +5,6 @@ namespace App\Navcoin\Block\Entity;
 class BlockGroup
 {
     /**
-     * @var string
-     */
-    private $type;
-
-    /**
      * @var \DateTime
      */
     private $start;
@@ -18,11 +13,6 @@ class BlockGroup
      * @var \DateTime
      */
     private $end;
-
-    /**
-     * @var int
-     */
-    private $secondsInPeriod;
 
     /**
      * @var int
@@ -55,10 +45,8 @@ class BlockGroup
     private $height;
 
     public function __construct(
-        string $type,
         \DateTime $start,
         \DateTime $end,
-        int $secondsInPeriod,
         int $blocks,
         int $transactions,
         float $stake,
@@ -66,21 +54,14 @@ class BlockGroup
         float $spend,
         int $height
     ) {
-        $this->type = $type;
         $this->start = $start;
         $this->end = $end;
-        $this->secondsInPeriod = $secondsInPeriod;
         $this->blocks = $blocks;
         $this->transactions = $transactions;
         $this->stake = $stake;
         $this->fees = $fees;
         $this->spend = $spend;
         $this->height = $height;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     public function getStart(): \DateTime
@@ -91,11 +72,6 @@ class BlockGroup
     public function getEnd(): \DateTime
     {
         return $this->end;
-    }
-
-    public function getSecondsInPeriod(): int
-    {
-        return $this->secondsInPeriod;
     }
 
     public function getBlocks(): int
@@ -126,10 +102,5 @@ class BlockGroup
     public function getHeight(): int
     {
         return $this->height;
-    }
-
-    public function getInterval(): int
-    {
-        return $this->getSecondsInPeriod() / $this->getTransactions();
     }
 }

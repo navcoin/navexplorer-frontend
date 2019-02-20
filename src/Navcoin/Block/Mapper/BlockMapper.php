@@ -12,7 +12,6 @@ class BlockMapper extends BaseMapper
     public function mapEntity(array $data): Block
     {
         return new Block(
-            $data['id'],
             $data['hash'],
             $data['merkleRoot'],
             $data['bits'],
@@ -22,28 +21,16 @@ class BlockMapper extends BaseMapper
             $data['height'],
             $data['difficulty'],
             $data['confirmations'],
-            (new \DateTime())->setTimestamp($data['created']/1000),
-            $data['stake'] / 100000000,
-            $data['fees'] / 100000000,
-            $data['spend'] / 100000000,
-            $data['cfundPayout'] / 100000000,
+            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['created']),
+            $data['stake'],
+            $data['fees'],
+            $data['spend'],
+            $this->getData('cfundPayout', $data, 0),
             $data['stakedBy'] ?: '',
             $data['transactions'],
-            $data['best'],
-            $this->mapSignals(array_key_exists('signals', $data) ? $data['signals'] : []),
-            $data['blockCycle'],
+            $this->getData('best', $data),
             array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
-            $data['balance'] / 100000000
+            $data['balance']
         );
-    }
-
-    private function mapSignals(array $data): BlockSignals
-    {
-        $signals = new BlockSignals();
-        foreach ($data as $signalData) {
-            $signals->add(new BlockSignal($signalData['name'], $signalData['signalling']));
-        }
-
-        return $signals;
     }
 }

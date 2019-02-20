@@ -48,7 +48,7 @@ class Output
     {
         $this->type = $type;
         $this->index = $index;
-        $this->amount = $amount;
+        $this->amount = $amount != 0 ? $amount / 100000000 : 0;
         $this->addresses = $addresses;
         $this->redeemedInTransaction = $redeemedInTransaction;
         $this->redeemedInBlock = $redeemedInBlock;

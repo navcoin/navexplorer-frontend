@@ -2,11 +2,6 @@
 
 namespace App\Navcoin\Distribution\Entity;
 
-/**
- * Class Distribution
- *
- * @package App\Navcoin\Distribution\Entity
- */
 class Distribution implements \IteratorAggregate
 {
     /**
@@ -14,13 +9,6 @@ class Distribution implements \IteratorAggregate
      */
     private $segments = [];
 
-    /**
-     * Add
-     *
-     * @param DistributionSegment $segment
-     *
-     * @return Distribution
-     */
     public function add(DistributionSegment $segment): self
     {
         array_push($this->segments, $segment);
@@ -28,11 +16,6 @@ class Distribution implements \IteratorAggregate
         return $this;
     }
 
-    /**
-     * Get Iterator
-     *
-     * @return \ArrayIterator
-     */
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->segments);

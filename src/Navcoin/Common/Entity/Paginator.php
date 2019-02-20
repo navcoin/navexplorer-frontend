@@ -4,11 +4,6 @@ namespace App\Navcoin\Common\Entity;
 
 use JMS\Serializer\Annotation\Accessor;
 
-/**
- * Class Paginator
- *
- * @package App\Navcoin\Common\Entity
- */
 class Paginator implements IteratorEntityInterface
 {
     /**
@@ -47,52 +42,54 @@ class Paginator implements IteratorEntityInterface
     private $number;
 
     /**
-     * @var IteratorEntity
+     * @var array
      * @Accessor(getter="getElements",setter="setElements")
      */
-    private $elements;
+    private $elements = [];
 
-    /**
-     * Add
-     *
-     * @param mixed $element
-     *
-     * @return self
-     */
-    public function add($element): self
+    public function add($element): IteratorEntityInterface
     {
-        $this->elements->add($element);
+        array_push($this->elements, $element);
 
         return $this;
     }
 
-    /**
-     * Get Iterator
-     *
-     * @return \ArrayIterator
-     */
-    public function getIterator(): \ArrayIterator
+    public function getElement(int $index)
     {
-        return $this->elements->getIterator();
+        if (!array_key_exists($index, $this->getElements())) {
+            throw new \RuntimeException(sprintf("Element %d does not exist", $index));
+        }
+
+        return $this->getElements()[0];
     }
 
-    /**
-     * Get Last
-     *
-     * @return bool
-     */
+    public function getElements(): array
+    {
+        return $this->elements;
+    }
+
+    public function countElements(): int
+    {
+        return count($this->elements);
+    }
+
+    public function setElements(array $elements): IteratorEntityInterface
+    {
+        $this->elements = $elements;
+
+        return $this;
+    }
+
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->elements);
+    }
+
     public function isLast(): bool
     {
         return $this->last;
     }
 
-    /**
-     * Set Last
-     *
-     * @param bool $last
-     *
-     * @return $this
-     */
     public function setLast(bool $last): self
     {
         $this->last = $last;
@@ -100,23 +97,11 @@ class Paginator implements IteratorEntityInterface
         return $this;
     }
 
-    /**
-     * Get TotalPages
-     *
-     * @return int
-     */
     public function getTotalPages(): int
     {
         return $this->totalPages;
     }
 
-    /**
-     * Set TotalPages
-     *
-     * @param int $totalPages
-     *
-     * @return $this
-     */
     public function setTotalPages(int $totalPages): self
     {
         $this->totalPages = $totalPages;
@@ -124,23 +109,11 @@ class Paginator implements IteratorEntityInterface
         return $this;
     }
 
-    /**
-     * Get TotalElements
-     *
-     * @return int
-     */
     public function getTotalElements(): int
     {
         return $this->totalElements;
     }
 
-    /**
-     * Set TotalElements
-     *
-     * @param int $totalElements
-     *
-     * @return $this
-     */
     public function setTotalElements(int $totalElements): self
     {
         $this->totalElements = $totalElements;
@@ -148,23 +121,11 @@ class Paginator implements IteratorEntityInterface
         return $this;
     }
 
-    /**
-     * Get First
-     *
-     * @return bool
-     */
     public function isFirst(): bool
     {
         return $this->first;
     }
 
-    /**
-     * Set First
-     *
-     * @param bool $first
-     *
-     * @return $this
-     */
     public function setFirst(bool $first): self
     {
         $this->first = $first;
@@ -172,23 +133,11 @@ class Paginator implements IteratorEntityInterface
         return $this;
     }
 
-    /**
-     * Get NumberOfElements
-     *
-     * @return int
-     */
     public function getNumberOfElements(): int
     {
         return $this->numberOfElements;
     }
 
-    /**
-     * Set NumberOfElements
-     *
-     * @param int $numberOfElements
-     *
-     * @return $this
-     */
     public function setNumberOfElements(int $numberOfElements): self
     {
         $this->numberOfElements = $numberOfElements;
@@ -196,23 +145,11 @@ class Paginator implements IteratorEntityInterface
         return $this;
     }
 
-    /**
-     * Get Size
-     *
-     * @return int
-     */
     public function getSize(): int
     {
         return $this->size;
     }
 
-    /**
-     * Set Size
-     *
-     * @param int $size
-     *
-     * @return $this
-     */
     public function setSize(int $size): self
     {
         $this->size = $size;
@@ -220,50 +157,14 @@ class Paginator implements IteratorEntityInterface
         return $this;
     }
 
-    /**
-     * Get Number
-     *
-     * @return int
-     */
     public function getNumber(): int
     {
         return $this->number;
     }
 
-    /**
-     * Set Number
-     *
-     * @param int $number
-     *
-     * @return $this
-     */
     public function setNumber(int $number): self
     {
         $this->number = $number;
-
-        return $this;
-    }
-
-    /**
-     * Get Elements
-     *
-     * @return IteratorEntity
-     */
-    public function getElements()
-    {
-        return $this->elements->getElements();
-    }
-
-    /**
-     * Set Elements
-     *
-     * @param IteratorEntity $elements
-     *
-     * @return $this
-     */
-    public function setElements(IteratorEntity $elements): self
-    {
-        $this->elements = $elements;
 
         return $this;
     }

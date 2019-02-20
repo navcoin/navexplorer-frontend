@@ -16,10 +16,9 @@ class TransactionMapper extends BaseMapper
     public function mapEntity(array $data): Transaction
     {
         $transaction = new Transaction(
-            $data['id'],
             $data['hash'],
             $data['height'],
-            (new \DateTime())->setTimestamp($data['time']/1000),
+            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['time']),
             $data['stake'] / 100000000,
             $data['fees'] / 100000000,
             $this->mapInputs($data['inputs']),
@@ -43,7 +42,7 @@ class TransactionMapper extends BaseMapper
                     $inputData['amount'] / 100000000,
                     $inputData['index'],
                     $inputData['previousOutput'],
-                    $inputData['previousOutputBlock']
+                    $this->getData('previousOutputBlock', $inputData, '')
                 )
             );
         }
@@ -63,10 +62,10 @@ class TransactionMapper extends BaseMapper
                 $output = new Output(
                     $outputData['type'],
                     $outputData['index'],
-                    $outputData['amount'] / 100000000,
+                    $this->getData('amount', $outputData, 0),
                     array_key_exists('addresses', $outputData) ? $outputData['addresses'] : (array_key_exists('address', $outputData) ? [$outputData['address']] : []),
-                    is_array($outputData['redeemedIn']) ? $outputData['redeemedIn']['hash'] : null,
-                    is_array($outputData['redeemedIn']) ? $outputData['redeemedIn']['height'] : null
+                    $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['hash'] : null,
+                    $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['height'] : null
                 );
 
                 if ($output->isCommunityFund()) {
@@ -75,7 +74,6 @@ class TransactionMapper extends BaseMapper
 
                 $outputs->add($output);
             } catch (\Exception $e) {
-                //
             }
         }
 

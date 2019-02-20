@@ -53,11 +53,9 @@ export default class TransactionLoader {
                     if (typeof input.type !== 'undefined' && input.type === 'COLD_STAKING') {
                         address.append('<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[0] + '">' + input.addresses[0] + '</a>' +
-                            '  <small>Staking</small>' +
                             '</span>' +
                             '<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[1] + '">' + input.addresses[1] + '</a>' +
-                            '  <small>Spending</small>' +
                             '</span>');
                     } else if (typeof input.type !== 'undefined' && input.type !== 'PUBKEY' && input.type !== 'PUBKEYHASH') {
                         address.html(input.type.toLowerCase());
