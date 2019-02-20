@@ -30,8 +30,8 @@ export default class TransactionLoader {
                 '  </div>\n' +
                 '  <div class="card-body">\n' +
                 '    <div class="row">\n' +
-                '      <div class="col-sm-12 col-md-6 inputs"><span class="caption">Inputs</span>' + self.inputList(tx.inputs) + '</div>\n' +
-                '      <div class="col-sm-12 col-md-6 outputs"><span class="caption">Outputs</span>' + self.inputList(tx.outputs) + '</div>\n' +
+                '      <div class="col-sm-12 col-md-6 inputs"><span class="caption">Inputs</span>' + self.inputList(tx.inputs, tx) + '</div>\n' +
+                '      <div class="col-sm-12 col-md-6 outputs"><span class="caption">Outputs</span>' + self.inputList(tx.outputs, tx) + '</div>\n' +
                 '    </div>\n' +
                 '  </div>\n' +
                 '</div>'
@@ -39,7 +39,7 @@ export default class TransactionLoader {
         });
     }
 
-    inputList(inputs) {
+    inputList(inputs, tx) {
         let BreakException = {};
         let list = $(document.createElement('ul'));
         let self = this;
@@ -61,7 +61,11 @@ export default class TransactionLoader {
                         address.html(input.type.toLowerCase());
                     } else if (typeof input.addresses !== 'undefined') {
                         if (input.addresses.length === 0) {
-                            address.html('N/A');
+                            if (tx.type === "PRIVATE_STAKING") {
+                                address.html('Private address');
+                            } else {
+                                address.html('N/A');
+                            }
                         } else {
                             let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
                             address.append(a);
@@ -90,6 +94,10 @@ export default class TransactionLoader {
                 } else {
                     throw e;
                 }
+            }
+        } else {
+            if (tx.type === "COINBASE") {
+                return "Coinbase";
             }
         }
 

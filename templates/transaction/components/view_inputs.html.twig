@@ -23,7 +23,11 @@
                     {% endif %}
                 </td>
                 <td data-role="address">
-                    {% if transaction.staking %}
+                    {% if transacgtion.type == "PRIVATE_STAKING" %}
+                        <span class="break-word">
+                            <em>Private Address</em>
+                        </span>
+                    {% elseif transaction.staking %}
                         <span class="break-word">
                             <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
                         </span>

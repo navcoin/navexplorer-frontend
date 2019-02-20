@@ -28,7 +28,9 @@
                             {% endif %}
                         </td>
                         <td data-role="address">
-                            {% if output.type == "COLD_STAKING" %}
+                            {% if output.type == "PRIVATE_TRANSACTION" %}
+                                <em>Private Address</em>
+                            {% elseif output.type == "COLD_STAKING" %}
                                 <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
                                 <a href="{{ path('app_address_index', { 'hash': output.addresses[1] }) }}" class="break-word">{{ output.addresses[1] }}</a>
                             {% elseif output.addresses and output.addresses|length %}
