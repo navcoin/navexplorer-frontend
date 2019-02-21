@@ -2,7 +2,6 @@
 
 namespace App\Navcoin\Client;
 
-use App\Exception\ServerRequestException;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\Entity\Paginator;
 use GuzzleHttp\Client;
@@ -10,6 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class NavcoinClient implements NavcoinClientInterface
 {
@@ -22,6 +22,11 @@ class NavcoinClient implements NavcoinClientInterface
      * @var string
      */
     private $network;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * @var Client
@@ -37,16 +42,15 @@ class NavcoinClient implements NavcoinClientInterface
      * @var array
      */
     private $headers = [
-        'headers' => [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-        ]
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
     ];
 
-    public function __construct(string $baseUrl, string $network)
+    public function __construct(string $baseUrl, string $network, LoggerInterface $logger)
     {
         $this->baseUrl = $baseUrl;
-        $this->network = $network;
+        $this->network = strtolower($network);
+        $this->logger = $logger;
 
         $this->client = HttpClientDiscovery::find();
         $this->messageFactory = MessageFactoryDiscovery::find();
@@ -54,10 +58,12 @@ class NavcoinClient implements NavcoinClientInterface
 
     public function get(string $uri): ResponseInterface
     {
-        $request = $this->messageFactory
-            ->createRequest('GET', $this->baseUrl.$uri, $this->headers)
-            ->withHeader("Network", strtolower($this->network));
+        $this->headers["Network"] = "testnet";
 
+        $this->logger->debug("Api Request:", [$this->network, $this->baseUrl.$uri, $this->headers]);
+        $request = $this->messageFactory->createRequest('GET', $this->baseUrl.$uri, $this->headers);
+
+        $this->logger->debug("Api Response:", [$this->network, $this->baseUrl.$uri, $this->headers]);
         $response = $this->client->sendRequest($request);
 
         if ($response->getStatusCode() == 404) {

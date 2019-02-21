@@ -43,7 +43,7 @@ class BlockApi extends NavcoinApi
         try {
             $response = $this->getClient()->get(sprintf('/api/block?size=%d&page=%d', $size, $page));
             $data = $this->getClient()->getJsonBody($response);
-        } catch (ServerRequestException $e) {
+        } catch (ClientException $e) {
             return new Blocks();
         }
 
