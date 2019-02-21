@@ -19,6 +19,11 @@ class NavcoinClient implements NavcoinClientInterface
     private $baseUrl;
 
     /**
+     * @var string
+     */
+    private $network;
+
+    /**
      * @var Client
      */
     private $client;
@@ -38,16 +43,21 @@ class NavcoinClient implements NavcoinClientInterface
         ]
     ];
 
-    public function __construct(string $baseUrl)
+    public function __construct(string $baseUrl, string $network)
     {
         $this->baseUrl = $baseUrl;
+        $this->network = $network;
+
         $this->client = HttpClientDiscovery::find();
         $this->messageFactory = MessageFactoryDiscovery::find();
     }
 
-    public function get(string $uri, bool $replay = false): ResponseInterface
+    public function get(string $uri): ResponseInterface
     {
-        $request = $this->messageFactory->createRequest('GET', $this->baseUrl.$uri, $this->headers);
+        $request = $this->messageFactory
+            ->createRequest('GET', $this->baseUrl.$uri, $this->headers)
+            ->withHeader("Network", strtolower($this->network));
+
         $response = $this->client->sendRequest($request);
 
         if ($response->getStatusCode() == 404) {
