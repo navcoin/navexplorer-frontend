@@ -30,7 +30,7 @@ services:
 
     # Navcoin Clients
     App\Navcoin\Client\NavcoinClient:
-        arguments: ['%navcoin.base_uri%', '%navcoin.network%']
+        arguments: ['%navcoin.base_uri%', '%navcoin.network%', '@logger']
 
     # Navcoin APIs
     App\Navcoin\Address\Api\AddressApi:
