@@ -63,8 +63,9 @@ class NavcoinClient implements NavcoinClientInterface
         $this->logger->debug("Api Request:", [$this->network, $this->baseUrl.$uri, $this->headers]);
         $request = $this->messageFactory->createRequest('GET', $this->baseUrl.$uri, $this->headers);
 
-        $this->logger->debug("Api Response:", [$this->network, $this->baseUrl.$uri, $this->headers]);
         $response = $this->client->sendRequest($request);
+        $this->logger->debug("Api Response:", [$response->getStatusCode(), $response->getBody()->getContents()]);
+
 
         if ($response->getStatusCode() == 404) {
             throw new ClientException("Resource not found", $request, $response);
