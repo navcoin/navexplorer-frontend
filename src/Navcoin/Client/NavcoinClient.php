@@ -58,7 +58,7 @@ class NavcoinClient implements NavcoinClientInterface
 
     public function get(string $uri): ResponseInterface
     {
-        $this->headers["Network"] = "testnet";
+        $this->headers["Network"] = $this->network;
 
         $this->logger->debug("Api Request:", [$this->network, $this->baseUrl.$uri, $this->headers]);
         $request = $this->messageFactory->createRequest('GET', $this->baseUrl.$uri, $this->headers);
