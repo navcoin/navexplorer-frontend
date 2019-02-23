@@ -2,84 +2,40 @@
 
 namespace App\Navcoin\Distribution\Entity;
 
-/**
- * Class DistributionSegment
- *
- * @package App\Navcoin\Distribution\Entity
- */
 class DistributionSegment
 {
     /**
      * @var int
      */
-    private $position;
+    private $group;
 
     /**
      * @var float
      */
-    private $total;
-
-    /**
-     * @var float
-     */
-    private $value;
+    private $balance;
 
     /**
      * @var int
      */
     private $percentage;
 
-    /**
-     * Constructor
-     *
-     * @param int|null $position
-     * @param float    $total
-     * @param float    $value
-     * @param float    $percentage
-     */
-    public function __construct(?int $position, float $total, float $value, float $percentage)
+    public function __construct(int $group, float $balance, int $percentage)
     {
-        $this->position = $position;
-        $this->total = $total;
-        $this->value = $value;
+        $this->group = $group;
+        $this->balance = $balance;
         $this->percentage = $percentage;
     }
 
-    /**
-     * Get Position
-     *
-     * @return int
-     */
-    public function getPosition(): int
+    public function getGroup(): int
     {
-        return $this->position;
+        return $this->group;
     }
 
-    /**
-     * Get Total
-     *
-     * @return float
-     */
-    public function getTotal(): float
+    public function getBalance(): float
     {
-        return $this->total;
+        return $this->balance;
     }
 
-    /**
-     * Get Value
-     *
-     * @return float
-     */
-    public function getValue(): float
-    {
-        return $this->value;
-    }
-
-    /**
-     * Get Percentage
-     *
-     * @return int
-     */
     public function getPercentage(): int
     {
         return $this->percentage;

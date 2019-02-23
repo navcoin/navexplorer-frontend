@@ -47,7 +47,7 @@ class AddressController extends Controller
     public function index(Request $request, String $hash, AddressTransactionTypeFilter $filter): Response
     {
         if ($hash == 'Community Fund') {
-            return $this->redirectToRoute('app_communityfund_redirect');
+            return $this->redirectToRoute('app_communityfund_index');
         }
 
         try {
@@ -80,9 +80,8 @@ class AddressController extends Controller
         $addressTransactions = $this->transactionApi->getTransactionsForAddress(
             $hash,
             $request->get('size', $this->pageSize),
-            $request->get('filters', []),
-            $request->get('from', null),
-            $request->get('to', null)
+            $request->get('page', 1),
+            $request->get('filters', [])
         );
 
         return new Response($serializer->serialize($addressTransactions, 'json'));

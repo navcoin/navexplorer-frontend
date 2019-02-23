@@ -44,11 +44,6 @@ class BlockCycle
      */
     private $currentBlock;
 
-    /**
-     * @var int
-     */
-    private $remainingBlocks;
-
     public function __construct(
         int $blocksInCycle,
         float $minQuorum,
@@ -57,8 +52,7 @@ class BlockCycle
         int $height,
         int $cycle,
         int $firstBlock,
-        int $currentBlock,
-        int $remainingBlocks
+        int $currentBlock
     ) {
         $this->blocksInCycle = $blocksInCycle;
         $this->minQuorum = $minQuorum;
@@ -68,7 +62,6 @@ class BlockCycle
         $this->cycle = $cycle;
         $this->firstBlock = $firstBlock;
         $this->currentBlock = $currentBlock;
-        $this->remainingBlocks = $remainingBlocks;
     }
 
     public function getBlocksInCycle(): int
@@ -113,6 +106,6 @@ class BlockCycle
 
     public function getRemainingBlocks(): int
     {
-        return $this->remainingBlocks;
+        return $this->blocksInCycle - $this->currentBlock;
     }
 }

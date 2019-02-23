@@ -5,8 +5,8 @@
 
 {% block page %}page-soft-forks-index{% endblock %}
 
-{% set blocksInCycle = (softForks|first).blocksInCycle %}
-{% set firstBlock = (blocksInCycle * block.blockCycle) - blocksInCycle %}
+{% set blocksInCycle = softForks.blocksInCycle %}
+{% set firstBlock = (blocksInCycle * softForks.blockCycle) - blocksInCycle %}
 {% set currentBlock = (block.height - firstBlock) %}
 {% set remainingBlocks = blocksInCycle - currentBlock %}
 
@@ -17,7 +17,7 @@
                 <h1>Soft forks</h1>
 
                 <div class="alert alert-info">
-                    Signaling for block <strong>{{ currentBlock|number_format }}</strong> of <strong>{{ (softForks|first).blocksInCycle|number_format }}</strong> in the {{ block.blockCycle|ordinal }} block cycle.<br/>
+                    Signaling for block <strong>{{ currentBlock|number_format }}</strong> of <strong>{{ softForks.blocksInCycle|number_format }}</strong> in the {{ softForks.blockCycle|ordinal }} block cycle.<br/>
                     There are <strong>{{ remainingBlocks|number_format }}</strong> blocks remaining.
                 </div>
             </div>
@@ -43,13 +43,13 @@
                                 <tr>
                                     <td>{{ fork.name }}</td>
                                     <td class="text-center">{{ fork.blocksSignalling|number_format }}</td>
-                                    <td class="text-center d-none d-sm-table-cell">{{ (fork.blocksInCycle*0.75)|number_format }}</td>
-                                    <td class="text-center d-none d-sm-table-cell">{{ fork.blocksRemaining|number_format }}</td>
+                                    <td class="text-center d-none d-sm-table-cell">{{ (softForks.blocksInCycle * 0.75)|number_format }}</td>
+                                    <td class="text-center d-none d-sm-table-cell">{{ softForks.blocksRemaining|number_format }}</td>
                                     <td class="text-center">{{ ((fork.blocksSignalling / currentBlock) * 100)|number_format(1) }}%</td>
                                     <td class="text-center">
-                                        {% if (fork.blocksInCycle*0.75) - fork.blocksSignalling > fork.blocksRemaining %}
+                                        {% if (softForks.blocksInCycle * 0.75) - fork.blocksSignalling > softForks.blocksRemaining %}
                                             <span class="badge badge-warning">Missed</span>
-                                        {% elseif (fork.blocksSignalling >= (fork.blocksInCycle*0.75)) %}
+                                        {% elseif (fork.blocksSignalling >= (softForks.blocksInCycle * 0.75)) %}
                                             <span class="badge badge-success">Locked In</span>
                                         {% else %}
                                             <span class="badge badge-info">{{ fork.state|capitalize }}</span>
@@ -90,7 +90,7 @@
                                         {{ fork.activationHeight }}
                                     {% endif %}
                                 </td>
-                                <td class="text-center">{{ ((fork.blocksSignalling / fork.blocksInCycle) * 100)|number_format(1) }}%</td>
+                                <td class="text-center">{{ ((fork.blocksSignalling / softForks.blocksInCycle) * 100)|number_format(1) }}%</td>
                                 <td class="text-center">
                                     {% if fork.state == 'ACTIVE' %}
                                         <span class="badge badge-success">{{ fork.state|capitalize }}</span>
@@ -112,7 +112,7 @@
                     <div class="card-body">
                         <h3>What are soft forks?</h3>
                         <p>Soft forks are changes to the protocols that govern the NavCoin blockchain.</p>
-                        <p>At the end of each {{ ((softForks|first).blocksInCycle)|number_format }} block cycle the number of blocks that signalled support for a soft fork are counted.</p>
+                        <p>At the end of each {{ (softForks.blocksInCycle)|number_format }} block cycle the number of blocks that signalled support for a soft fork are counted.</p>
                         <p>If the number of signalling blocks is greater than 75% the soft fork is locked in and will be activated at the end of the next block cycle.</p>
                         <p>If the block cycle fails to reach the required 75% a new attempt to lock in the soft fork is started in the next block cycle.</p>
                     </div>

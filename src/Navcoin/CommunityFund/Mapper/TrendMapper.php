@@ -10,12 +10,13 @@ class TrendMapper extends BaseMapper
     public function mapEntity(array $data): Trend
     {
         return new Trend(
-            $data['votesYes'],
-            $data['votesNo'],
-            $data['segment'],
             $data['start'],
             $data['end'],
-            $data['blocksCounted']
+            $data['votesYes'],
+            $data['votesNo'],
+            $data['trendYes'],
+            $data['trendNo'],
+            $data['trendAbstain']
         );
     }
 }

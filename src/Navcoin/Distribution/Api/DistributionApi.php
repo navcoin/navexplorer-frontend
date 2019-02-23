@@ -5,30 +5,19 @@ namespace App\Navcoin\Distribution\Api;
 use App\Navcoin\Common\NavcoinApi;
 use App\Navcoin\Distribution\Entity\Distribution;
 use App\Exception\DistributionException;
-use App\Exception\ServerRequestException;
+use GuzzleHttp\Exception\ClientException;
 
-/**
- * Class DistributionApi
- *
- * @package App\Navcoin\Distribution\Api
- */
 class DistributionApi extends NavcoinApi
 {
-    /**
-     * Get transactions
-     *
-     * @param String $groups
-     *
-     * @return Distribution
-     */
-    public function getBalanceDistribution(String $groups): Distribution
+    public function getBalanceDistribution(String $groups = null): Distribution
     {
         try {
-            $data = $this->getClient()->get('/api/distribution/balance?groups='.$groups);
-        } catch (ServerRequestException $e) {
+            $response = $this->getClient()->get('/api/coin/wealth?groups=' . $groups);
+            $data = $this->getClient()->getJsonBody($response);
+        } catch (ClientException $e) {
             throw new DistributionException(sprintf("The distribution cannot be created."), 500, $e);
         }
 
-        return $this->getMapper()->mapIterator($data);
+        return $this->getMapper()->mapIterator(Distribution::class, $data);
     }
 }

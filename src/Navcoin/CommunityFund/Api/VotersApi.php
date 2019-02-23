@@ -15,7 +15,8 @@ class VotersApi extends NavcoinApi
     {
         try {
             $voteString = $vote ? 'true' : 'false';
-            $data = $this->getClient()->get('/api/community-fund/proposal/'.$hash.'/voting/'.$voteString);
+            $response = $this->getClient()->get('/api/community-fund/proposal/' . $hash . '/vote/' . $voteString);
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
@@ -25,14 +26,15 @@ class VotersApi extends NavcoinApi
             }
         }
 
-        return $this->getMapper()->mapIterator($data, Voters::class, ['vote' => $vote]);
+        return $this->getMapper()->mapIterator(Voters::class, $data, null, ['vote' => $vote]);
     }
 
     public function getPaymentRequestVotes(String $hash, bool $vote): Voters
     {
         try {
             $voteString = $vote ? 'true' : 'false';
-            $data = $this->getClient()->get('/api/community-fund/payment-request/'.$hash.'/voting/'.$voteString);
+            $response = $this->getClient()->get('/api/community-fund/payment-request/' . $hash . '/vote/' . $voteString);
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
@@ -42,6 +44,6 @@ class VotersApi extends NavcoinApi
             }
         }
 
-        return $this->getMapper()->mapIterator($data, Voters::class, ['vote' => $vote]);
+        return $this->getMapper()->mapIterator(Voters::class, $data, null, ['vote' => $vote]);
     }
 }

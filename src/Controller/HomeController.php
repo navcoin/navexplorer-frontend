@@ -11,11 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class HomeController
- *
- * @package App\Controller
- */
 class HomeController extends Controller
 {
     /**
@@ -23,11 +18,6 @@ class HomeController extends Controller
      */
     private $blockGroupApi;
 
-    /**
-     * Constructor
-     *
-     * @param BlockGroupApi $blockGroupApi
-     */
     public function __construct(BlockGroupApi $blockGroupApi)
     {
         $this->blockGroupApi = $blockGroupApi;
@@ -43,11 +33,8 @@ class HomeController extends Controller
      */
     public function index(Request $request): array
     {
-        $period = $request->get('period', 'hourly');
-
         return [
-            'blocks' => $this->blockGroupApi->getGroupByCategory($period, 10),
-            'period' => $period,
+            'blocks' => $this->blockGroupApi->getGroupByCategory($request->get('period', 'hourly'), 10)
         ];
     }
 

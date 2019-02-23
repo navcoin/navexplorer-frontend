@@ -14,7 +14,8 @@ class TrendApi extends NavcoinApi
     public function getProposalVotingTrend(String $hash): Trends
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal/'.$hash.'/trend');
+            $response = $this->getClient()->get('/api/community-fund/proposal/' . $hash . '/trend');
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
@@ -24,13 +25,14 @@ class TrendApi extends NavcoinApi
             }
         }
 
-        return $this->getMapper()->mapIterator($data, Trends::class);
+        return $this->getMapper()->mapIterator(Trends::class, $data);
     }
 
     public function getPaymentRequestVotingTrend(String $hash): Trends
     {
         try {
-            $data = $this->getClient()->get('/api/community-fund/payment-request/'.$hash.'/trend');
+            $response = $this->getClient()->get('/api/community-fund/payment-request/'.$hash.'/trend');
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
@@ -40,6 +42,6 @@ class TrendApi extends NavcoinApi
             }
         }
 
-        return $this->getMapper()->mapIterator($data, Trends::class);
+        return $this->getMapper()->mapIterator(Trends::class, $data);
     }
 }

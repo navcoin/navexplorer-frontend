@@ -7,11 +7,6 @@ class Block
     /**
      * @var string
      */
-    private $id;
-
-    /**
-     * @var string
-     */
     private $hash;
 
     /**
@@ -95,16 +90,6 @@ class Block
     private $best;
 
     /**
-     * @var BlockSignals
-     */
-    private $signals;
-
-    /**
-     * @var int
-     */
-    private $blockCycle;
-
-    /**
      * @var string
      */
     private $raw;
@@ -115,7 +100,6 @@ class Block
     private $balance;
 
     public function __construct(
-        String $id,
         String $hash,
         String $merkleRoot,
         String $bits,
@@ -126,19 +110,16 @@ class Block
         float $difficulty,
         int $confirmations,
         \DateTime $created,
-        float $stake = 0.0,
-        float $fees = 0.0,
-        float $spend = 0.0,
-        float $cfundPayout = 0.0,
-        String $stakedBy = '',
-        int $transactions = 0,
+        float $stake,
+        float $fees,
+        float $spend,
+        float $cfundPayout,
+        String $stakedBy,
+        int $transactions,
         bool $best,
-        BlockSignals $signals,
-        ?int $blockCycle,
         string $raw,
         float $balance
     ) {
-        $this->id = $id;
         $this->hash = $hash;
         $this->merkleRoot = $merkleRoot;
         $this->bits = $bits;
@@ -149,22 +130,15 @@ class Block
         $this->difficulty = $difficulty;
         $this->confirmations = $confirmations;
         $this->created = $created;
-        $this->stake = $stake;
-        $this->fees = $fees;
-        $this->spend = $spend;
-        $this->cfundPayout = $cfundPayout;
+        $this->stake = $stake ? $stake / 100000000 : 0;
+        $this->fees =  $fees ? $fees / 100000000 : 0;
+        $this->spend =  $spend ? $spend / 100000000 : 0;
+        $this->cfundPayout =  $cfundPayout ? $cfundPayout / 100000000 : 0;
         $this->stakedBy = $stakedBy;
         $this->transactions = $transactions;
         $this->best = $best;
-        $this->signals = $signals;
-        $this->blockCycle = $blockCycle;
         $this->raw = $raw;
-        $this->balance = $balance;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
+        $this->balance =  $balance ? $balance / 100000000 : 0;
     }
 
     public function getHash(): string
@@ -255,16 +229,6 @@ class Block
     public function isBest(): bool
     {
         return $this->best;
-    }
-
-    public function getSignals()
-    {
-        return $this->signals;
-    }
-
-    public function getBlockCycle()
-    {
-        return $this->blockCycle;
     }
 
     public function getRaw()

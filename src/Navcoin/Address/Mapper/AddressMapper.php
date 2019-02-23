@@ -3,20 +3,12 @@
 namespace App\Navcoin\Address\Mapper;
 
 use App\Navcoin\Address\Entity\Address;
+use App\Navcoin\Common\Entity\IteratorEntityInterface;
+use App\Navcoin\Common\Mapper\BaseMapper;
 use App\Navcoin\Common\Mapper\MapperInterface;
 
-class AddressMapper implements MapperInterface
+class AddressMapper extends BaseMapper
 {
-    public function mapIterator(array $data, String $class = null): array
-    {
-        $addresses = [];
-        foreach ($data as $address) {
-            $addresses[] = $this->mapEntity($address);
-        }
-
-        return $addresses;
-    }
-
     public function mapEntity(array $data): Address
     {
         return new Address(

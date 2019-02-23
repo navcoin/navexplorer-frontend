@@ -9,14 +9,19 @@ use App\Navcoin\Common\NavcoinApi;
 
 class BlockGroupApi extends NavcoinApi
 {
-    public function getGroupByCategory(string $category, $count = 10): IteratorEntityInterface
+    public function getGroupByCategory(string $period, $count = 10): IteratorEntityInterface
     {
         try {
-            $data = $this->getClient()->get(sprintf('/api/group/block/%s/%d', $category, $count));
+            $response = $this->getClient()->get(sprintf('/api/blockgroup?period=%s&count=%d', $period, $count));
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new BlockGroups();
         }
 
-        return $this->getMapper()->mapIterator($data, BlockGroups::class);
+        /** @var BlockGroups $blockGroups */
+        $blockGroups = $this->getMapper()->mapIterator(BlockGroups::class, $data);
+        $blockGroups->setPeriod($period);
+
+        return $blockGroups;
     }
 }

@@ -87,9 +87,8 @@ class AddressTransaction
     private $coldStakingReceived;
 
     public function __construct(
-        String $id,
         String $transaction,
-        int $time,
+        \DateTime $time,
         int $height,
         float $balance,
         float $sent,
@@ -100,10 +99,8 @@ class AddressTransaction
         float $coldStakingSent,
         float $coldStakingReceived
     ) {
-        $this->id = $id;
         $this->transaction = $transaction;
-        $date = new \DateTime();
-        $this->time = $date->setTimestamp($time);
+        $this->time = $time;
         $this->height = $height;
         $this->balance = $balance;
         $this->sent = $sent;
@@ -115,11 +112,6 @@ class AddressTransaction
         $this->coldStakingSent = $coldStakingSent;
         $this->coldStakingReceived = $coldStakingReceived;
         $this->coldStakingAmount = $this->coldStakingReceived - ($this->type !== 'RECEIVE' ? $this->coldStakingSent : 0);
-    }
-
-    public function getId(): String
-    {
-        return $this->id;
     }
 
     public function getTransaction(): string

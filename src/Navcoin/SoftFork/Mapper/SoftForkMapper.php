@@ -2,17 +2,25 @@
 
 namespace App\Navcoin\SoftFork\Mapper;
 
+use App\Navcoin\Common\Entity\Paginator;
+use App\Navcoin\Common\Mapper\BaseMapper;
 use App\Navcoin\Common\Mapper\MapperInterface;
 use App\Navcoin\SoftFork\Entity\SoftFork;
 use App\Navcoin\SoftFork\Entity\SoftForks;
 
-class SoftForkMapper implements MapperInterface
+class SoftForkMapper extends BaseMapper
 {
-    public function mapIterator(array $data, String $class = null): SoftForks
+    public function mapIterator(String $class, array $data, Paginator $paginator = null, array $options = [])
     {
-        $softForks = new SoftForks();
+        $softForks = new SoftForks(
+            $data['blockCycle'],
+            $data['blocksInCycle'],
+            $data['firstBlock'],
+            $data['currentBlock'],
+            $data['blocksRemaining']
+        );
 
-        foreach ($data as $softFork) {
+        foreach ($data['softForks'] as $softFork) {
             $softForks->add($this->mapEntity($softFork));
         }
         $elements = $softForks->getElements();
@@ -26,12 +34,9 @@ class SoftForkMapper implements MapperInterface
         return new SoftFork(
             $data['name'],
             $data['state'],
-            $data['blocksInCycle'],
-            $data['blocksInCycle'] * 0.75,
             $data['blocksSignalling'],
-            $data['blocksRemaining'],
-            $data['lockedInHeight'],
-            $data['activationHeight']
+            $this->getData('lockedInHeight', $data),
+            $this->getData('activationHeight', $data)
         );
     }
 

@@ -29,7 +29,9 @@ class CommunityFundProposalViewPage {
     }
 
     createTrendGraph() {
-        axios.get('/community-fund/proposal/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
+        if ($('#votes').length) {
+            axios.get('/community-fund/proposal/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
+        }
     }
 
     loadChartData(response) {

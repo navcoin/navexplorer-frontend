@@ -10,9 +10,8 @@ class TransactionMapper extends BaseMapper
     public function mapEntity(array $data): Transaction
     {
         return new Transaction(
-            $data['id'],
             $data['transaction'],
-            $data['time']/1000,
+            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['time']),
             $data['height'],
             $data['balance'] / 100000000,
             $data['sent'] / 100000000,

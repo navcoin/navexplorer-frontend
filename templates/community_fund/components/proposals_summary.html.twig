@@ -3,6 +3,12 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
+                    <td><strong>Contributed</strong></td>
+                    <td class="text-right">
+                        {{ stats.contributed|stake_format }}
+                    </td>
+                </tr>
+                <tr>
                     <td><strong>Available</strong></td>
                     <td class="text-right">
                         {{ stats.available|stake_format }}
@@ -15,9 +21,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><strong>Spent</strong></td>
+                    <td><strong>Paid</strong></td>
                     <td class="text-right">
-                        {{ stats.spent|stake_format }}
+                        {{ stats.paid|stake_format }}
                     </td>
                 </tr>
             </tbody>

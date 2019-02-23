@@ -2,25 +2,8 @@
 
 namespace App\Navcoin\CommunityFund\Entity;
 
-use JMS\Serializer\Serializer;
-
 class Trend
 {
-    /**
-     * @var int
-     */
-    private $votesYes;
-
-    /**
-     * @var int
-     */
-    private $votesNo;
-
-    /**
-     * @var int
-     */
-    private $segment;
-
     /**
      * @var int
      */
@@ -34,7 +17,12 @@ class Trend
     /**
      * @var int
      */
-    private $blocksCounted;
+    private $votesYes;
+
+    /**
+     * @var int
+     */
+    private $votesNo;
 
     /**
      * @var int
@@ -51,19 +39,15 @@ class Trend
      */
     private $trendAbstain;
 
-    public function __construct(int $votesYes, int $votesNo, int $segment, int $start, int $end, int $blocksCounted)
+    public function __construct(int $start, int $end, int $votesYes, int $votesNo, int $trendYes, int $trendNo, int $trendAbstain)
     {
-        $this->votesYes = $votesYes;
-        $this->votesNo = $votesNo;
-        $totalVotes = $votesYes + $votesNo;
-        $this->segment = $segment;
         $this->start = $start;
         $this->end = $end;
-        $this->blocksCounted = $blocksCounted;
-
-        $this->trendYes = round($this->blocksCounted ? ($this->votesYes / $this->blocksCounted) * 100 : 0, 2);
-        $this->trendNo = round($this->blocksCounted ? ($this->votesNo / $this->blocksCounted) * 100 : 0, 2);
-        $this->trendAbstain = round($this->blocksCounted ? ((($this->blocksCounted - $totalVotes) / $this->blocksCounted) * 100) : 0, 2);
+        $this->votesYes = $votesYes;
+        $this->votesNo = $votesNo;
+        $this->trendYes = $trendYes;
+        $this->trendNo = $trendNo;
+        $this->trendAbstain = $trendAbstain;
     }
 
     public function getVotesYes(): int
@@ -99,5 +83,15 @@ class Trend
     public function getTrendYes(): int
     {
         return $this->trendYes;
+    }
+
+    public function getTrendNo(): int
+    {
+        return $this->trendNo;
+    }
+
+    public function getTrendAbstain(): int
+    {
+        return $this->trendAbstain;
     }
 }

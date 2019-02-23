@@ -24,7 +24,7 @@ class PaymentRequestMapper extends BaseMapper
             $data['state'],
             $data['stateChangedOnBlock'],
             $data['status'],
-            (new \DateTime())->setTimestamp($data['createdAt']/1000)
+            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['createdAt'])
         );
 
         if ($data['state'] == "ACCEPTED") {

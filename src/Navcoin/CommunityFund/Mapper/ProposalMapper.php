@@ -27,13 +27,13 @@ class ProposalMapper extends BaseMapper
             $data['votesNo'],
             $data['votingCycle'],
             $data['state'],
-            $data['stateChangedOnBlock'],
+            $this->getData('stateChangedOnBlock', $data),
             $data['status'],
-            (new \DateTime())->setTimestamp($data['createdAt']/1000)
+            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['createdAt'])
         );
 
-        if (array_key_exists('expiresOn', $data) && $data['expiresOn'] != null) {
-            $proposal->setExpiresOn((new \DateTime())->setTimestamp($data['expiresOn']/1000));
+        if ($this->getData('expiresOn', $data)) {
+            $proposal->setExpiresOn(\DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['expiresOn']));
         }
 
         return $proposal;

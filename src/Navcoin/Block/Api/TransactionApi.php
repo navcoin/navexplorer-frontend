@@ -17,7 +17,8 @@ class TransactionApi extends NavcoinApi
     public function getTransaction(String $hash): Transaction
     {
         try {
-            $data = $this->getClient()->get('/api/tx/'.$hash);
+            $response = $this->getClient()->get('/api/tx/' . $hash);
+            $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
@@ -38,22 +39,24 @@ class TransactionApi extends NavcoinApi
         $url .= ($to !== null) ? sprintf('&to=%s', $to) : '';
 
         try {
-            $data = $this->getClient()->get($url);
-        } catch (ServerRequestException $e) {
+            $response = $this->getClient()->get($url);
+            $data = $this->getClient()->getJsonBody($response);
+        } catch (ClientException $e) {
             return new Transactions();
         }
 
-        return $this->getMapper()->mapIterator($data, Transactions::class);
+        return $this->getMapper()->mapIterator(Transactions::class, $data);
     }
 
     public function getTransactionsForBlock(String $height): IteratorEntityInterface
     {
         try {
-            $data = $this->getClient()->get('/api/block/'.$height.'/tx');
-        } catch (ServerRequestException $e) {
+            $response = $this->getClient()->get('/api/block/'.$height.'/tx');
+            $data = $this->getClient()->getJsonBody($response);
+        } catch (ClientException $e) {
             throw new BlockNotFoundException(sprintf("The block at height %s does not exist.", $height), 0, $e);
         }
 
-        return $this->getMapper()->mapIterator($data, Transactions::class);
+        return $this->getMapper()->mapIterator( Transactions::class, $data);
     }
 }

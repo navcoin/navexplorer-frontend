@@ -2,11 +2,6 @@
 
 namespace App\Navcoin\Common;
 
-/**
- * Class AbstractFilter
- *
- * @package App\Navcoin\Common
- */
 abstract class AbstractFilter
 {
     /**
@@ -19,25 +14,14 @@ abstract class AbstractFilter
      */
     private $filters;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->setClass();
         $this->getFilters();
     }
 
-    /**
-     * Sets the class used for filtering
-     */
     public abstract function setClass();
 
-    /**
-     * Get Filters
-     *
-     * @return array
-     */
     public function getFilters(): array
     {
         if (is_null($this->filters)) {
@@ -48,13 +32,6 @@ abstract class AbstractFilter
         return $this->filters;
     }
 
-    /**
-     * Create filter query
-     *
-     * @param array $filters
-     *
-     * @return string
-     */
     public function createFilterQuery(array $filters): string
     {
         if (empty($filters) || $filters === $this->getFilters()) {
