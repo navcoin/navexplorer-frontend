@@ -64,7 +64,7 @@ class NavcoinClient implements NavcoinClientInterface
         $request = $this->messageFactory->createRequest('GET', $this->baseUrl.$uri, $this->headers);
 
         $response = $this->client->sendRequest($request);
-        $this->logger->debug("Api Response:", [$response->getStatusCode(), $response->getBody()->getContents()]);
+        $this->logger->debug("Api Response:", [$response->getStatusCode(), $response]);
 
 
         if ($response->getStatusCode() == 404) {
