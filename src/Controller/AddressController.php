@@ -101,9 +101,8 @@ class AddressController extends Controller
         $addressTransactions = $this->transactionApi->getColdTransactionsForAddress(
             $hash,
             $request->get('size', $this->pageSize),
-            $request->get('filters', []),
-            $request->get('from', null),
-            $request->get('to', null)
+            $request->get('page', 1),
+            $request->get('filters', [])
         );
 
         return new Response($serializer->serialize($addressTransactions, 'json'));
