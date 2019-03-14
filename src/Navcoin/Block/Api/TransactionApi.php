@@ -32,6 +32,23 @@ class TransactionApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
+    public function getRawTransaction(String $hash): String
+    {
+        try {
+            $response = $this->getClient()->get('/api/tx/'.$hash.'/raw');
+            $data = $this->getClient()->getBody($response);
+        } catch (ClientException $e) {
+            switch ($e->getResponse()->getStatusCode()) {
+                case Response::HTTP_NOT_FOUND:
+                    throw new BlockNotFoundException(sprintf("The `%s` transaction does not exist.", $hash), 0, $e);
+                default:
+                    throw $e;
+            }
+        }
+
+        return $data;
+    }
+
     public function getTransactions(int $size = 50, String $from = null, String $to = null): IteratorEntityInterface
     {
         $url = sprintf('/api/tx/?page=%d&size=%d',0, $size);

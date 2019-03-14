@@ -23,7 +23,7 @@
                     {% endif %}
                 </td>
                 <td data-role="address">
-                    {% if transacgtion.type == "PRIVATE_STAKING" %}
+                    {% if transaction.type == "PRIVATE_STAKING" or transaction.type == "PRIVATE_SPEND" %}
                         <span class="break-word">
                             <em>Private Address</em>
                         </span>

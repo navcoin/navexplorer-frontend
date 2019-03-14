@@ -79,6 +79,7 @@ class TransactionController extends Controller
         try {
             $transaction = $this->transactionApi->getTransaction($request->get('hash'));
             $block = $this->blockApi->getBlock($transaction->getHeight());
+            $rawData = $this->transactionApi->getRawTransaction($transaction->getHash());
         } catch(TransactionNotFoundException $e) {
             return $this->render(
                 'transaction/not_found.html.twig',
@@ -90,6 +91,7 @@ class TransactionController extends Controller
         return [
             'transaction' => $transaction,
             'block' => $block,
+            'raw' => $rawData,
         ];
     }
 }
