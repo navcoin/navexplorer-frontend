@@ -49,7 +49,6 @@ class BlockController extends Controller
     /**
      * @Route("/blocks.json")
      *
-     *
      * @param Request             $request
      * @param SerializerInterface $serializer
      *
@@ -76,7 +75,6 @@ class BlockController extends Controller
     {
         try {
             $block = $this->blockApi->getBlock($request->get('height'));
-            $rawData = $this->blockApi->getRawBlock($block->getHash());
         } catch (BlockNotFoundException $e) {
             return $this->render(
                 'block/not_found.html.twig',
@@ -86,14 +84,12 @@ class BlockController extends Controller
         }
 
         return $this->render('block/view.html.twig', [
-            'block' => $block,
-            'raw' => $rawData,
+            'block' => $block
         ]);
     }
 
     /**
      * @Route("/block/{height}/tx.json")
-     *
      *
      * @param Request             $request
      * @param SerializerInterface $serializer
@@ -105,5 +101,23 @@ class BlockController extends Controller
         $transactions = $this->transactionApi->getTransactionsForBlock($request->get('height'));
 
         return new Response($serializer->serialize($transactions, 'json'));
+    }
+
+    /**
+     * @Route("/block/{hash/raw.json")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function rawData(Request $request): Response
+    {
+        try {
+            $rawData = $this->blockApi->getRawBlock($request->get('hash'));
+        } catch (\Exception $e) {
+            return new Response("Unable to load raw data", $e->getCode());
+        }
+
+        return new Response($rawData, 200);
     }
 }

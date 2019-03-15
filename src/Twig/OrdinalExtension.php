@@ -5,18 +5,8 @@ namespace App\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-/**
- * Class OrdinalExtension
- *
- * @package App\Twig
- */
 class OrdinalExtension extends AbstractExtension
 {
-    /**
-     * Get filters
-     *
-     * @return array
-     */
     public function getFilters(): array
     {
         return array(
@@ -24,13 +14,6 @@ class OrdinalExtension extends AbstractExtension
         );
     }
 
-    /**
-     * Stake filter
-     *
-     * @param float $number
-     *
-     * @return string
-     */
     public function ordinal(float $number): string
     {
         $ends = ['th','st','nd','rd','th','th','th','th','th','th'];

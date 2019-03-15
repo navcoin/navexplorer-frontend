@@ -46,7 +46,6 @@ class TransactionController extends Controller
         return [];
     }
 
-
     /**
      * @Route("/tx.json")
      *
@@ -93,5 +92,23 @@ class TransactionController extends Controller
             'block' => $block,
             'raw' => $rawData,
         ];
+    }
+
+    /**
+     * @Route("/tx/{hash/raw.json")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function rawData(Request $request): Response
+    {
+        try {
+            $rawData = $this->transactionApi->getRawTransaction($request->get('hash'));
+        } catch (\Exception $e) {
+            return new Response("Unable to load raw data", $e->getCode());
+        }
+
+        return new Response($rawData, 200);
     }
 }

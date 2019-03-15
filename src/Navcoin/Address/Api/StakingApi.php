@@ -5,11 +5,6 @@ namespace App\Navcoin\Address\Api;
 use App\Exception\ServerRequestException;
 use App\Navcoin\Common\NavcoinApi;
 
-/**
- * Class StakingApi
- *
- * @package App\Navcoin\Address\Api
- */
 class StakingApi extends NavcoinApi
 {
     public function getStakingReport(String $hash, \DateTime $from, \DateTime $to)

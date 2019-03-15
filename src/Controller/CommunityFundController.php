@@ -244,7 +244,6 @@ class CommunityFundController extends Controller
     /**
      * @Route("/community-fund/proposal/{hash}/trend.json")
      *
-     *
      * @param Request             $request
      * @param SerializerInterface $serializer
      *
@@ -252,14 +251,16 @@ class CommunityFundController extends Controller
      */
     public function proposalVoteTrends(Request $request, SerializerInterface $serializer): Response
     {
-        $transactions = $this->trendApi->getProposalVotingTrend($request->get('hash'));
-
-        return new Response($serializer->serialize($transactions, 'json'));
+        return new Response(
+            $serializer->serialize(
+                $this->trendApi->getProposalVotingTrend($request->get('hash')),
+                'json'
+            )
+        );
     }
 
     /**
      * @Route("/community-fund/payment-request/{hash}/trend.json")
-     *
      *
      * @param Request             $request
      * @param SerializerInterface $serializer
@@ -268,8 +269,11 @@ class CommunityFundController extends Controller
      */
     public function paymentRequestVoteTrends(Request $request, SerializerInterface $serializer): Response
     {
-        $transactions = $this->trendApi->getPaymentRequestVotingTrend($request->get('hash'));
-
-        return new Response($serializer->serialize($transactions, 'json'));
+        return new Response(
+            $serializer->serialize(
+                $this->trendApi->getPaymentRequestVotingTrend($request->get('hash')),
+                'json'
+            )
+        );
     }
 }

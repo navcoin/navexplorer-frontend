@@ -7,11 +7,6 @@ use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class DistributionController
- *
- * @package App\Controller
- */
 class DistributionController
 {
     /**
@@ -19,16 +14,10 @@ class DistributionController
      */
     private $distributionApi;
 
-    /**
-     * Constructor
-     *
-     * @param DistributionApi $distributionApi
-     */
     public function __construct(DistributionApi $distributionApi)
     {
         $this->distributionApi = $distributionApi;
     }
-
 
     /**
      * @Route("/distribution/balance.json")

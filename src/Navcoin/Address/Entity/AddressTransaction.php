@@ -97,7 +97,8 @@ class AddressTransaction
         String $address,
         float $coldStakingBalance,
         float $coldStakingSent,
-        float $coldStakingReceived
+        float $coldStakingReceived,
+        float $coldStakingAmount
     ) {
         $this->transaction = $transaction;
         $this->time = $time;
@@ -111,7 +112,7 @@ class AddressTransaction
         $this->coldStakingBalance = $coldStakingBalance;
         $this->coldStakingSent = $coldStakingSent;
         $this->coldStakingReceived = $coldStakingReceived;
-        $this->coldStakingAmount = $this->coldStakingReceived - ($this->type !== 'RECEIVE' ? $this->coldStakingSent : 0);
+        $this->coldStakingAmount = $coldStakingAmount;
     }
 
     public function getTransaction(): string

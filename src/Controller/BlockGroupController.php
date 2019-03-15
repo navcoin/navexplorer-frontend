@@ -20,16 +20,10 @@ class BlockGroupController
      */
     private $blockGroupApi;
 
-    /**
-     * Constructor
-     *
-     * @param BlockGroupApi $blockGroupApi
-     */
     public function __construct(BlockGroupApi $blockGroupApi)
     {
         $this->blockGroupApi = $blockGroupApi;
     }
-
 
     /**
      * @Route("/block/group/{category}.json")
