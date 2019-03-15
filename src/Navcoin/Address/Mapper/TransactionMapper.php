@@ -9,6 +9,13 @@ class TransactionMapper extends BaseMapper
 {
     public function mapEntity(array $data): Transaction
     {
+        if ($data['type'] === 'COLD_STAKING') {
+            $coldStakingBalance = $data['coldStakingBalance'];
+            $coldStakingSent = ($data['type'] !== 'RECEIVE' ? $data['coldStakingSent'] : 0);
+            $coldStakingReceived = $data['coldStakingReceived'];
+            $coldStakingAmount = ($data['coldStakingReceived'] - $coldStakingSent);
+        }
+
         return new Transaction(
             $data['transaction'],
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['time']),
@@ -18,9 +25,10 @@ class TransactionMapper extends BaseMapper
             $data['received'] / 100000000,
             $data['type'],
             $data['address'],
-            $data['coldStakingBalance'] / 100000000,
-            $data['coldStakingSent'] / 100000000,
-            $data['coldStakingReceived'] / 100000000
+            isset($coldStakingBalance) ? $coldStakingBalance / 100000000 : 0,
+            isset($coldStakingSent)? $coldStakingSent / 100000000 : 0,
+            isset($coldStakingReceived) ? $coldStakingReceived / 100000000 : 0,
+            isset($coldStakingAmount) ? $coldStakingAmount / 100000000 : 0
         );
     }
 }
