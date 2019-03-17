@@ -10,5 +10,4 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['all' => true],
-    Http\HttplugBundle\HttplugBundle::class => ['all' => true],
 ];
