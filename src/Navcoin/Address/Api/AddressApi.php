@@ -4,6 +4,7 @@ namespace App\Navcoin\Address\Api;
 
 use App\Exception\AddressIndexIncompleteException;
 use App\Exception\AddressInvalidException;
+use App\Exception\AddressNotFoundException;
 use App\Exception\ServerRequestException;
 use App\Navcoin\Address\Entity\Address;
 use App\Navcoin\Address\Entity\Addresses;
@@ -22,7 +23,9 @@ class AddressApi extends NavcoinApi
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:
-                    throw new AddressInvalidException(sprintf("The `%s` address does not exist.", $hash), 0, $e);
+                    throw new AddressNotFoundException(sprintf("The `%s` address does not exist.", $hash), 0, $e);
+                case Response::HTTP_BAD_REQUEST:
+                    throw new AddressInvalidException(sprintf("The `%s` address is invalid.", $hash), 0, $e);
                 default:
                     throw $e;
             }
