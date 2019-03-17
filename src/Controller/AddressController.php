@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Exception\AddressInvalidException;
+use App\Exception\AddressNotFoundException;
 use App\Navcoin\Address\Api\AddressApi;
 use App\Navcoin\Address\Api\TransactionApi;
 use App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter;
@@ -52,8 +53,12 @@ class AddressController extends Controller
 
         try {
             $address = $this->addressApi->getAddress($hash);
-        } catch (AddressInvalidException $e) {
+        } catch (AddressNotFoundException $e) {
             return $this->render('address/not_found.html.twig', [
+                'hash' => $hash,
+            ]);
+        } catch (AddressInvalidException $e) {
+            return $this->render('address/not_valid.html.twig', [
                 'hash' => $hash,
             ]);
         }
