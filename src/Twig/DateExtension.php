@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Navcoin\Block\Entity\Block;
 use App\Navcoin\Block\Entity\BlockGroup;
+use App\Navcoin\Common\Entity\DateRangeInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -33,7 +34,7 @@ class DateExtension extends AbstractExtension
         );
     }
 
-    public function period(String $period, int $index, BlockGroup $block) {
+    public function period(String $period, int $index, DateRangeInterface $block) {
         switch ($period) {
             case 'hourly':
                 return $this->hourly($block);
@@ -44,17 +45,17 @@ class DateExtension extends AbstractExtension
         }
     }
 
-    public function hourly(BlockGroup $block)
+    public function hourly(DateRangeInterface $block)
     {
         return sprintf("%s - %s", $block->getStart()->format('H:i'), $block->getEnd()->format('H:i'));
     }
 
-    public function daily(BlockGroup $block)
+    public function daily(DateRangeInterface $block)
     {
         return $block->getStart()->format('D jS M');
     }
 
-    public function monthly(BlockGroup $block)
+    public function monthly(DateRangeInterface $block)
     {
         return $block->getStart()->format('F Y');
     }

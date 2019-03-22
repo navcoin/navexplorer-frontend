@@ -2,7 +2,9 @@
 
 namespace App\Navcoin\Block\Entity;
 
-class BlockGroup
+use App\Navcoin\Common\Entity\DateRangeInterface;
+
+class BlockGroup implements DateRangeInterface
 {
     /**
      * @var \DateTime
