@@ -84,7 +84,7 @@ class StakingGroup implements DateRangeInterface
     
     public function getRatio(float $balance): float
     {
-        if ($balace == 0) {
+        if ($balance == 0) {
             return 0;
         }
 
@@ -93,7 +93,7 @@ class StakingGroup implements DateRangeInterface
 
     public function getRatioAnnualised(float $balance, string $period): float
     {
-        if ($balace == 0) {
+        if ($balance == 0) {
             return 0;
         }
 
