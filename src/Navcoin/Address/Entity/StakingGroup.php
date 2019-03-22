@@ -84,11 +84,19 @@ class StakingGroup implements DateRangeInterface
     
     public function getRatio(float $balance): float
     {
+        if ($balace == 0) {
+            return 0;
+        }
+
         return ($this->amount / $balance) * 100;
     }
 
     public function getRatioAnnualised(float $balance, string $period): float
     {
+        if ($balace == 0) {
+            return 0;
+        }
+
         $ratio = $this->getRatio($balance);
         switch ($period) {
             case 'hourly':
