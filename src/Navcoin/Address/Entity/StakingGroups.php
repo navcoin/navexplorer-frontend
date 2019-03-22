@@ -32,6 +32,7 @@ class StakingGroups extends IteratorEntity implements IteratorEntityInterface
     public function getMaxStakes(): int
     {
         return max(array_map(function($o) {
+            /** @var $o StakingGroup */
             return $o->getStakes();
         }, $this->getElements()));
     }
