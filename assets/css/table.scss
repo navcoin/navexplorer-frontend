@@ -91,8 +91,10 @@
     td[data-role="height"]:before { content: "Height"; }
     td[data-role="index"]:before { content: "Index"; }
     td[data-role="lastBlock"]:before { content: "Last Block"; }
+    td[data-role="navEarned"]:before { content: "NAV Earned"; }
     td[data-role="navRequested"]:before { content: "NAV Requested"; }
     td[data-role="navSpent"]:before { content: "NAV Spent"; }
+    td[data-role="numStakes"]:before { content: "# Stakes"; }
     td[data-role="percentageOfCoins"]:before { content: "% of Coins"; }
     td[data-role="previousOutput"]:before { content: "Previous Output"; }
     td[data-role="proposal"]:before { content: "Proposal"; }

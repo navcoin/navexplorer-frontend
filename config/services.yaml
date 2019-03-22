@@ -41,6 +41,7 @@ services:
     App\Navcoin\Address\Api\StakingApi:
         arguments:
             - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\Address\Mapper\StakingMapper'
 
     App\Navcoin\Address\Api\TransactionApi:
         arguments:
@@ -98,6 +99,10 @@ services:
         arguments:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\CommunityFund\Mapper\TrendMapper'
+
+    App\Navcoin\Staking\Api\StakingApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
 
     App\Navcoin\Network\Service\NetworkService:
         arguments:
