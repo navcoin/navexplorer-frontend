@@ -81,6 +81,7 @@
 
     td[data-role="address"]:before { content: "Address"; }
     td[data-role="amount"]:before { content: "Amount"; }
+    td[data-role="annualPercentage"]:before { content: "Annual %"; }
     td[data-role="balance"]:before { content: "Balance"; }
     td[data-role="block"]:before { content: "Block"; }
     td[data-role="blocks"]:before { content: "Blocks"; }

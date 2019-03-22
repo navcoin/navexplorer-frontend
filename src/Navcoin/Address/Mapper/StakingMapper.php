@@ -13,7 +13,7 @@ class StakingMapper extends BaseMapper
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['start']),
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['end']),
             $data['stakes'],
-            $data['amount'] ? $data['amount'] / 100000000 : 0
+            $data['amount'] !== 0 ? $data['amount'] / 100000000 : 0
         );
     }
 }

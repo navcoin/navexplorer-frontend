@@ -52,7 +52,7 @@ class DateExtension extends AbstractExtension
 
     public function daily(DateRangeInterface $block)
     {
-        return $block->getStart()->format('D jS M');
+        return $block->getStart()->format('j F Y');
     }
 
     public function monthly(DateRangeInterface $block)
