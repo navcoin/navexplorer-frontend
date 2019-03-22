@@ -66,13 +66,13 @@ class NavcoinClient implements NavcoinClientInterface
         $response = $this->client->sendRequest($request);
         $this->logger->debug("Api Response:", [$response->getStatusCode(), $response]);
 
-
-        if ($response->getStatusCode() == 404) {
-            throw new ClientException("Resource not found", $request, $response);
-        }
-
-        if ($response->getStatusCode() == 500) {
-            throw new ClientException($response->getBody()->getContents(), $request, $response);
+        switch ($response->getStatusCode()) {
+            case 400:
+                throw new ClientException("Request not valid", $request, $response);
+            case 404:
+                throw new ClientException("Resource not found", $request, $response);
+            case 500:
+                throw new ClientException($response->getBody()->getContents(), $request, $response);
         }
 
         return $response;

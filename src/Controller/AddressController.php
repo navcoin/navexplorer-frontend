@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Exception\AddressInvalidException;
 use App\Exception\AddressNotFoundException;
+use App\Exception\StakingReportUnavailableException;
 use App\Navcoin\Address\Api\AddressApi;
+use App\Navcoin\Address\Api\StakingApi;
 use App\Navcoin\Address\Api\TransactionApi;
+use App\Navcoin\Address\Entity\StakingGroups;
 use App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,6 +24,11 @@ class AddressController extends Controller
     private $addressApi;
 
     /**
+     * @var StakingApi
+     */
+    private $stakingApi;
+
+    /**
      * @var TransactionApi
      */
     private $transactionApi;
@@ -30,9 +38,10 @@ class AddressController extends Controller
      */
     private $pageSize = 50;
 
-    public function __construct(AddressApi $addressApi, TransactionApi $transactionApi)
+    public function __construct(AddressApi $addressApi, StakingApi $stakingApi, TransactionApi $transactionApi)
     {
         $this->addressApi = $addressApi;
+        $this->stakingApi = $stakingApi;
         $this->transactionApi = $transactionApi;
     }
 
@@ -63,11 +72,23 @@ class AddressController extends Controller
             ]);
         }
 
+        try {
+            /** @var StakingGroups $stakingReport */
+            $stakingReport = $this->stakingApi->getStakingReport(
+                $hash,
+                $request->get('period', "daily")
+            );
+        } catch (StakingReportUnavailableException $e) {
+            $stakingReport = null;
+        }
+
         return $this->render('address/index.html.twig', [
             'address' => $address,
             'hash' => $hash,
             'filter' => $filter,
             'filters' => $request->get('filters') ? explode(',', $request->get('filters')) : [],
+            'stakingReport' => $stakingReport,
+            'activeTab' => $request->get('period') ? 'staking-report' : 'transactions',
         ]);
     }
 
@@ -111,5 +132,24 @@ class AddressController extends Controller
         );
 
         return new Response($serializer->serialize($addressTransactions, 'json'));
+    }
+
+    /**
+     * @Route("/address/{hash}/staking.json")
+     *
+     * @param Request             $request
+     * @param string              $hash
+     * @param SerializerInterface $serializer
+     *
+     * @return Response
+     */
+    public function stakingReport(Request $request, String $hash, SerializerInterface $serializer): Response
+    {
+        $stakingReport = $this->addressApi->getStakingReport(
+            $hash,
+            $request->get('period', "daily")
+        );
+
+        return new Response($serializer->serialize($stakingReport, 'json'));
     }
 }
