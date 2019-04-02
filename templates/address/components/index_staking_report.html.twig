@@ -35,7 +35,8 @@
                         </td>
                         <td class="d-none d-md-table-cell">
                             <div class="progress">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ row.stakes/(stakingReport.maxStakes*1.2) * 100 }}%" aria-valuenow="{{ row.stakes/(stakingReport.maxStakes*1.2) * 100 }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                {%  set progress = row.amount == 0 ? 0 : row.stakes/(stakingReport.maxStakes*1.2) * 100 %}
+                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </td>
                     </tr>
