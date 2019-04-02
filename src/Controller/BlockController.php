@@ -75,6 +75,7 @@ class BlockController extends Controller
     {
         try {
             $block = $this->blockApi->getBlock($request->get('height'));
+            $rawData = $this->blockApi->getRawBlock($block->getHash());
         } catch (BlockNotFoundException $e) {
             return $this->render(
                 'block/not_found.html.twig',
@@ -84,7 +85,8 @@ class BlockController extends Controller
         }
 
         return $this->render('block/view.html.twig', [
-            'block' => $block
+            'block' => $block,
+            'raw' => $rawData,
         ]);
     }
 
