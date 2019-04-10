@@ -3,14 +3,10 @@
 namespace App\Navcoin\Address\Entity;
 
 use App\Navcoin\Address\Type\AddressTransactionType;
+use DateTime;
 
 class AddressTransaction
 {
-    /**
-     * @var String
-     */
-    private $id;
-
     /**
      * @var String
      */
@@ -88,11 +84,12 @@ class AddressTransaction
 
     public function __construct(
         String $transaction,
-        \DateTime $time,
+        DateTime $time,
         int $height,
         float $balance,
         float $sent,
         float $received,
+        float $amount,
         String $type,
         String $address,
         float $coldStakingBalance,
@@ -106,7 +103,7 @@ class AddressTransaction
         $this->balance = $balance;
         $this->sent = $sent;
         $this->received = $received;
-        $this->amount = $this->received - $this->sent;
+        $this->amount = $amount;
         $this->type = $type;
         $this->address = $address;
         $this->coldStakingBalance = $coldStakingBalance;
@@ -120,7 +117,7 @@ class AddressTransaction
         return $this->transaction;
     }
 
-    public function getTime(): \DateTime
+    public function getTime(): DateTime
     {
         return $this->time;
     }

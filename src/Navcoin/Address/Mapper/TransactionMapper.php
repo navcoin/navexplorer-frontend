@@ -23,6 +23,7 @@ class TransactionMapper extends BaseMapper
             $data['balance'] / 100000000,
             $data['sent'] / 100000000,
             $data['received'] / 100000000,
+            $data['received'] - $data['sent'] / 100000000,
             $data['type'],
             $data['address'],
             isset($coldStakingBalance) ? $coldStakingBalance / 100000000 : 0,
