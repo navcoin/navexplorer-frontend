@@ -22,7 +22,7 @@ class PaymentRequestMapper extends BaseMapper
             $data['votesNo'],
             $data['votingCycle'],
             $data['state'],
-            $data['stateChangedOnBlock'],
+            array_key_exists('stateChangedOnBlock', $data) ? $data['stateChangedOnBlock'] : null,
             $data['status'],
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['createdAt'])
         );
