@@ -12,17 +12,11 @@ class SoftForkMapper extends BaseMapper
 {
     public function mapIterator(String $class, array $data, Paginator $paginator = null, array $options = [])
     {
-        $softForks = new SoftForks(
-            $data['blockCycle'],
-            $data['blocksInCycle'],
-            $data['firstBlock'],
-            $data['currentBlock'],
-            $data['blocksRemaining']
-        );
-
-        foreach ($data['softForks'] as $softFork) {
+        $softForks = new SoftForks();
+        foreach ($data as $softFork) {
             $softForks->add($this->mapEntity($softFork));
         }
+
         $elements = $softForks->getElements();
         usort($elements, [$this, 'sortBySignals']);
 
@@ -31,17 +25,27 @@ class SoftForkMapper extends BaseMapper
 
     public function mapEntity(array $data): SoftFork
     {
-        return new SoftFork(
+        $sf = new SoftFork(
             $data['name'],
+            $data['signalBit'],
             $data['state'],
-            $data['blocksSignalling'],
-            $this->getData('lockedInHeight', $data),
-            $this->getData('activationHeight', $data)
+            $this->getData('lockedinheight', $data),
+            $this->getData('activationheight', $data),
+            $this->getData('signalheight', $data)
         );
+
+        if ($this->hasData('cycles', $data) && is_array($data['cycles'])) {
+            foreach ($data['cycles'] as $cycle) {
+                $sf->addCycle($cycle['cycle'], $cycle['blocks']);
+            }
+        }
+
+        return $sf;
     }
 
     function sortBySignals(SoftFork $a, SoftFork $b)
     {
-        return $a->getBlocksSignalling() < $b->getBlocksSignalling();
+        return true;
+//        return $a->getBlocksSignalling() < $b->getBlocksSignalling();
     }
 }

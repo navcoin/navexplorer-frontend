@@ -12,7 +12,7 @@ class Stats
     /**
      * @var float
      */
-    private $requested;
+    private $available;
 
     /**
      * @var float
@@ -24,10 +24,10 @@ class Stats
      */
     private $locked;
 
-    public function __construct(float $contributed, float $requested, float $paid, float $locked)
+    public function __construct(float $contributed, float $available, float $paid, float $locked)
     {
         $this->contributed = $contributed;
-        $this->requested = $requested;
+        $this->available = $available;
         $this->paid = $paid;
         $this->locked = $locked;
     }
@@ -35,11 +35,6 @@ class Stats
     public function getContributed(): float
     {
         return $this->contributed;
-    }
-
-    public function getRequested(): float
-    {
-        return $this->requested;
     }
 
     public function getPaid(): float
@@ -54,6 +49,6 @@ class Stats
 
     public function getAvailable(): float
     {
-        return $this->contributed - $this->paid - $this->locked;
+        return $this->available;
     }
 }

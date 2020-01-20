@@ -55,21 +55,6 @@ class Proposal
     private $proposalDuration;
 
     /**
-     * @var int
-     */
-    private $votesYes;
-
-    /**
-     * @var int
-     */
-    private $votesNo;
-
-    /**
-     * @var int
-     */
-    private $votingCycle;
-
-    /**
      * @var string
      */
     private $state;
@@ -82,12 +67,12 @@ class Proposal
     /**
      * @var string
      */
-    private $status;
+    private $updatedOnBlock;
 
     /**
-     * @var \DateTime
+     * @var string
      */
-    private $createdAt;
+    private $status;
 
     /**
      * @var \DateTime
@@ -105,13 +90,10 @@ class Proposal
         float $userPaidFee,
         string $paymentAddress,
         int $proposalDuration,
-        int $votesYes,
-        int $votesNo,
-        int $votingCycle,
         string $state,
-        ?string $stateChangedOnBlock,
-        string $status,
-        \DateTime $createdAt
+        string $stateChangedOnBlock,
+        string $updatedOnBlock,
+        string $status
     ) {
         $this->version = $version;
         $this->hash = $hash;
@@ -123,13 +105,10 @@ class Proposal
         $this->userPaidFee = $userPaidFee;
         $this->paymentAddress = $paymentAddress;
         $this->proposalDuration = $proposalDuration;
-        $this->votesYes = $votesYes;
-        $this->votesNo = $votesNo;
-        $this->votingCycle = $votingCycle;
         $this->state = $state;
         $this->stateChangedOnBlock = $stateChangedOnBlock;
+        $this->updatedOnBlock = $updatedOnBlock;
         $this->status = $status;
-        $this->createdAt = $createdAt;
     }
 
     public function getVersion(): int
@@ -228,27 +207,6 @@ class Proposal
         return $date;
     }
 
-
-    public function getVotesYes(): int
-    {
-        return $this->votesYes;
-    }
-
-    public function getVotesNo(): int
-    {
-        return $this->votesNo;
-    }
-
-    public function getVotesTotal(): int
-    {
-        return $this->votesYes + $this->votesNo;
-    }
-
-    public function getVotingCycle(): int
-    {
-        return $this->votingCycle;
-    }
-
     public function getState(): string
     {
         return $this->state;
@@ -259,14 +217,14 @@ class Proposal
         return $this->stateChangedOnBlock;
     }
 
+    public function getUpdatedOnBlock(): string
+    {
+        return $this->updatedOnBlock;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
-    }
-
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
     }
 
     public function getExpiresOn(): ?\DateTime

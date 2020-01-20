@@ -38,6 +38,7 @@ class SoftForkController
         $softForks->sortByLockedInHeight();
 
         return [
+            'cycle' => $this->softForkApi->getCycle(),
             'block' => $this->blockApi->getBestBlock(),
             'softForks' => $softForks,
         ];

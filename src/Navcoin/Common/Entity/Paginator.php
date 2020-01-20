@@ -34,12 +34,12 @@ class Paginator implements IteratorEntityInterface
     /**
      * @var int
      */
-    private $size;
+    private $pageSize;
 
     /**
      * @var int
      */
-    private $number;
+    private $currentPage;
 
     /**
      * @var array
@@ -145,26 +145,26 @@ class Paginator implements IteratorEntityInterface
         return $this;
     }
 
-    public function getSize(): int
+    public function getPageSize(): int
     {
-        return $this->size;
+        return $this->pageSize;
     }
 
-    public function setSize(int $size): self
+    public function setPageSize(int $pageSize): self
     {
-        $this->size = $size;
+        $this->pageSize = $pageSize;
 
         return $this;
     }
 
-    public function getNumber(): int
+    public function getCurrentPage(): int
     {
-        return $this->number;
+        return $this->currentPage;
     }
 
-    public function setNumber(int $number): self
+    public function setCurrentPage(int $currentPage): self
     {
-        $this->number = $number;
+        $this->currentPage = $currentPage;
 
         return $this;
     }

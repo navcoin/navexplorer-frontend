@@ -12,7 +12,7 @@ class DistributionApi extends NavcoinApi
     public function getBalanceDistribution(String $groups = null): Distribution
     {
         try {
-            $response = $this->getClient()->get('/api/coin/wealth?groups=' . $groups);
+            $response = $this->getClient()->get('/coin/wealth?groups=' . $groups);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             throw new DistributionException(sprintf("The distribution cannot be created."), 500, $e);

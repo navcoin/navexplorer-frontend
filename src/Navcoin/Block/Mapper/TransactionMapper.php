@@ -21,8 +21,8 @@ class TransactionMapper extends BaseMapper
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['time']),
             $data['stake'] / 100000000,
             $data['fees'] / 100000000,
-            $this->mapInputs($data['inputs']),
-            $this->mapOutputs($data['outputs']),
+            $this->mapInputs($data['vin']),
+            $this->mapOutputs($data['vout']),
             $data['type'],
             array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
             $this->mapProposalVotes(array_key_exists('proposalVotes', $data) && $data['proposalVotes'] ? $data['proposalVotes'] : [])
@@ -35,14 +35,14 @@ class TransactionMapper extends BaseMapper
     {
         $inputs = new Inputs();
 
-        foreach ($data as $inputData) {
+        foreach ($data as $key => $inputData) {
             $inputs->add(
                 new Input(
                     array_key_exists('addresses', $inputData) ? $inputData['addresses'] : (array_key_exists('address', $inputData) ? [$inputData['address']] : []),
-                    $inputData['amount'] / 100000000,
-                    $inputData['index'],
-                    $inputData['previousOutput'],
-                    $this->getData('previousOutputBlock', $inputData, '')
+                    $this->getData('value', $inputData, 0),
+                    $key,
+                    $this->getData('txid', $inputData, ''),
+                    $inputData['previousOutput']['height']
                 )
             );
         }
@@ -53,17 +53,17 @@ class TransactionMapper extends BaseMapper
     private function mapOutputs(array $data): Outputs
     {
         $outputs = new Outputs();
-        foreach ($data as $outputData) {
-            if ($outputData['type'] == null) {
+        foreach ($data as $key => $outputData) {
+            if ($outputData['scriptPubKey']['type'] == null) {
                 continue;
             }
 
             try {
                 $output = new Output(
-                    $outputData['type'],
-                    $outputData['index'],
-                    $this->getData('amount', $outputData, 0),
-                    array_key_exists('addresses', $outputData) ? $outputData['addresses'] : (array_key_exists('address', $outputData) ? [$outputData['address']] : []),
+                    strtoupper($outputData['scriptPubKey']['type']),
+                    $key,
+                    $this->getData('valuesat', $outputData, 0),
+                    $this->getData('addresses', $outputData['scriptPubKey'], []),
                     $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['hash'] : null,
                     $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['height'] : null
                 );

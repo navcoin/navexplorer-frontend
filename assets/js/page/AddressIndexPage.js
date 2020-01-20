@@ -38,12 +38,12 @@ class AddressIndexPage {
         );
 
         let $amountTd = $(document.createElement('td')).attr('data-role', 'amount')
-            .append(numberFormatter.format(data.amount) + '&nbsp;NAV');
-        if (data.type === "STAKING") {
+            .append(numberFormatter.format(data.total) + '&nbsp;NAV');
+        if (data.type === "stake") {
             $amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
-        } else if (data.type === "COLD_STAKING") {
+        } else if (data.type === "cold_stake") {
             $amountTd.append('&nbsp;<span class="badge badge-info">Cold Stake</span>');
-        } else if (data.type === "COMMUNITY_FUND_PAYOUT") {
+        } else if (data.type === "community_fund_payout") {
             $amountTd.append('&nbsp;<span class="badge badge-info">Community Fund</span>');
         }
 

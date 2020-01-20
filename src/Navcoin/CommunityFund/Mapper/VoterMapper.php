@@ -10,9 +10,10 @@ class VoterMapper extends BaseMapper
     public function mapEntity(array $data): Voter
     {
         return new Voter(
-            $data['address'],
-            $data['votes'],
-            $this->options['vote']
+            $this->getData('address', $data, ''),
+            $data['yes'],
+            $data['no'],
+            $data['abstain']
         );
     }
 }

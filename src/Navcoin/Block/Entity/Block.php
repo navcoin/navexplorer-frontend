@@ -117,8 +117,7 @@ class Block
         String $stakedBy,
         int $transactions,
         bool $best,
-        string $raw,
-        float $balance
+        string $raw
     ) {
         $this->hash = $hash;
         $this->merkleRoot = $merkleRoot;
@@ -138,7 +137,6 @@ class Block
         $this->transactions = $transactions;
         $this->best = $best;
         $this->raw = $raw;
-        $this->balance =  $balance ? $balance / 100000000 : 0;
     }
 
     public function getHash(): string
@@ -236,7 +234,7 @@ class Block
         return $this->raw;
     }
 
-    public function getBalance(): float
+    public function getBalance(): ?float
     {
         return $this->balance;
     }

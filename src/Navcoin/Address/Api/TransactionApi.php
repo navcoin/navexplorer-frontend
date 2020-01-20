@@ -22,7 +22,7 @@ class TransactionApi extends NavcoinApi
 
     public function getTransactionsForAddress(String $hash, int $size = 50, int $page = 1, array $filters = null): IteratorEntityInterface
     {
-        $url = sprintf('/api/address/%s/tx?size=%d&page=%d', $hash, $size, $page);
+        $url = sprintf('/address/%s/tx?size=%d&page=%d', $hash, $size, $page);
         if (!empty($filters)) {
             $filterQuery = $this->addressTransactionTypeFilter->createfilterQuery($filters);
             $url .= ($filterQuery !== '') ? '&' . $filterQuery : '';
@@ -40,7 +40,7 @@ class TransactionApi extends NavcoinApi
 
     public function getColdTransactionsForAddress(String $hash, int $size = 50, int $page = 1, array $filters = null): IteratorEntityInterface
     {
-        $url = sprintf('/api/address/%s/coldtx?size=%d&page=%d', $hash, $size, $page);
+        $url = sprintf('/address/%s/tx/cold?size=%d&page=%d', $hash, $size, $page);
         if (!empty($filters)) {
             $filterQuery = $this->addressTransactionTypeFilter->createfilterQuery($filters);
             $url .= ($filterQuery !== '') ? '&' . $filterQuery : '';

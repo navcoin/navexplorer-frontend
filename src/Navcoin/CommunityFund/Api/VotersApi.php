@@ -14,8 +14,7 @@ class VotersApi extends NavcoinApi
     public function getProposalVotes(String $hash, bool $vote): Voters
     {
         try {
-            $voteString = $vote ? 'true' : 'false';
-            $response = $this->getClient()->get('/api/community-fund/proposal/' . $hash . '/vote/' . $voteString);
+            $response = $this->getClient()->get('/dao/cfund/proposal/' . $hash . '/votes');
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {

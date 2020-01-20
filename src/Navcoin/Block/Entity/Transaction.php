@@ -169,6 +169,6 @@ class Transaction
 
     public function isCoinbase(): bool
     {
-        return $this->type == "COINBASE" || $this->type == "EMPTY";
+        return $this->type == "coinbase";
     }
 }

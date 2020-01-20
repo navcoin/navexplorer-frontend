@@ -26,6 +26,8 @@
                     <tbody>
                         {% for proposal in proposals %}
                             <tr><td>{% include "community_fund/components/proposal_card_slim.html.twig" %}</td></tr>
+                        {% else %}
+                            <tr><td>There are no pending proposals</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -44,6 +46,8 @@
                     <tbody>
                     {% for paymentRequest in paymentRequests %}
                         <tr><td>{% include "community_fund/components/paymentrequest_card_slim.html.twig" %}</td></tr>
+                    {% else %}
+                        <tr><td>There are no pending payment requests</td></tr>
                     {% endfor %}
                     </tbody>
                 </table>

@@ -18,7 +18,7 @@ class AddressApi extends NavcoinApi
     public function getAddress(String $hash): Address
     {
         try {
-            $response = $this->getClient()->get('/api/address/' . $hash);
+            $response = $this->getClient()->get('/address/' . $hash);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -37,7 +37,7 @@ class AddressApi extends NavcoinApi
     public function getTopAddresses(int $count): IteratorEntityInterface
     {
         try {
-            $response = $this->getClient()->get('/api/address?size=' . $count);
+            $response = $this->getClient()->get('/address?size=' . $count);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             throw new AddressIndexIncompleteException(sprintf("Could not return top %d addresses", $count), 0, $e);

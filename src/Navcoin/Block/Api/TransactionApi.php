@@ -17,7 +17,7 @@ class TransactionApi extends NavcoinApi
     public function getTransaction(String $hash): Transaction
     {
         try {
-            $response = $this->getClient()->get('/api/tx/' . $hash);
+            $response = $this->getClient()->get('/tx/' . $hash);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -35,7 +35,7 @@ class TransactionApi extends NavcoinApi
     public function getRawTransaction(String $hash): String
     {
         try {
-            $response = $this->getClient()->get('/api/tx/'.$hash.'/raw');
+            $response = $this->getClient()->get('/tx/'.$hash.'/raw');
             $data = $this->getClient()->getBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -68,7 +68,7 @@ class TransactionApi extends NavcoinApi
     public function getTransactionsForBlock(String $height): IteratorEntityInterface
     {
         try {
-            $response = $this->getClient()->get('/api/block/'.$height.'/tx');
+            $response = $this->getClient()->get('/block/'.$height.'/tx');
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             throw new BlockNotFoundException(sprintf("The block at height %s does not exist.", $height), 0, $e);

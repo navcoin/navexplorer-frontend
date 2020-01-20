@@ -12,18 +12,24 @@ class Voter
     /**
      * @var int
      */
-    private $votes;
+    private $votesYes;
 
     /**
-     * @var bool
+     * @var int
      */
-    private $vote;
+    private $votesNo;
 
-    public function __construct(string $address, int $votes, bool $vote)
+    /**
+     * @var int
+     */
+    private $votesAbstain;
+
+    public function __construct(string $address, int $votesYes, int $votesNo, int $votesAbstain)
     {
         $this->address = $address;
-        $this->votes = $votes;
-        $this->vote = $vote;
+        $this->votesYes = $votesYes;
+        $this->votesNo = $votesNo;
+        $this->votesAbstain = $votesAbstain;
     }
 
     public function getAddress(): string
@@ -31,13 +37,28 @@ class Voter
         return $this->address;
     }
 
-    public function getVotes(): int
+    /**
+     * @return int
+     */
+    public function getVotesYes(): int
     {
-        return $this->votes;
+        return $this->votesYes;
     }
 
-    public function isVote(): bool
+    /**
+     * @return int
+     */
+    public function getVotesNo(): int
     {
-        return $this->vote;
+        return $this->votesNo;
     }
+
+    /**
+     * @return int
+     */
+    public function getVotesAbstain(): int
+    {
+        return $this->votesAbstain;
+    }
+
 }

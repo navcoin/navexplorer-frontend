@@ -22,14 +22,10 @@ class ProposalMapper extends BaseMapper
             $data['userPaidFee'],
             $data['paymentAddress'],
             $data['proposalDuration'],
-
-            $data['votesYes'],
-            $data['votesNo'],
-            $data['votingCycle'],
             $data['state'],
-            $this->getData('stateChangedOnBlock', $data),
-            $data['status'],
-            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['createdAt'])
+            $this->getData('stateChangedOnBlock', $data, ''),
+            $this->getData('updatedOnBlock', $data, ''),
+            $data['status']
         );
 
         if ($this->getData('expiresOn', $data)) {

@@ -46,7 +46,7 @@ class PaymentRequestApi extends NavcoinApi
     public function getPaymentRequests(Proposal $proposal): PaymentRequests
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/proposal/' . $proposal->getHash() . '/payment-request');
+            $response = $this->getClient()->get('/dao/cfund/proposal/' . $proposal->getHash() . '/payment-request');
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
@@ -58,7 +58,7 @@ class PaymentRequestApi extends NavcoinApi
     public function getPaymentRequestsByState(string $state, $order = 'id'): PaymentRequests
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/payment-request?state='.$state);
+            $response = $this->getClient()->get('/dao/cfund/payment-request?state='.$state);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
@@ -78,7 +78,7 @@ class PaymentRequestApi extends NavcoinApi
         $state = strtoupper($state);
 
         try {
-            $data = $this->getClient()->get('/api/community-fund/proposal/'.$proposal->getHash().'/payment-request/state/' . $state);
+            $data = $this->getClient()->get('/dao/cfund/proposal/'.$proposal->getHash().'/payment-request/state/' . $state);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
         }

@@ -17,7 +17,7 @@ class BlockApi extends NavcoinApi
     public function getBlock(String $height): Block
     {
         try {
-            $response = $this->getClient()->get('/api/block/'.$height);
+            $response = $this->getClient()->get('/block/'.$height);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -34,7 +34,7 @@ class BlockApi extends NavcoinApi
     public function getRawBlock(String $hash): String
     {
         try {
-            $response = $this->getClient()->get('/api/block/'.$hash.'/raw');
+            $response = $this->getClient()->get('/block/'.$hash.'/raw');
             $data = $this->getClient()->getBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -58,12 +58,14 @@ class BlockApi extends NavcoinApi
     public function getBlocks(int $size = 50, int $page = 1): IteratorEntityInterface
     {
         try {
-            $response = $this->getClient()->get(sprintf('/api/block?size=%d&page=%d', $size, $page));
+            $response = $this->getClient()->get(sprintf('/block?size=%d&page=%d', $size, $page));
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             return new Blocks();
         }
 
+//        dump($this->getClient()->getPaginator($response));
+//        die;
         return $this->getMapper()->mapIterator(Blocks::class, $data, $this->getClient()->getPaginator($response));
     }
 }
