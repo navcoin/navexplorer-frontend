@@ -3,3 +3,15 @@ Disallow: /
 
 User-agent: MJ12bot
 Disallow: /
+
+User-agent: AlphaSeoBot
+Disallow: /
+
+User-agent: AlphaSeoBot-SA
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
