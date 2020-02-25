@@ -46,7 +46,7 @@
                                     <td class="text-center">
                                         {% if (cycle.blocksInCycle * 0.75) - fork.bestCycle > cycle.remainingBlocks %}
                                             <span class="badge badge-warning">Missed</span>
-                                        {% elseif (fork.blocksSignalling >= (cycle.blocksInCycle * 0.75)) %}
+                                        {% elseif (fork.bestCycle >= (cycle.blocksInCycle * 0.75)) %}
                                             <span class="badge badge-success">Locked In</span>
                                         {% else %}
                                             <span class="badge badge-info">{{ fork.state|capitalize }}</span>
@@ -86,7 +86,13 @@
                                     {% if fork.state == 'ACTIVE' %}
                                         <a href="{{ path('app_block_view', {'height': fork.activationHeight }) }}">{{ fork.activationHeight }}</a>
                                     {% else %}
-                                        {{ fork.activationHeight }}
+                                        {% if block.height < fork.activationHeight %}
+                                            {{ fork.activationHeight }}
+                                        {% else %}
+                                            <a href="{{ path('app_block_view', {'height': fork.activationHeight }) }}">
+                                                {{ fork.activationHeight }}
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
                                 </td>
                                 <td class="text-center">

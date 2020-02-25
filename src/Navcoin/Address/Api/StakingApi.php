@@ -13,7 +13,7 @@ class StakingApi extends NavcoinApi
     public function getStakingReport(string $hash, string $period): IteratorEntityInterface
     {
         try {
-            $response = $this->getClient()->get('/address/' . $hash . '/staking?period='.$period);
+            $response = $this->getClient()->get('/api/address/' . $hash . '/chart/staking?period='.$period);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             throw new StakingReportUnavailableException(sprintf("Could not return staking report for address: %s", $hash), 0, $e);

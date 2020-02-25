@@ -28,11 +28,13 @@
                                 Transactions
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if activeTab == "cold-transactions" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#cold-staking" aria-expanded="false" aria-controls="cold-staking">
-                                Cold Staking
-                            </a>
-                        </li>
+                        {% if address.coldStakedBalance %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if activeTab == "cold-transactions" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#cold-staking" aria-expanded="false" aria-controls="cold-staking">
+                                    Cold Staking
+                                </a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link {% if activeTab == "staking-report" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#staking-report" aria-expanded="true" aria-controls="staking-report">
                                 Staking Report

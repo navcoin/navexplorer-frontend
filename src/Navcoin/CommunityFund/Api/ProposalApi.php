@@ -3,6 +3,8 @@
 namespace App\Navcoin\CommunityFund\Api;
 
 use App\Exception\ServerRequestException;
+use App\Navcoin\Client\NavcoinClientInterface;
+use App\Navcoin\Common\Mapper\MapperInterface;
 use App\Navcoin\Common\NavcoinApi;
 use App\Navcoin\CommunityFund\Entity\BlockCycle;
 use App\Navcoin\CommunityFund\Entity\BlockCycleVoting;
@@ -17,7 +19,7 @@ class ProposalApi extends NavcoinApi
 {
     public function getBlockCycle(): BlockCycle
     {
-        $response = $this->getClient()->get('/dao/cfund/block-cycle');
+        $response = $this->getClient()->get('/api/community-fund/block-cycle');
         $data = $this->getClient()->getJsonBody($response);
 
         return new BlockCycle(
@@ -35,7 +37,7 @@ class ProposalApi extends NavcoinApi
     public function getStats(): Stats
     {
         try {
-            $response = $this->getClient()->get('/dao/cfund/stats');
+            $response = $this->getClient()->get('/api/community-fund/stats');
             $data = $this->getClient()->getJsonBody($response);
 
             $stats = new Stats($data['contributed'], $data['available'], $data['paid'], $data['locked']);
@@ -49,7 +51,7 @@ class ProposalApi extends NavcoinApi
     public function getProposal(String $hash): Proposal
     {
         try {
-            $response = $this->getClient()->get('/dao/cfund/proposal/' . $hash);
+            $response = $this->getClient()->get('/api/community-fund/proposal/' . $hash);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -66,7 +68,7 @@ class ProposalApi extends NavcoinApi
     public function getAll(): Proposals
     {
         try {
-            $response = $this->getClient()->get('/dao/cfund/proposal');
+            $response = $this->getClient()->get('/api/community-fund/proposal');
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new Proposals();
@@ -75,14 +77,14 @@ class ProposalApi extends NavcoinApi
         return $this->getMapper()->mapIterator(Proposals::class, $data);
     }
 
-    public function getProposalsByState(string $state, string $order = 'id', ?int $page = 1): Proposals
+    public function getProposalsByState(string $state, $order = 'id'): Proposals
     {
-//        try {
-            $response = $this->getClient()->get('/dao/cfund/proposal?size=15&page='.$page.'&status='.strtolower($state));
+        try {
+            $response = $this->getClient()->get('/api/community-fund/proposal?state='.$state);
             $data = $this->getClient()->getJsonBody($response);
-//        } catch (ServerRequestException $e) {
-//            return new Proposals();
-//        }
+        } catch (ServerRequestException $e) {
+            return new Proposals();
+        }
 
         $proposals = $this->getMapper()->mapIterator(Proposals::class, $data);
 

@@ -24,7 +24,7 @@ class DistributionMapper implements MapperInterface
     {
         return new DistributionSegment(
             $data['group'],
-            $data['balance']  / 100000000,
+            $data['balance'],
             $data['percentage']
         );
     }

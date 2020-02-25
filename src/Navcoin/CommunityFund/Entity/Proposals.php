@@ -14,9 +14,9 @@ class Proposals extends IteratorEntity implements IteratorEntityInterface
 
     public function sortByVotes() {
         $proposals = $this->getElements();
-        usort($proposals, function (Proposal $a, Proposal $b) {
-            return -1 * ($a->getVotesTotal() - $b->getVotesTotal());
-        });
+//        usort($proposals, function (Proposal $a, Proposal $b) {
+//            return -1 * ($a->getVotesTotal() - $b->getVotesTotal());
+//        });
 
         $this->setElements($proposals);
     }

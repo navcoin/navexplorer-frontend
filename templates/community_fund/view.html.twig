@@ -43,11 +43,7 @@
 
                 <div id="block-collapse">
                     <div id="voting" class="collapse show" data-parent="#block-collapse">
-                        {% if proposal.state == "PENDING" %}
-                            {% include "community_fund/components/view_proposal_voting_pending.html.twig" %}
-                        {% elseif proposal.state == "ACCEPTED" %}
-                            {% include "community_fund/components/view_proposal_voting_accepted.html.twig" %}
-                        {% endif %}
+                        {% include "community_fund/components/view_proposal_voting_pending.html.twig" %}
                     </div>
 
                     <div id="payment-requests" class="collapse collapsed" data-parent="#block-collapse">

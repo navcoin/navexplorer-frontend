@@ -33,18 +33,17 @@ class ProposalExtension extends AbstractExtension
 
     public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
     {
-        return '';
-//        $this->blockCycle = $blockCycle;
-//        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $proposal->getVotesTotal();
-//
-//        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false);
-//
-//        return '
-//<div class="progress">
-//    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $proposal->getVotesYes()).'
-//    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $proposal->getVotesNo()).'
-//    '.($proposal->getState() == 'PENDING' ? $abstentionBar : '').'
-//</div>';
+        $this->blockCycle = $blockCycle;
+        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $proposal->getVotesTotal();
+
+        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false);
+
+        return '
+<div class="progress">
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $proposal->getVotesYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $proposal->getVotesNo()).'
+    '.($proposal->getState() == 'PENDING' ? $abstentionBar : '').'
+</div>';
     }
 
     public function getPaymentRequestVoteProgress(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
@@ -83,7 +82,7 @@ class ProposalExtension extends AbstractExtension
         $classes = ['progress-bar'];
 
         if ($vote === true) {
-             array_push($classes, 'bg-success');
+            array_push($classes, 'bg-success');
         } elseif ($vote === false) {
             array_push($classes, 'bg-danger');
         } else {
