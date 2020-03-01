@@ -17,7 +17,7 @@ class PaymentRequestApi extends NavcoinApi
     public function getAll(Proposal $proposal): PaymentRequests
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/proposal/'.$proposal->getHash().'/payment-request');
+            $response = $this->getClient()->get('/dao/cfund/proposal/'.$proposal->getHash().'/payment-request');
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
@@ -29,7 +29,7 @@ class PaymentRequestApi extends NavcoinApi
     public function getPaymentRequest(String $hash): PaymentRequest
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/payment-request/'.$hash);
+            $response = $this->getClient()->get('/dao/cfund/payment-request/'.$hash);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -55,10 +55,10 @@ class PaymentRequestApi extends NavcoinApi
         return $this->getMapper()->mapIterator(PaymentRequests::class, $data);
     }
 
-    public function getPaymentRequestsByState(string $state, $order = 'id'): PaymentRequests
+    public function getByStatus(string $status, $order = 'id'): PaymentRequests
     {
         try {
-            $response = $this->getClient()->get('/dao/cfund/payment-request?state='.$state);
+            $response = $this->getClient()->get("/dao/cfund/payment-request?status={$status}&size=5000");
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
@@ -71,18 +71,5 @@ class PaymentRequestApi extends NavcoinApi
         }
 
         return $paymentRequests;
-    }
-
-    public function getPaymentRequestsForProposalByState(Proposal $proposal, string $state): PaymentRequests
-    {
-        $state = strtoupper($state);
-
-        try {
-            $data = $this->getClient()->get('/dao/cfund/proposal/'.$proposal->getHash().'/payment-request/state/' . $state);
-        } catch (ServerRequestException $e) {
-            return new PaymentRequests();
-        }
-
-        return $this->getMapper()->mapIterator($data, PaymentRequests::class);
     }
 }

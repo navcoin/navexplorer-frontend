@@ -55,21 +55,6 @@ class Proposal
     private $proposalDuration;
 
     /**
-     * @var int
-     */
-    private $votesYes;
-
-    /**
-     * @var int
-     */
-    private $votesNo;
-
-    /**
-     * @var int
-     */
-    private $votingCycle;
-
-    /**
      * @var string
      */
     private $state;
@@ -105,9 +90,6 @@ class Proposal
         float $userPaidFee,
         string $paymentAddress,
         int $proposalDuration,
-        int $votesYes,
-        int $votesNo,
-        int $votingCycle,
         string $state,
         ?string $stateChangedOnBlock,
         string $status
@@ -122,9 +104,6 @@ class Proposal
         $this->userPaidFee = $userPaidFee;
         $this->paymentAddress = $paymentAddress;
         $this->proposalDuration = $proposalDuration;
-        $this->votesYes = $votesYes;
-        $this->votesNo = $votesNo;
-        $this->votingCycle = $votingCycle;
         $this->state = $state;
         $this->stateChangedOnBlock = $stateChangedOnBlock;
         $this->status = $status;
@@ -224,27 +203,6 @@ class Proposal
         $date = trim($date, ', ');
 //        $date = strrev(implode(strrev(' and '), explode(strrev(', '), strrev($date), 2)));
         return $date;
-    }
-
-
-    public function getVotesYes(): int
-    {
-        return $this->votesYes ?: 0;
-    }
-
-    public function getVotesNo(): int
-    {
-        return $this->votesNo ?: 0;
-    }
-
-    public function getVotesTotal(): int
-    {
-        return ($this->votesYes + $this->votesNo) ?: 0;
-    }
-
-    public function getVotingCycle(): int
-    {
-        return $this->votingCycle ?: 0;
     }
 
     public function getState(): string

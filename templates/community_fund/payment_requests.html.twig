@@ -28,6 +28,9 @@
                             <a class="{{ active == 'accepted' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'state': 'accepted'}) }}">Accepted</a>
                         </li>
                         <li class="list-inline-item">
+                            <a class="{{ active == 'paid' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'state': 'paid'}) }}">Paid</a>
+                        </li>
+                        <li class="list-inline-item">
                             <a class="{{ active == 'rejected' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'state': 'rejected'}) }}">Rejected</a>
                         </li>
                         <li class="list-inline-item">

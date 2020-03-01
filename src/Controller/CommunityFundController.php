@@ -67,10 +67,10 @@ class CommunityFundController extends Controller
      */
     public function indexAction(): array
     {
-        $proposals = $this->proposalApi->getProposalsByState("PENDING", "id");
+        $proposals = $this->proposalApi->getByStatus("pending", "id", 1, 5);
         $proposals->limit(5);
 
-        $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("PENDING", "id");
+        $paymentRequests = $this->paymentRequestApi->getByStatus("pending", "id");
         $proposals->limit(5);
 
         return [
@@ -93,19 +93,19 @@ class CommunityFundController extends Controller
     {
         switch($request->get('state')) {
             case 'pending':
-                $proposals = $this->proposalApi->getProposalsByState("PENDING", "votes");
+                $proposals = $this->proposalApi->getByStatus("pending", "votes");
                 break;
             case 'accepted':
-                $proposals = $this->proposalApi->getProposalsByState("ACCEPTED");
+                $proposals = $this->proposalApi->getByStatus("accepted");
                 break;
             case 'rejected':
-                $proposals = $this->proposalApi->getProposalsByState("REJECTED");
+                $proposals = $this->proposalApi->getByStatus("rejected");
                 break;
             case 'expired':
-                $proposals = $this->proposalApi->getProposalsByState("EXPIRED");
+                $proposals = $this->proposalApi->getByStatus("expired");
                 break;
             case 'pending-funds':
-                $proposals = $this->proposalApi->getProposalsByState("PENDING_FUNDS");
+                $proposals = $this->proposalApi->getByStatus("pending_funds");
                 break;
             default:
                 return $this->redirectToRoute('app_communityfund_proposals', ['state' => 'pending']);
@@ -145,8 +145,7 @@ class CommunityFundController extends Controller
             'proposal' => $this->proposalApi->getProposal($request->get('hash')),
             'paymentRequests' => $this->paymentRequestApi->getPaymentRequests($proposal),
             'block' => $block,
-            'votesYes' => $this->votersApi->getProposalVotes($request->get('hash'), true),
-            'votesNo' => $this->votersApi->getProposalVotes($request->get('hash'), false),
+            'votes' => $this->votersApi->getProposalVotes($request->get('hash')),
         ];
     }
 
@@ -164,16 +163,11 @@ class CommunityFundController extends Controller
     {
         switch($request->get('state')) {
             case 'pending':
-                $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("PENDING", "votes");
-                break;
             case 'accepted':
-                $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("ACCEPTED");
-                break;
+            case 'paid':
             case 'rejected':
-                $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("REJECTED");
-                break;
             case 'expired':
-                $paymentRequests = $this->paymentRequestApi->getPaymentRequestsByState("EXPIRED");
+                $paymentRequests = $this->paymentRequestApi->getByStatus($request->get('state'));
                 break;
             default:
                 return $this->redirectToRoute('app_communityfund_paymentrequests', ['state' => 'pending']);
@@ -236,8 +230,7 @@ class CommunityFundController extends Controller
             'proposal' => $this->proposalApi->getProposal($paymentRequest->getProposalHash()),
             'paymentRequest' => $paymentRequest,
             'block' => $block,
-            'votesYes' => $this->votersApi->getPaymentRequestVotes($request->get('hash'), true),
-            'votesNo' => $this->votersApi->getPaymentRequestVotes($request->get('hash'), false),
+            'votes' => $this->votersApi->getPaymentRequestVotes($request->get('hash')),
         ];
     }
 

@@ -64,8 +64,6 @@ class BlockApi extends NavcoinApi
             return new Blocks();
         }
 
-//        dump($this->getClient()->getPaginator($response));
-//        die;
         return $this->getMapper()->mapIterator(Blocks::class, $data, $this->getClient()->getPaginator($response));
     }
 }

@@ -40,7 +40,7 @@ class Block
     private $height;
 
     /**
-     * @var float
+     * @var string
      */
     private $difficulty;
 
@@ -107,7 +107,7 @@ class Block
         int $version,
         int $nonce,
         int $height,
-        float $difficulty,
+        string $difficulty,
         int $confirmations,
         \DateTime $created,
         float $stake,
@@ -174,7 +174,7 @@ class Block
         return $this->height;
     }
 
-    public function getDifficulty(): float
+    public function getDifficulty(): string
     {
         return $this->difficulty;
     }

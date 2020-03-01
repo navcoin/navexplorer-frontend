@@ -48,8 +48,8 @@ class AddressController extends Controller
     /**
      * @Route("/address/{hash}")
      *
-     * @param Request                      $request
-     * @param string                       $hash
+     * @param Request $request
+     * @param string $hash
      * @param AddressTransactionTypeFilter $filter
      *
      * @return Response
@@ -95,8 +95,8 @@ class AddressController extends Controller
     /**
      * @Route("/address/{hash}/tx.json")
      *
-     * @param Request             $request
-     * @param string              $hash
+     * @param Request $request
+     * @param string $hash
      * @param SerializerInterface $serializer
      *
      * @return Response
@@ -116,8 +116,8 @@ class AddressController extends Controller
     /**
      * @Route("/address/{hash}/cold-tx.json")
      *
-     * @param Request             $request
-     * @param string              $hash
+     * @param Request $request
+     * @param string $hash
      * @param SerializerInterface $serializer
      *
      * @return Response
@@ -132,24 +132,5 @@ class AddressController extends Controller
         );
 
         return new Response($serializer->serialize($addressTransactions, 'json'));
-    }
-
-    /**
-     * @Route("/address/{hash}/staking.json")
-     *
-     * @param Request             $request
-     * @param string              $hash
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
-     */
-    public function stakingReport(Request $request, String $hash, SerializerInterface $serializer): Response
-    {
-        $stakingReport = $this->addressApi->getStakingReport(
-            $hash,
-            $request->get('period', "daily")
-        );
-
-        return new Response($serializer->serialize($stakingReport, 'json'));
     }
 }

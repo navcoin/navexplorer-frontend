@@ -11,4 +11,8 @@ class Voters extends IteratorEntity implements IteratorEntityInterface
     {
         $this->supportedTypes = [Voter::class];
     }
+
+    public function latestCycle(): Voter {
+        return $this->getElements()[count($this->getElements())-1];
+    }
 }

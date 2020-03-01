@@ -21,7 +21,6 @@
                     <th># Stakes</th>
                     <th>Nav Earned</th>
                     <th>Annual %</th>
-                    <th style="Width:50%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -32,12 +31,6 @@
                         <td data-role="navEarned">{{ row.amount|stake_format }}</td>
                         <td data-role="annualPercentage">
                             {{ row.ratioAnnualised(address.balance, stakingReport.period)|number_format(2) }}%
-                        </td>
-                        <td class="d-none d-md-table-cell">
-                            <div class="progress">
-                                {%  set progress = row.amount == 0 ? 0 : row.stakes/(stakingReport.maxStakes*1.2) * 100 %}
-                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
                         </td>
                     </tr>
                 {% endfor %}

@@ -25,7 +25,6 @@ class TransactionMapper extends BaseMapper
             $this->mapOutputs($data['vout']),
             $data['type'],
             array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
-            $this->mapProposalVotes(array_key_exists('proposalVotes', $data) && $data['proposalVotes'] ? $data['proposalVotes'] : [])
         );
 
         return $transaction;
@@ -69,7 +68,7 @@ class TransactionMapper extends BaseMapper
                 );
 
                 if ($output->isCommunityFund()) {
-                    $output->setHash($outputData['hash']);
+                    $output->setHash($outputData['scriptPubKey']['hash']);
                 }
 
                 $outputs->add($output);

@@ -5,6 +5,7 @@ namespace App\Twig;
 use App\Navcoin\CommunityFund\Entity\BlockCycle;
 use App\Navcoin\CommunityFund\Entity\PaymentRequest;
 use App\Navcoin\CommunityFund\Entity\Proposal;
+use App\Navcoin\CommunityFund\Entity\Voter;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -31,33 +32,33 @@ class ProposalExtension extends AbstractExtension
         );
     }
 
-    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
+    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle, Voter $voter): string
     {
         $this->blockCycle = $blockCycle;
-        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $proposal->getVotesTotal();
 
-        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false);
+        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $voter->getAbstain(), false);
 
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $proposal->getVotesYes()).'
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $proposal->getVotesNo()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $voter->getYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $voter->getNo()).'
     '.($proposal->getState() == 'PENDING' ? $abstentionBar : '').'
 </div>';
     }
 
     public function getPaymentRequestVoteProgress(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
     {
-        $this->blockCycle = $blockCycle;
-        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $paymentRequest->getVotesTotal();
-
-        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false);
-        return '
-<div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), true), $paymentRequest->getVotesYes()).'
-    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), false), $paymentRequest->getVotesNo()).'
-    '.($paymentRequest->getState() == 'PENDING' ? $abstentionBar : '').'
-</div>';
+        return '';
+//        $this->blockCycle = $blockCycle;
+//        $abstentionVotes = $blockCycle->getBlocksInCycle() - $blockCycle->getRemainingBlocks() - $paymentRequest->getVotesTotal();
+//
+//        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $abstentionVotes, false);
+//        return '
+//<div class="progress">
+//    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), true), $paymentRequest->getVotesYes()).'
+//    '.$this->getProgressBar($this->getProgressBarClass($paymentRequest->getState(), false), $paymentRequest->getVotesNo()).'
+//    '.($paymentRequest->getState() == 'PENDING' ? $abstentionBar : '').'
+//</div>';
     }
 
     public function getProposalStateTitle(String $state): string

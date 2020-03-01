@@ -60,7 +60,9 @@
                 <tbody>
                 <tr class="d-flex">
                     <td class="col-5"><strong>Difficulty</strong></td>
-                    <td class="text-right col-7">{{ block.difficulty }}</td>
+                    <td class="text-right break-word col-7">
+                        {{ block.difficulty|slice(0,20) }}...
+                    </td>
                 </tr>
                 <tr class="d-flex">
                     <td class="col-5"><strong>Bits</strong></td>
@@ -81,7 +83,7 @@
                 <tr class="d-flex">
                     <td class="col-5"><strong>Merkle Root</strong></td>
                     <td class="text-right break-word col-7">
-                        {{ block.merkleRoot|slice(0,10) }}...
+                        {{ block.merkleRoot|slice(0,20) }}...
                     </td>
                 </tr>
                 </tbody>

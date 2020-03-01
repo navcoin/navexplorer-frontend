@@ -30,14 +30,14 @@ class ProposalApi extends NavcoinApi
             $data['currentBlock'],
             $data['cycle'],
             $data['firstBlock'],
-            $data['currentBlock'] - $data['firstBlock']
+            $data['currentBlock'] - $data['firstBlock'] + 1
         );
     }
 
     public function getStats(): Stats
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/stats');
+            $response = $this->getClient()->get('/dao/cfund/stats');
             $data = $this->getClient()->getJsonBody($response);
 
             $stats = new Stats($data['contributed'], $data['available'], $data['paid'], $data['locked']);
@@ -51,7 +51,7 @@ class ProposalApi extends NavcoinApi
     public function getProposal(String $hash): Proposal
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/proposal/' . $hash);
+            $response = $this->getClient()->get('/dao/cfund/proposal/' . $hash);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -68,7 +68,7 @@ class ProposalApi extends NavcoinApi
     public function getAll(): Proposals
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/proposal');
+            $response = $this->getClient()->get('/dao/cfund/proposal');
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new Proposals();
@@ -77,10 +77,10 @@ class ProposalApi extends NavcoinApi
         return $this->getMapper()->mapIterator(Proposals::class, $data);
     }
 
-    public function getProposalsByState(string $state, $order = 'id'): Proposals
+    public function getByStatus(string $status, $order = 'id'): Proposals
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/proposal?state='.$state);
+            $response = $this->getClient()->get('/dao/cfund/proposal?size=5000&status='.$status);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new Proposals();

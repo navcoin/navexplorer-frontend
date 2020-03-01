@@ -31,13 +31,13 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="2">Nobody has voted for this payment request</td>
+                    <td colspan="2">Nobody has voted for this proposal</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-
     </div>
+
     <div class="col-md-6 col-sm-12">
         <h4>Voters Against</h4>
         <table class="table table-striped">
@@ -53,11 +53,11 @@
                     <td>
                         <a href="{{ path('app_address_index', {'hash': vote.address }) }}">{{ vote.address }}</a>
                     </td>
-                    <td>{{ vote.yes }}</td>
+                    <td>{{ vote.no }}</td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="2">Nobody has voted against this payment request</td>
+                    <td colspan="2">Nobody has voted against this proposal</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -98,12 +98,11 @@ class NavcoinClient implements NavcoinClientInterface
         if ($response->hasHeader('x-pagination')) {
             $data = \GuzzleHttp\json_decode($response->getHeader('x-pagination')[0], true);
 
-//            dump($data);
             return (new Paginator())
                 ->setFirst($data['first'])
                 ->setLast($data['last'])
                 ->setTotalElements($data['total'])
-                ->setPageSize($data['page_size'])
+                ->setPageSize($data['size'])
                 ->setTotalPages($data['total_pages'])
                 ->setNumberOfElements($data['number_of_elements'])
                 ->setCurrentPage($data['current_page']);

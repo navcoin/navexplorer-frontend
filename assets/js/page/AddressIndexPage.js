@@ -80,8 +80,8 @@ class AddressIndexPage {
         );
 
         let $amountTd = $(document.createElement('td')).attr('data-role', 'amount')
-            .append(numberFormatter.format(data.cold_staking_amount) + '&nbsp;NAV');
-        if (data.type === "COLD_STAKING") {
+            .append(numberFormatter.format(data.total) + '&nbsp;NAV');
+        if (data.type === "cold_stake") {
             $amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
         }
 
@@ -90,7 +90,7 @@ class AddressIndexPage {
         $row.append($(document.createElement('td'))
             .attr('data-role', 'balance')
             .addClass("text-right")
-            .append(numberFormatter.format(data.cold_staking_balance) + '&nbsp;NAV')
+            .append(numberFormatter.format(data.balance) + '&nbsp;NAV')
         );
 
         return $row;

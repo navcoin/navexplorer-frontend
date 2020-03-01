@@ -22,9 +22,6 @@ class ProposalMapper extends BaseMapper
             $data['userPaidFee'],
             $data['paymentAddress'],
             $data['proposalDuration'],
-            $data['votesYes'],
-            $data['votesNo'],
-            $data['votingCycle'],
             $data['state'],
             $this->getData('stateChangedOnBlock', $data),
             $data['status']
@@ -32,7 +29,7 @@ class ProposalMapper extends BaseMapper
 
         if ($this->getData('expiresOn', $data)) {
             $ts = $this->getData('expiresOn', $data);
-            $proposal->setExpiresOn(new DateTime("@$ts") );
+            $proposal->setExpiresOn(new \DateTime("@$ts"));
         }
 
         return $proposal;

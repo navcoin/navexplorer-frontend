@@ -17,12 +17,17 @@ class Trend
     /**
      * @var int
      */
-    private $votesYes;
+    private $voteYes;
 
     /**
      * @var int
      */
-    private $votesNo;
+    private $voteNo;
+
+    /**
+     * @var int
+     */
+    private $voteAbstain;
 
     /**
      * @var int
@@ -39,30 +44,16 @@ class Trend
      */
     private $trendAbstain;
 
-    public function __construct(int $start, int $end, int $votesYes, int $votesNo, int $trendYes, int $trendNo, int $trendAbstain)
+    public function __construct(int $start, int $end, int $voteYes, int $voteNo, int $voteAbstain, int $trendYes, int $trendNo, int $trendAbstain)
     {
         $this->start = $start;
         $this->end = $end;
-        $this->votesYes = $votesYes;
-        $this->votesNo = $votesNo;
+        $this->voteYes = $voteYes;
+        $this->voteNo = $voteNo;
+        $this->voteAbstain = $voteAbstain;
         $this->trendYes = $trendYes;
         $this->trendNo = $trendNo;
         $this->trendAbstain = $trendAbstain;
-    }
-
-    public function getVotesYes(): int
-    {
-        return $this->votesYes;
-    }
-
-    public function getVotesNo(): int
-    {
-        return $this->votesNo;
-    }
-
-    public function getSegment(): int
-    {
-        return $this->segment;
     }
 
     public function getStart(): int
@@ -75,9 +66,18 @@ class Trend
         return $this->end;
     }
 
-    public function getBlocksCounted(): int
+    public function getVoteAbstain(): int
     {
-        return $this->blocksCounted;
+        return $this->voteAbstain;
+    }
+
+    public function getVoteNo(): int
+    {
+        return $this->voteNo;
+    }
+    public function getVoteYes(): int
+    {
+        return $this->voteYes;
     }
 
     public function getTrendYes(): int

@@ -28,13 +28,11 @@
                                 Transactions
                             </a>
                         </li>
-                        {% if address.coldStakedBalance %}
-                            <li class="nav-item">
-                                <a class="nav-link {% if activeTab == "cold-transactions" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#cold-staking" aria-expanded="false" aria-controls="cold-staking">
-                                    Cold Staking
-                                </a>
-                            </li>
-                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if activeTab == "cold-transactions" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#cold-staking" aria-expanded="false" aria-controls="cold-staking">
+                                Cold Staking
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link {% if activeTab == "staking-report" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#staking-report" aria-expanded="true" aria-controls="staking-report">
                                 Staking Report
@@ -47,11 +45,9 @@
                             {% include "address/components/index_transactions.html.twig" %}
                         </div>
 
-                        {% if address.coldStakedBalance %}
-                            <div id="cold-staking" class="collapse {% if activeTab == "cold-transactions" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">
-                                {% include "address/components/index_cold_staking.html.twig" %}
-                            </div>
-                        {% endif %}
+                        <div id="cold-staking" class="collapse {% if activeTab == "cold-transactions" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">
+                            {% include "address/components/index_cold_staking.html.twig" %}
+                        </div>
 
                         <div id="staking-report" class="collapse {% if activeTab == "staking-report" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">
                             {% include "address/components/index_staking_report.html.twig" %}

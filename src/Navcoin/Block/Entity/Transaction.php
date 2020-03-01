@@ -69,8 +69,7 @@ class Transaction
         Inputs $inputs,
         Outputs $outputs,
         string $type,
-        string $raw,
-        ?ProposalVotes $proposalVotes
+        string $raw
     ) {
         $this->hash = $hash;
         $this->height = $height;
@@ -81,10 +80,6 @@ class Transaction
         $this->outputs = $outputs;
         $this->type = $type;
         $this->raw = $raw;
-
-        if (!is_null($proposalVotes)) {
-            $this->proposalVotes = $proposalVotes;
-        }
     }
 
     public function getId(): string

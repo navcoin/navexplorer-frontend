@@ -18,18 +18,15 @@
                     <a href="{{ path('app_block_view', {'height': paymentRequest.blockHash}) }}">{{ paymentRequest.blockHash }}</a>
                 </td>
             </tr>
-            {% if paymentRequest.paidOnBlock %}
+
+            {% if paymentRequest.status == "paid" and paymentRequest.stateChangedOnBlock %}
                 <tr>
                     <td><strong>Paid On Block</strong></td>
                     <td class="text-right break-word">
-                        <a href="{{ path('app_search_results', {'hash': paymentRequest.paidOnBlock}) }}">{{ paymentRequest.paidOnBlock }}</a>
+                        <a href="{{ path('app_search_results', {'hash': paymentRequest.stateChangedOnBlock}) }}">{{ paymentRequest.stateChangedOnBlock }}</a>
                     </td>
                 </tr>
             {% endif %}
-            <tr>
-                <td><strong>Creation Date</strong></td>
-                <td class="text-right break-word">{{ paymentRequest.createdAt|date_localised('Y-m-d, H:i:s') }}</td>
-            </tr>
             </tbody>
         </table>
     </div>
@@ -45,10 +42,6 @@
                 <td><strong>NAV&nbsp;Available</strong></td>
                 <td class="text-right break-word">{{ proposal.notYetPaid|stake_format }}</td>
             </tr>
-            {#<tr>#}
-                {#<td><strong>Fee</strong></td>#}
-                {#<td class="text-right break-word">{{ proposal.userPaidFee|stake_format }}</td>#}
-            {#</tr>#}
             <tr>
                 <td><strong>Status</strong></td>
                 <td class="text-right break-word">{{ paymentRequest.status|title }}</td>

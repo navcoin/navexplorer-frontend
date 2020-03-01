@@ -2,12 +2,12 @@
 
 namespace App\Navcoin\CommunityFund\Entity;
 
-class Voter
+class VoterAddress
 {
     /**
-     * @var int
+     * @var string
      */
-    private $cycle;
+    private $address;
 
     /**
      * @var int
@@ -24,22 +24,17 @@ class Voter
      */
     private $abstain;
 
-    /**
-     * @var VoterAddress[]
-     */
-    private $addresses;
-
-    public function __construct(int $cycle, int $yes, int $no, int $abstain)
+    public function __construct(string $address, int $yes, int $no, int $abstain)
     {
-        $this->cycle = $cycle;
+        $this->address = $address;
         $this->yes = $yes;
         $this->no = $no;
         $this->abstain = $abstain;
     }
 
-    public function getCycle(): int
+    public function getAddress(): string
     {
-        return $this->cycle;
+        return $this->address;
     }
 
     public function getYes(): int
@@ -55,15 +50,5 @@ class Voter
     public function getAbstain(): int
     {
         return $this->abstain;
-    }
-
-    public function getAddresses(): array
-    {
-        return $this->addresses;
-    }
-
-    public function setAddresses(array $addresses)
-    {
-        $this->addresses = $addresses;
     }
 }
