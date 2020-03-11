@@ -24,9 +24,8 @@ class ProposalApi extends NavcoinApi
 
         return new BlockCycle(
             $data['blocksInCycle'],
-            $data['minQuorum'],
-            new BlockCycleVoting($data['proposalVoting']['cycles'], $data['proposalVoting']['accept'], $data['proposalVoting']['reject']),
-            new BlockCycleVoting($data['paymentVoting']['cycles'], $data['paymentVoting']['accept'], $data['paymentVoting']['reject']),
+            new BlockCycleVoting($data['proposalVoting']['cycles'], $data['proposalVoting']['accept'], $data['proposalVoting']['reject'], $data['proposalVoting']['quorum']),
+            new BlockCycleVoting($data['paymentVoting']['cycles'], $data['paymentVoting']['accept'], $data['paymentVoting']['reject'], $data['paymentVoting']['quorum']),
             $data['currentBlock'],
             $data['cycle'],
             $data['firstBlock'],

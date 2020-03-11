@@ -56,6 +56,16 @@ class Transaction
     private $raw;
 
     /**
+     * @var int
+     */
+    private $size;
+
+    /**
+     * @var int
+     */
+    private $version;
+
+    /**
      * @var ProposalVotes
      */
     private $proposalVotes;
@@ -69,7 +79,9 @@ class Transaction
         Inputs $inputs,
         Outputs $outputs,
         string $type,
-        string $raw
+        string $raw,
+        string $size,
+        string $version
     ) {
         $this->hash = $hash;
         $this->height = $height;
@@ -80,6 +92,8 @@ class Transaction
         $this->outputs = $outputs;
         $this->type = $type;
         $this->raw = $raw;
+        $this->size = $size;
+        $this->version = $version;
     }
 
     public function getId(): string
@@ -155,6 +169,16 @@ class Transaction
     public function getRaw()
     {
         return $this->raw;
+    }
+
+    public function getSize(): int
+    {
+        return $this->size;
+    }
+
+    public function getVersion(): int
+    {
+        return $this->version;
     }
 
     public function getProposalVotes(): ProposalVotes

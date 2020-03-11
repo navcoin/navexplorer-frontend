@@ -132,7 +132,7 @@ class CommunityFundController extends Controller
         $proposal = $this->proposalApi->getProposal($request->get('hash'));
 
         $block = null;
-        if ($proposal->getState() == 'ACCEPTED' && $proposal->getStateChangedOnBlock()) {
+        if ($proposal->getState() == 'accepted' && $proposal->getStateChangedOnBlock()) {
             try {
                 $block = $this->blockApi->getBlock($proposal->getStateChangedOnBlock());
             } catch (BlockNotFoundException $e) {

@@ -4,29 +4,27 @@
             <thead>
             <tr>
                 <th>Hash</th>
+                <th>Duration</th>
                 <th>Nav Requested</th>
                 <th>Nav Paid</th>
-                <th>Duration</th>
-                <th>Status</th>
             </tr>
             </thead>
             <tbody>
             {% for idx, proposal in proposals %}
                 <tr class="{% if idx is even %}tr-alt{% endif %}">
                     <td colspan="5">
-                        <div class="inline-proposal-description"><a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}">{{ proposal.description|capitalize}}</a></div>
+                        <div class="inline-proposal-description"><a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}">{{ proposal.description|capitalize|default("No Description")}}</a></div>
                     </td>
                 </tr>
                 <tr class="{% if idx is even %}tr-alt {% endif %}tr-sub">
                     <td>{{ proposal.hash }}</td>
+                    <td>{{ proposal.duration }}</td>
                     <td>{{ proposal.requestedAmount|stake_format }}</td>
                     <td>{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</td>
-                    <td>{{ proposal.duration }}</td>
-                    <td>{{ proposal.status|title }}</td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5">There are no {{ active|proposalState }} proposals</td>
+                    <td colspan="4">There are no {{ active|proposalState }} proposals</td>
                 </tr>
             {% endfor %}
             </tbody>

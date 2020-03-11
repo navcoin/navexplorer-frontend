@@ -9,6 +9,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td><strong>Height</strong></td>
+                    <td class="text-right">
+                        <a href="{{ path('app_block_view', {'height': transaction.height}) }}">
+                            {{ transaction.height }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
                     <td><strong>Total&nbsp;Output</strong></td>
                     <td class="text-right">
                         {{ transaction.outputs.value|stake_format }}
@@ -36,16 +44,16 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <td><strong>Height</strong></td>
-                    <td class="text-right">
-                        <a href="{{ path('app_block_view', {'height': transaction.height}) }}">
-                            {{ transaction.height }}
-                        </a>
-                    </td>
-                </tr>
-                <tr>
                     <td><strong>Confirmations</strong></td>
                     <td class="text-right">{{ block.confirmations }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Size</strong></td>
+                    <td class="text-right">{{ transaction.size }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Version</strong></td>
+                    <td class="text-right">{{ transaction.version }}</td>
                 </tr>
                 <tr>
                     <td><strong>Time</strong></td>

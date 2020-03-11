@@ -25,6 +25,8 @@ class TransactionMapper extends BaseMapper
             $this->mapOutputs($data['vout']),
             $data['type'],
             array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
+            $data['size'],
+            $data['version']
         );
 
         return $transaction;

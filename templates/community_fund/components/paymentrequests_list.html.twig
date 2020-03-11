@@ -13,7 +13,7 @@
             {% for idx, paymentRequest in paymentRequests %}
                 <tr class="{% if idx is even %}tr-alt{% endif %}">
                     <td colspan="3">
-                        <div class="inline-proposal-description"><a href="{{ path('app_communityfund_viewpaymentrequest', {'hash': paymentRequest.hash}) }}">{{ paymentRequest.description|capitalize}}</a></div>
+                        <div class="inline-proposal-description"><a href="{{ path('app_communityfund_viewpaymentrequest', {'hash': paymentRequest.hash}) }}">{{ paymentRequest.description|capitalize|default("No Description")}}</a></div>
                     </td>
                 </tr>
                 <tr class="{% if idx is even %}tr-alt {% endif %}tr-sub">
@@ -23,7 +23,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="3">There are no {{ active|proposalState }} payment requests</td>
+                    <td colspan="3">There are no payment requests</td>
                 </tr>
             {% endfor %}
             </tbody>

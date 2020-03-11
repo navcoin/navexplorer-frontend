@@ -20,10 +20,10 @@ class PaymentRequestMapper extends BaseMapper
             $data['requestedAmount'],
             $data['state'],
             array_key_exists('stateChangedOnBlock', $data) ? $data['stateChangedOnBlock'] : null,
-            $data['status'],
+            $data['status']
         );
 
-        if ($data['state'] == "ACCEPTED") {
+        if ($data['status'] == "ACCEPTED") {
             $paymentRequest->setPaidOnBlock($data['paidOnBlock']);
         }
 
