@@ -96,6 +96,7 @@ class DaoController extends AbstractController
      */
     public function consultationAction(Request $request) {
         return [
+            'blockCycle' => $this->proposalApi->getBlockCycle(),
             'consultation' => $this->consultationApi->getByHash($request->get('hash')),
         ];
     }

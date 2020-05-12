@@ -15,6 +15,37 @@
             </div>
         </div>
 
+
+        <div class="row">
+            <div class="col-md-12">
+                {% if consultation.state == 3 %}
+                    <div class="alert alert-danger">
+                        This consultation has expired
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        Votes counted for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ consultation.votingCycle|ordinal }} voting cycle.<br/>
+                        {% if blockCycle.remainingBlocks == 1 %}
+                            There is <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> block remaining.
+                        {% else %}
+                            There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining.
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if consultation.state == 9 and consultation.votingCycle < 3 %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+
+                        <p>Consultation has found support<br/>Waiting until the end of voting cycle 2 to begin final voting</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row margin-bottom">
             <div class="col-sm-12 col-md-8">
                 <table class="table table-striped">
@@ -38,6 +69,10 @@
                     <tr>
                         <td><strong>Status</strong></td>
                         <td class="text-right break-word">{{ consultation.status|capitalize }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Voting Cycle</strong></td>
+                        <td class="text-right break-word">{{ consultation.votingCycle }}</td>
                     </tr>
                     </tbody>
                 </table>
