@@ -107,7 +107,5 @@ class NavcoinClient implements NavcoinClientInterface
                 ->setNumberOfElements($data['number_of_elements'])
                 ->setCurrentPage($data['current_page']);
         }
-
-        return null;
     }
 }

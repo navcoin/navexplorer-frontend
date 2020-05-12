@@ -8,27 +8,15 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
-                <h1>Community&nbsp;Fund</h1>
-            </div>
-        </div>
-
-        <div class="row margin-bottom-half">
-            <div class="col-md-8">
-                <h2>Proposal</h2>
-                <p class="proposal-description">{{ proposal.description }}</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
+                <h1>Dao</h1>
                 <h2>Payment Request</h2>
-                <p class="paymentrequest-description">{{ paymentRequest.description }}</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
+                <p class="paymentrequest-description">{{ paymentRequest.description }}</p>
                 {{ include('community_fund/components/view_paymentrequest_details.html.twig') }}
             </div>
         </div>

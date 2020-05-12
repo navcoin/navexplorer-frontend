@@ -4,6 +4,7 @@ namespace App\Navcoin\CommunityFund\Entity;
 
 use App\Navcoin\Common\Entity\IteratorEntity;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
+use App\Navcoin\SoftFork\Entity\SoftFork;
 
 class Voters extends IteratorEntity implements IteratorEntityInterface
 {

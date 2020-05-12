@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.0.8",
+        "php": "^7.1",
         "ext-iconv": "*",
         "endroid/qr-code-bundle": "^3.2",
         "guzzlehttp/guzzle": "^6.3",

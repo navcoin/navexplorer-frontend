@@ -29,7 +29,7 @@ class SoftForkApi extends NavcoinApi
             $response = $this->getClient()->get('/softfork/cycle');
             $data = $this->getClient()->getJsonBody($response);
 
-            return new SoftForkCycle($data['blocksInCycle'], $data['blockCycle'], $data['currentBlock']-1, $data['firstBlock'], $data['remainingBlocks']+1);
+            return new SoftForkCycle($data['blocksInCycle'], $data['blockCycle'], $data['currentBlock']+1, $data['firstBlock'], $data['remainingBlocks']-1);
         } catch (ServerRequestException $e) {
             throw new \RuntimeException("Could not load soft forks");
         }

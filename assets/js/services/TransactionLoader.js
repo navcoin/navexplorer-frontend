@@ -49,13 +49,23 @@ export default class TransactionLoader {
                 inputs.forEach(function (input, index) {
                     let address = $(document.createElement('div'));
                     address.attr('class', 'address float-left');
-
+console.log(input.type);
                     if (typeof input.type !== 'undefined' && input.type === 'COLD_STAKING') {
                         address.append('<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[0] + '">' + input.addresses[0] + '</a>' +
                             '</span>' +
                             '<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[1] + '">' + input.addresses[1] + '</a>' +
+                            '</span>');
+                    } else if (typeof input.type !== 'undefined' && input.type === 'COLD_STAKING_V2') {
+                        address.append('<span class="break-word">' +
+                            '  <a href="/address/' + input.addresses[0] + '">' + input.addresses[0] + '</a>' +
+                            '</span>' +
+                            '<span class="break-word">' +
+                            '  <a href="/address/' + input.addresses[1] + '">' + input.addresses[1] + '</a>' +
+                            '</span>' +
+                            '<span class="break-word">' +
+                            '  <a href="/address/' + input.addresses[2] + '">' + input.addresses[2] + '</a>' +
                             '</span>');
                     } else if (typeof input.type !== 'undefined' && input.type !== 'PUBKEY' && input.type !== 'PUBKEYHASH') {
                         address.html(input.type.toLowerCase());

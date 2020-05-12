@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block title %}DAO Consultations{% endblock %}
+{% block description %}NavCoin DAO Consultations{% endblock %}
+
+{% block page %}page-dao-consultations{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>DAO</h1>
+                <h2>Consensus Consultations</h2>
+                {% include "community_fund/components/blockcycle_stats.html.twig" %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Consultation</th>
+                        <th>Height</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for idx, consultation in consultations %}
+                        <tr class="{% if idx is even %}tr-alt {% endif %}">
+                            <td>
+                                {{ consultation.question|capitalize|default("No Description")}}<br>
+                                <a href="{{ path('app_dao_consultation', {'hash': consultation.hash}) }}">{{ consultation.hash }}</a>
+                            </td>
+                            <td>{{ consultation.height|number_format }}</td>
+                            <td>{{ consultation.status|capitalize }}</td>
+                            {#                    <td>{{ proposal.duration }}</td>#}
+                            {#                    <td>{{ proposal.requestedAmount|stake_format }}</td>#}
+                            {#                    <td>{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</td>#}
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">There are no consensus consultations</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <a class="btn btn-info" href="{{ path('app_dao_index') }}">Go back</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

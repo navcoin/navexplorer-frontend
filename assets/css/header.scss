@@ -1,5 +1,5 @@
 header {
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.25rem;
   background-color: $light-grey;
 
   @media (max-width: 575px) {
@@ -41,21 +41,22 @@ header {
       line-height: 22px;
       font-weight: 100;
       text-transform: inherit;
-      border-bottom: 2px solid $dark-purple;
+      padding: 0.5rem 1rem 0;
+      //border-bottom: 2px solid $dark-purple;
     }
   }
   
-  .nav-item.active .nav-link {
-    border-bottom: 2px solid $white;
-  }
+  //.nav-item.active .nav-link {
+  //  border-bottom: 2px solid $white;
+  //}
 
-  .nav-link:hover {
-    color: $blue;
-    border-bottom: 2px solid $white;
-  }
+  //.nav-link:hover {
+  //  color: $blue;
+  //  border-bottom: 2px solid $white;
+  //}
 
   .bg-nav {
-    background-color: $dark-purple;
+    background-color: $purple;
   }
 }
 

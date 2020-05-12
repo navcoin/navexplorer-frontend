@@ -1,0 +1,46 @@
+.card {
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.card-padded {
+  overflow: hidden;
+  margin-bottom: 1rem;
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+.card-header {
+  padding: 0.5rem;
+  margin-bottom: 0;
+  //color: $white;
+  background-color: $mid-grey;
+  h2 {
+    font-size: 1rem;
+    margin:0;
+  }
+}
+
+.card-body {
+  padding: 0;
+
+  p:not(:last-child) {
+    padding-bottom: 0;
+  }
+  p {
+    padding: 0.5rem;
+    margin: 0;
+  }
+}
+
+.card-footer {
+  padding: 0.5rem;
+  background-color: $mid-grey;
+  .btn {
+    margin-right: 0.5rem;
+  }
+  .btn:last-child {
+    margin-right: 0rem;
+  }
+}

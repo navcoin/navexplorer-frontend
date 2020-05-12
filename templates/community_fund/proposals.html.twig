@@ -9,16 +9,17 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h1>Community Fund</h1>
-
+                <h1>DAO</h1>
+                <h2>Proposals</h2>
                 {% include "community_fund/components/blockcycle_stats.html.twig" %}
             </div>
         </div>
 
         <div class="row proposals-list">
             <div class="col-md-12">
-                <h2 class="float-left">{{ active|replace({'-': ' '})|capitalize }} proposals</h2>
-
+                <div class="float-left">
+                    <h3>{{ active|replace({'-': ' '})|capitalize }} Proposals</h3>
+                </div>
                 <div class="filters float-right">
                     <ul class="list-inline">
                         <li class="list-inline-item">
@@ -42,5 +43,12 @@
         </div>
 
         {% include "community_fund/components/proposals_list.html.twig"%}
+
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <a class="btn btn-info" href="{{ path('app_communityfund_index') }}">Go back</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

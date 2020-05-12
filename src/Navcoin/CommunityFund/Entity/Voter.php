@@ -57,6 +57,11 @@ class Voter
         return $this->abstain;
     }
 
+    public function getTotal(): int
+    {
+        return $this->yes + $this->no + $this->abstain;
+    }
+
     public function getAddresses(): array
     {
         return $this->addresses;
@@ -65,5 +70,23 @@ class Voter
     public function setAddresses(array $addresses)
     {
         $this->addresses = $addresses;
+    }
+
+    public function sortAddressesYesDesc() {
+        $addresses = $this->getAddresses();
+        usort( $addresses, function (VoterAddress $a, VoterAddress $b) {
+            return -1 * ($a->getYes() - $b->getYes());
+        });
+
+        $this->setAddresses($addresses);
+    }
+
+    public function sortAddressesNoDesc() {
+        $addresses = $this->getAddresses();
+        usort( $addresses, function (VoterAddress $a, VoterAddress $b) {
+            return -1 * ($a->getNo() - $b->getNo());
+        });
+
+        $this->setAddresses($addresses);
     }
 }

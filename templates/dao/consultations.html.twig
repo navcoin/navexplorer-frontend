@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}DAO Consultations{% endblock %}
+{% block description %}NavCoin DAO Consultations{% endblock %}
+
+{% block page %}page-dao-consultations{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>DAO</h1>
+
+                {% include "community_fund/components/blockcycle_stats.html.twig" %}
+            </div>
+        </div>
+
+        <div class="row proposals-list">
+            <div class="col-md-12">{{ active|replace({'-': ' '})|capitalize }}
+                <h2 class="float-left"> Consultations</h2>
+
+                <div class="filters float-right">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'waiting-for-support' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'waiting-for-support'}) }}">Waiting for support</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'expired'}) }}">Expired</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'passed' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'passed'}) }}">Passed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'reflection' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'reflection'}) }}">Reflection</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'found-support' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'found-support'}) }}">Found Support</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {% include "dao/components/consultations_list.html.twig"%}
+    </div>
+{% endblock %}

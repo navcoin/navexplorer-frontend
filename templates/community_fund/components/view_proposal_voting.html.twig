@@ -22,6 +22,7 @@
             </tr>
             </thead>
             <tbody>
+            {{ votes.latestCycle.sortAddressesYesDesc() }}
             {% for vote in votes.latestCycle.addresses if vote.yes != 0 %}
                 <tr>
                     <td>
@@ -48,6 +49,7 @@
             </tr>
             </thead>
             <tbody>
+            {{ votes.latestCycle.sortAddressesNoDesc() }}
             {% for vote in votes.latestCycle.addresses if vote.no != 0 %}
                 <tr>
                     <td>

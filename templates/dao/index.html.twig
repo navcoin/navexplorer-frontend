@@ -11,6 +11,56 @@
                 <div class="col-md-12">
                     <h1>DAO</h1>
 
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12 d-flex align-items-stretch">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2>Community&nbsp;Fund</h2>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        The <a href="{{path('app_communityfund_index')}}" class="card-link">NavCoin Community Fund</a>
+                                        is a decentralized way to fund projects and initiatives voted for by the community.
+                                    </p>
+                                    <p>Community members can create proposals and payment requests. The community then vote to confirm acceptance and release payment.</p>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+                                    <a href="{{path('app_communityfund_proposals', {'state': 'pending'})}}" class="card-link">Proposals</a>
+                                    <a href="{{path('app_communityfund_paymentrequests', {'state': 'pending'})}}" class="card-link">Payment Requests</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-12 d-flex align-items-stretch">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2>Consensus&nbsp;Parameters</h2>
+                                </div>
+                                <div class="card-body">
+                                    <p>Consensus parameters are used to govern the NavCoin network.</p>
+                                    <p>Through the DAO community members can propose consultations to change the consensus parameters that govern NavCoin.</p>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+                                    <a href="{{path('app_dao_consensusparameters')}}" class="card-link">View Parameters</a>
+                                    <a href="{{path('app_dao_consensusconsultations', {'status':'waiting-for-support'})}}" class="card-link">Consensus Consultations</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-12 d-flex align-items-stretch">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2>Consultations</h2>
+                                </div>
+                                <div class="card-body">
+                                    <p>&nbsp;</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="{{path('app_communityfund_index')}}" class="card-link">Consultations</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

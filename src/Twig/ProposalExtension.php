@@ -36,13 +36,13 @@ class ProposalExtension extends AbstractExtension
     {
         $this->blockCycle = $blockCycle;
 
-        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $voter->getAbstain(), false);
+        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $blockCycle->getCurrentBlock() - $voter->getTotal(), false);
 
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), true), $voter->getYes()).'
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getState(), false), $voter->getNo()).'
-    '.($proposal->getState() == 'PENDING' ? $abstentionBar : '').'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), true), $voter->getYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), false), $voter->getNo()).'
+    '.($proposal->getStatus() == 'pending' ? $abstentionBar : '').'
 </div>';
     }
 
@@ -90,7 +90,7 @@ class ProposalExtension extends AbstractExtension
             array_push($classes, 'bg-grey');
         }
 
-        if ($state == 'PENDING') {
+        if ($state == 'pending') {
             $classes[] = 'progress-bar-striped';
             $classes[] = 'progress-bar-animated';
         }

@@ -9,15 +9,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h1>Community Fund</h1>
-
+                <h1>DAO</h1>
+                <h2>Payment Requests</h2>
                 {% include "community_fund/components/blockcycle_stats.html.twig" %}
             </div>
         </div>
 
         <div class="row proposals-list">
             <div class="col-md-12">
-                <h2 class="float-left">{{ active|replace({'-': ' '})|capitalize }} Payment Requests</h2>
+                <h3 class="float-left">{{ active|replace({'-': ' '})|capitalize }} Payment Requests</h3>
 
                 <div class="filters float-right">
                     <ul class="list-inline">
@@ -42,5 +42,12 @@
         </div>
 
         {% include "community_fund/components/paymentrequests_list.html.twig"%}
+
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <a class="btn btn-info" href="{{ path('app_communityfund_index') }}">Go back</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

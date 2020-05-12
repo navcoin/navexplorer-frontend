@@ -16,22 +16,9 @@
                 <tr>
                     <td>{{ rank+1 }}</td>
                     <td>
-                        <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">
-                            {{ address.hash }}
-                        </a>
-                        {% if address.label %}
-                            <span class="badge badge-info">{{ address.label }}</span>
-                        {% endif %}
+                        <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">{{ address.hash }}</a>
                     </td>
-                    <td>
-                        {{ address.balance|stake_format(false, 2) }}<br/>
-{#                        {% set balance = ((address.balance/bestBlock.balance)*100)|round(2, 'floor') %}#}
-{#                        {% if balance == 0 %}#}
-{#                            < 0.01%#}
-{#                        {% else %}#}
-{#                            {{ balance|number_format(2) }}%#}
-{#                        {% endif %}#}
-                    </td>
+                    <td>{{ address.balance|stake_format(false, 2) }}</td>
                     <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': address.blockIndex}) }}">{{ address.blockIndex }}</a></td>
                     <td class="d-none d-md-table-cell">{{ address.staked|stake_format(false, 2) }}</td>
                 </tr>

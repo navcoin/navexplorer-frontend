@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Hash</th>
+                <th>Duration</th>
+                <th>Nav Requested</th>
+                <th>Nav Paid</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for idx, consultation in consultations %}
+                <tr class="{% if idx is even %}tr-alt{% endif %}">
+                    <td colspan="5">
+                        <div class="inline-proposal-description"><a href="{{ path('app_dao_consultation', {'hash': consultation.hash}) }}">{{ consultation.question|capitalize|default("No Description")}}</a></div>
+                    </td>
+                </tr>
+                <tr class="{% if idx is even %}tr-alt {% endif %}tr-sub">
+                    <td>{{ consultation.version }}</td>
+{#                    <td>{{ proposal.duration }}</td>#}
+{#                    <td>{{ proposal.requestedAmount|stake_format }}</td>#}
+{#                    <td>{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</td>#}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">There are no consultations that are {{ active|replace({'-': ' '}) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
