@@ -19,20 +19,22 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Consultation</th>
+                        <th>Consensus change for</th>
                         <th>Height</th>
-                        <th>Status</th>
+                        <th class="text-center">Voting Cycle</th>
+                        <th class="text-center">Status</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for idx, consultation in consultations %}
                         <tr class="{% if idx is even %}tr-alt {% endif %}">
                             <td>
-                                {{ consultation.question|capitalize|default("No Description")}}<br>
+                                {{ consultation.question|trim('Consensus change for:', 'left')}}<br>
                                 <a href="{{ path('app_dao_consultation', {'hash': consultation.hash}) }}">{{ consultation.hash }}</a>
                             </td>
                             <td>{{ consultation.height|number_format }}</td>
-                            <td>{{ consultation.status|capitalize }}</td>
+                            <td class="text-center">{{ consultation.status != "expired" ? consultation.votingCycleForState|ordinal : '--' }}</td>
+                            <td class="text-center">{{ consultation.status|capitalize }}</td>
                             {#                    <td>{{ proposal.duration }}</td>#}
                             {#                    <td>{{ proposal.requestedAmount|stake_format }}</td>#}
                             {#                    <td>{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</td>#}

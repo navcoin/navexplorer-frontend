@@ -61,6 +61,20 @@ class ProposalExtension extends AbstractExtension
 //</div>';
     }
 
+    public function getAnswerVotes(string $type, BlockCycle $blockCycle, int $count): string
+    {
+        $this->blockCycle = $blockCycle;
+
+        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $blockCycle->getCurrentBlock() - $voter->getTotal(), false);
+
+        return '
+<div class="progress">
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), true), $voter->getYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), false), $voter->getNo()).'
+    '.($proposal->getStatus() == 'pending' ? $abstentionBar : '').'
+</div>';
+    }
+
     public function getProposalStateTitle(String $state): string
     {
         return preg_replace('/(-|_)/', ' ', $state);

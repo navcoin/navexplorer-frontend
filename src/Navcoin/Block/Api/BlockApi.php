@@ -19,6 +19,7 @@ class BlockApi extends NavcoinApi
         try {
             $response = $this->getClient()->get('/block/'.$height);
             $data = $this->getClient()->getJsonBody($response);
+            dd($data);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case Response::HTTP_NOT_FOUND:

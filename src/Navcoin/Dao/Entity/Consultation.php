@@ -32,7 +32,10 @@ class Consultation
     private $max;
 
     /** @var int */
-    private $votingCycle;
+    private $votingCyclesFromCreation;
+
+    /** @var int */
+    private $votingCycleForState;
 
     /** @var int */
     private $state;
@@ -71,7 +74,8 @@ class Consultation
         array $answers,
         int $min,
         int $max,
-        int $votingCycle,
+        int $votingCyclesFromCreation,
+        int $votingCycleForState,
         int $state,
         string $status,
         string $proposedBy,
@@ -91,7 +95,8 @@ class Consultation
         $this->answers = $answers;
         $this->min = $min;
         $this->max = $max;
-        $this->votingCycle = $votingCycle;
+        $this->votingCyclesFromCreation = $votingCyclesFromCreation;
+        $this->votingCycleForState = $votingCycleForState;
         $this->state = $state;
         $this->status = $status;
         $this->stateChangedOnBlock = $stateChangedOnBlock;
@@ -148,9 +153,14 @@ class Consultation
         return $this->max;
     }
 
-    public function getVotingCycle(): int
+    public function getVotingCyclesFromCreation(): int
     {
-        return $this->votingCycle;
+        return $this->votingCyclesFromCreation;
+    }
+
+    public function getVotingCycleForState(): int
+    {
+        return $this->votingCycleForState;
     }
 
     public function getState(): int

@@ -24,7 +24,7 @@
                     </div>
                 {% else %}
                     <div class="alert alert-info">
-                        Votes counted for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ consultation.votingCycle|ordinal }} voting cycle.<br/>
+                        Votes counted for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ consultation.votingCycleForState|ordinal }} voting cycle.<br/>
                         {% if blockCycle.remainingBlocks == 1 %}
                             There is <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> block remaining.
                         {% else %}
@@ -35,12 +35,12 @@
             </div>
         </div>
 
-        {% if consultation.state == 9 and consultation.votingCycle < 3 %}
+        {% if consultation.state == 9 and consultation.votingCycleFromCreation < 3 %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-success">
-
-                        <p>Consultation has found support<br/>Waiting until the end of voting cycle 2 to begin final voting</p>
+                        Consultation has found support<br/>
+                        Waiting until the end of the 2nd voting cycle to begin final voting
                     </div>
                 </div>
             </div>
@@ -51,8 +51,13 @@
                 <table class="table table-striped">
                     <tbody>
                     <tr>
-                        <td><strong>Question</strong></td>
-                        <td class="text-right break-word">{{ consultation.question }}</td>
+                        {% if consultation.consensusParameter %}
+                            <td><strong>Consensus change for</strong></td>
+                            <td class="text-right break-word">{{ consultation.question|trim('Consensus change for: ', 'left') }}</td>
+                        {% else %}
+                            <td><strong>Question</strong></td>
+                            <td class="text-right break-word">{{ consultation.question }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td><strong>Hash</strong></td>
@@ -60,19 +65,23 @@
                     </tr>
                     <tr>
                         <td><strong>Block Hash</strong></td>
-                        <td class="text-right break-word">{{ consultation.blockHash }}</td>
+                        <td class="text-right break-word">
+                            <a href="{{ path('app_block_view', {'height': consultation.blockHash}) }}">{{ consultation.blockHash }}</a>
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>Proposed By</strong></td>
-                        <td class="text-right break-word">{{ consultation.proposedBy }}</td>
+                        <td class="text-right break-word">
+                            <a href="{{ path('app_address_index', { 'hash': consultation.proposedBy }) }}">{{ consultation.proposedBy }}</a>
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>Status</strong></td>
                         <td class="text-right break-word">{{ consultation.status|capitalize }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Voting Cycle</strong></td>
-                        <td class="text-right break-word">{{ consultation.votingCycle }}</td>
+                        <td><strong>Voting Cycle </strong></td>
+                        <td class="text-right break-word">{{ consultation.votingCycleForState|ordinal }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -129,6 +138,10 @@
                         <tr>
                             <td><strong>Support</strong></td>
                             <td class="text-right break-word">{{ a.support }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Votes</strong></td>
+                            <td class="text-right break-word">{{ a.votes }}</td>
                         </tr>
                         <tr>
                             <td><strong>Version</strong></td>

@@ -5,8 +5,8 @@
             <tr>
                 <th>Hash</th>
                 <th>Duration</th>
-                <th>Nav Requested</th>
-                <th>Nav Paid</th>
+                <th class="text-right">Nav Requested</th>
+                <th class="text-right">Nav Paid</th>
             </tr>
             </thead>
             <tbody>
@@ -19,8 +19,8 @@
                 <tr class="{% if idx is even %}tr-alt {% endif %}tr-sub">
                     <td>{{ proposal.hash }}</td>
                     <td>{{ proposal.duration }}</td>
-                    <td>{{ proposal.requestedAmount|stake_format }}</td>
-                    <td>{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</td>
+                    <td class="text-right">{{ proposal.requestedAmount|stake_format }}</td>
+                    <td class="text-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</td>
                 </tr>
             {% else %}
                 <tr>

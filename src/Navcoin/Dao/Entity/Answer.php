@@ -13,6 +13,9 @@ class Answer
     /** @var int */
     private $support;
 
+    /** @var int */
+    private $votes;
+
     /** @var string */
     private $status;
 
@@ -35,6 +38,7 @@ class Answer
         int $version,
         string $answer,
         int $support,
+        int $votes,
         string $status,
         bool $foundSupport,
         string $stateChangedOnBlock,
@@ -45,6 +49,7 @@ class Answer
         $this->version = $version;
         $this->answer = $answer;
         $this->support = $support;
+        $this->votes = $votes;
         $this->status = $status;
         $this->foundSupport = $foundSupport;
         $this->stateChangedOnBlock = $stateChangedOnBlock;
@@ -66,6 +71,11 @@ class Answer
     public function getSupport(): int
     {
         return $this->support;
+    }
+
+    public function getVotes(): int
+    {
+        return $this->votes;
     }
 
     public function getStatus(): string

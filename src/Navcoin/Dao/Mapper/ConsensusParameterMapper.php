@@ -18,7 +18,7 @@ class ConsensusParameterMapper extends BaseMapper
                 $value['desc'],
                 $value['type'],
                 $value['value'],
-                $value['updatedOnBlock'],
+                $value['updatedOnBlock']
             );
         }
         $consensusParameters = new ConsensusParameters();
