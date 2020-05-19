@@ -79,6 +79,15 @@ class Proposal
      */
     private $expiresOn;
 
+    /** @var int */
+    private $votesYes;
+    /** @var int */
+    private $votesAbs;
+    /** @var int */
+    private $votesNo;
+    /** @var int */
+    private $votingCycle;
+
     public function __construct(
         int $version,
         string $hash,
@@ -92,7 +101,11 @@ class Proposal
         int $proposalDuration,
         string $state,
         ?string $stateChangedOnBlock,
-        string $status
+        string $status,
+        int $votesYes,
+        int $votesAbs,
+        int $votesNo,
+        int $votingCycle
     ) {
         $this->version = $version;
         $this->hash = $hash;
@@ -107,6 +120,10 @@ class Proposal
         $this->state = $state;
         $this->stateChangedOnBlock = $stateChangedOnBlock;
         $this->status = $status;
+        $this->votesYes = $votesYes;
+        $this->votesAbs = $votesAbs;
+        $this->votesNo = $votesNo;
+        $this->votingCycle = $votingCycle;
     }
 
     public function getVersion(): int
@@ -235,5 +252,25 @@ class Proposal
         $this->expiresOn = $expiresOn;
 
         return $this;
+    }
+
+    public function getVotesYes(): int
+    {
+        return $this->votesYes;
+    }
+
+    public function getVotesAbs(): int
+    {
+        return $this->votesAbs;
+    }
+
+    public function getVotesNo(): int
+    {
+        return $this->votesNo;
+    }
+
+    public function getVotingCycle(): int
+    {
+        return $this->votingCycle;
     }
 }

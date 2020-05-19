@@ -24,7 +24,11 @@ class ProposalMapper extends BaseMapper
             $data['proposalDuration'],
             $data['state'],
             $this->getData('stateChangedOnBlock', $data),
-            $data['status']
+            $data['status'],
+            $data['votesYes'],
+            $data['votesAbs'],
+            $data['votesNo'],
+            $data['votingCycle']
         );
 
         if ($this->getData('expiresOn', $data)) {

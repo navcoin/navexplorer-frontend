@@ -2,7 +2,7 @@
 
 namespace App\Twig;
 
-use App\Navcoin\CommunityFund\Entity\BlockCycle;
+use App\Navcoin\Block\Entity\BlockCycle;
 use App\Navcoin\CommunityFund\Entity\PaymentRequest;
 use App\Navcoin\CommunityFund\Entity\Proposal;
 use App\Navcoin\CommunityFund\Entity\Voter;
@@ -32,17 +32,15 @@ class ProposalExtension extends AbstractExtension
         );
     }
 
-    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle, Voter $voter): string
+    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
     {
         $this->blockCycle = $blockCycle;
 
-        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $blockCycle->getCurrentBlock() - $voter->getTotal(), false);
-
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), true), $voter->getYes()).'
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), false), $voter->getNo()).'
-    '.($proposal->getStatus() == 'pending' ? $abstentionBar : '').'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), true), $proposal->getVotesYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), false), $proposal->getVotesNo()).'
+    '.$this->getProgressBar($this->getProgressBarClass('abstention', null), $proposal->getVotesAbs(), false).'
 </div>';
     }
 
@@ -63,16 +61,16 @@ class ProposalExtension extends AbstractExtension
 
     public function getAnswerVotes(string $type, BlockCycle $blockCycle, int $count): string
     {
-        $this->blockCycle = $blockCycle;
-
-        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $blockCycle->getCurrentBlock() - $voter->getTotal(), false);
-
-        return '
-<div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), true), $voter->getYes()).'
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), false), $voter->getNo()).'
-    '.($proposal->getStatus() == 'pending' ? $abstentionBar : '').'
-</div>';
+//        $this->blockCycle = $blockCycle;
+//
+//        $abstentionBar = $this->getProgressBar($this->getProgressBarClass('abstention', null), $blockCycle->getCurrentBlock() - $voter->getTotal(), false);
+//
+//        return '
+//<div class="progress">
+//    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), true), $voter->getYes()).'
+//    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), false), $voter->getNo()).'
+//    '.($proposal->getStatus() == 'pending' ? $abstentionBar : '').'
+//</div>';
     }
 
     public function getProposalStateTitle(String $state): string
@@ -82,7 +80,7 @@ class ProposalExtension extends AbstractExtension
 
     private function getProgressBar(string $classes, int $votes, bool $showPercent = true): string
     {
-        $votesPercent = (int) round(($votes / $this->blockCycle->getBlocksInCycle()) * 100);
+        $votesPercent = (int) round(($votes / $this->blockCycle->getSize()) * 100);
         return sprintf(
             '<div class="%s" role="progressbar" style="%s" aria-valuenow="%d" aria-valuemin="0" aria-valuemax="100">%s</div>',
             $classes,

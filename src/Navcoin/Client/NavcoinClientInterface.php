@@ -3,6 +3,7 @@
 namespace App\Navcoin\Client;
 
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
+use App\Navcoin\Common\Entity\Paginator;
 use Psr\Http\Message\ResponseInterface;
 
 interface NavcoinClientInterface
@@ -10,5 +11,5 @@ interface NavcoinClientInterface
     public function get(string $uri): ResponseInterface;
     public function getBody(ResponseInterface $response): string;
     public function getJsonBody(ResponseInterface $response, bool $assoc = true): array;
-    public function getPaginator(ResponseInterface $response): IteratorEntityInterface;
+    public function getPaginator(ResponseInterface $response): Paginator;
 }

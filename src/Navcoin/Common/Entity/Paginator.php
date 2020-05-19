@@ -2,147 +2,34 @@
 
 namespace App\Navcoin\Common\Entity;
 
-use JMS\Serializer\Annotation\Accessor;
-
-class Paginator implements IteratorEntityInterface
+class Paginator
 {
-    /**
-     * @var bool
-     */
-    private $last;
-
-    /**
-     * @var int
-     */
-    private $totalPages;
-
-    /**
-     * @var int
-     */
-    private $totalElements;
-
-    /**
-     * @var bool
-     */
-    private $first;
-
-    /**
-     * @var int
-     */
-    private $numberOfElements;
-
-    /**
-     * @var int
-     */
+    /** @var int */
     private $pageSize;
 
-    /**
-     * @var int
-     */
+    /**  @var int */
+    private $totalPages;
+
+    /**  @var int */
+    private $totalElements;
+
+    /**  @var int */
     private $currentPage;
 
-    /**
-     * @var array
-     * @Accessor(getter="getElements",setter="setElements")
-     */
-    private $elements = [];
+    /**  @var bool */
+    private $first;
 
-    public function add($element): IteratorEntityInterface
+    /** @var bool */
+    private $last;
+
+    public function __construct(int $pageSize, int $totalPages, int $totalElements, int $currentPage, bool $first, bool $last)
     {
-        array_push($this->elements, $element);
-
-        return $this;
-    }
-
-    public function getElement(int $index)
-    {
-        if (!array_key_exists($index, $this->getElements())) {
-            throw new \RuntimeException(sprintf("Element %d does not exist", $index));
-        }
-
-        return $this->getElements()[0];
-    }
-
-    public function getElements(): array
-    {
-        return $this->elements;
-    }
-
-    public function countElements(): int
-    {
-        return count($this->elements);
-    }
-
-    public function setElements(array $elements): IteratorEntityInterface
-    {
-        $this->elements = $elements;
-
-        return $this;
-    }
-
-    public function getIterator(): \ArrayIterator
-    {
-        return new \ArrayIterator($this->elements);
-    }
-
-    public function isLast(): bool
-    {
-        return $this->last;
-    }
-
-    public function setLast(bool $last): self
-    {
-        $this->last = $last;
-
-        return $this;
-    }
-
-    public function getTotalPages(): int
-    {
-        return $this->totalPages;
-    }
-
-    public function setTotalPages(int $totalPages): self
-    {
+        $this->pageSize = $pageSize;
         $this->totalPages = $totalPages;
-
-        return $this;
-    }
-
-    public function getTotalElements(): int
-    {
-        return $this->totalElements;
-    }
-
-    public function setTotalElements(int $totalElements): self
-    {
         $this->totalElements = $totalElements;
-
-        return $this;
-    }
-
-    public function isFirst(): bool
-    {
-        return $this->first;
-    }
-
-    public function setFirst(bool $first): self
-    {
+        $this->currentPage = $currentPage;
         $this->first = $first;
-
-        return $this;
-    }
-
-    public function getNumberOfElements(): int
-    {
-        return $this->numberOfElements;
-    }
-
-    public function setNumberOfElements(int $numberOfElements): self
-    {
-        $this->numberOfElements = $numberOfElements;
-
-        return $this;
+        $this->last = $last;
     }
 
     public function getPageSize(): int
@@ -150,11 +37,14 @@ class Paginator implements IteratorEntityInterface
         return $this->pageSize;
     }
 
-    public function setPageSize(int $pageSize): self
+    public function getTotalPages(): int
     {
-        $this->pageSize = $pageSize;
+        return $this->totalPages;
+    }
 
-        return $this;
+    public function getTotalElements(): int
+    {
+        return $this->totalElements;
     }
 
     public function getCurrentPage(): int
@@ -162,10 +52,23 @@ class Paginator implements IteratorEntityInterface
         return $this->currentPage;
     }
 
-    public function setCurrentPage(int $currentPage): self
+    public function isFirst(): bool
     {
-        $this->currentPage = $currentPage;
+        return $this->first;
+    }
 
-        return $this;
+    public function isLast(): bool
+    {
+        return $this->last;
+    }
+
+    public function getPreviousPage(): int
+    {
+        return $this->currentPage == 1 ? 1 : $this->currentPage - 1;
+    }
+
+    public function getNextPage(): int
+    {
+        return $this->currentPage == $this->totalPages ? $this->totalPages : $this->currentPage + 1;
     }
 }

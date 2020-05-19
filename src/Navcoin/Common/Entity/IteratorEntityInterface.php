@@ -10,4 +10,7 @@ interface IteratorEntityInterface
     public function countElements(): int;
     public function setElements(array $elements): self;
     public function getIterator(): \ArrayIterator;
+    public function setPaginator(Paginator $paginator): void;
+    public function getPaginator(): Paginator;
+    public function isPaginated(): bool;
 }

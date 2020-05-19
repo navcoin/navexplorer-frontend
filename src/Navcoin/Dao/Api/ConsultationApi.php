@@ -29,10 +29,10 @@ class ConsultationApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    public function getByState(int $state): Consultations
+    public function getConsultations(int $size, int $page, array $parameters): Consultations
     {
         try {
-            $response = $this->getClient()->get('/dao/consultation?size=5000&state='.$state);
+            $response = $this->getClient()->get('/dao/consultation?size='.$size.'&page='.$page.'&'.http_build_query($parameters));
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new Consultations();

@@ -3,46 +3,36 @@
 namespace App\Controller;
 
 use App\Exception\BlockNotFoundException;
-use App\Navcoin\Address\Api\AddressApi;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\CommunityFund\Api\PaymentRequestApi;
 use App\Navcoin\CommunityFund\Api\ProposalApi;
 use App\Navcoin\CommunityFund\Api\TrendApi;
 use App\Navcoin\CommunityFund\Api\VotersApi;
-use App\Navcoin\SoftFork\Api\SoftForkApi;
+use App\Navcoin\CommunityFund\Constants\ProposalState;
+use App\Navcoin\CommunityFund\Constants\ProposalStatus;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CommunityFundController extends Controller
+class CommunityFundController extends AbstractController
 {
-    /**
-     * @var ProposalApi
-     */
+    /** @var ProposalApi */
     private $proposalApi;
 
-    /**
-     * @var PaymentRequestApi
-     */
+    /** @var PaymentRequestApi */
     private $paymentRequestApi;
 
-    /**
-     * @var VotersApi
-     */
+    /** @var VotersApi */
     private $votersApi;
 
-    /**
-     * @var TrendApi
-     */
+    /** @var TrendApi */
     private $trendApi;
 
-    /**
-     * @var BlockApi
-     */
+    /** @var BlockApi */
     private $blockApi;
 
     public function __construct(
@@ -62,27 +52,19 @@ class CommunityFundController extends Controller
     /**
      * @Route("/community-fund")
      * @Template()
-     *
-     * @return array
      */
     public function indexAction(): array
     {
-        $proposals = $this->proposalApi->getByStatus("pending", "id", 1, 5);
-        $proposals->limit(5);
-
-        $paymentRequests = $this->paymentRequestApi->getByStatus("pending", "id");
-        $proposals->limit(5);
-
         return [
             'stats' => $this->proposalApi->getStats(),
-            'blockCycle' => $this->proposalApi->getBlockCycle(),
-            'proposals' => $proposals,
-            'paymentRequests' => $paymentRequests,
+            'blockCycle' => $this->blockApi->getBlockCycle(),
+            'proposals' => $this->proposalApi->getProposals(['state' => ProposalState::PENDING], 5),
+            'paymentRequests' => $this->paymentRequestApi->getByStatus("pending", "id"),
         ];
     }
 
     /**
-     * @Route("/community-fund/proposals/{state}")
+     * @Route("/community-fund/proposals/{status}")
      * @Template()
      *
      * @param Request $request
@@ -91,48 +73,52 @@ class CommunityFundController extends Controller
      */
     public function proposalsAction(Request $request)
     {
-        switch($request->get('state')) {
-            case 'pending':
-                $proposals = $this->proposalApi->getByStatus("pending", "votes");
+        switch($request->get('status')) {
+            case ProposalStatus::PENDING:
+                $state = ProposalState::PENDING;
+                $order = 'votes';
                 break;
-            case 'accepted':
-                $proposals = $this->proposalApi->getByStatus("accepted");
+            case ProposalStatus::ACCEPTED:
+                $state = ProposalState::ACCEPTED;
+                $order = 'id';
                 break;
-            case 'rejected':
-                $proposals = $this->proposalApi->getByStatus("rejected");
+            case ProposalStatus::REJECTED:
+                $state = ProposalState::REJECTED;
+                $order = 'id';
                 break;
-            case 'expired':
-                $proposals = $this->proposalApi->getByStatus("expired");
+            case ProposalStatus::EXPIRED:
+                $state = ProposalState::EXPIRED;
+                $order = 'id';
                 break;
-            case 'pending-funds':
-                $proposals = $this->proposalApi->getByStatus("pending_funds");
+            case ProposalStatus::PENDING_FUNDS:
+                $state = ProposalState::PENDING_FUNDS;
+                $order = 'id';
                 break;
             default:
-                return $this->redirectToRoute('app_communityfund_proposals', ['state' => 'pending']);
+                return $this->redirectToRoute('app_communityfund_proposals', ['status' => ProposalStatus::PENDING]);
         }
 
+        $proposals = $this->proposalApi->getProposals(['state' => $state], 9, $request->get('page', 1), true);
+
         return [
-            'stats' => $this->proposalApi->getStats(),
             'blockHeight' => $this->blockApi->getBestBlock()->getHeight(),
-            'blockCycle' => $this->proposalApi->getBlockCycle(),
-            'proposals' => $proposals,
-            'active' => $request->get('state'),
+            'blockCycle' => $this->blockApi->getBlockCycle(),
+            'proposals' => $proposals->getElements(),
+            'paginator' => $proposals->getPaginator(),
+            'active' => $request->get('status'),
         ];
     }
 
     /**
      * @Route("/community-fund/proposal/{hash}")
      * @Template()
-     *
-     * @param Request $request
-     * @return array
      */
     public function viewAction(Request $request)
     {
         $proposal = $this->proposalApi->getProposal($request->get('hash'));
 
         $block = null;
-        if ($proposal->getState() == 'accepted' && $proposal->getStateChangedOnBlock()) {
+        if ($proposal->getState() == ProposalStatus::ACCEPTED && $proposal->getStateChangedOnBlock()) {
             try {
                 $block = $this->blockApi->getBlock($proposal->getStateChangedOnBlock());
             } catch (BlockNotFoundException $e) {
@@ -141,23 +127,17 @@ class CommunityFundController extends Controller
         }
 
         return [
-            'blockCycle' => $this->proposalApi->getBlockCycle(),
-            'proposal' => $this->proposalApi->getProposal($request->get('hash')),
+            'blockCycle' => $this->blockApi->getBlockCycle(),
+            'proposal' => $proposal,
             'paymentRequests' => $this->paymentRequestApi->getPaymentRequests($proposal),
             'block' => $block,
-            'votes' => $this->votersApi->getProposalVotes($request->get('hash')),
+            'votes' => $this->votersApi->getProposalVotes($proposal->getHash()),
         ];
     }
-
-
 
     /**
      * @Route("/community-fund/payment-requests/{state}")
      * @Template()
-     *
-     * @param Request $request
-     *
-     * @return array|RedirectResponse
      */
     public function paymentRequestsAction(Request $request)
     {
@@ -176,7 +156,7 @@ class CommunityFundController extends Controller
         return [
             'stats' => $this->proposalApi->getStats(),
             'blockHeight' => $this->blockApi->getBestBlock()->getHeight(),
-            'blockCycle' => $this->proposalApi->getBlockCycle(),
+            'blockCycle' => $this->blockApi->getBlockCycle(),
             'paymentRequests' => $paymentRequests,
             'active' => $request->get('state'),
         ];

@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        {% if consultation.state == 9 and consultation.votingCycleFromCreation < 3 %}
+        {% if consultation.state == 9 and consultation.votingCyclesFromCreation < 3 %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-success">
@@ -133,7 +133,7 @@
                         </tr>
                         <tr>
                             <td><strong>Answer</strong></td>
-                            <td class="text-right break-word">{{ a.answer }}</td>
+                            <td class="text-right break-word">{{ a.answer|answerType(consensus.type) }}</td>
                         </tr>
                         <tr>
                             <td><strong>Support</strong></td>

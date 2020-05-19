@@ -8,22 +8,26 @@ use App\Navcoin\Dao\Entity\ConsensusParameters;
 
 class ConsensusParameterMapper extends BaseMapper
 {
-    public function mapEntity(array $data): ConsensusParameters
+    public function mapAll(array $data): ConsensusParameters
     {
         $parameters = [];
-
         foreach($data as $key => $value) {
-            $parameters[] =  new ConsensusParameter(
-                $value['id'],
-                $value['desc'],
-                $value['type'],
-                $value['value'],
-                $value['updatedOnBlock']
-            );
+            $parameters[] = $this->mapEntity($value);
         }
         $consensusParameters = new ConsensusParameters();
         $consensusParameters->setElements($parameters);
 
         return $consensusParameters;
+    }
+
+    public function mapEntity(array $data): ConsensusParameter
+    {
+        return new ConsensusParameter(
+            $data['id'],
+            $data['desc'],
+            $data['type'],
+            $data['value'],
+            $data['updatedOnBlock']
+        );
     }
 }
