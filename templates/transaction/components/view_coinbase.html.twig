@@ -21,8 +21,10 @@
                 {% endif %}
             </tr>
         {% elseif output.type == "NONSTANDARD" %}
-            <td data-role="index">{{ output.index }}</td>
-            <td data-role="type" colspan="3">{{ output.type|capitalize }}</td>
+            <tr>
+                <td data-role="index">{{ output.index }}</td>
+                <td data-role="type" colspan="3">{{ output.type|capitalize }}</td>
+            </tr>
         {% else %}
             <tr>
                 <td data-role="index">{{ output.index }}</td>
