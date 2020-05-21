@@ -1,7 +1,11 @@
 .progress {
   background-color: $light-grey;
-  border: $mid-grey 1px solid;
+  border: $dark-grey 1px solid;
   height: 1.25rem;
+
+  .bg-abstain {
+    background: $dark-grey !important;
+  }
 
   .progress-bar {
     color: $white;

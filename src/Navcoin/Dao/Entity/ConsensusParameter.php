@@ -56,7 +56,7 @@ class ConsensusParameter
             case 1:
                 return $this->value / 100 . '%';
             case 2:
-                return $this->value/10000000 . '&nbsp;Nav';
+                return $this->value/100000000 . '&nbsp;Nav';
             case 3:
                 return $this->value == 0 ? 'false' : 'true';
         }

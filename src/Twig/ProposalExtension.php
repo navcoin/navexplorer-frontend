@@ -32,15 +32,15 @@ class ProposalExtension extends AbstractExtension
         );
     }
 
-    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
+    public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle, Voter $latestCycle = null): string
     {
         $this->blockCycle = $blockCycle;
 
         return '
 <div class="progress">
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), true), $proposal->getVotesYes()).'
-    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), false), $proposal->getVotesNo()).'
-    '.$this->getProgressBar($this->getProgressBarClass('abstention', null), $proposal->getVotesAbs(), false).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), "yes"), $proposal->getVotesYes()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), "no"), $proposal->getVotesNo()).'
+    '.$this->getProgressBar($this->getProgressBarClass($proposal->getStatus(), "abs"), $proposal->getVotesAbs(), false).'
 </div>';
     }
 
@@ -90,14 +90,16 @@ class ProposalExtension extends AbstractExtension
         );
     }
 
-    private function getProgressBarClass(String $state, $vote): string
+    private function getProgressBarClass(String $state, ?string $vote): string
     {
         $classes = ['progress-bar'];
 
-        if ($vote === true) {
+        if ($vote === "yes") {
             array_push($classes, 'bg-success');
-        } elseif ($vote === false) {
+        } elseif ($vote === "no") {
             array_push($classes, 'bg-danger');
+        } elseif ($vote === "abs") {
+            array_push($classes, 'bg-abstain');
         } else {
             array_push($classes, 'bg-grey');
         }
