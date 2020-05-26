@@ -181,10 +181,10 @@ class Proposal
         $inputSeconds = $this->proposalDuration;
 
         $secondsInAMinute = 60;
-        $secondsInAnHour  = 60 * $secondsInAMinute;
-        $secondsInADay    = 24 * $secondsInAnHour;
-        $secondsInAWeek   = 7 * $secondsInADay;
-        $secondsInAYear   = 52 * $secondsInAWeek;
+        $secondsInAnHour = 60 * $secondsInAMinute;
+        $secondsInADay = 24 * $secondsInAnHour;
+        $secondsInAWeek = 7 * $secondsInADay;
+        $secondsInAYear = 52 * $secondsInAWeek;
 
         // extract years
         $years = floor($inputSeconds / $secondsInAYear);
@@ -214,12 +214,13 @@ class Proposal
         $date .= $weeks ? $weeks . ($weeks == 1 ? ' week, ' : ' weeks, ') : '';
         $date .= $days ? $days . ($days == 1 ? ' day, ' : ' days, ') : '';
         $date .= $hours ? $hours . ($hours == 1 ? ' hour, ' : ' hours, ') : '';
-        $date .= $minutes ? $minutes . ($minutes == 1 ? ' minute, ' : ' minutes, ') : '';
-        $date .= $seconds ? $seconds . ($seconds == 1 ? ' second, ' : ' seconds, ') : '';
 
-        $date = trim($date, ', ');
-//        $date = strrev(implode(strrev(' and '), explode(strrev(', '), strrev($date), 2)));
-        return $date;
+        if ($this->proposalDuration < 604800) {
+            $date .= $minutes ? $minutes . ($minutes == 1 ? ' minute, ' : ' minutes, ') : '';
+            $date .= $seconds ? $seconds . ($seconds == 1 ? ' second, ' : ' seconds, ') : '';
+        }
+
+        return trim($date, ', ');
     }
 
     public function getState(): string
