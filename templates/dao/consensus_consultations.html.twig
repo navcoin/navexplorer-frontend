@@ -30,30 +30,6 @@
                         <td><strong>Value</strong></td>
                         <td class="text-right break-word">{{ parameter.formattedValue|raw }}</td>
                     </tr>
-                    {#                    <tr>#}
-                    {#                        <td><strong>Block&nbsp;Hash</strong></td>#}
-                    {#                        <td class="text-right break-word">#}
-                    {#                            <a href="{{ path('app_block_view', {'height': proposal.blockHash}) }}">{{ proposal.blockHash }}</a>#}
-                    {#                        </td>#}
-                    {#                    </tr>#}
-                    {#                    <tr>#}
-                    {#                        <td><strong>Payment&nbsp;Address</strong></td>#}
-                    {#                        <td class="text-right break-word">#}
-                    {#                            <a href="{{ path('app_address_index', {'hash': proposal.paymentAddress}) }}">{{ proposal.paymentAddress }}</a>#}
-                    {#                        </td>#}
-                    {#                    </tr>#}
-                    {#                    <tr>#}
-                    {#                        <td><strong>Duration</strong></td>#}
-                    {#                        <td class="text-right break-word">#}
-                    {#                            {{ proposal.duration }}#}
-                    {#                        </td>#}
-                    {#                    </tr>#}
-                    {#                    {% if proposal.expiresOn %}#}
-                    {#                        <tr>#}
-                    {#                            <td><strong>Expiry Date</strong></td>#}
-                    {#                            <td class="text-right break-word">{{ proposal.expiresOn|date_localised('Y-m-d, H:i:s') }}</td>#}
-                    {#                        </tr>#}
-                    {#                    {% endif %}#}
                     </tbody>
                 </table>
             </div>
@@ -69,30 +45,6 @@
                         <td><strong>Consultations</strong></td>
                         <td class="text-right">{{ consultations|length }}
                     </tr>
-                    {#                    <tr>#}
-                    {#                        <td><strong>NAV&nbsp;Requested</strong></td>#}
-                    {#                        <td class="text-right break-word">{{ proposal.requestedAmount|stake_format }}</td>#}
-                    {#                    </tr>#}
-                    {#                    <tr>#}
-                    {#                        <td><strong>NAV&nbsp;Paid</strong></td>#}
-                    {#                        <td class="text-right break-word">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</td>#}
-                    {#                    </tr>#}
-                    {#                    <tr>#}
-                    {#                        <td><strong>Fee</strong></td>#}
-                    {#                        <td class="text-right break-word">{{ proposal.userPaidFee|stake_format }}</td>#}
-                    {#                    </tr>#}
-                    {#                    <tr>#}
-                    {#                        <td><strong>Status</strong></td>#}
-                    {#                        <td class="text-right break-word">{{ proposal.status|title }}</td>#}
-                    {#                    </tr>#}
-                    {#                    {% if proposal.stateChangedOnBlock and proposal.state == "ACCEPTED" %}#}
-                    {#                        <tr>#}
-                    {#                            <td><strong>Acception Date</strong></td>#}
-                    {#                            <td class="text-right break-word">#}
-                    {#                                {{ block.created|date_localised('Y-m-d, H:i:s') }}#}
-                    {#                            </td>#}
-                    {#                        </tr>#}
-                    {#                    {% endif %}#}
                     </tbody>
                 </table>
 
