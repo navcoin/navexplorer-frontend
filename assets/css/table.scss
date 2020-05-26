@@ -80,6 +80,7 @@
     }
 
     td[data-role="address"]:before { content: "Address"; }
+    td[data-role="answer"]:before { content: "Answer"; }
     td[data-role="amount"]:before { content: "Amount"; }
     td[data-role="annualPercentage"]:before { content: "Annual %"; }
     td[data-role="balance"]:before { content: "Balance"; }
@@ -108,6 +109,7 @@
     td[data-role="transactions"]:before { content: "Transactions"; }
     td[data-role="type"]:before { content: "Type"; }
     td[data-role="vote"]:before { content: "Vote"; }
+    td[data-role="votingCycle"]:before { content: "Voting Cycle"; }
     td[data-role="votingStatus"]:before { content: "Voting Status"; }
     td[data-role="type"]:before { content: "Type"; }
   }
