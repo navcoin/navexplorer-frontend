@@ -21,15 +21,20 @@ class DaoExtension extends AbstractExtension
 
     public function getAnswerType(string $value, int $type): string
     {
+
         switch ($type) {
             case 0:
                 return $value;
             case 1:
                 return $value / 100 . '%';
             case 2:
-                return $value/10000000 . '&nbsp;Nav';
+                return $this->convertToNavFromSatoshi($value) . '&nbsp;Nav';
             case 3:
                 return $value == 0 ? 'false' : 'true';
         }
+    }
+
+    private function convertToNavFromSatoshi(string $value) {
+        return rtrim(rtrim(bcdiv(intval($value), 100000000, 8), '0'), '.');
     }
 }

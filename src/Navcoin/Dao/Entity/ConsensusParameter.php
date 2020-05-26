@@ -56,7 +56,7 @@ class ConsensusParameter
             case 1:
                 return $this->value / 100 . '%';
             case 2:
-                return $this->value/100000000 . '&nbsp;Nav';
+                return rtrim(rtrim(bcdiv( intval($this->value), 100000000, 8 ), '0'), '.') . '&nbsp;Nav';
             case 3:
                 return $this->value == 0 ? 'false' : 'true';
         }

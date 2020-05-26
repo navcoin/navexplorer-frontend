@@ -15,7 +15,7 @@
                 <a href="{{ path('app_dao_consultation', {'hash': consultation.hash}) }}" class="break-word">{{ consultation.hash }}</a>
             </td>
             <td data-role="height">{{ consultation.height|number_format }}</td>
-            <td data-role="answer" class="text-center">{{ consultation.acceptedAnswer ? consultation.acceptedAnswer.answer : '--' }}</td>
+            <td data-role="answer" class="text-center">{{ consultation.acceptedAnswer ? consultation.acceptedAnswer.answer|answerType(parameter.type) : '--' }}</td>
             <td data-role="votingCycle" class="text-center">{{ consultation.status != "expired" ? consultation.votingCycleForState|ordinal : '--' }}</td>
             <td data-role="status" class="text-center">{{ consultation.status|capitalize }}</td>
         </tr>
