@@ -26,12 +26,12 @@
                                 </div>
                                 <div class="card-footer text-left">
                                     <a href="{{path('app_communityfund_proposals', {'status': 'pending'})}}" class="card-link">Proposals</a>
-                                    <a href="{{path('app_communityfund_paymentrequests', {'state': 'pending'})}}" class="card-link">Payment Requests</a>
+                                    <a href="{{path('app_communityfund_paymentrequests', {'status': 'pending'})}}" class="card-link">Payment Requests</a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h2>Consensus&nbsp;Parameters</h2>
@@ -41,13 +41,12 @@
                                     <p>Through the DAO community members can propose consultations to change the consensus parameters that govern NavCoin.</p>
                                 </div>
                                 <div class="card-footer text-left">
-                                    <a href="{{path('app_dao_consensusparameters')}}" class="card-link">Consensus Parameters</a>
-                                    <a href="{{path('app_dao_consensusconsultations')}}" class="card-link">View Consultations</a>
+                                    <a href="{{path('app_dao_consensus')}}" class="card-link">Consensus Parameters</a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h2>Consultations</h2>
@@ -56,7 +55,7 @@
                                     <p>&nbsp;</p>
                                 </div>
                                 <div class="card-footer text-left">
-                                    <a href="{{path('app_communityfund_index')}}" class="card-link">All Consultations</a>
+                                    <a href="{{path('app_dao_consultations', {'status': 'waiting-for-support'})}}" class="card-link">All Consultations</a>
                                 </div>
                             </div>
                         </div>

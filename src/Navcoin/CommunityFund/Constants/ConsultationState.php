@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Navcoin\Dao\Constants;
+namespace App\Navcoin\CommunityFund\Constants;
 
 class ConsultationState
 {
-    const WAITING_FOR_SUPPORT = 0;
+    const PENDING = 0;
     const VOTING_STARTED = 1;
     const EXPIRED = 3;
     const PASSED = 7;

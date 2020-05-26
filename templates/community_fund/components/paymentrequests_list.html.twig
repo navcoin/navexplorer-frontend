@@ -1,32 +1,27 @@
-
 <div class="row">
-    <div class="col-md-12">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Hash</th>
-                <th>Nav Requested</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for idx, paymentRequest in paymentRequests %}
-                <tr class="{% if idx is even %}tr-alt{% endif %}">
-                    <td colspan="3">
-                        <div class="inline-proposal-description"><a href="{{ path('app_communityfund_viewpaymentrequest', {'hash': paymentRequest.hash}) }}">{{ paymentRequest.description|capitalize|default("No Description")}}</a></div>
-                    </td>
-                </tr>
-                <tr class="{% if idx is even %}tr-alt {% endif %}tr-sub">
-                    <td>{{ paymentRequest.hash }}</td>
-                    <td>{{ paymentRequest.requestedAmount|stake_format }}</td>
-                    <td>{{ paymentRequest.status|title }}</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">There are no payment requests</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    {% for paymentRequest in paymentRequests %}
+        <div class="col-sm-6 col-md-4 col-lg-4">
+            {% include "community_fund/components/paymentrequest_card.html.twig" %}
+        </div>
+    {% else %}
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                There are no {{ active|proposalState }} payment requests
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="col-sm-12">
+        <div class="table-pagination">
+            <span class="pagination-details">Showing page {{ paginator.currentPage}} of {{ paginator.totalPages }}</span>
+            <span class="float-right">
+                <ul>
+                    <li><a href="{{ path('app_communityfund_paymentrequests', {'status': active, 'page': 1}) }}" class="paginator paginator-first {% if paginator.first %}disabled{% endif %}">first</a></li>
+                    <li><a href="{{ path('app_communityfund_paymentrequests', {'status': active, 'page': paginator.previousPage }) }}" class="paginator paginator-previous {% if paginator.first %}disabled{% endif %}">previous</a></li>
+                    <li><a href="{{ path('app_communityfund_paymentrequests', {'status': active, 'page': paginator.nextPage }) }}" class="paginator paginator-next {% if paginator.last %}disabled{% endif %}">next</a></li>
+                    <li><a href="{{ path('app_communityfund_paymentrequests', {'status': active, 'page': paginator.totalPages }) }}" class="paginator paginator-last {% if paginator.last %}disabled{% endif %}">last</a></li>
+                </ul>
+            </span>
+        </div>
     </div>
 </div>

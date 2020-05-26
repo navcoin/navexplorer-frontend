@@ -3,10 +3,12 @@
 namespace App\Navcoin\CommunityFund\Api;
 
 use App\Exception\ServerRequestException;
+use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\NavcoinApi;
 use App\Navcoin\CommunityFund\Entity\PaymentRequest;
 use App\Navcoin\CommunityFund\Entity\PaymentRequests;
 use App\Navcoin\CommunityFund\Entity\Proposal;
+use App\Navcoin\CommunityFund\Entity\Proposals;
 use App\Navcoin\CommunityFund\Exception\CommunityFundPaymentRequestNotFound;
 use App\Navcoin\CommunityFund\Exception\CommunityFundProposalNotFound;
 use GuzzleHttp\Exception\ClientException;
@@ -43,16 +45,17 @@ class PaymentRequestApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    public function getPaymentRequests(Proposal $proposal): PaymentRequests
+    public function getPaymentRequests(array $parameters, int $size = 10, int $page = 1, $paginate = false): IteratorEntityInterface
     {
         try {
-            $response = $this->getClient()->get('/dao/cfund/proposal/' . $proposal->getHash() . '/payment-request');
+            $response = $this->getClient()->get('/dao/cfund/payment-request?size='.$size.'&page='.$page.'&'.http_build_query($parameters));
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new PaymentRequests();
         }
 
-        return $this->getMapper()->mapIterator(PaymentRequests::class, $data);
+        $paginator = $paginate ? $this->getClient()->getPaginator($response) : null;
+        return $this->getMapper()->mapIterator(PaymentRequests::class, $data, $paginator);
     }
 
     public function getByStatus(string $status, $order = 'id'): PaymentRequests

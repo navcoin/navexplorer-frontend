@@ -11,30 +11,32 @@
             <div class="col-md-12">
                 <h1>DAO</h1>
 
-                {% include "community_fund/components/blockcycle_stats.html.twig" %}
             </div>
         </div>
 
         <div class="row proposals-list">
-            <div class="col-md-12">{{ active|replace({'-': ' '})|capitalize }}
-                <h2 class="float-left"> Consultations</h2>
+            <div class="col-md-12">
+                <h2>Consultations</h2>
 
                 <div class="filters float-right">
                     <ul class="list-inline">
                         <li class="list-inline-item">
-                            <a class="{{ active == 'waiting-for-support' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'waiting-for-support'}) }}">Waiting for support</a>
+                            <a class="{{ active == 'waiting-for-support' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'waiting-for-support'}) }}">Waiting For Support</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'expired'}) }}">Expired</a>
+                            <a class="{{ active == 'voting-started' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'voting-started'}) }}">Voting Started</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{{ active == 'passed' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'passed'}) }}">Passed</a>
+                            <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'expired'}) }}">Expired</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{{ active == 'reflection' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'reflection'}) }}">Reflection</a>
+                            <a class="{{ active == 'passed' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'passed'}) }}">Passed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{{ active == 'found-support' ? 'active' : '' }}" href="{{ path('app_dao_consultations', {'status': 'found-support'}) }}">Found Support</a>
+                            <a class="{{ active == 'reflection' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'reflection'}) }}">Reflection</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'found-support' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'found-support'}) }}">Found Support</a>
                         </li>
                     </ul>
                 </div>
@@ -42,5 +44,26 @@
         </div>
 
         {% include "dao/components/consultations_list.html.twig"%}
+
+        <div class="col-sm-12">
+            <div class="table-pagination">
+                <span class="pagination-details">Showing page {{ paginator.currentPage}} of {{ paginator.totalPages }}</span>
+                <span class="float-right">
+                <ul>
+                    <li><a href="{{ path(app.request.get('_route'), {'status': active, 'page': 1}) }}" class="paginator paginator-first {% if paginator.first %}disabled{% endif %}">first</a></li>
+                    <li><a href="{{ path(app.request.get('_route'), {'status': active, 'page': paginator.previousPage }) }}" class="paginator paginator-previous {% if paginator.first %}disabled{% endif %}">previous</a></li>
+                    <li><a href="{{ path(app.request.get('_route'), {'status': active, 'page': paginator.nextPage }) }}" class="paginator paginator-next {% if paginator.last %}disabled{% endif %}">next</a></li>
+                    <li><a href="{{ path(app.request.get('_route'), {'status': active, 'page': paginator.totalPages }) }}" class="paginator paginator-last {% if paginator.last %}disabled{% endif %}">last</a></li>
+                </ul>
+            </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <a class="btn btn-info" href="{{ path('app_dao_index') }}">Go back</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

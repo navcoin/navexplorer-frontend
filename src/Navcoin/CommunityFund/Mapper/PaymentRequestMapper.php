@@ -18,13 +18,13 @@ class PaymentRequestMapper extends BaseMapper
             $data['proposalHash'],
             $data['description'],
             $data['requestedAmount'],
-            $data['votesYes'],
-            $data['votesNo'],
-            $data['votingCycle'],
             $data['state'],
             $data['stateChangedOnBlock'],
             $data['status'],
-            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['createdAt'])
+            $data['votesYes'],
+            $data['votesAbs'],
+            $data['votesNo'],
+            $data['votingCycle']
         );
 
         if ($data['state'] == "ACCEPTED") {

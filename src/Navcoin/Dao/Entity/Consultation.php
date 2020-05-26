@@ -207,4 +207,15 @@ class Consultation
     {
         return $this->updatedOnBlock;
     }
+
+    public function getAcceptedAnswer(): ?Answer
+    {
+        foreach($this->getAnswers() as $answer) {
+            if ($answer->getStatus() == 'passed') {
+                return $answer;
+            }
+        }
+
+        return null;
+    }
 }

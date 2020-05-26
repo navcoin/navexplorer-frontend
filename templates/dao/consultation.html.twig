@@ -23,14 +23,7 @@
                         This consultation has expired
                     </div>
                 {% else %}
-                    <div class="alert alert-info">
-                        Votes counted for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ consultation.votingCycleForState|ordinal }} voting cycle.<br/>
-                        {% if blockCycle.remainingBlocks == 1 %}
-                            There is <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> block remaining.
-                        {% else %}
-                            There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining.
-                        {% endif %}
-                    </div>
+                    {% include "community_fund/components/blockcycle_stats.html.twig" %}
                 {% endif %}
             </div>
         </div>
@@ -75,6 +68,14 @@
                             <a href="{{ path('app_address_index', { 'hash': consultation.proposedBy }) }}">{{ consultation.proposedBy }}</a>
                         </td>
                     </tr>
+                    {% if consultation.status == "passed" %}
+                        <tr>
+                            <td><strong>Activated On Block</strong></td>
+                            <td class="text-right break-word">
+                                <a href="{{ path("app_block_view", {"height": consultation.updatedOnBlock}) }}">{{ consultation.updatedOnBlock }}</a>
+                            </td>
+                        </tr>
+                    {% endif %}
                     <tr>
                         <td><strong>Status</strong></td>
                         <td class="text-right break-word">{{ consultation.status|capitalize }}</td>

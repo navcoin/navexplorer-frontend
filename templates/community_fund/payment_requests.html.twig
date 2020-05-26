@@ -22,19 +22,19 @@
                 <div class="filters float-right">
                     <ul class="list-inline">
                         <li class="list-inline-item">
-                            <a class="{{ active == 'pending' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'state': 'pending'}) }}">Pending</a>
+                            <a class="{{ active == 'pending' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'pending'}) }}">Pending</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{{ active == 'accepted' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'state': 'accepted'}) }}">Accepted</a>
+                            <a class="{{ active == 'accepted' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'accepted'}) }}">Accepted</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{{ active == 'paid' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'state': 'paid'}) }}">Paid</a>
+                            <a class="{{ active == 'rejected' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'rejected'}) }}">Rejected</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{{ active == 'rejected' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'state': 'rejected'}) }}">Rejected</a>
+                            <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'expired'}) }}">Expired</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'state': 'expired'}) }}">Expired</a>
+                            <a class="{{ active == 'paid' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'paid'}) }}">Paid</a>
                         </li>
                     </ul>
                 </div>

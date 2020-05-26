@@ -8,6 +8,6 @@ class ProposalStatus
     const ACCEPTED = 'accepted';
     const REJECTED = 'rejected';
     const EXPIRED = 'expired';
-    const PENDING_FUNDS = 'pending_funds';
-    const PENDING_VOTING_PREQ = 'pending_voting_preq';
+    const PENDING_FUNDS = 'pending-funds';
+    const PENDING_VOTING_PREQ = 'pending-voting-preq';
 }

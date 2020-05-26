@@ -13,6 +13,16 @@
         </li>
 
         <li class="list-group-item">
+            {{ paymentRequestVoteProgress(paymentRequest, blockCycle) }}
+            <p class="text-muted">
+                <span class="float-left">
+                    Accept {{ paymentRequest.votesYes }} / Reject {{ paymentRequest.votesNo }} / Abstain {{ paymentRequest.votesAbs }}
+                </span>
+                <span class="float-right">Cycle: {{ paymentRequest.votingCycle }}</span>
+            </p>
+        </li>
+
+        <li class="list-group-item">
             Status
             <span class="float-right">{{ paymentRequest.status|title }}</span>
         </li>

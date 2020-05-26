@@ -3,7 +3,9 @@
 namespace App\Navcoin\Dao\Api;
 
 use App\Exception\ServerRequestException;
+use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\NavcoinApi;
+use App\Navcoin\CommunityFund\Entity\Proposals;
 use App\Navcoin\Dao\Entity\Consultation;
 use App\Navcoin\Dao\Entity\Consultations;
 use App\Navcoin\Dao\Exception\ConsultationNotFound;
@@ -29,7 +31,7 @@ class ConsultationApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    public function getConsultations(int $size, int $page, array $parameters): Consultations
+    public function getConsultations(array $parameters, int $size = 10, int $page = 1, $paginate = false): IteratorEntityInterface
     {
         try {
             $response = $this->getClient()->get('/dao/consultation?size='.$size.'&page='.$page.'&'.http_build_query($parameters));
@@ -38,7 +40,8 @@ class ConsultationApi extends NavcoinApi
             return new Consultations();
         }
 
-        return $this->getMapper()->mapIterator(Consultations::class, $data);
+        $paginator = $paginate ? $this->getClient()->getPaginator($response) : null;
+        return $this->getMapper()->mapIterator(Consultations::class, $data, $paginator);
     }
 
     public function getAllConsensus(): Consultations

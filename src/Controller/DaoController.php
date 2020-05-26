@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Navcoin\Block\Api\BlockApi;
+use App\Navcoin\CommunityFund\Constants\PaymentRequestState;
+use App\Navcoin\CommunityFund\Constants\PaymentRequestStatus;
 use App\Navcoin\Dao\Api\ConsultationApi;
 use App\Navcoin\Dao\Api\ConsensusApi;
 use App\Navcoin\CommunityFund\Api\ProposalApi;
@@ -47,28 +49,31 @@ class DaoController extends AbstractController
     }
 
     /**
-     * @Route("/dao/consensus/parameters")
+     * @Route("/dao/consensus")
      * @Template()
      */
-    public function consensusParametersAction() {
+    public function consensusAction() {
         return [
             'parameters' => $this->consensusApi->getConsensusParameters(),
         ];
     }
 
     /**
-     * @Route("/dao/consensus/consultations")
+     * @Route("/dao/consensus/{id}/consultations")
      * @Template()
      */
-    public function consensusConsultationsAction(Request $request) {
-        $size = $request->get('size', 500);
-        $page = $request->get('page', 1);
+    public function consensusConsultationsAction(Request $request)
+    {
+        $parameter = $this->consensusApi->getConsensusParameter($request->get('id'));
+
+        $consultations = $this->consultationApi->getConsultations(['consensus' => true, 'min' => $parameter->getId()],
+            9, $request->get('page', 1), true);
 
         return [
-            'blockCycle' => $this->blockApi->getBlockCycle(),
-            'consultations' => $this->consultationApi->getConsultations($size, $page, [
-                'consensus' => true,
-            ]),
+            'parameter' => $parameter,
+            'consultations' => $consultations->getElements(),
+            'paginator' => $consultations->getPaginator(),
+            'active' => null,
         ];
     }
 
@@ -81,30 +86,32 @@ class DaoController extends AbstractController
             case ConsultationStatus::WAITING_FOR_SUPPORT:
                 $state = ConsultationState::WAITING_FOR_SUPPORT;
                 break;
+            case ConsultationStatus::VOTING_STARTED:
+                $state = ConsultationState::VOTING_STARTED;
+                break;
             case ConsultationStatus::EXPIRED:
                 $state = ConsultationState::EXPIRED;
                 break;
-            case ConsultationStatus::PASSED:
-                $state = ConsultationState::PASSED;
-                break;
             case ConsultationStatus::REFLECTION:
                 $state = ConsultationState::REFLECTION;
+                break;
+            case ConsultationStatus::PASSED:
+                $state = ConsultationState::PASSED;
                 break;
             case ConsultationStatus::FOUND_SUPPORT:
                 $state = ConsultationState::FOUND_SUPPORT;
                 break;
             default:
-                return $this->redirectToRoute('app_dao_consultations', ['status' => ConsultationStatus::WAITING_FOR_SUPPORT]);
+                return $this->redirectToRoute('app_dao_consensusconsultations', ['status' => ConsultationStatus::WAITING_FOR_SUPPORT]);
         }
-        $size = $request->get('size', $this->pageSize);
-        $page = $request->get('page', 1);
-        $parameters = [
-          'state' => $state,
-        ];
+
+
+        $consultations = $this->consultationApi->getConsultations(['state' => $state], 9, $request->get('page', 1), true);
 
         return [
-            'blockCycle' => $this->proposalApi->getBlockCycle(),
-            'consultations' => $this->consultationApi->getConsultations($size, $page, $parameters),
+            'blockCycle' => $this->blockApi->getBlockCycle(),
+            'consultations' => $consultations->getElements(),
+            'paginator' => $consultations->getPaginator(),
             'active' => $request->get('status'),
         ];
     }
@@ -118,7 +125,7 @@ class DaoController extends AbstractController
         $consensusParameter = $consultation->isConsensusParameter() ? $this->consensusApi->getConsensusParameter($consultation->getMin()) : null;
 
         return [
-            'blockCycle' => $this->proposalApi->getBlockCycle(),
+            'blockCycle' => $this->blockApi->getBlockCycle(),
             'consultation' => $this->consultationApi->getByHash($request->get('hash')),
             'consensus' => $consensusParameter,
         ];

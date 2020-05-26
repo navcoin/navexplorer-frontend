@@ -21,19 +21,21 @@
                                     <th>Description</th>
                                     <th class="text-center">Value</th>
                                     <th class="text-center">Last Updated</th>
+                                    <th class="text-center"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     {% for idx, parameter in parameters %}
                                         <tr>
                                             <td>{{ parameter.id }}</td>
-                                            <td>{{ parameter.desc }}</td>
+                                            <td><a href="{{ path('app_dao_consensusconsultations', {'id':parameter.id}) }}">{{ parameter.desc }}</a></td>
                                             <td class="text-center">{{ parameter.formattedValue|raw }}</td>
                                             <td class="text-center">{{ parameter.updatedOnBlock ? : 'Never' }}</td>
+                                            <td><a href="{{ path('app_dao_consensusconsultations', {'id':parameter.id}) }}">View</a></td>
                                         </tr>
                                     {% else %}
                                         <tr>
-                                            <td colspan="4">There are no consensus parameters</td>
+                                            <td colspan="5">There are no consensus parameters</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

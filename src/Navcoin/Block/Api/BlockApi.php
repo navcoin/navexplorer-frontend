@@ -73,9 +73,9 @@ class BlockApi extends NavcoinApi
         $data = $this->getClient()->getJsonBody($response);
 
         return new BlockCycle(
-            $data['Size'],
-            $data['Cycle'],
-            $data['Index']
+            $data['size'],
+            $data['cycle'],
+            $data['index']
         );
     }
 }

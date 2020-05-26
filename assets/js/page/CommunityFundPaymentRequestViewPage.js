@@ -15,17 +15,6 @@ class CommunityFundPaymentRequestViewPage {
     }
 
     autoLinkDescription() {
-        let $proposalDescription = $('.proposal-description');
-        $proposalDescription.html(
-            anchorme($proposalDescription.html(), {
-                attributes:[
-                    {
-                        name:"target",
-                        value:"_blank"
-                    }
-                ]
-            })
-        );
         let $paymentRequestDescription = $('.paymentrequest-description');
         $paymentRequestDescription.html(
             anchorme($paymentRequestDescription.html(), {
@@ -40,6 +29,7 @@ class CommunityFundPaymentRequestViewPage {
     }
 
     createTrendGraph() {
+        console.log($('#votes').length);
         if ($('#votes').length) {
             axios.get('/community-fund/payment-request/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
         }

@@ -54,6 +54,15 @@ class PaymentRequest
      */
     private $paidOnBlock;
 
+    /** @var int */
+    private $votesYes;
+    /** @var int */
+    private $votesAbs;
+    /** @var int */
+    private $votesNo;
+    /** @var int */
+    private $votingCycle;
+
     public function __construct(
         int $version,
         string $hash,
@@ -63,7 +72,11 @@ class PaymentRequest
         float $requestedAmount,
         string $state,
         ?string $stateChangedOnBlock,
-        string $status
+        string $status,
+        int $votesYes,
+        int $votesAbs,
+        int $votesNo,
+        int $votingCycle
     ) {
         $this->version = $version;
         $this->hash = $hash;
@@ -74,6 +87,10 @@ class PaymentRequest
         $this->state = $state;
         $this->stateChangedOnBlock = $stateChangedOnBlock;
         $this->status = $status;
+        $this->votesYes = $votesYes;
+        $this->votesAbs = $votesAbs;
+        $this->votesNo = $votesNo;
+        $this->votingCycle = $votingCycle;
     }
 
     public function getVersion(): int
@@ -135,5 +152,25 @@ class PaymentRequest
         $this->paidOnBlock = $paidOnBlock;
 
         return $this;
+    }
+
+    public function getVotesYes(): int
+    {
+        return $this->votesYes;
+    }
+
+    public function getVotesAbs(): int
+    {
+        return $this->votesAbs;
+    }
+
+    public function getVotesNo(): int
+    {
+        return $this->votesNo;
+    }
+
+    public function getVotingCycle(): int
+    {
+        return $this->votingCycle;
     }
 }

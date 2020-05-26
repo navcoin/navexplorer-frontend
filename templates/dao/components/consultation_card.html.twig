@@ -1,0 +1,46 @@
+<div class="card card-proposal">
+    <div class="card-header">
+        <h5>{{ consultation.question|capitalize}}</h5>
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <a href="{{ path('app_dao_consultation', {'hash': consultation.hash}) }}" class="break-word">{{ consultation.hash }}</a>
+        </li>
+
+        <li class="list-group-item">
+            Answers
+            <span class="float-right">{{ consultation.answers|length }}</span>
+        </li>
+
+        <li class="list-group-item">
+            Created on block
+            <span class="float-right">
+                <a href="{{ path("app_block_view", {"height": consultation.height}) }}">{{ consultation.height }}</a></span>
+        </li>
+
+        {% if consultation.status == "passed" %}
+            <li class="list-group-item">
+                Activated on block
+                <span class="float-right">
+                    <a href="{{ path("app_block_view", {"height": consultation.updatedOnBlock}) }}">{{ consultation.updatedOnBlock }}</a>
+                </span>
+            </li>
+        {% endif %}
+
+        <li class="list-group-item">
+            Status
+            <span class="float-right">{{ consultation.status|title }}</span>
+        </li>
+
+{#        <li class="list-group-item">#}
+{#            {{ dump(consultation) }}#}
+{#        </li>#}
+    </ul>
+
+    <div class="card-footer">
+        <div class="d-flex justify-content-center">
+            <a href="{{ path('app_dao_consultation', {"hash": consultation.hash}) }}" class="btn btn-info">View Consultation</a>
+        </div>
+    </div>
+</div>
