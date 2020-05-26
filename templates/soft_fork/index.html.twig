@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for fork in softForks if fork.state not in ['active', 'locked_in'] and fork.bestCycle %}
+                        {% for fork in softForks if fork.state not in ['active', 'locked_in'] %}
                             <tr>
                                 <td>{{ fork.name }}</td>
                                 <td class="text-center">
