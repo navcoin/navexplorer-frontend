@@ -32,7 +32,7 @@ class ProposalExtension extends AbstractExtension
 <div class="progress">
     '.$this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($proposal->getStatus(), "yes"), $proposal->getVotesYes()).'
     '.$this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($proposal->getStatus(), "no"), $proposal->getVotesNo()).'
-    '.$this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($proposal->getStatus(), "abs"), $proposal->getVotesAbs(), false).'
+    '.$this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($proposal->getStatus(), "abs"), $proposal->getVotesAbs()).'
 </div>';
     }
 
