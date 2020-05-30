@@ -71,7 +71,6 @@ class PaymentRequest
         string $description,
         float $requestedAmount,
         string $state,
-        ?string $stateChangedOnBlock,
         string $status,
         int $votesYes,
         int $votesAbs,
@@ -85,7 +84,6 @@ class PaymentRequest
         $this->description = $description;
         $this->requestedAmount = $requestedAmount;
         $this->state = $state;
-        $this->stateChangedOnBlock = $stateChangedOnBlock;
         $this->status = $status;
         $this->votesYes = $votesYes;
         $this->votesAbs = $votesAbs;
