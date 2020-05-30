@@ -19,6 +19,7 @@ class PaymentRequestMapper extends BaseMapper
             $data['description'],
             $data['requestedAmount'],
             $data['state'],
+            $this->getData('stateChangedOnBlock', $data, null),
             $data['status'],
             $data['votesYes'],
             $data['votesAbs'],
