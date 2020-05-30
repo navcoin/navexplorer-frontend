@@ -29,7 +29,13 @@
             <tr>
                 <td data-role="index">{{ output.index }}</td>
                 <td data-role="type">{{ output.type|lower }}</td>
-                <td data-role="address"><a class="break-word" href="{{ path('app_address_index', {'hash': output.address}) }}">{{ output.address }}</a></td>
+                <td data-role="address">
+                    {% if output.address %}
+                        <a class="break-word" href="{{ path('app_address_index', {'hash': output.address}) }}">{{ output.address }}</a>
+                    {% else %}
+                        {{ output.address }}
+                    {% endif %}
+                </td>
                 <td data-role="amount">{{ output.amount|stake_format }}</td>
             </tr>
         {% endif %}
