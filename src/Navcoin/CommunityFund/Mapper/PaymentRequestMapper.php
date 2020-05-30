@@ -19,7 +19,6 @@ class PaymentRequestMapper extends BaseMapper
             $data['description'],
             $data['requestedAmount'],
             $data['state'],
-            $data['stateChangedOnBlock'],
             $data['status'],
             $data['votesYes'],
             $data['votesAbs'],
@@ -28,7 +27,7 @@ class PaymentRequestMapper extends BaseMapper
         );
 
         if ($data['state'] == "ACCEPTED") {
-            $paymentRequest->setPaidOnBlock($data['paidOnBlock']);
+//            $paymentRequest->setPaidOnBlock($data['paidOnBlock']);
         }
 
         return $paymentRequest;
