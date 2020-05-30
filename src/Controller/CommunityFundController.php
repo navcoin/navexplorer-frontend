@@ -128,7 +128,7 @@ class CommunityFundController extends AbstractController
         return [
             'blockCycle' => $this->blockApi->getBlockCycle(),
             'proposal' => $proposal,
-            'paymentRequests' => $this->paymentRequestApi->getPaymentRequests(['proposalHash' => $proposalHash]),
+            'paymentRequests' => $this->paymentRequestApi->getPaymentRequests(['proposal' => $proposal->getHash()]),
             'block' => $block,
             'votes' => $this->votersApi->getProposalVotes($proposal->getHash()),
         ];
