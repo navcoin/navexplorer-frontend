@@ -53,8 +53,10 @@ class ConsultationMapper extends BaseMapper
     private function mapAnswers(?array $data): array
     {
         $answers = [];
-        foreach($data as $answer) {
-            $answers[] = $this->mapAnswer($answer);
+        if ($data != null) {
+            foreach ($data as $answer) {
+                $answers[] = $this->mapAnswer($answer);
+            }
         }
 
         return $answers;

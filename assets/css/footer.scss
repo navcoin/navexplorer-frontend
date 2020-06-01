@@ -3,18 +3,18 @@ footer {
   //height: 20px;
   bottom: 0;
   width: 100%;
-  border-top: $dark-purple 5px solid;
   background-color: $purple;
   margin-top: 2rem;
-  padding: 0.25rem;
-  color: $off-white;
+  padding: 0.5rem;
+  color: #FFF;
 
   a {
-    color: $white;
+    color: #FFF;
   }
 
   a:hover {
-    color: $off-white;
+    color: #FFF;
+    text-decoration: underline;
   }
 
   .network {
@@ -30,12 +30,13 @@ footer {
         padding-right: 0.2rem;
 
         a {
-          color: $grey;
+          color: #FFF;
           text-transform: capitalize;
         }
 
         a:hover {
-          color: $white;
+          color: #FFF;
+          text-decoration: underline;
         }
 
         a.active {
