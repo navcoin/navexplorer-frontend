@@ -71,7 +71,7 @@ class PaymentRequest
         string $description,
         float $requestedAmount,
         string $state,
-        string $stateChangedOnBlock,
+        ?string $stateChangedOnBlock,
         string $status,
         int $votesYes,
         int $votesAbs,
