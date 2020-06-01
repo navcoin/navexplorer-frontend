@@ -34,7 +34,7 @@ class ConsultationMapper extends BaseMapper
         );
     }
 
-    private function mapAnswers(array $data): array
+    private function mapAnswers(?array $data): array
     {
         $answers = [];
         foreach($data as $answer) {
