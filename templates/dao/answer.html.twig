@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ consultation.question }} / {{ answer.answer }}{% endblock %}
-{% block description %}NavCoin DAO Answer {{ answer.hash }} for consultation {{ consultation.hash }}{% endblock %}
+{% block title %}{{ answer.answer }}{% endblock %}
+{% block description %}NavCoin DAO Answer {{ answer.hash }} for consultation {{ answer.parent }}{% endblock %}
 
 {% block page %}page-dao-answer{% endblock %}
 
@@ -29,7 +29,7 @@
             <tr>
                 <td><strong>Consultation&nbsp;Hash</strong></td>
                 <td class="text-right break-word">
-                    <a href="{{ path('app_dao_consultation', {'hash': consultation.hash}) }}">{{ consultation.hash }}</a>
+                    <a href="{{ path('app_dao_consultation', {'hash': answer.parent}) }}">{{ answer.parent }}</a>
                 </td>
             </tr>
             <tr>

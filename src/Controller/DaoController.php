@@ -136,23 +136,12 @@ class DaoController extends AbstractController
     }
 
     /**
-     * @Route("/dao/consultation/{consultation}/answer/{hash}")
+     * @Route("/dao/answer/{hash}")
      * @Template()
      */
     public function answerAction(Request $request) {
-        $consultation = $this->consultationApi->getByHash($request->get('consultation'));
-        $consensusParameter = $consultation->isConsensusParameter() ? $this->consensusApi->getConsensusParameter($consultation->getMin()) : null;
-
-        $answer = $consultation->getAnswer($request->get('hash'));
-        if ($answer == null) {
-            throw new AnswerNotFound(sprintf("The `%s` answer does not exist for consultation %s.", $request->get('hash'), $consultation->getHash()), 404);
-        }
-
         return [
-            'blockCycle' => $this->blockApi->getBlockCycle(),
-            'consultation' => $consultation,
-            'consensus' => $consensusParameter,
-            'answer' => $answer,
+            'answer' => $this->consultationApi->getByAnswerHash($request->get('hash')),
         ];
     }
 }

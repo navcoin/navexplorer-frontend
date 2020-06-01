@@ -34,22 +34,27 @@ class ConsultationMapper extends BaseMapper
         );
     }
 
+    public function mapAnswer(array $data): Answer
+    {
+        return new Answer(
+            $data['version'],
+            $data['answer'],
+            $data['support'],
+            $data['votes'],
+            $data['status'],
+            $data['foundSupport'],
+            $data['stateChangedOnBlock'],
+            $data['txblockhash'],
+            $data['parent'],
+            $data['hash']
+        );
+    }
+
     private function mapAnswers(?array $data): array
     {
         $answers = [];
         foreach($data as $answer) {
-            $answers[] = new Answer(
-                $answer['version'],
-                $answer['answer'],
-                $answer['support'],
-                $answer['votes'],
-                $answer['status'],
-                $answer['foundSupport'],
-                $answer['stateChangedOnBlock'],
-                $answer['txblockhash'],
-                $answer['parent'],
-                $answer['hash']
-            );
+            $answers[] = $this->mapAnswer($answer);
         }
 
         return $answers;

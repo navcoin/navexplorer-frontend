@@ -69,8 +69,8 @@ class TransactionMapper extends BaseMapper
                     $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['height'] : null
                 );
 
-                if ($output->isCommunityFund()) {
-                    $output->setHash($outputData['scriptPubKey']['hash']);
+                if ($this->hasData('scriptPubKey', $outputData) && $this->hasData('hash', $outputData['scriptPubKey'])) {
+                    $output->setHash($this->getData('hash', $outputData['scriptPubKey'], null));
                 }
 
                 $outputs->add($output);

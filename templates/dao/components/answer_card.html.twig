@@ -9,7 +9,7 @@
 
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
-            <a href="{{ path('app_dao_answer', {'hash': a.hash, 'consultation': consultation.hash}) }}" class="break-word">{{ a.hash }}</a>
+            <a href="{{ path('app_dao_answer', {'hash': a.hash}) }}" class="break-word">{{ a.hash }}</a>
         </li>
 
         <li class="list-group-item">
@@ -41,7 +41,7 @@
 
     <div class="card-footer">
         <div class="d-flex justify-content-center">
-{#            <a href="{{ path('app_dao_answer', {"hash": a.hash, 'consultation': consultation.hash}) }}" class="btn btn-info">View Answer</a>#}
+{#            <a href="{{ path('app_dao_answer', {"hash": a.hash}) }}" class="btn btn-info">View Answer</a>#}
         </div>
     </div>
 </div>
