@@ -9,9 +9,9 @@
         </tr>
     </thead>
     <tbody>
-        {% for key, input in transaction.inputs %}
+        {% for input in transaction.inputs %}
             <tr>
-                <td data-role="index">{{ key }}</td>
+                <td data-role="index">{{ input.index }}</td>
                 <td data-role="previousOutput">
                     {% if input.previousOutput %}
                         <a href="{{ path('app_transaction_view', {'hash': input.previousOutput}) }}">{{ input.previousOutput|slice(0, 20) }}</a>...:{{ input.index }}
@@ -23,11 +23,7 @@
                     {% endif %}
                 </td>
                 <td data-role="address">
-                    {% if transaction.type == "PRIVATE_STAKING" or transaction.type == "PRIVATE_SPEND" %}
-                        <span class="break-word">
-                            <em>Private Address</em>
-                        </span>
-                    {% elseif transaction.staking %}
+                    {% if transaction.staking %}
                         <span class="break-word">
                             <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
                         </span>
