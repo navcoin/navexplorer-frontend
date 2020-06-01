@@ -3,13 +3,13 @@
 namespace App\Controller;
 
 use App\Navcoin\Block\Api\BlockApi;
-use App\Navcoin\CommunityFund\Constants\PaymentRequestState;
-use App\Navcoin\CommunityFund\Constants\PaymentRequestStatus;
+use App\Navcoin\Dao\Api\AnswerVotesApi;
 use App\Navcoin\Dao\Api\ConsultationApi;
 use App\Navcoin\Dao\Api\ConsensusApi;
 use App\Navcoin\CommunityFund\Api\ProposalApi;
 use App\Navcoin\Dao\Constants\ConsultationState;
 use App\Navcoin\Dao\Constants\ConsultationStatus;
+use App\Navcoin\Dao\Exception\AnswerNotFound;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,17 +26,21 @@ class DaoController extends AbstractController
     /** @var ProposalApi */
     private $proposalApi;
 
+    /** @var AnswerVotesApi */
+    private $answerVotesApi;
+
     /** @var BlockApi */
     private $blockApi;
 
     /** @var int */
     private $pageSize = 4;
 
-    public function __construct(ConsultationApi $consultationApi, ConsensusApi $consensusApi, ProposalApi $proposalApi, BlockApi $blockApi)
+    public function __construct(ConsultationApi $consultationApi, ConsensusApi $consensusApi, ProposalApi $proposalApi, AnswerVotesApi $answerVotesApi, BlockApi $blockApi)
     {
         $this->consultationApi = $consultationApi;
         $this->consensusApi = $consensusApi;
         $this->proposalApi = $proposalApi;
+        $this->answerVotesApi = $answerVotesApi;
         $this->blockApi = $blockApi;
     }
 
@@ -123,11 +127,32 @@ class DaoController extends AbstractController
     public function consultationAction(Request $request) {
         $consultation = $this->consultationApi->getByHash($request->get('hash'));
         $consensusParameter = $consultation->isConsensusParameter() ? $this->consensusApi->getConsensusParameter($consultation->getMin()) : null;
+dd($consultation);
+        return [
+            'blockCycle' => $this->blockApi->getBlockCycle(),
+            'consultation' => $consultation,
+            'consensus' => $consensusParameter,
+        ];
+    }
+
+    /**
+     * @Route("/dao/consultation/{consultation}/answer/{hash}")
+     * @Template()
+     */
+    public function answerAction(Request $request) {
+        $consultation = $this->consultationApi->getByHash($request->get('consultation'));
+        $consensusParameter = $consultation->isConsensusParameter() ? $this->consensusApi->getConsensusParameter($consultation->getMin()) : null;
+
+        $answer = $consultation->getAnswer($request->get('hash'));
+        if ($answer == null) {
+            throw new AnswerNotFound(sprintf("The `%s` answer does not exist for consultation %s.", $request->get('hash'), $consultation->getHash()), 404);
+        }
 
         return [
             'blockCycle' => $this->blockApi->getBlockCycle(),
-            'consultation' => $this->consultationApi->getByHash($request->get('hash')),
+            'consultation' => $consultation,
             'consensus' => $consensusParameter,
+            'answer' => $answer,
         ];
     }
 }

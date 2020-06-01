@@ -100,6 +100,11 @@ services:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Dao\Mapper\ConsultationMapper'
 
+    App\Navcoin\Dao\Api\AnswerVoteApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\CommunityFund\Mapper\VoterMapper'
+
     App\Navcoin\CommunityFund\Api\VotersApi:
         arguments:
             - '@App\Navcoin\Client\NavcoinClient'

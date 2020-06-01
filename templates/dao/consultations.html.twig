@@ -24,19 +24,19 @@
                             <a class="{{ active == 'waiting-for-support' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'waiting-for-support'}) }}">Waiting For Support</a>
                         </li>
                         <li class="list-inline-item">
+                            <a class="{{ active == 'found-support' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'found-support'}) }}">Found Support</a>
+                        </li>
+                        <li class="list-inline-item">
                             <a class="{{ active == 'voting-started' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'voting-started'}) }}">Voting Started</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="{{ active == 'reflection' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'reflection'}) }}">Reflection</a>
                         </li>
                         <li class="list-inline-item">
                             <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'expired'}) }}">Expired</a>
                         </li>
                         <li class="list-inline-item">
                             <a class="{{ active == 'passed' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'passed'}) }}">Passed</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="{{ active == 'reflection' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'reflection'}) }}">Reflection</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="{{ active == 'found-support' ? 'active' : '' }}" href="{{ path(app.request.get('_route'), {'status': 'found-support'}) }}">Found Support</a>
                         </li>
                     </ul>
                 </div>

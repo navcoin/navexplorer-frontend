@@ -19,10 +19,10 @@ class DaoExtension extends AbstractExtension
         ];
     }
 
-    public function getAnswerType(string $value, int $type): string
+    public function getAnswerType(string $value, ?int $type): string
     {
-
         switch ($type) {
+            case null:
             case 0:
                 return $value;
             case 1:

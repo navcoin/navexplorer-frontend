@@ -1,10 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block title %}{{ consultation.question }}{% endblock %}
-{% block description %}NavCoin DAO Consultations{% endblock %}
+{% block description %}NavCoin DAO Consultation {{ consultation.hash }}{% endblock %}
 
 {% block page %}page-dao-consultation{% endblock %}
-
 
 {% block body %}
     <div class="container-fluid">
@@ -14,7 +13,6 @@
                 <h2>Consultation</h2>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-md-12">
@@ -32,8 +30,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-success">
-                        Consultation has found support<br/>
-                        Waiting until the end of the 2nd voting cycle to begin final voting
+                        Consultation has found support. Waiting until the end of the 2nd voting cycle to begin final voting
                     </div>
                 </div>
             </div>
@@ -120,48 +117,6 @@
             </div>
         </div>
 
-
-        <h3>Answers</h3>
-
-        <div class="row">
-            {% for a in consultation.answers %}
-                <div class="col-sm-12 col-md-6">
-                    <table class="table table-striped margin-bottom">
-                        <tbody>
-                        <tr>
-                            <td><strong>Hash</strong></td>
-                            <td class="text-right break-word">{{ a.hash }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Answer</strong></td>
-                            <td class="text-right break-word">{{ a.answer|answerType(consensus.type) }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Support</strong></td>
-                            <td class="text-right break-word">{{ a.support }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Votes</strong></td>
-                            <td class="text-right break-word">{{ a.votes }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Version</strong></td>
-                            <td class="text-right break-word">{{ a.version }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Status</strong></td>
-                            <td class="text-right break-word">
-                                {% if consultation.state == 0 and a.foundSupport %}
-                                    Found support, waiting for end of voting period
-                                {% else %}
-                                    {{ a.status|capitalize }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            {% endfor %}
-        </div>
+        {% include "dao/components/answers_list.html.twig" %}
     </div>
 {% endblock %}

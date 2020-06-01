@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ consultation.question }} / {{ answer.answer }}{% endblock %}
+{% block description %}NavCoin DAO Answer {{ answer.hash }} for consultation {{ consultation.hash }}{% endblock %}
+
+{% block page %}page-dao-answer{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>DAO</h1>
+            <h2>Consultation Answer</h2>
+        </div>
+    </div>
+
+    <div class="row margin-bottom">
+    <div class="col-sm-12 col-md-8">
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <td><strong>Answer</strong></td>
+                <td class="text-right break-word">{{ answer.answer }}</td>
+            </tr>
+            <tr>
+                <td><strong>Hash</strong></td>
+                <td class="text-right break-word">{{ answer.hash }}</td>
+            </tr>
+            <tr>
+                <td><strong>Consultation&nbsp;Hash</strong></td>
+                <td class="text-right break-word">
+                    <a href="{{ path('app_dao_consultation', {'hash': consultation.hash}) }}">{{ consultation.hash }}</a>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Status</strong></td>
+                <td class="text-right break-word">
+                    {{ answer.status|capitalize }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-12 col-md-4">
+        <table class="table table-striped">
+            <tbody>
+            <tr class="d-flex">
+                <td class="col-7"><strong>Version</strong></td>
+                <td class="text-right break-word col-5">
+                    {{ answer.version }}
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <td class="col-7"><strong>Support</strong></td>
+                <td class="text-right break-word col-5">
+                    {{ answer.support }}
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <td class="col-7"><strong>Votes</strong></td>
+                <td class="text-right break-word col-5">
+                    {{ answer.votes }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

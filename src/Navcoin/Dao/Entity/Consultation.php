@@ -143,6 +143,17 @@ class Consultation
         return $this->answers;
     }
 
+    public function getAnswer(string $hash): ?Answer
+    {
+        foreach ($this->answers as $answer) {
+            if ($answer->getHash() == $hash) {
+                return $answer;
+            }
+        }
+
+        return null;
+    }
+
     public function getMin(): int
     {
         return $this->min;

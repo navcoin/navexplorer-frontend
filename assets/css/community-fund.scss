@@ -43,6 +43,16 @@
       line-height: 1.2;
       height: 3.6em;
     }
+    h5.height-2 {
+      margin-bottom: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-height: 1.2;
+      height: 2.4em;
+    }
   }
 
   .card-footer {

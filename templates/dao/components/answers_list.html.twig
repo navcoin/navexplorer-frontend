@@ -1,0 +1,14 @@
+<h3>Answers</h3>
+
+<div class="row">
+    {{ dump(consultation.answers) }}
+    {% for a in consultation.answers %}
+        <div class="col-sm-12 col-md-6 col-lg-6">
+{#            {% include "dao/components/answer_card.html.twig" %}#}
+        </div>
+    {% else %}
+        <div class="col-md-12">
+            <p>There are no answers available</p>
+        </div>
+    {% endfor %}
+</div>
