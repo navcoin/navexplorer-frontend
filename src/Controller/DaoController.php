@@ -127,7 +127,7 @@ class DaoController extends AbstractController
     public function consultationAction(Request $request) {
         $consultation = $this->consultationApi->getByHash($request->get('hash'));
         $consensusParameter = $consultation->isConsensusParameter() ? $this->consensusApi->getConsensusParameter($consultation->getMin()) : null;
-dd($consultation);
+
         return [
             'blockCycle' => $this->blockApi->getBlockCycle(),
             'consultation' => $consultation,
