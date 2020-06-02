@@ -30,7 +30,7 @@
                     <td><strong>Sent</strong></td>
                     <td class="text-right">
                         <span class="badge badge-info badge-transaction-count">{{ address.sentCount }} txs</span>
-                        {{ address.sent|stake_format }}
+                        {{ address.sent|abs|stake_format }}
                     </td>
                 </tr>
                 <tr>
