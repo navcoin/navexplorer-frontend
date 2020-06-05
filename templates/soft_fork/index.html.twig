@@ -42,7 +42,7 @@
                                 </td>
                                 <td class="text-center d-none d-sm-table-cell">{{ (cycle.blocksInCycle * 0.75)|number_format }}</td>
                                 <td class="text-center d-none d-sm-table-cell">{{ cycle.remainingBlocks|number_format }}</td>
-                                <td class="text-center">{{ ((fork.bestCycle / cycle.currentBlock) * 100)|number_format(1) }}%</td>
+                                <td class="text-center">{{ ((fork.bestCycle / (cycle.blocksInCycle-cycle.remainingBlocks)) * 100)|number_format(1) }}%</td>
                                 <td class="text-center">
                                     {% if (cycle.blocksInCycle * 0.75) - fork.bestCycle > cycle.remainingBlocks %}
                                         <span class="badge badge-warning">Missed</span>
