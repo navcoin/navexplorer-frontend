@@ -32,7 +32,7 @@ header {
 
   .navbar-dark .navbar-nav {
     .nav-item {
-      padding: 0 0.4rem 0 0.4rem;
+      padding: 0 0.4rem 0 0;
     }
     .nav-link {
       color: #FFF;
@@ -41,19 +41,13 @@ header {
       line-height: 22px;
       font-weight: 100;
       text-transform: inherit;
-      padding: 0.5rem 1rem 0;
-      //border-bottom: 2px solid $dark-purple;
+      padding: 0 1.5rem 0 0;
     }
   }
-  
-  //.nav-item.active .nav-link {
-  //  border-bottom: 2px solid $white;
-  //}
 
-  //.nav-link:hover {
-  //  color: $blue;
-  //  border-bottom: 2px solid $white;
-  //}
+  .nav-link:hover {
+    color: $off-white !important;
+  }
 
   .bg-nav {
     background-color: $purple;
