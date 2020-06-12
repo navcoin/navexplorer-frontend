@@ -49,7 +49,6 @@ export default class TransactionLoader {
                 inputs.forEach(function (input, index) {
                     let address = $(document.createElement('div'));
                     address.attr('class', 'address float-left');
-console.log(input.type);
                     if (typeof input.type !== 'undefined' && input.type === 'COLD_STAKING') {
                         address.append('<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[0] + '">' + input.addresses[0] + '</a>' +
