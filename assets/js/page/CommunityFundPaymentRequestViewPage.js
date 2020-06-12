@@ -29,7 +29,6 @@ class CommunityFundPaymentRequestViewPage {
     }
 
     createTrendGraph() {
-        console.log($('#votes').length);
         if ($('#votes').length) {
             axios.get('/community-fund/payment-request/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
         }
