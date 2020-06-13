@@ -26,8 +26,8 @@ class Stats
 
     public function __construct(float $contributed, float $available, float $paid, float $locked)
     {
-        $this->contributed = $contributed - 5.00030464;
-        $this->available = $available - 5.00030464;
+        $this->contributed = $contributed;
+        $this->available = $available;
         $this->paid = $paid;
         $this->locked = $locked;
     }

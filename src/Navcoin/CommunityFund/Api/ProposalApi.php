@@ -24,7 +24,7 @@ class ProposalApi extends NavcoinApi
             $response = $this->getClient()->get('/dao/cfund/stats');
             $data = $this->getClient()->getJsonBody($response);
 
-            $stats = new Stats($data['contributed'], $data['available'], $data['paid'], $data['locked']);
+            $stats = new Stats(0, $data['available'], $data['paid'], $data['locked']);
         } catch (\Exception $e) {
             $stats = new Stats(0, 0, 0, 0);
         }
