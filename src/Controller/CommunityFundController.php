@@ -53,16 +53,10 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/community-fund")
-     * @Template()
      */
-    public function indexAction(): array
+    public function indexAction(): RedirectResponse
     {
-        return [
-            'stats' => $this->proposalApi->getStats(),
-            'blockCycle' => $this->blockApi->getBlockCycle(),
-            'proposals' => $this->proposalApi->getProposals(['state' => ProposalState::PENDING], 5),
-            'paymentRequests' => $this->paymentRequestApi->getPaymentRequests(['state' => PaymentRequestState::PENDING], 5),
-        ];
+        return $this->redirectToRoute("app_dao_index");
     }
 
     /**

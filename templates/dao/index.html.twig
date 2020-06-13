@@ -19,10 +19,16 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        The NavCoin <a href="{{path('app_communityfund_index')}}" class="card-link">Community Fund</a>
-                                        is a decentralized way to fund projects and initiatives voted for by the community.
+                                        The Community Fund is a decentralized way to fund projects and initiatives voted for by the NavCoin community.<br/>
+                                        Community members can create proposals and payment requests.<br/>
+                                        The community then vote to confirm acceptance and release payment.
                                     </p>
-                                    <p>Community members can create proposals and payment requests.<br>The community then vote to confirm acceptance and release payment.</p>
+
+                                    <p>
+                                        Available: {{ cfundstats.Available|round|stake_format }}<br/>
+                                        Locked: {{ cfundstats.Locked|stake_format }}<br/>
+                                        Paid: {{ cfundstats.Paid|stake_format }}<br/>
+                                    </p>
                                 </div>
                                 <div class="card-footer text-left">
                                     <a href="{{path('app_communityfund_proposals', {'status': 'pending'})}}" class="card-link">Proposals</a>

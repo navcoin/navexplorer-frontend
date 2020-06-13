@@ -49,7 +49,9 @@ class DaoController extends AbstractController
      * @Template()
      */
     public function indexAction() {
-        return [];
+        return [
+            'cfundstats' => $this->proposalApi->getStats()
+        ];
     }
 
     /**
