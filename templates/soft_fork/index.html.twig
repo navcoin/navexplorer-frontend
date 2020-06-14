@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for fork in softForks if fork.state not in ['active'] %}
+                        {% for fork in softForks if fork.state not in ['active', 'locked_in'] %}
                             <tr>
                                 <td>{{ fork.name|replace({"_": " "})|capitalize }}</td>
                                 <td class="text-center">
@@ -47,7 +47,7 @@
                                     {% if (cycle.blocksInCycle * 0.75) - fork.bestCycle > cycle.remainingBlocks %}
                                         <span class="badge badge-warning">Missed</span>
                                     {% elseif (fork.bestCycle >= (cycle.blocksInCycle * 0.75)) %}
-                                        <span class="badge badge-success">Locked In</span>
+                                        <span class="badge badge-info">Locked In</span>
                                     {% else %}
                                         <span class="badge badge-info">{{ fork.state|capitalize }}</span>
                                     {% endif %}
@@ -74,7 +74,7 @@
                     </thead>
                     <tbody>
 
-                    {% for fork in softForks if fork.state in ['active'] %}
+                    {% for fork in softForks if fork.state in ['active', 'locked_in'] %}
                         <tr>
                             <td>{{ fork.name|replace({"_": " "})|capitalize }}</td>
                             <td class="text-center">
