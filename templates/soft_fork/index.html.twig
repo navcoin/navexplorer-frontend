@@ -36,7 +36,7 @@
                     <tbody>
                         {% for fork in softForks if fork.state not in ['active'] %}
                             <tr>
-                                <td>{{ fork.name }}</td>
+                                <td>{{ fork.name|replace({"_": " "})|capitalize }}</td>
                                 <td class="text-center">
                                     {{ fork.bestCycle|number_format }}
                                 </td>
@@ -76,7 +76,7 @@
 
                     {% for fork in softForks if fork.state in ['active'] %}
                         <tr>
-                            <td>{{ fork.name }}</td>
+                            <td>{{ fork.name|replace({"_": " "})|capitalize }}</td>
                             <td class="text-center">
                               <a href="{{ path('app_block_view', {'height': fork.lockedInHeight }) }}">{{ fork.lockedInHeight }}</a>
                             </td>
