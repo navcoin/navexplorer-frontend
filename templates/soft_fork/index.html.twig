@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for fork in softForks if fork.state not in ['active', 'locked_in'] %}
+                        {% for fork in softForks if fork.state not in ['active'] %}
                             <tr>
                                 <td>{{ fork.name }}</td>
                                 <td class="text-center">
@@ -74,7 +74,7 @@
                     </thead>
                     <tbody>
 
-                    {% for fork in softForks if fork.state in ['active', 'locked_in'] %}
+                    {% for fork in softForks if fork.state in ['active'] %}
                         <tr>
                             <td>{{ fork.name }}</td>
                             <td class="text-center">
