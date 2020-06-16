@@ -9,13 +9,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                    <h1>Search Results</h1>
+
                     <div class="alert alert-danger">
                         <h2>Bad news!</h2>
-                        There are no blocks, transactions or addresses that match `{{ hash }}`.<br/>
-                        We'll soon be matching against partial addresses, but for now you'll have to search again.
+                        <p>There are no blocks, transactions or addresses that match `{{ hash }}`.</p>
                     </div>
-
-                    {% include 'search/components/form.html.twig' %}
                 </div>
             </div>
         </div>
