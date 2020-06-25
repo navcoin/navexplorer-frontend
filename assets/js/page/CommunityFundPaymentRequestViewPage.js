@@ -77,18 +77,9 @@ class CommunityFundPaymentRequestViewPage {
                         mode: "horizontal",
                         scaleID: "y-axis-0",
                         value: 50,
-                        borderColor: "rgb(222,214,201)",
+                        borderColor: "rgb(220,220,220)",
                         borderWidth: 3
                     },
-                    {
-                        drawTime: "beforeDatasetsDraw",
-                        type: "box",
-                        yScaleID: "y-axis-0",
-                        yMin: 0,
-                        yMax: 50,
-                        backgroundColor: "rgba(222,214,201,0.5)",
-                        borderWidth: 0,
-                    }
                 ]
             }
         };
@@ -98,9 +89,22 @@ class CommunityFundPaymentRequestViewPage {
             datasets: [
                 {
                     fill: true,
-                    lineTension: 0.3,
+                    lineTension: 0.4,
+                    backgroundColor: "rgba(224, 224, 224, 1)",
+                    borderColor: "rgba(232,232,232, 0)",
+                    pointRadius: 0,
+                    data: abstain,
+                    spanGaps: false,
+                    scaleOverride : true,
+                    scaleSteps : 20,
+                    scaleStepWidth : 50,
+                    scaleStartValue : 0
+                },
+                {
+                    fill: true,
+                    lineTension: 0.4,
                     backgroundColor: "rgba(221,109,109,1)",
-                    borderColor: "rgba(217,83,79,1)",
+                    borderColor: "rgba(217,83,79,0)",
                     pointRadius: 0,
                     data: no,
                     spanGaps: false,
@@ -111,9 +115,9 @@ class CommunityFundPaymentRequestViewPage {
                 },
                 {
                     fill: true,
-                    lineTension: 0.3,
+                    lineTension: 0.4,
                     backgroundColor: "rgba(164,204,109,1)",
-                    borderColor: "rgba(147,197,75,1)",
+                    borderColor: "rgba(147,197,75,0)",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
