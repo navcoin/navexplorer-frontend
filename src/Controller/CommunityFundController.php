@@ -56,11 +56,22 @@ class CommunityFundController extends AbstractController
      */
     public function indexAction(): RedirectResponse
     {
-        return $this->redirectToRoute("app_dao_index");
+        return $this->redirectToRoute("app_dao_index", [], 301);
     }
 
     /**
      * @Route("/community-fund/proposals/{status}")
+     */
+    public function oldProposalsAction(Request $request) {
+        return $this->redirectToRoute(
+            "app_communityfund_proposals",
+            ["status" => $request->get("status")],
+            301
+        );
+    }
+
+    /**
+     * @Route("/dao/proposals/{status}")
      * @Template()
      */
     public function proposalsAction(Request $request)
@@ -68,23 +79,18 @@ class CommunityFundController extends AbstractController
         switch($request->get('status')) {
             case ProposalStatus::PENDING:
                 $state = ProposalState::PENDING;
-                $order = 'votes';
                 break;
             case ProposalStatus::ACCEPTED:
                 $state = ProposalState::ACCEPTED;
-                $order = 'id';
                 break;
             case ProposalStatus::REJECTED:
                 $state = ProposalState::REJECTED;
-                $order = 'id';
                 break;
             case ProposalStatus::EXPIRED:
                 $state = ProposalState::EXPIRED;
-                $order = 'id';
                 break;
             case ProposalStatus::PENDING_FUNDS:
                 $state = ProposalState::PENDING_FUNDS;
-                $order = 'id';
                 break;
             default:
                 return $this->redirectToRoute('app_communityfund_proposals', ['status' => ProposalStatus::PENDING]);
@@ -103,11 +109,22 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/community-fund/proposal/{hash}")
+     */
+    public function oldViewAction(Request $request)
+    {
+        return $this->redirectToRoute(
+            "app_communityfund_view",
+            ["hash" => $request->get("hash")],
+            301
+        );
+    }
+
+    /**
+     * @Route("/dao/proposal/{hash}")
      * @Template()
      */
     public function viewAction(Request $request)
     {
-        $proposalHash = $request->get('hash');
         $proposal = $this->proposalApi->getProposal($request->get('hash'));
 
         $block = null;
@@ -132,28 +149,36 @@ class CommunityFundController extends AbstractController
      * @Route("/community-fund/payment-requests/{status}")
      * @Template()
      */
+    public function oldPaymentRequestsAction(Request $request)
+    {
+        return $this->redirectToRoute(
+            "app_communityfund_paymentrequests",
+            ["status" => $request->get("status")],
+            301
+        );
+    }
+
+    /**
+     * @Route("/dao/payment-requests/{status}")
+     * @Template()
+     */
     public function paymentRequestsAction(Request $request)
     {
         switch($request->get('status')) {
             case PaymentRequestStatus::PENDING:
                 $state = PaymentRequestState::PENDING;
-                $order = 'votes';
                 break;
             case PaymentRequestStatus::ACCEPTED:
                 $state = PaymentRequestState::ACCEPTED;
-                $order = 'id';
                 break;
             case PaymentRequestStatus::REJECTED:
                 $state = PaymentRequestState::REJECTED;
-                $order = 'id';
                 break;
             case PaymentRequestStatus::EXPIRED:
                 $state = PaymentRequestState::EXPIRED;
-                $order = 'id';
                 break;
             case PaymentRequestStatus::PAID:
                 $state = PaymentRequestState::PAID;
-                $order = 'id';
                 break;
             default:
                 return $this->redirectToRoute('app_communityfund_paymentrequests', ['status' => PaymentRequestStatus::PENDING]);
@@ -172,6 +197,19 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/community-fund/proposal/{hash}/payment-requests")
+     * @Template()
+     */
+    public function oldViewPaymentRequestsAction(Request $request)
+    {
+        return $this->redirectToRoute(
+            "app_communityfund_viewpaymentrequests",
+            ["hash" => $request->get("hash")],
+            301
+        );
+    }
+
+    /**
+     * @Route("/dao/proposal/{hash}/payment-requests")
      * @Template()
      *
      * @param Request $request
@@ -195,6 +233,18 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/community-fund/payment-request/{hash}")
+     */
+    public function oldViewPaymentRequestAction(Request $request)
+    {
+        return $this->redirectToRoute(
+            "app_communityfund_viewpaymentrequest",
+            ["hash" => $request->get("hash")],
+            301
+        );
+    }
+
+    /**
+     * @Route("/dao/payment-request/{hash}")
      * @Template()
      *
      * @param Request $request
