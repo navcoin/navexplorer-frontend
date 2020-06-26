@@ -137,6 +137,14 @@ class DaoController extends AbstractController
         ];
     }
 
+
+    /**
+     * @Route("/community-fund/consultation/{hash}")
+     */
+    public function oldConsultationAction(Request $request) {
+        return $this->redirectToRoute("app_dao_consultation", ["hash" => $request->get("hash")], 301);
+    }
+
     /**
      * @Route("/dao/answer/{hash}")
      * @Template()
