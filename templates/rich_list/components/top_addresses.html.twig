@@ -17,7 +17,7 @@
                     <td>
                         <a href="{{ path('app_address_index', { 'hash': richListItem.hash }) }}" class="break-word">{{ richListItem.hash }}</a>
                     </td>
-                    <td>Spending<br/>Staking<br/>Voting</td>
+                    <td>Spendable<br/>Stakable<br/>Voting Weight</td>
                     <td>
                         {{ richListItem.spending|stake_format(false, 2) }}<br/>
                         {{ richListItem.staking|stake_format(false, 2) }}<br/>
