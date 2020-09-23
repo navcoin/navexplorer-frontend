@@ -143,7 +143,7 @@ class AddressIndexPage {
         let change = $(document.createElement('span'))
 
         if (changes[value] === 0) {
-            change.attr('class', 'zero')
+            // change.attr('class', 'zero')
         }
         change.append(new NavNumberFormat().format(changes[value]))
 
