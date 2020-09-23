@@ -4,6 +4,7 @@ namespace App\Navcoin\Address\Mapper;
 
 use App\Navcoin\Address\Entity\Balance;
 use App\Navcoin\Address\Entity\Summary;
+use App\Navcoin\Address\Entity\SummaryAccount;
 use App\Navcoin\Common\Mapper\BaseMapper;
 
 class SummaryMapper extends BaseMapper
@@ -13,16 +14,19 @@ class SummaryMapper extends BaseMapper
         return new Summary(
             $data['height'],
             $data['hash'],
-            $this->mapResult($data['balance'])
+            $this->mapAccount($data['spending']),
+            $this->mapAccount($data['staking']),
+            $this->mapAccount($data['voting'])
         );
     }
 
-    public function mapResult(array $data): Balance
+    public function mapAccount(array $data): SummaryAccount
     {
-        return new Balance(
-            $data['spending'] / 100000000,
-            $data['staking'] / 100000000,
-            $data['voting'] / 100000000
+        return new SummaryAccount(
+            $data['balance'] / 100000000,
+            $data['staked'] / 100000000,
+            $data['sent'] / 100000000,
+            $data['received'] / 100000000
         );
     }
 }

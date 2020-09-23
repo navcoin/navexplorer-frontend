@@ -9,30 +9,33 @@
             <tr>
                 <td><strong>Balance</strong></td>
                 <td class="text-right">
-                    {{ summary.balance.spending|stake_format }}
+                    {{ account.balance|stake_format }}
                 </td>
             </tr>
             <tr>
                 <td><strong>Sent</strong></td>
                 <td class="text-right">
+                    {{ account.sent|stake_format }}
                 </td>
             </tr>
             <tr>
                 <td><strong>Received</strong></td>
                 <td class="text-right">
+                    {{ account.received|stake_format }}
                 </td>
             </tr>
             <tr>
                 <td><strong>Staked</strong></td>
                 <td class="text-right">
+                    {{ account.staked|stake_format }}
                 </td>
             </tr>
-            <tr>
-                <td><strong>Rich list</strong></td>
-                <td class="text-right">
+{#            <tr>#}
+{#                <td><strong>Rich list</strong></td>#}
+{#                <td class="text-right">#}
 
-                </td>
-            </tr>
+{#                </td>#}
+{#            </tr>#}
             </tbody>
         </table>
     </div>

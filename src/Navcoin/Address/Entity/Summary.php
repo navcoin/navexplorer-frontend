@@ -2,8 +2,6 @@
 
 namespace App\Navcoin\Address\Entity;
 
-use DateTime;
-
 class Summary
 {
     /** @var int */
@@ -12,15 +10,24 @@ class Summary
     /** @var string */
     private $hash;
 
-    /** @var Balance */
-    private $balance;
+    /** @var SummaryAccount */
+    private $spending;
 
-    public function __construct(int $height, string $hash, Balance $balance)
+    /** @var SummaryAccount */
+    private $staking;
+
+    /** @var SummaryAccount */
+    private $voting;
+
+    public function __construct(int $height, string $hash, SummaryAccount $spending, SummaryAccount $staking, SummaryAccount $voting)
     {
         $this->height = $height;
         $this->hash = $hash;
-        $this->balance = $balance;
+        $this->spending = $spending;
+        $this->staking = $staking;
+        $this->voting = $voting;
     }
+
 
     public function getHeight(): int
     {
@@ -32,8 +39,27 @@ class Summary
         return $this->hash;
     }
 
-    public function getBalance(): Balance
+    /**
+     * @return SummaryAccount
+     */
+    public function getSpending(): SummaryAccount
     {
-        return $this->balance;
+        return $this->spending;
+    }
+
+    /**
+     * @return SummaryAccount
+     */
+    public function getStaking(): SummaryAccount
+    {
+        return $this->staking;
+    }
+
+    /**
+     * @return SummaryAccount
+     */
+    public function getVoting(): SummaryAccount
+    {
+        return $this->voting;
     }
 }

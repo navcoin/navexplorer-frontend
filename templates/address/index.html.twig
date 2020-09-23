@@ -17,9 +17,9 @@
             </div>
 
             <div class="row">
-                {% include "address/components/index_summary.html.twig" with { 'name': 'Spending' } %}
-                {% include "address/components/index_summary.html.twig" with { 'name': 'Staking' } %}
-                {% include "address/components/index_summary.html.twig" with { 'name': 'Voting' } %}
+                {% include "address/components/index_summary.html.twig" with { name: "Spending", 'account': summary.spending } %}
+                {% include "address/components/index_summary.html.twig" with { name: "Staking", 'account': summary.staking } %}
+                {% include "address/components/index_summary.html.twig" with { name: "Voting", 'account': summary.voting } %}
             </div>
 
             <div class="row">
@@ -43,7 +43,7 @@
                         </div>
 
                         <div id="staking-report" class="collapse {% if activeTab == "staking-report" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">
-                            {% include "address/components/index_staking_report.html.twig" %}
+{#                            {% include "address/components/index_staking_report.html.twig" %}#}
                         </div>
                     </div>
                 </div>
