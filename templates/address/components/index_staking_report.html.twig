@@ -67,9 +67,9 @@
                             <div class="view-voting">Voting</div>
                         </td>
                         <td data-role="annualPercentage">
-                            <div class="view-spending">{{ row.spendingRatioAnnualised(summary.balance.spending, stakingReport.period)|number_format(2) }}%</div>
-                            <div class="view-staking">{{ row.stakingRatioAnnualised(summary.balance.staking, stakingReport.period)|number_format(2) }}%</div>
-                            <div class="view-voting">{{ row.votingRatioAnnualised(summary.balance.voting, stakingReport.period)|number_format(2) }}%</div>
+                            <div class="view-spending">{{ row.spendingRatioAnnualised(summary.spending.balance, stakingReport.period)|number_format(2) }}%</div>
+                            <div class="view-staking">{{ row.stakingRatioAnnualised(summary.staking.balance, stakingReport.period)|number_format(2) }}%</div>
+                            <div class="view-voting">{{ row.votingRatioAnnualised(summary.voting.balance, stakingReport.period)|number_format(2) }}%</div>
                         </td>
                     </tr>
                 {% endfor %}
