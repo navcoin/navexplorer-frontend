@@ -19,7 +19,6 @@ class StakingApi extends NavcoinApi
             throw new StakingReportUnavailableException(sprintf("Could not return staking report for address: %s", $hash), 0, $e);
         }
 
-
         /** @var StakingGroups $stakingGroups */
         $stakingGroups = $this->getMapper()->mapIterator(StakingGroups::class, $data);
         $stakingGroups->setPeriod($period);

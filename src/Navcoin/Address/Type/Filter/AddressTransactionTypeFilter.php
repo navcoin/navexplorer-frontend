@@ -7,9 +7,6 @@ use App\Navcoin\Address\Type\AddressTransactionType;
 
 class AddressTransactionTypeFilter extends AbstractFilter
 {
-    /**
-     * @inheritdoc
-     */
     public function setClass() {
         $this->class = AddressTransactionType::class;
     }

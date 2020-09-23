@@ -1,78 +1,39 @@
-<div class="row transaction-summary">
-    <div class="col-sm-12 col-md-8">
+
+<div class="col-sm-12 col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ name }}</h2>
+        </div>
         <table class="table table-striped">
             <tbody>
-                <tr>
-                    <td><strong>Hash</strong></td>
-                    <td class="text-right break-word">
-                        {{ address.hash }}
-                        {% if address.label %}
-                            {#<br><span class="badge badge-info">{{ address.label }}</span>#}
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Balance</strong></td>
-                    <td class="text-right">
-                        {{ address.balance|stake_format }}
-                    </td>
-                </tr>
-                {% if address.coldStaked or address.coldStakedBalance != 0 %}
-                    <tr>
-                        <td><strong>Cold Staking Balance</strong></td>
-                        <td class="text-right">
-                            {#<span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>#}
-                            {{ (address.coldStakedBalance)|stake_format }}
-                        </td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <td><strong>Sent</strong></td>
-                    <td class="text-right">
-                        <span class="badge badge-info badge-transaction-count">{{ address.sentCount }} txs</span>
-                        {{ address.sent|abs|stake_format }}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Received</strong></td>
-                    <td class="text-right">
-                        <span class="badge badge-info badge-transaction-count">{{ address.receivedCount }} txs</span>
-                        {{ address.received|stake_format }}
-                    </td>
-                </tr>
-                {% if address.staked %}
-                    <tr>
-                        <td><strong>Staked</strong></td>
-                        <td class="text-right">
-                            <span class="badge badge-info badge-transaction-count">{{ address.stakedCount }} txs</span>
-                            {{ (address.staked)|stake_format }}
-                        </td>
-                    </tr>
-                {% endif %}
-                {% if address.coldStaked or address.coldStakedBalance != 0 %}
-                    <tr>
-                        <td><strong>Cold Staked</strong></td>
-                        <td class="text-right">
-                            <span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>
-                            {{ (address.coldStaked)|stake_format }}
-                        </td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <td><strong>Transactions</strong></td>
-                    <td class="text-right">
-                        {{ address.transactions|number_format }}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Rich list</strong></td>
-                    <td class="text-right">{{ address.richListPosition|ordinal }}</td>
-                </tr>
+            <tr>
+                <td><strong>Balance</strong></td>
+                <td class="text-right">
+                    {{ summary.balance.spending|stake_format }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Sent</strong></td>
+                <td class="text-right">
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Received</strong></td>
+                <td class="text-right">
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Staked</strong></td>
+                <td class="text-right">
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Rich list</strong></td>
+                <td class="text-right">
+
+                </td>
+            </tr>
             </tbody>
         </table>
-    </div>
-    <div class="col-md-3 offset-md-1 text-center">
-        <div><img src="{{ qr_code_data_uri("navcoin:"~address.hash) }}" /></div>
-        <div><a href="navcoin:{{ address.hash }}" class="btn btn-success">Send Navcoin</a></div>
     </div>
 </div>

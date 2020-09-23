@@ -3,29 +3,89 @@ const $ = require('jquery');
 import TableManager from "../services/TableManager";
 import NavNumberFormat from "../services/NavNumberFormat";
 import moment from 'moment/src/moment';
+import Cookies from 'js-cookie'
 
 class AddressIndexPage {
-    constructor() {
 
+    constructor() {
         this.hash = $('.address').data('hash');
 
-        this.tableManager = new TableManager('#transaction-list table', 'transactions', this.createTableRow);
+        new TableManager('#history-list table', 'historys', this.createHistoryRow);
 
-        if ($('#cold-transaction-list').length !== 0) {
-            this.tableManager = new TableManager('#cold-transaction-list table', 'transactions', this.createColdTableRow);
-        }
+        this.viewSpendingObj = $('<style>.view-spending { display: none; }</style>')
+        this.viewStakingObj = $('<style>.view-staking { display: none; }</style>')
+        this.viewVotingObj = $('<style>.view-voting { display: none; }</style>')
+
+        this.initTableView()
+
     }
 
-    createTableRow(data) {
-        let numberFormatter = new NavNumberFormat();
+    initTableView() {
+        if (!$('.form-address-type').length) {
+            return
+        }
 
+        if (Cookies.get('v-sp') === undefined) { Cookies.set('v-sp', true) }
+        if (Cookies.get('v-st') === undefined) { Cookies.set('v-st', true) }
+        if (Cookies.get('v-vo') === undefined) { Cookies.set('v-vo', false) }
+        this.updateTableView()
+
+        let that = this
+        $('.toggle-view-spending').each(function(index, element) {$(element).change(function() {
+            console.log("click .toggle-view-spending")
+        })});
+        $('.toggle-view-spending').change(function() {
+            // console.log("click .toggle-view-spending")
+            $('.toggle-view-spending').each(function(index, element) {
+                $(element).prop('checked', $(this).prop('checked'))
+            })
+            Cookies.set('v-sp', $(this).prop('checked'))
+            that.updateTableView()
+        })
+        $('.toggle-view-staking').change(function() {
+            console.log("click .toggle-view-staking")
+            $('.toggle-view-staking').each(function(index, element) {
+                $(element).prop('checked', $(this).prop('checked'))
+            })
+            Cookies.set('v-st', $(this).prop('checked'))
+            that.updateTableView()
+        })
+        $('.toggle-view-voting').change(function() {
+            console.log("click .toggle-view-voting")
+            $('.toggle-view-voting').each(function(index, element) {
+                $(element).prop('checked', $(this).prop('checked'))
+            })
+            Cookies.set('v-vo', $(this).prop('checked'))
+            that.updateTableView()
+        })
+    }
+
+    updateTableView() {
+        if (Cookies.get('v-sp') === 'false' && Cookies.get('v-st') === 'false' && Cookies.get('v-vo') === 'false') {
+            Cookies.set('v-sp', true)
+            Cookies.set('v-st', true)
+            Cookies.set('v-vo', true)
+        }
+        Cookies.get('v-sp') === 'false' ? this.viewSpendingObj.appendTo('head') : this.viewSpendingObj.detach()
+        Cookies.get('v-st') === 'false' ? this.viewStakingObj.appendTo('head') : this.viewStakingObj.detach()
+        Cookies.get('v-vo') === 'false' ? this.viewVotingObj.appendTo('head') : this.viewVotingObj.detach()
+
+        $('.toggle-view-spending').each(function(index, element) {
+            $(element).prop('checked', Cookies.get('v-sp') !== 'false')
+        })
+
+        $('.toggle-view-staking').each(function(index, element) {
+            $(element).prop('checked', Cookies.get('v-st') !== 'false')
+        })
+
+        $('.toggle-view-voting').each(function(index, element) {
+            $(element).prop('checked', Cookies.get('v-vo') !== 'false')
+        })
+    }
+
+    createHistoryRow(data) {
         let $row = $(document.createElement('tr'));
-        $row.attr('data-id', data.id);
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'block')
-            .append('<a href="/block/'+data.height+'">'+data.height+'</a>')
-        );
+        $row.attr('data-id', data.tx_id);
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'date/time')
@@ -33,67 +93,65 @@ class AddressIndexPage {
         );
 
         $row.append($(document.createElement('td'))
-            .attr('data-role', 'hash')
-            .append('<a href="/tx/'+data.transaction+'">' + data.transaction.substr(0, 15) + '...</a>')
+            .attr('data-role', 'height')
+            .append('<a href="/block/'+data.height+'">'+data.height+'</a>')
         );
 
-        let $amountTd = $(document.createElement('td')).attr('data-role', 'amount')
-            .append(numberFormatter.format(data.total) + '&nbsp;NAV');
-        if (data.type === "stake") {
-            $amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
-        } else if (data.type === "cold_stake") {
-            $amountTd.append('&nbsp;<span class="badge badge-info">Cold Stake</span>');
-        } else if (data.type === "community_fund_payout") {
-            $amountTd.append('&nbsp;<span class="badge badge-info">Community Fund</span>');
+        let type = $(document.createElement('td'))
+            .attr('data-role', 'type')
+        if (data.stake === true) {
+            type.append('<span class="badge badge-info">Stake</span>')
+        } else if (data.cfund_payout === true) {
+            type.append('<span class="badge badge-success">Cfund Payout</span>');
+        } else if (data.stake_payout === true) {
+            type.append('<span class="badge badge-success">Stake Payout</span>');
+        } else if (data.changes.spending < 0) {
+            type.append('<span class="badge badge-warning">Send</span>')
+        } else if (data.changes.spending > 0 || data.changes.staking > 0 || data.changes.voting > 0) {
+            type.append('<span class="badge badge-success">Receive</span>')
         }
-
-        $row.append($amountTd);
+        $row.append(type)
 
         $row.append($(document.createElement('td'))
-            .attr('data-role', 'balance')
-            .addClass("text-right")
-            .append(numberFormatter.format(data.balance) + '&nbsp;NAV')
+            .attr('data-role', 'txid')
+            .append('<a href="/tx/'+data.tx_id+'" class="break-word d-none d-lg-inline">' + data.tx_id + '</a>')
+            .append('<a href="/tx/'+data.tx_id+'" class="break-word d-sm-none d-md-inline d-lg-none">' + data.tx_id.substr(0, 30) + '...</a>')
+            .append('<a href="/tx/'+data.tx_id+'" class="d-none d-sm-inline d-md-none">' + data.tx_id.substr(0, 15) + '...</a>')
         );
+
+        let changesLabel = $(document.createElement('td'))
+        changesLabel.attr('class', 'hide')
+        changesLabel.append($(document.createElement('div')).attr('class', 'view-spending').append('Spending'));
+        changesLabel.append($(document.createElement('div')).attr('class', 'view-staking').append('Staking'));
+        changesLabel.append($(document.createElement('div')).attr('class', 'view-voting').append('Voting'));
+        $row.append(changesLabel)
+
+        let changeRow = $(document.createElement('td'))
+        changeRow.attr('data-role', 'changes')
+        changeRow.append($(document.createElement('div')).attr('class', 'view-spending').append(AddressIndexPage.addChanges(data.changes, 'spending')).append('&nbsp;Nav'));
+        changeRow.append($(document.createElement('div')).attr('class', 'view-staking').append(AddressIndexPage.addChanges(data.changes, 'staking')).append('&nbsp;Nav'));
+        changeRow.append($(document.createElement('div')).attr('class', 'view-voting').append(AddressIndexPage.addChanges(data.changes, 'voting')).append('&nbsp;Nav'));
+        $row.append(changeRow)
+
+        let balanceRow = $(document.createElement('td'))
+        balanceRow.attr('data-role', 'balance')
+        balanceRow.append($(document.createElement('div')).attr('class', 'view-spending').append(AddressIndexPage.addChanges(data.balance, 'spending')).append('&nbsp;Nav'));
+        balanceRow.append($(document.createElement('div')).attr('class', 'view-staking').append(AddressIndexPage.addChanges(data.balance, 'staking')).append('&nbsp;Nav'));
+        balanceRow.append($(document.createElement('div')).attr('class', 'view-voting').append(AddressIndexPage.addChanges(data.balance, 'voting')).append('&nbsp;Nav'));
+        $row.append(balanceRow);
 
         return $row;
     }
 
-    createColdTableRow(data) {
-        let numberFormatter = new NavNumberFormat();
+    static addChanges(changes, value) {
+        let change = $(document.createElement('span'))
 
-        let $row = $(document.createElement('tr'));
-        $row.attr('data-id', data.id);
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'block')
-            .append('<a href="/block/'+data.height+'">'+data.height+'</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'date/time')
-            .append(moment(data.time).utc().format('YYYY-MM-DD[,] HH:mm:ss'))
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'hash')
-            .append('<a href="/tx/'+data.transaction+'">' + data.transaction.substr(0, 15) + '...</a>')
-        );
-
-        let $amountTd = $(document.createElement('td')).attr('data-role', 'amount')
-            .append(numberFormatter.format(data.total) + '&nbsp;NAV');
-        if (data.type === "cold_stake") {
-            $amountTd.append('&nbsp;<span class="badge badge-info">Stake</span>');
+        if (changes[value] === 0) {
+            change.attr('class', 'zero')
         }
+        change.append(new NavNumberFormat().format(changes[value]))
 
-        $row.append($amountTd);
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'balance')
-            .addClass("text-right")
-            .append(numberFormatter.format(data.balance) + '&nbsp;NAV')
-        );
-
-        return $row;
+        return change
     }
 }
 

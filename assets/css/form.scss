@@ -1,6 +1,5 @@
 .form-filter {
   float: right;
-  margin-top: 0.5rem;
 
   span {
     font-size: 1rem;
@@ -11,7 +10,7 @@
   }
 
   input {
-    margin-left: 0.25rem;
+    margin-left: 0;
   }
 }
 
@@ -21,4 +20,18 @@
   label, input {
     opacity: 0.5;
   }
+}
+
+.dropdown-menu .dropdown-item {
+  text-transform: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .selected {
+  font-weight: bold;
+  color: $dark-purple;
 }

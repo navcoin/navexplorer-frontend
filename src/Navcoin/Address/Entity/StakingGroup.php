@@ -6,36 +6,38 @@ use App\Navcoin\Common\Entity\DateRangeInterface;
 
 class StakingGroup implements DateRangeInterface
 {
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     private $start;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     private $end;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $stakes;
 
-    /**
-     * @var float
-     */
-    private $amount;
+    /** @var float */
+    private $staking;
+
+    /** @var float */
+    private $spending;
+
+    /** @var float */
+    private $voting;
 
     public function __construct(
         \DateTime $start,
         \DateTime $end,
         int $stakes,
-        float $amount
+        float $staking,
+        float $spending,
+        float $voting
     ) {
         $this->start = $start;
         $this->end = $end;
         $this->stakes = $stakes;
-        $this->amount = $amount;
+        $this->staking = $staking;
+        $this->spending = $spending;
+        $this->voting = $voting;
     }
 
     public function getStart(): \DateTime
@@ -43,21 +45,9 @@ class StakingGroup implements DateRangeInterface
         return $this->start;
     }
 
-    public function setStart(\DateTime $start)
-    {
-        $this->start = $start;
-        return $this;
-    }
-
     public function getEnd(): \DateTime
     {
         return $this->end;
-    }
-
-    public function setEnd(\DateTime $end)
-    {
-        $this->end = $end;
-        return $this;
     }
 
     public function getStakes(): int
@@ -65,35 +55,54 @@ class StakingGroup implements DateRangeInterface
         return $this->stakes;
     }
 
-    public function setStakes(int $stakes)
+    public function getStaking(): float
     {
-        $this->stakes = $stakes;
-        return $this;
+        return $this->staking;
     }
 
-    public function getAmount(): float
+    public function getSpending(): float
     {
-        return $this->amount;
+        return $this->spending;
     }
 
-    public function setAmount(float $amount)
+    public function getVoting(): float
     {
-        $this->amount = $amount;
-        return $this;
+        return $this->voting;
     }
+
     
-    public function getRatio(float $balance): float
+    public function getSpendingRatio(float $balance): float
     {
-        if ($balance == 0 || $this->amount == 0) {
+        if ($balance == 0 || $this->spending == 0) {
             return 0;
         }
 
-        return ($this->amount / $balance) * 100;
+        return ($this->spending / $balance) * 100;
     }
 
-    public function getRatioAnnualised(float $balance, string $period): float
+
+    public function getStakingRatio(float $balance): float
     {
-        $ratio = $this->getRatio($balance);
+        if ($balance == 0 || $this->staking == 0) {
+            return 0;
+        }
+
+        return ($this->staking / $balance) * 100;
+    }
+
+
+    public function getVotingRatio(float $balance): float
+    {
+        if ($balance == 0 || $this->voting == 0) {
+            return 0;
+        }
+
+        return ($this->voting / $balance) * 100;
+    }
+
+    public function getSpendingRatioAnnualised(float $balance, string $period): float
+    {
+        $ratio = $this->getSpendingRatio($balance);
         switch ($period) {
             case 'hourly':
                 return $ratio * 8760;
@@ -101,8 +110,32 @@ class StakingGroup implements DateRangeInterface
                 return $ratio * 365;
             case 'monthly':
                 return $ratio * 12;
-            default:
-                return null;
+        }
+    }
+
+    public function getStakingRatioAnnualised(float $balance, string $period): float
+    {
+        $ratio = $this->getStakingRatio($balance);
+        switch ($period) {
+            case 'hourly':
+                return $ratio * 8760;
+            case 'daily':
+                return $ratio * 365;
+            case 'monthly':
+                return $ratio * 12;
+        }
+    }
+
+    public function getVotingRatioAnnualised(float $balance, string $period): float
+    {
+        $ratio = $this->getVotingRatio($balance);
+        switch ($period) {
+            case 'hourly':
+                return $ratio * 8760;
+            case 'daily':
+                return $ratio * 365;
+            case 'monthly':
+                return $ratio * 12;
         }
     }
 }

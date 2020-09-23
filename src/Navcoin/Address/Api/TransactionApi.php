@@ -20,39 +20,4 @@ class TransactionApi extends NavcoinApi
         $this->addressTransactionTypeFilter = $addressTransactionTypeFilter;
     }
 
-    public function getTransactionsForAddress(String $hash, int $size = 50, int $page = 1, array $filters = null): IteratorEntityInterface
-    {
-        $url = sprintf('/address/%s/tx?size=%d&page=%d', $hash, $size, $page);
-        if (!empty($filters)) {
-            $filterQuery = $this->addressTransactionTypeFilter->createfilterQuery($filters);
-            $url .= ($filterQuery !== '') ? '&' . $filterQuery : '';
-        }
-
-        try {
-            $response = $this->getClient()->get($url);
-            $data = $this->getClient()->getJsonBody($response);
-        } catch (ServerRequestException $e) {
-            return new Transactions();
-        }
-
-        return $this->getMapper()->mapIterator(Transactions::class, $data, $this->getClient()->getPaginator($response));
-    }
-
-    public function getColdTransactionsForAddress(String $hash, int $size = 50, int $page = 1, array $filters = null): IteratorEntityInterface
-    {
-        $url = sprintf('/address/%s/tx/cold?size=%d&page=%d', $hash, $size, $page);
-        if (!empty($filters)) {
-            $filterQuery = $this->addressTransactionTypeFilter->createfilterQuery($filters);
-            $url .= ($filterQuery !== '') ? '&' . $filterQuery : '';
-        }
-
-        try {
-            $response = $this->getClient()->get($url);
-            $data = $this->getClient()->getJsonBody($response);
-        } catch (ServerRequestException $e) {
-            return new Transactions();
-        }
-
-        return $this->getMapper()->mapIterator(Transactions::class, $data, $this->getClient()->getPaginator($response));
-    }
 }

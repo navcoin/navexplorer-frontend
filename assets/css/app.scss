@@ -17,9 +17,11 @@
 @import 'distribution';
 @import 'community-fund';
 @import 'dao';
+@import 'history';
 
 html {
   overflow-y: scroll;
+  cursor: default;
 }
 
 .body {
@@ -35,12 +37,17 @@ h1 {
   font-size: 1.8rem;
 }
 
+h2 {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
 p, li {
   font-family: 'Roboto', sans-serif;
 }
 
 a {
-  color: $purple;
+  color: $light-purple;
   span {
     position: absolute;
     top: -9999px;
@@ -55,7 +62,7 @@ a.disabled {
 }
 
 a:hover {
-  color: $blue;
+  color: $pink;
   text-decoration: none;
 }
 
@@ -64,7 +71,7 @@ p {
 }
 
 .margin-top {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .margin-bottom {
@@ -95,8 +102,35 @@ small {
   margin: 2rem 0 1rem;
 }
 
+.badge {
+  padding: 4px;
+}
+
+.badge-tooltip {
+  color: $white;
+  background-color: $black;
+  cursor: pointer;
+}
+
 .badge-transaction-count {
   margin-right: 1rem;
+}
+
+.badge-info {
+  background-color: $light-blue;
+}
+
+.badge-pink {
+  color: $white;
+  background-color: $pink;
+}
+
+.badge-purple {
+  background-color: $purple;
+}
+
+.badge-info {
+  background-color: $light-blue;
 }
 
 .badge-staking {

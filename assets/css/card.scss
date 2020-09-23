@@ -1,6 +1,7 @@
 .card {
   overflow: hidden;
   margin-bottom: 1rem;
+  padding: 0.6rem;
 }
 
 .card-padded {
@@ -12,12 +13,11 @@
 }
 
 .card-header {
-  padding: 0.5rem;
-  margin-bottom: 0;
-  //color: $white;
-  background-color: $mid-grey;
+  padding: 0.5rem 0;
+  margin-bottom: -1px;
+  background-color: $white;
   h2 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin:0;
   }
 }

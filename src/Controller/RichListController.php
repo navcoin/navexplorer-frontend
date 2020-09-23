@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Navcoin\Address\Api\AddressApi;
+use App\Navcoin\Address\Api\RichListApi;
 use App\Navcoin\Block\Api\BlockApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,11 +13,6 @@ class RichListController
     /**
      * @Route("/rich-list")
      * @Template()
-     *
-     * @param AddressApi $addressApi
-     * @param BlockApi   $blockApi
-     *
-     * @return array
      */
     public function index(AddressApi $addressApi, BlockApi $blockApi)
     {
@@ -24,7 +20,7 @@ class RichListController
 
         return [
             'count' => $count,
-            'richList' => $addressApi->getTopAddresses($count),
+            'richList' => $addressApi->getAddresses($count),
             'bestBlock' => $blockApi->getBestBlock()
         ];
     }

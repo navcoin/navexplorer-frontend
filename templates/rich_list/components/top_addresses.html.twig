@@ -6,21 +6,24 @@
             <tr>
                 <th>#</th>
                 <th>Address</th>
-                <th>Balance</th>
+                <th colspan="2">Balance</th>
                 <th class="d-none d-md-table-cell">Last&nbsp;Block</th>
-                <th class="d-none d-md-table-cell">Stake&nbsp;Rewards</th>
             </tr>
         </thead>
         <tbody>
-            {% for rank, address in richList %}
+            {% for richListItem in richList %}
                 <tr>
-                    <td>{{ rank+1 }}</td>
+                    <td>{{ richListItem.position }}</td>
                     <td>
-                        <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">{{ address.hash }}</a>
+                        <a href="{{ path('app_address_index', { 'hash': richListItem.hash }) }}" class="break-word">{{ richListItem.hash }}</a>
                     </td>
-                    <td>{{ address.balance|stake_format(false, 2) }}</td>
-                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': address.blockIndex}) }}">{{ address.blockIndex }}</a></td>
-                    <td class="d-none d-md-table-cell">{{ address.staked|stake_format(false, 2) }}</td>
+                    <td>Spending<br/>Staking<br/>Voting</td>
+                    <td>
+                        {{ richListItem.spending|stake_format(false, 2) }}<br/>
+                        {{ richListItem.staking|stake_format(false, 2) }}<br/>
+                        {{ richListItem.voting|stake_format(false, 2) }}
+                    </td>
+                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': richListItem.height}) }}">{{ richListItem.height }}</a></td>
                 </tr>
             {% endfor %}
         </tbody>

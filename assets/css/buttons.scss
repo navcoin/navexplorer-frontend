@@ -15,3 +15,8 @@
   background-color: $dark-purple;
   border-color: $purple;
 }
+
+.btn:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}

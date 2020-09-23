@@ -58,6 +58,10 @@
         font-weight: normal;
       }
 
+      td.hide {
+        display: none;
+      }
+
       td {
         /* Behave  like a "row" */
         border: none;
@@ -86,8 +90,10 @@
     td[data-role="balance"]:before { content: "Balance"; }
     td[data-role="block"]:before { content: "Block"; }
     td[data-role="blocks"]:before { content: "Blocks"; }
+    td[data-role="changes"]:before { content: "Changes"; }
     td[data-role="date/time"]:before { content: "Date/Time"; }
     td[data-role="description"]:before { content: "Description"; }
+    td[data-role="forBalance"]:before { content: "For Balance"; }
     td[data-role="hourlyPeriod"]:before { content: "Period"; }
     td[data-role="hash"]:before { content: "Hash"; }
     td[data-role="height"]:before { content: "Height"; }
@@ -108,6 +114,7 @@
     td[data-role="status"]:before { content: "Status"; }
     td[data-role="transactions"]:before { content: "Transactions"; }
     td[data-role="type"]:before { content: "Type"; }
+    td[data-role="txid"]:before { content: "Txid"; }
     td[data-role="vote"]:before { content: "Vote"; }
     td[data-role="votingCycle"]:before { content: "Voting Cycle"; }
     td[data-role="votingStatus"]:before { content: "Voting Status"; }

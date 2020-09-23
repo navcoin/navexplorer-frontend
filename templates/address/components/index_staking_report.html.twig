@@ -1,17 +1,44 @@
-<div class="margin-top">
+<div>
+    <div class="heading">
+        <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Group By</button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item {% if (type == "hourly") %}selected{% endif %}" href="{{ path('app_address_index', {'hash': summary.hash, 'period': 'hourly'}) }}">
+                Hourly
+            </a>
+            <a class="dropdown-item {% if (type == "daily") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'period': 'daily'}) }}">
+                Daily
+            </a>
+            <a class="dropdown-item {% if (type == "monthly") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'period': 'monthly'}) }}">
+                Monthly
+            </a>
+        </div>
 
-    <form class="form-filter" action="{{ path('app_home_index') }}">
-        <span class="legend">Group by:</span>
-        <label>
-            <a class="btn btn-sm btn-info" href="{{ path('app_address_index', {'hash': address.hash, 'period': 'hourly'}) }}">Hourly</a>
-        </label>
-        <label>
-            <a class="btn btn-sm btn-info" href="{{ path('app_address_index', {'hash': address.hash, 'period': 'daily'}) }}">Daily</a>
-        </label>
-        <label>
-            <a class="btn btn-sm btn-info" href="{{ path('app_address_index', {'hash': address.hash, 'period': 'monthly'}) }}">Monthly</a>
-        </label>
-    </form>
+        <div class="form-address-type float-right">
+            <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">For Balances</button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input toggle-view-spending" name="spending" id="staking-toggle-spending">
+                        <label class="custom-control-label" for="staking-toggle-spending">Spending changes</label>
+                    </div>
+                </a>
+                <a class="dropdown-item">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input toggle-view-staking" name="staking" id="staking-toggle-staking">
+                        <label class="custom-control-label" for="staking-toggle-staking">Staking changes</label>
+                    </div>
+                </a>
+                <a class="dropdown-item">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input toggle-view-voting" name="voting" id="staking-toggle-voting">
+                        <label class="custom-control-label" for="staking-toggle-voting">Voting changes</label>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 
     {% if stakingReport %}
         <table class="table table-striped table-adaptive">
@@ -20,6 +47,7 @@
                     <th>Period</th>
                     <th># Stakes</th>
                     <th>Nav Earned</th>
+                    <th>For Balance</th>
                     <th>Annual %</th>
                 </tr>
             </thead>
@@ -28,9 +56,20 @@
                     <tr>
                         <td data-role="hourlyPeriod">{{ period(stakingReport.period, index, row) }}</td>
                         <td data-role="numStakes">{{ row.stakes|number_format }}</td>
-                        <td data-role="navEarned">{{ row.amount|stake_format }}</td>
+                        <td data-role="navEarned">
+                            <div class="view-spending">{{ row.spending|stake_format }}</div>
+                            <div class="view-staking">{{ row.staking|stake_format }}</div>
+                            <div class="view-voting">{{ row.voting|stake_format }}</div>
+                        </td>
+                        <td data-role="forBalance" class="hide">
+                            <div class="view-spending">Spending</div>
+                            <div class="view-staking">Staking</div>
+                            <div class="view-voting">Voting</div>
+                        </td>
                         <td data-role="annualPercentage">
-                            {{ row.ratioAnnualised(address.balance, stakingReport.period)|number_format(2) }}%
+                            <div class="view-spending">{{ row.spendingRatioAnnualised(summary.balance.spending, stakingReport.period)|number_format(2) }}%</div>
+                            <div class="view-staking">{{ row.stakingRatioAnnualised(summary.balance.staking, stakingReport.period)|number_format(2) }}%</div>
+                            <div class="view-voting">{{ row.votingRatioAnnualised(summary.balance.voting, stakingReport.period)|number_format(2) }}%</div>
                         </td>
                     </tr>
                 {% endfor %}
