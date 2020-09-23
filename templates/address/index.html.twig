@@ -17,9 +17,13 @@
             </div>
 
             <div class="row">
-                {% include "address/components/index_summary.html.twig" with { name: "Spending", 'account': summary.spending } %}
-                {% include "address/components/index_summary.html.twig" with { name: "Staking", 'account': summary.staking } %}
-                {% include "address/components/index_summary.html.twig" with { name: "Voting", 'account': summary.voting } %}
+                {% include "address/components/index_balance.html.twig" %}
+            </div>
+
+            <div class="row">
+                {% include "address/components/index_sent.html.twig" %}
+                {% include "address/components/index_received.html.twig" %}
+                {% include "address/components/index_staked.html.twig" %}
             </div>
 
             <div class="row">

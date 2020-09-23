@@ -62,9 +62,9 @@
                             <div class="view-voting">{{ row.voting|stake_format }}</div>
                         </td>
                         <td data-role="forBalance" class="hide">
-                            <div class="view-spending">Spending</div>
-                            <div class="view-staking">Staking</div>
-                            <div class="view-voting">Voting</div>
+                            <div class="view-spending">Spendable</div>
+                            <div class="view-staking">Stakable</div>
+                            <div class="view-voting">Voting Weight</div>
                         </td>
                         <td data-role="annualPercentage">
                             <div class="view-spending">{{ row.spendingRatioAnnualised(summary.spending.balance, stakingReport.period)|number_format(2) }}%</div>

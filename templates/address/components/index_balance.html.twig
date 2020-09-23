@@ -1,0 +1,22 @@
+
+<div class="col-sm-12 col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h2>Balance</h2>
+        </div>
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th width="33%"><strong>Spendable</strong></th>
+                <th width="33%"><strong>Stakable</strong></th>
+                <th width="33%"><strong>Voting Weight</strong></th>
+            </tr>
+            <tr>
+                <td>{{ summary.spending.balance|stake_format }}</td>
+                <td>{{ summary.staking.balance|stake_format }}</td>
+                <td>{{ summary.voting.balance|stake_format }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
