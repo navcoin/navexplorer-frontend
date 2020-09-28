@@ -17,7 +17,7 @@ class StakeExtension extends AbstractExtension
     public function stakeFormat(float $number, bool $sign = false, int $decimalPlaces = 8): string
     {
         if ($number === 0.0) {
-            return "0&nbsp; Nav";
+            return "0&nbsp;Nav";
         }
         if ($number < 1) {
             $stake = sprintf('%.8f', $number);

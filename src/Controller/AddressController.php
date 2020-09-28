@@ -53,6 +53,7 @@ class AddressController extends Controller
     public function index(Request $request, String $hash): Response
     {
         try {
+            $address = $this->addressApi->getAddress($hash);
             $summary = $this->summaryApi->getSummary($hash);
         } catch (AddressNotFoundException $e) {
             return $this->render('address/not_found.html.twig', ['hash' => $hash]);
@@ -61,6 +62,7 @@ class AddressController extends Controller
         }
 
         return $this->render('address/index.html.twig', [
+            'address' => $address,
             'summary' => $summary,
             'type' => $request->query->getAlpha('type'),
             'stakingReport' => $this->getStakingReport($hash, $request->get('period', "daily")),

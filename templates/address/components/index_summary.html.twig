@@ -1,36 +1,24 @@
-
-<div class="col-sm-12 col-md-4">
-    <div class="card">
-        <div class="card-header">
-            <h2>{{ name }}</h2>
-        </div>
-        <table class="table table-striped">
-            <tbody>
-            <tr>
-                <td><strong>Sent</strong></td>
-                <td class="text-right">
-                    {{ account.sent|stake_format }}
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Received</strong></td>
-                <td class="text-right">
-                    {{ account.received|stake_format }}
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Staked</strong></td>
-                <td class="text-right">
-                    {{ account.staked|stake_format }}
-                </td>
-            </tr>
-{#            <tr>#}
-{#                <td><strong>Rich list</strong></td>#}
-{#                <td class="text-right">#}
-
-{#                </td>#}
-{#            </tr>#}
-            </tbody>
-        </table>
-    </div>
+<div class="address-summary">
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <th>Hash</th>
+            <td class="text-right">
+                {{ summary.hash }}
+            </td>
+        </tr>
+        <tr>
+            <th>First Seen</th>
+            <td class="text-right">
+                <a href="{{ path("app_block_view", {'height': address.createdBlock}) }}">{{ address.createdBlock }}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <td class="text-right">
+                {{ address.createdTime|age }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

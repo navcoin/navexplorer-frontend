@@ -1,9 +1,19 @@
 .table {
   margin-bottom: 0;
 
+  th {
+    font-weight: normal;
+    color: $grey;
+  }
+
   th,
   td {
     padding: 0.5rem 0.25rem;
+
+    label {
+      color: $grey;
+      margin-bottom: 0;
+    }
   }
 
   badge {

@@ -13,7 +13,7 @@
         <tbody>
             {% for richListItem in richList %}
                 <tr>
-                    <td>{{ richListItem.position }}</td>
+                    <td>{{ richListItem.richList.spending }}</td>
                     <td>
                         <a href="{{ path('app_address_index', { 'hash': richListItem.hash }) }}" class="break-word">{{ richListItem.hash }}</a>
                     </td>

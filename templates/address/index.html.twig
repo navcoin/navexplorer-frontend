@@ -9,21 +9,16 @@
     <div class="address" data-hash="{{ summary.hash }}">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="introduction">
-                        <h1 class="break-word">{{ summary.hash }}</h1>
-                    </div>
+                <div class="col-sm-12"><h1>Address</h1></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    {% include "address/components/index_summary.html.twig" %}
                 </div>
-            </div>
-
-            <div class="row">
-                {% include "address/components/index_balance.html.twig" %}
-            </div>
-
-            <div class="row">
-                {% include "address/components/index_sent.html.twig" %}
-                {% include "address/components/index_received.html.twig" %}
-                {% include "address/components/index_staked.html.twig" %}
+                <div class="col-md-4">
+                    {% include "address/components/index_balance.html.twig" %}
+                </div>
             </div>
 
             <div class="row">

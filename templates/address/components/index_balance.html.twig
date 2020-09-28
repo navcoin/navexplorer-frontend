@@ -1,5 +1,4 @@
 
-<div class="col-sm-12 col-md-6">
     <div class="card">
         <div class="card-header">
             <h2>Balance</h2>
@@ -7,16 +6,20 @@
         <table class="table table-striped">
             <tbody>
             <tr>
-                <th width="33%"><strong>Spendable</strong></th>
-                <th width="33%"><strong>Stakable</strong></th>
-                <th width="33%"><strong>Voting Weight</strong></th>
+                <th width="33%"><label>Spendable</label></th>
+                <td class="text-right">{{ summary.spending.balance|stake_format }}</td>
+                <td class="text-right">{{ summary.spending.balance ? address.richList.spending|ordinal : '' }}</td>
             </tr>
             <tr>
-                <td>{{ summary.spending.balance|stake_format }}</td>
-                <td>{{ summary.staking.balance|stake_format }}</td>
-                <td>{{ summary.voting.balance|stake_format }}</td>
+                <th width="33%"><label>Stakable</label></th>
+                <td class="text-right">{{ summary.staking.balance|stake_format }}</td>
+                <td class="text-right">{{ summary.staking.balance ? address.richList.staking|ordinal : '' }}</td>
+            </tr>
+            <tr>
+                <th width="33%"><label>Voting Weight</label></th>
+                <td class="text-right">{{ summary.voting.balance|stake_format }}</td>
+                <td class="text-right">{{ summary.voting.balance ? address.richList.voting|ordinal : '' }}</td>
             </tr>
             </tbody>
         </table>
     </div>
-</div>

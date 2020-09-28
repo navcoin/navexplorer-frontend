@@ -2,38 +2,52 @@
 
 namespace App\Navcoin\Address\Entity;
 
+use DateTime;
+
 class Address
 {
-    /** @var int */
-    protected $position;
-
     /** @var string */
     private $hash;
 
     /** @var int */
-    protected $height;
+    private $height;
 
     /** @var float */
-    protected $spending;
+    private $spending;
 
     /** @var float */
-    protected $staking;
+    private $staking;
 
     /** @var float */
-    protected $voting;
+    private $voting;
 
-    public function __construct(int $position, string $hash, int $height, float $spending, float $staking, float $voting) {
-        $this->position = $position;
+    /** @var DateTime */
+    private $createdTime;
+
+    /** @var int */
+    private $createdBlock;
+
+    /** @var RichList */
+    private $richList;
+
+    public function __construct(
+        string $hash,
+        int $height,
+        float $spending,
+        float $staking,
+        float $voting,
+        DateTime $createdTime,
+        int $createdBlock,
+        RichList $richList
+    ) {
         $this->hash = $hash;
         $this->height = $height;
         $this->spending = $spending;
         $this->staking = $staking;
         $this->voting = $voting;
-    }
-
-    public function getPosition(): int
-    {
-        return $this->position;
+        $this->createdTime = $createdTime;
+        $this->createdBlock = $createdBlock;
+        $this->richList = $richList;
     }
 
     public function getHash(): string
@@ -59,5 +73,20 @@ class Address
     public function getVoting(): float
     {
         return $this->voting;
+    }
+
+    public function getCreatedTime(): DateTime
+    {
+        return $this->createdTime;
+    }
+
+    public function getCreatedBlock(): int
+    {
+        return $this->createdBlock;
+    }
+
+    public function getRichList(): RichList
+    {
+        return $this->richList;
     }
 }
