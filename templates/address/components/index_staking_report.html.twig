@@ -1,75 +1,48 @@
 <div>
     <div class="heading">
-        <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">Group By</button>
+        <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ period|capitalize }} Report</button>
         <div class="dropdown-menu">
-            <a class="dropdown-item {% if (type == "hourly") %}selected{% endif %}" href="{{ path('app_address_index', {'hash': summary.hash, 'period': 'hourly'}) }}">
+            <a class="dropdown-item {% if (period == "hourly") %}selected{% endif %}" href="{{ path('app_address_index', {'hash': summary.hash, 'period': 'hourly'}) }}">
                 Hourly
             </a>
-            <a class="dropdown-item {% if (type == "daily") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'period': 'daily'}) }}">
+            <a class="dropdown-item {% if (period == "daily") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'period': 'daily'}) }}">
                 Daily
             </a>
-            <a class="dropdown-item {% if (type == "monthly") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'period': 'monthly'}) }}">
+            <a class="dropdown-item {% if (period == "monthly") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'period': 'monthly'}) }}">
                 Monthly
             </a>
-        </div>
-
-        <div class="form-address-type float-right">
-            <button class="btn btn-outline dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">For Balances</button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input toggle-view-spending" name="spending" id="staking-toggle-spending">
-                        <label class="custom-control-label" for="staking-toggle-spending">Spending changes</label>
-                    </div>
-                </a>
-                <a class="dropdown-item">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input toggle-view-staking" name="staking" id="staking-toggle-staking">
-                        <label class="custom-control-label" for="staking-toggle-staking">Staking changes</label>
-                    </div>
-                </a>
-                <a class="dropdown-item">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input toggle-view-voting" name="voting" id="staking-toggle-voting">
-                        <label class="custom-control-label" for="staking-toggle-voting">Voting changes</label>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 
     {% if stakingReport %}
-        <table class="table table-striped table-adaptive">
+        <table class="table table-striped table-adaptive table-nav">
             <thead>
                 <tr>
                     <th>Period</th>
-                    <th># Stakes</th>
-                    <th>Nav Earned</th>
-                    <th>For Balance</th>
-                    <th>Annual %</th>
+                    <th class="text-center">Stakes</th>
+                    <th></th>
+                    <th class="text-right">Spendable</th>
+                    <th class="text-right">Stakable</th>
+                    <th class="text-right">Voting Weight</th>
                 </tr>
             </thead>
             <tbody>
                 {% for index, row in stakingReport %}
                     <tr>
                         <td data-role="hourlyPeriod">{{ period(stakingReport.period, index, row) }}</td>
-                        <td data-role="numStakes">{{ row.stakes|number_format }}</td>
-                        <td data-role="navEarned">
-                            <div class="view-spending">{{ row.spending|stake_format }}</div>
-                            <div class="view-staking">{{ row.staking|stake_format }}</div>
-                            <div class="view-voting">{{ row.voting|stake_format }}</div>
+                        <td data-role="numStakes" class="text-center">{{ row.stakes|number_format }}</td>
+                        <td class="hide text-right"><label>Reward<br/>Annual %</label></td>
+                        <td class="text-right" data-role="spendable">
+                            {{ row.spending|stake_format }}<br/>
+                            {{ row.spendingRatioAnnualised(summary.spending.balance, stakingReport.period)|number_format(2) }}%
                         </td>
-                        <td data-role="forBalance" class="hide">
-                            <div class="view-spending">Spendable</div>
-                            <div class="view-staking">Stakable</div>
-                            <div class="view-voting">Voting Weight</div>
+                        <td class="text-right" data-role="stakable">
+                            {{ row.staking|stake_format }}<br/>
+                            {{ row.stakingRatioAnnualised(summary.staking.balance, stakingReport.period)|number_format(2) }}%
                         </td>
-                        <td data-role="annualPercentage">
-                            <div class="view-spending">{{ row.spendingRatioAnnualised(summary.spending.balance, stakingReport.period)|number_format(2) }}%</div>
-                            <div class="view-staking">{{ row.stakingRatioAnnualised(summary.staking.balance, stakingReport.period)|number_format(2) }}%</div>
-                            <div class="view-voting">{{ row.votingRatioAnnualised(summary.voting.balance, stakingReport.period)|number_format(2) }}%</div>
+                        <td class="text-right" data-role="votingWeight">
+                            {{ row.voting|stake_format }}<br/>
+                            {{ row.votingRatioAnnualised(summary.voting.balance, stakingReport.period)|number_format(2) }}%
                         </td>
                     </tr>
                 {% endfor %}

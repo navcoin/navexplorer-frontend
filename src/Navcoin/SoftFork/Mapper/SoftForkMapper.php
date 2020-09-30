@@ -7,6 +7,7 @@ use App\Navcoin\Common\Mapper\BaseMapper;
 use App\Navcoin\Common\Mapper\MapperInterface;
 use App\Navcoin\SoftFork\Entity\SoftFork;
 use App\Navcoin\SoftFork\Entity\SoftForks;
+use DateTime;
 
 class SoftForkMapper extends BaseMapper
 {
@@ -29,6 +30,8 @@ class SoftForkMapper extends BaseMapper
             $data['name'],
             $data['signalBit'],
             $data['state'],
+            DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['startTime']),
+            DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['timeout']),
             $this->getData('lockedinheight', $data),
             $this->getData('activationheight', $data),
             $this->getData('signalheight', $data)

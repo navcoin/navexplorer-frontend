@@ -10,7 +10,7 @@ class AddressIndexPage {
     constructor() {
         this.hash = $('.address').data('hash');
 
-        new TableManager('#history-list table', 'historys', this.createHistoryRow);
+        new TableManager('#history-list table', 'transactions', this.createHistoryRow);
 
         this.viewSpendingObj = $('<style>.view-spending { display: none; }</style>')
         this.viewStakingObj = $('<style>.view-staking { display: none; }</style>')
@@ -35,7 +35,6 @@ class AddressIndexPage {
             console.log("click .toggle-view-spending")
         })});
         $('.toggle-view-spending').change(function() {
-            // console.log("click .toggle-view-spending")
             $('.toggle-view-spending').each(function(index, element) {
                 $(element).prop('checked', $(this).prop('checked'))
             })
@@ -88,8 +87,10 @@ class AddressIndexPage {
         $row.attr('data-id', data.tx_id);
 
         $row.append($(document.createElement('td'))
-            .attr('data-role', 'date/time')
-            .append(moment(data.time).utc().format('YYYY-MM-DD[<br/>@ ]HH:mm:ss'))
+            .attr('data-role', 'transaction')
+            .append('<a href="/tx/'+data.tx_id+'" class="break-word d-none d-lg-inline">' + data.tx_id.substr(0, 15) + '...</a>')
+            .append('<a href="/tx/'+data.tx_id+'" class="break-word d-sm-inline d-md-inline d-lg-none">' + data.tx_id.substr(0, 15) + '...</a>')
+            .append('<div><small>Block:</small> <a href="/block/'+data.height+'">'+data.height+'</a></small></div>')
         );
 
         let type = $(document.createElement('td'))
@@ -108,42 +109,74 @@ class AddressIndexPage {
         $row.append(type)
 
         $row.append($(document.createElement('td'))
-            .attr('data-role', 'txid')
-            .append('<a href="/tx/'+data.tx_id+'" class="break-word d-none d-lg-inline">' + data.tx_id + '</a>')
-            .append('<a href="/tx/'+data.tx_id+'" class="break-word d-sm-none d-md-inline d-lg-none">' + data.tx_id.substr(0, 30) + '...</a>')
-            .append('<a href="/tx/'+data.tx_id+'" class="d-none d-sm-inline d-md-none">' + data.tx_id.substr(0, 15) + '...</a>')
-            .append('<br/><small>Block:</small> <a href="/block/'+data.height+'">'+data.height+'</a></small>')
+            .attr('data-role', 'date/time')
+            .append(moment(data.time).utc().format('YYYY-MM-DD'))
+            .append('<br/>')
+            .append(moment(data.time).utc().format('HH:mm:ss'))
         );
 
         let changesLabel = $(document.createElement('td'))
-        changesLabel.attr('class', 'hide')
-        changesLabel.append($(document.createElement('div')).append('<strong>Changes</strong>'));
-        changesLabel.append($(document.createElement('div')).append('<strong>Balance</strong>'));
+        changesLabel.attr('class', 'hide text-right')
+        changesLabel.append($(document.createElement('div')).append('<label>Changes</label>'));
+        changesLabel.append($(document.createElement('div')).append('<label>Balance</label>'));
         $row.append(changesLabel)
 
-        let spendableRow = $(document.createElement('td')).attr('class', 'view-spending')
-        spendableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'spending')).append('&nbsp;Nav'));
-        spendableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'spending')).append('&nbsp;Nav'));
+        let spendableRow = $(document.createElement('td')).attr('class', 'text-right hide').attr('data-role', 'spendable')
+        spendableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'spending', true)).append('&nbsp;Nav'));
+        spendableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'spending', false)).append('&nbsp;Nav'));
         $row.append(spendableRow)
 
-        let stakableRow = $(document.createElement('td')).attr('class', 'view-staking')
-        stakableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'staking')).append('&nbsp;Nav'));
-        stakableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'staking')).append('&nbsp;Nav'));
+        if (data.changes.spending !== 0) {
+            let spendableChangeRow = $(document.createElement('td')).attr('class', 'text-right td-adaptive').attr('data-role', 'spendableChange')
+            spendableChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'spending', true)).append('&nbsp;Nav'));
+            $row.append(spendableChangeRow)
+
+            let spendableBalanceRow = $(document.createElement('td')).attr('class', 'text-right td-adaptive').attr('data-role', 'spendableBalance')
+            spendableBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'spending', false)).append('&nbsp;Nav'));
+            $row.append(spendableBalanceRow)
+        }
+
+        let stakableRow = $(document.createElement('td')).attr('class', 'text-right hide').attr('data-role', 'stakable')
+        stakableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'staking', true)).append('&nbsp;Nav'));
+        stakableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'staking', false)).append('&nbsp;Nav'));
         $row.append(stakableRow)
 
-        let votingRow = $(document.createElement('td')).attr('class', 'view-voting')
-        votingRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'voting')).append('&nbsp;Nav'));
-        votingRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'voting')).append('&nbsp;Nav'));
+        if (data.changes.staking !== 0) {
+            let stakableChangeRow = $(document.createElement('td')).attr('class', 'td-adaptive').attr('data-role', 'stakableChange')
+            stakableChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'staking', true)).append('&nbsp;Nav'));
+            $row.append(stakableChangeRow)
+
+            let stakableBalanceRow = $(document.createElement('td')).attr('class', 'td-adaptive').attr('data-role', 'stakableBalance')
+            stakableBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'staking', false)).append('&nbsp;Nav'));
+            $row.append(stakableBalanceRow)
+        }
+
+        let votingRow = $(document.createElement('td')).attr('class', 'text-right hide').attr('data-role', 'votingWeight')
+        votingRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'voting', true)).append('&nbsp;Nav'));
+        votingRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'voting', false)).append('&nbsp;Nav'));
         $row.append(votingRow)
+
+        if (data.changes.voting !== 0) {
+            let votingChangeRow = $(document.createElement('td')).attr('class', 'text-right td-adaptive').attr('data-role', 'votingWeightChange')
+            votingChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'voting', true)).append('&nbsp;Nav'));
+            $row.append(votingChangeRow)
+
+            let votingBalanceRow = $(document.createElement('td')).attr('class', 'text-right td-adaptive').attr('data-role', 'votingWeightBalance')
+            votingBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'voting', false)).append('&nbsp;Nav'));
+            $row.append(votingBalanceRow)
+        }
 
         return $row;
     }
 
-    static addChanges(changes, value) {
+    static addChanges(changes, value, sign) {
         let change = $(document.createElement('span'))
 
         if (changes[value] === 0) {
             // change.attr('class', 'zero')
+        }
+        if (sign === true && changes[value] > 0) {
+            change.append('+ ');
         }
         change.append(new NavNumberFormat().format(changes[value]))
 

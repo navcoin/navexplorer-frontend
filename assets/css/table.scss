@@ -16,6 +16,10 @@
     }
   }
 
+  td.td-adaptive {
+    display: none;
+  }
+
   badge {
     margin-left: 0.25rem;
   }
@@ -35,7 +39,21 @@
   }
 }
 
-@media only screen and (max-width: 576px) {
+.table-nav {
+  border-top: 5px solid $purple;
+
+  td, th {
+    padding: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .table-second {
+    border-top: 0;
+  }
+}
+
+@media only screen and (max-width: 855px) {
   .table-adaptive {
 
     .table-pagination {
@@ -60,16 +78,22 @@
 
     tbody {
       tr {
-        border: 1px solid #ccc;
-        border-bottom: 0;
+        padding: 0.5rem 0 0 0;
+        border: 0;
+        border-top: 5px solid $purple;
       }
 
       th {
         font-weight: normal;
       }
 
+      td.td-adaptive {
+        display: inherit;
+      }
+
       td.hide {
         display: none;
+        visibility: hidden;
       }
 
       td {
@@ -93,6 +117,10 @@
       }
     }
 
+    td:before {
+      color: $grey;
+    }
+
     td[data-role="address"]:before { content: "Address"; }
     td[data-role="answer"]:before { content: "Answer"; }
     td[data-role="amount"]:before { content: "Amount"; }
@@ -112,22 +140,32 @@
     td[data-role="navEarned"]:before { content: "NAV Earned"; }
     td[data-role="navRequested"]:before { content: "NAV Requested"; }
     td[data-role="navSpent"]:before { content: "NAV Spent"; }
-    td[data-role="numStakes"]:before { content: "# Stakes"; }
+    td[data-role="numStakes"]:before { content: "Staking TXs"; }
     td[data-role="percentageOfCoins"]:before { content: "% of Coins"; }
     td[data-role="previousOutput"]:before { content: "Previous Output"; }
     td[data-role="proposal"]:before { content: "Proposal"; }
     td[data-role="rank"]:before { content: "Rank"; }
     td[data-role="redeemedIn"]:before { content: "Redeemed In"; }
+    td[data-role="spendable"]:before { content: "Spendable"; }
+    td[data-role="spendableChange"]:before { content: "Spendable Change"; }
+    td[data-role="spendableBalance"]:before { content: "Spendable Balance"; }
+    td[data-role="stakable"]:before { content: "Stakable"; }
+    td[data-role="stakableChange"]:before { content: "Stakable Change"; }
+    td[data-role="stakableBalance"]:before { content: "Stakable Balance"; }
     td[data-role="stakedBy"]:before { content: "Staked By"; }
     td[data-role="stakeRewards"]:before { content: "Stake Rewards"; }
     td[data-role="stake"]:before { content: "Stake"; }
     td[data-role="status"]:before { content: "Status"; }
+    td[data-role="transaction"]:before { content: "Transaction"; }
     td[data-role="transactions"]:before { content: "Transactions"; }
     td[data-role="type"]:before { content: "Type"; }
     td[data-role="txid"]:before { content: "Txid"; }
     td[data-role="vote"]:before { content: "Vote"; }
     td[data-role="votingCycle"]:before { content: "Voting Cycle"; }
     td[data-role="votingStatus"]:before { content: "Voting Status"; }
+    td[data-role="votingWeight"]:before { content: "Voting Weight"; }
+    td[data-role="votingWeightChange"]:before { content: "Voting Weight Change"; }
+    td[data-role="votingWeightBalance"]:before { content: "Voting Weight Balance"; }
     td[data-role="type"]:before { content: "Type"; }
   }
 }
@@ -159,4 +197,8 @@
 
 .tr-sub td {
   border-top: 0;
+}
+
+.caption-top {
+  padding-bottom: 0;
 }

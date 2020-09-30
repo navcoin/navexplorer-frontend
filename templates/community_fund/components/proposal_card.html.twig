@@ -1,41 +1,44 @@
-<div class="card card-proposal">
+<div class="card card-proposal card-nav">
     <div class="card-header">
-        <h5>{{ proposal.description|capitalize}}</h5>
+        <h2>{{ proposal.description|capitalize}}</h2>
     </div>
 
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="break-word">{{ proposal.hash }}</a>
-        </li>
-        <li class="list-group-item">
-            NAV Requested
-            <span class="float-right">{{ proposal.requestedAmount|stake_format }}</span>
-        </li>
-        <li class="list-group-item">
-            NAV Paid
-            <span class="float-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</span>
-        </li>
-        <li class="list-group-item">
-            Duration
-            <span class="float-right">{{ proposal.duration }}</span>
-        </li>
-        <li class="list-group-item">
-            {{ proposalVoteProgress(proposal, blockCycle) }}
-            <p class="text-muted">
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="break-word">{{ proposal.hash }}</a>
+            </li>
+            <li class="list-group-item">
+                NAV Requested
+                <span class="float-right">{{ proposal.requestedAmount|stake_format }}</span>
+            </li>
+            <li class="list-group-item">
+                NAV Paid
+                <span class="float-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</span>
+            </li>
+            <li class="list-group-item">
+                Duration
+                <span class="float-right">{{ proposal.duration }}</span>
+            </li>
+            <li class="list-group-item">
+                {{ proposalVoteProgress(proposal, blockCycle) }}
+                <p class="text-muted">
                 <span class="float-left">
                     Accept {{ proposal.votesYes }} / Reject {{ proposal.votesNo }} / Abstain {{ proposal.votesAbs }}
                 </span>
-                <span class="float-right">Cycle: {{ proposal.votingCycle }}</span>
-            </p>
-        </li>
-        <li class="list-group-item">
-            Status
-            <span class="float-right">{{ proposal.status|title }}</span>
-        </li>
-    </ul>
+                    <span class="float-right">Cycle: {{ proposal.votingCycle }}</span>
+                </p>
+            </li>
+            <li class="list-group-item">
+                Status
+                <span class="float-right">{{ proposal.status|title }}</span>
+            </li>
+        </ul>
+    </div>
 
     <div class="card-footer">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-around">
+            <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="">View Proposal</a>
             <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="btn btn-info">View Proposal</a>
         </div>
     </div>

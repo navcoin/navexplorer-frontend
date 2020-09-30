@@ -41,6 +41,8 @@ class DateExtension extends AbstractExtension
         $years = floor($diff / (365*60*60*24));
         $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
         $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+        $hours = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)/ (60*60));
+        $minutes = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ (60));
 
         $age = "";
         if ($years > 0) {
@@ -57,6 +59,13 @@ class DateExtension extends AbstractExtension
                 $age .= ",";
             }
             $age .= sprintf(" %d day%s", $days, $days==1?'':'s');
+        }
+
+        if ($age == "") {
+            $age .= sprintf("%d hour%s", $hours, $hours==1?'':'s');
+            if ($minutes) {
+                $age .= sprintf(", %d minute%s", $minutes, $minutes==1?'':'s');
+            }
         }
 
         return $age;

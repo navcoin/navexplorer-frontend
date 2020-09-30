@@ -14,6 +14,7 @@ class SummaryMapper extends BaseMapper
         return new Summary(
             $data['height'],
             $data['hash'],
+            $data['txs'],
             $this->mapAccount($data['spending']),
             $this->mapAccount($data['staking']),
             $this->mapAccount($data['voting'])

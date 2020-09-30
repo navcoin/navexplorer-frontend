@@ -23,10 +23,9 @@ export default class TransactionLoader {
         let $transactionList = $(".transaction-list");
         data.elements.forEach(function (tx) {
             $transactionList.append(
-                '<div class="card">\n' +
-                '  <div class="card-header">\n' +
-                '    <a href="/tx/' + tx.hash+'" class="text-left">' + tx.hash + '</a>' +
-                self.sumOutputs(tx.outputs) +
+                '<div class="card card-nav">\n' +
+                '  <div class="card-header">' +
+                '    <h2 class="break-word"><a href="/tx/' + tx.hash+'" class="text-left">' + tx.hash + '</a></h2>\n' +
                 '  </div>\n' +
                 '  <div class="card-body">\n' +
                 '    <div class="row">\n' +

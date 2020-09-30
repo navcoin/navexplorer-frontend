@@ -36,7 +36,7 @@ class AddressController extends Controller
     private $transactionApi;
 
     /** @var int */
-    private $pageSize = 50;
+    private $pageSize = 10;
 
     public function __construct(AddressApi $addressApi, HistoryApi $historyApi, SummaryApi $summaryApi, StakingApi $stakingApi, TransactionApi $transactionApi)
     {
@@ -61,11 +61,14 @@ class AddressController extends Controller
             return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
         }
 
+        $period = $request->get('period', "monthly");
+
         return $this->render('address/index.html.twig', [
             'address' => $address,
             'summary' => $summary,
             'type' => $request->query->getAlpha('type'),
-            'stakingReport' => $this->getStakingReport($hash, $request->get('period', "daily")),
+            'stakingReport' => $this->getStakingReport($hash, $period),
+            'period' => $period,
             'activeTab' => $request->get('period') ? 'staking-report' : 'history',
         ]);
     }

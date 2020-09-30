@@ -2,36 +2,32 @@
 
 namespace App\Navcoin\SoftFork\Entity;
 
+use DateTime;
+
 class SoftFork
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $signalBit;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $state;
 
-    /**
-     * @var int
-     */
+    /** @var DateTime */
+    private $startTime;
+
+    /** @var DateTime */
+    private $timeout;
+
+    /** @var int */
     private $lockedInHeight;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $activationHeight;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $signalHeight;
 
     /**
@@ -43,6 +39,8 @@ class SoftFork
         String $name,
         int $signalBit,
         string $state,
+        DateTime $startTime,
+        DateTime $timeout,
         ?int $lockedInHeight,
         ?int $activationHeight,
         ?int $signalHeight
@@ -50,6 +48,8 @@ class SoftFork
         $this->name = $name;
         $this->signalBit = $signalBit;
         $this->state = $state;
+        $this->startTime = $startTime;
+        $this->timeout = $timeout;
         $this->lockedInHeight = $lockedInHeight;
         $this->activationHeight = $activationHeight;
         $this->signalHeight = $signalHeight;
@@ -68,6 +68,16 @@ class SoftFork
     public function getState(): string
     {
         return $this->state;
+    }
+
+    public function getStartTime(): DateTime
+    {
+        return $this->startTime;
+    }
+
+    public function getTimeout(): DateTime
+    {
+        return $this->timeout;
     }
 
     public function getLockedInHeight(): ?int
@@ -91,5 +101,17 @@ class SoftFork
 
     public function getBestCycle(): int {
         return count($this->cycles) > 0 ? end($this->cycles) : 0;
+    }
+
+    public function isSignalling(): bool {
+        return in_array($this->state, ["defined", "started"]) && $this->timeout->getTimestamp() >= (new DateTime())->getTimestamp();
+    }
+
+    public function isActive(): bool {
+        return in_array($this->state, ["active", "locked_in"]);
+    }
+
+    public function isExpired(): bool {
+        return in_array($this->state, ["defined", "started"]) && $this->timeout->getTimestamp() < (new DateTime())->getTimestamp();
     }
 }

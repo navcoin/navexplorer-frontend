@@ -34,7 +34,7 @@ class HomeController extends Controller
     public function index(Request $request): array
     {
         return [
-            'blocks' => $this->blockGroupApi->getGroupByCategory($request->get('period', 'hourly'), 10)
+            'blocks' => $this->blockGroupApi->getGroupByCategory($request->get('period', 'hourly'), 5)
         ];
     }
 

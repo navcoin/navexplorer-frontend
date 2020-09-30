@@ -13,6 +13,7 @@
 @import 'progress';
 @import 'chart';
 @import 'search';
+@import 'overview';
 @import 'soft-fork';
 @import 'distribution';
 @import 'community-fund';
@@ -36,10 +37,11 @@ h1, h2, h3, h4, h5 {
 h1 {
   margin: 1rem 0;
   font-size: 1.8rem;
+  text-transform: uppercase;
 }
 
 h2 {
-  margin: 1rem 0;
+  margin: 0 0 0.3rem;
   font-size: 1.2rem;
 }
 
@@ -72,7 +74,7 @@ p {
 }
 
 .margin-top {
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 .margin-bottom {

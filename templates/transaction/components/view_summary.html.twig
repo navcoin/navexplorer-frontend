@@ -1,13 +1,11 @@
 <div class="row transaction-summary">
+    <div class="col-sm-12">
+        <h2>{{ transaction.hash }}</h2>
+    </div>
+
     <div class="col-sm-12 col-md-12 col-lg-8">
-        <table class="table table-striped">
+        <table class="table table-striped table-nav">
             <tbody>
-                <tr>
-                    <td><strong>Hash</strong></td>
-                    <td class="text-right break-word">
-                        {{ transaction.hash }}
-                    </td>
-                </tr>
                 <tr>
                     <td><strong>Height</strong></td>
                     <td class="text-right">

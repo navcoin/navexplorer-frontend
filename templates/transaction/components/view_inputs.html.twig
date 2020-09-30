@@ -1,17 +1,17 @@
 <h2>Inputs</h2>
-<table class="table table-striped table-adaptive">
+<table class="table table-striped table-adaptive table-nav">
     <thead>
         <tr>
             <th style="width: 5%">Index</th>
             <th style="width: 40%">Previous Output</th>
             <th style="width: 35%">Address</th>
-            <th style="width: 20%">Amount</th>
+            <th style="width: 20%" class="text-right">Amount</th>
         </tr>
     </thead>
     <tbody>
         {% for input in transaction.inputs %}
             <tr>
-                <td data-role="index">{{ input.index }}</td>
+                <td data-role="index" class="text-center">{{ input.index }}</td>
                 <td data-role="previousOutput">
                     {% if input.previousOutput %}
                         <a href="{{ path('app_transaction_view', {'hash': input.previousOutput}) }}">{{ input.previousOutput|slice(0, 20) }}</a>...:{{ input.index }}
@@ -42,7 +42,7 @@
                         N/A
                     {% endif %}
                 </td>
-                <td data-role="amount">
+                <td data-role="amount" class="text-right">
                     {{ input.amount|stake_format }}
                 </td>
             </tr>

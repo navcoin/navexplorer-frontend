@@ -10,6 +10,9 @@ class Summary
     /** @var string */
     private $hash;
 
+    /** @var int */
+    protected $txs;
+
     /** @var SummaryAccount */
     private $spending;
 
@@ -19,10 +22,11 @@ class Summary
     /** @var SummaryAccount */
     private $voting;
 
-    public function __construct(int $height, string $hash, SummaryAccount $spending, SummaryAccount $staking, SummaryAccount $voting)
+    public function __construct(int $height, string $hash, int $txs, SummaryAccount $spending, SummaryAccount $staking, SummaryAccount $voting)
     {
         $this->height = $height;
         $this->hash = $hash;
+        $this->txs = $txs;
         $this->spending = $spending;
         $this->staking = $staking;
         $this->voting = $voting;
@@ -39,25 +43,21 @@ class Summary
         return $this->hash;
     }
 
-    /**
-     * @return SummaryAccount
-     */
+    public function getTxs(): int
+    {
+        return $this->txs;
+    }
+
     public function getSpending(): SummaryAccount
     {
         return $this->spending;
     }
 
-    /**
-     * @return SummaryAccount
-     */
     public function getStaking(): SummaryAccount
     {
         return $this->staking;
     }
 
-    /**
-     * @return SummaryAccount
-     */
     public function getVoting(): SummaryAccount
     {
         return $this->voting;

@@ -14,19 +14,13 @@ use JMS\Serializer\SerializerInterface;
 
 class BlockController extends Controller
 {
-    /**
-     * @var int
-     */
-    private $pageSize = 100;
+    /** @var int */
+    private $pageSize = 10;
 
-    /**
-     * @var BlockApi
-     */
+    /** @var BlockApi */
     private $blockApi;
 
-    /**
-     * @var TransactionApi
-     */
+    /** @var TransactionApi */
     private $transactionApi;
 
     public function __construct(BlockApi $blockApi, TransactionApi $transactionApi)
@@ -38,8 +32,6 @@ class BlockController extends Controller
     /**
      * @Route("/blocks")
      * @Template()
-     *
-     * @return array
      */
     public function index(): array
     {
@@ -48,11 +40,6 @@ class BlockController extends Controller
 
     /**
      * @Route("/blocks.json")
-     *
-     * @param Request             $request
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
      */
     public function blocks(Request $request, SerializerInterface $serializer): Response
     {
@@ -66,10 +53,6 @@ class BlockController extends Controller
 
     /**
      * @Route("/block/{height}")
-     *
-     * @param Request $request
-     *
-     * @return array|Response
      */
     public function view(Request $request)
     {
@@ -92,11 +75,6 @@ class BlockController extends Controller
 
     /**
      * @Route("/block/{height}/tx.json")
-     *
-     * @param Request             $request
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
      */
     public function transactions(Request $request, SerializerInterface $serializer): Response
     {
@@ -107,10 +85,6 @@ class BlockController extends Controller
 
     /**
      * @Route("/block/{hash/raw.json")
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     public function rawData(Request $request): Response
     {

@@ -1,22 +1,32 @@
 <div class="address-summary">
-    <table class="table table-striped">
+    <h2>{{ summary.hash }}</h2>
+    <table class="table table-nav table-striped">
         <tbody>
         <tr>
-            <th>Hash</th>
-            <td class="text-right">
-                {{ summary.hash }}
-            </td>
+            <th scope="col">Rich List</th>
+            <td>{{ address.richList.spending|ordinal }}</td>
         </tr>
         <tr>
-            <th>First Seen</th>
-            <td class="text-right">
-                <a href="{{ path("app_block_view", {'height': address.createdBlock}) }}">{{ address.createdBlock }}</a>
-            </td>
+            <th scope="col">Spendable Balance</th>
+            <td>{{ summary.spending.balance|stake_format }}</td>
         </tr>
         <tr>
-            <th>Age</th>
-            <td class="text-right">
-                {{ address.createdTime|age }}
+            <th scope="col">Stakable Balance</th>
+            <td>{{ summary.staking.balance|stake_format }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Voting Weight</th>
+            <td>{{ summary.voting.balance|stake_format }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Transactions</th>
+            <td>{{ summary.txs }} txs</td>
+        </tr>
+        <tr>
+            <th scope="col">Created At</th>
+            <td>
+                {{ address.createdTime|date_localised('Y-m-d, H:i:s') }}<br/>
+                <small><label>Block&nbsp;</label><a href="{{ path("app_block_view", {'height': address.createdBlock}) }}">{{ address.createdBlock }}</a></small>
             </td>
         </tr>
         </tbody>
