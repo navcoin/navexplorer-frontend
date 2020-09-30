@@ -1,6 +1,7 @@
-<h2>Best Block ({{ best.height }})</h2>
-<table class="table table-striped table-nav">
-    <tbody>
+<div class="bestBlock">
+    <h2>Best Block ({{ best.height }})</h2>
+    <table class="table table-striped table-nav">
+        <tbody>
         <tr>
             <th scope="col">hash</th>
             <td class="text-right">
@@ -33,5 +34,6 @@
             <th scope="col">Created At</th>
             <td class="text-right">{{ best.created|date_localised('Y-m-d, H:i:s') }}
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
