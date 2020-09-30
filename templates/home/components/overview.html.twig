@@ -18,17 +18,21 @@
         <thead>
         <tr>
             <th>Period</th>
+            <th class="text-center">Height</th>
             <th class="text-center">Blocks</th>
             <th class="text-center">Transactions</th>
-            <th class="text-right">Nav Spent</th>
+            <th class="text-center">Stake Rewards</th>
+            <th class="text-center">Nav Spent</th>
         </tr>
         </thead>
         <tbody>
         {% for index, block in blocks %}
             <tr>
                 <td data-role="hourlyPeriod">{{ period(blocks.period, index, block) }}</td>
+                <td data-role="height" class="text-center"><a href="{{ path('app_block_view', {'height': block.height}) }}">{{ block.height }}</a></td>
                 <td class="text-center" data-role="blocks">{{ block.blocks|number_format }}</td>
-                <td class="text-center" data-role="transactions">{{ (block.transactions-block.blocks-block.blocks) }}</td>
+                <td class="text-center" data-role="transactions">{{ block.transactions|number_format }}</td>
+                <td data-role="stakeRewards" class="text-right">{{ block.stake|stake_format(false, 2) }}</td>
                 <td data-role="navSpent" class="text-right">{{ block.spend|stake_format(false, 2) }}</td>
             </tr>
         {% endfor %}
