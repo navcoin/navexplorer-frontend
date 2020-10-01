@@ -112,6 +112,10 @@ export default class Pagination {
     }
 
     render() {
+        if (!this.containers) {
+            return;
+        }
+
         var pagination = this;
         this.containers.each(function () {
             $(this).empty();

@@ -7,22 +7,25 @@ class Paginator
     /** @var int */
     private $pageSize;
 
-    /**  @var int */
+    /** @var int */
     private $totalPages;
 
-    /**  @var int */
+    /** @var int */
     private $totalElements;
 
-    /**  @var int */
+    /** @var int */
     private $currentPage;
 
-    /**  @var bool */
+    /** @var bool */
     private $first;
 
     /** @var bool */
     private $last;
 
-    public function __construct(int $pageSize, int $totalPages, int $totalElements, int $currentPage, bool $first, bool $last)
+    /** @var int */
+    private $total;
+
+    public function __construct(int $pageSize, int $totalPages, int $totalElements, int $currentPage, bool $first, bool $last, int $total)
     {
         $this->pageSize = $pageSize;
         $this->totalPages = $totalPages;
@@ -30,6 +33,7 @@ class Paginator
         $this->currentPage = $currentPage;
         $this->first = $first;
         $this->last = $last;
+        $this->total = $total;
     }
 
     public function getPageSize(): int
@@ -70,5 +74,10 @@ class Paginator
     public function getNextPage(): int
     {
         return $this->currentPage == $this->totalPages ? $this->totalPages : $this->currentPage + 1;
+    }
+
+    public function getTotal(): int
+    {
+        return $this->total;
     }
 }

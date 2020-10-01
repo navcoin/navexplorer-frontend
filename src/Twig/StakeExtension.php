@@ -32,6 +32,6 @@ class StakeExtension extends AbstractExtension
 
 //        return $stake . '&nbsp;NAV';
 
-        return preg_replace('/\.([0-9]*)$/', '.<small>$1</small>', $stake) . '&nbsp;NAV';
+        return preg_replace('/\.([0-9]*)$/', '.<small>$1</small>', $stake) . '&nbsp;Nav';
     }
 }

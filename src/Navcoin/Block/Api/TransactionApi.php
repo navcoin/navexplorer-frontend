@@ -49,20 +49,17 @@ class TransactionApi extends NavcoinApi
         return $data;
     }
 
-    public function getTransactions(int $size = 50, String $from = null, String $to = null): IteratorEntityInterface
+    public function getTransactions(int $size = 50, int $page = 1, $paginate = true): IteratorEntityInterface
     {
-        $url = sprintf('/api/tx/?page=%d&size=%d',0, $size);
-        $url .= ($from !== null) ? sprintf('&from=%s', $from) : '';
-        $url .= ($to !== null) ? sprintf('&to=%s', $to) : '';
-
         try {
-            $response = $this->getClient()->get($url);
+            $response = $this->getClient()->get(sprintf('/tx?size=%d&page=%d', $size, $page));
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             return new Transactions();
         }
 
-        return $this->getMapper()->mapIterator(Transactions::class, $data);
+        $paginator = $paginate ? $this->getClient()->getPaginator($response) : null;
+        return $this->getMapper()->mapIterator(Transactions::class, $data, $paginator);
     }
 
     public function getTransactionsForBlock(String $height): IteratorEntityInterface
@@ -72,6 +69,18 @@ class TransactionApi extends NavcoinApi
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             throw new BlockNotFoundException(sprintf("The block at height %s does not exist.", $height), 0, $e);
+        }
+
+        return $this->getMapper()->mapIterator( Transactions::class, $data);
+    }
+
+    public function getLatestTransactions(int $count): IteratorEntityInterface
+    {
+        try {
+            $response = $this->getClient()->get('/latesttx/'.$count);
+            $data = $this->getClient()->getJsonBody($response);
+        } catch (ClientException $e) {
+            return new Transactions();
         }
 
         return $this->getMapper()->mapIterator( Transactions::class, $data);

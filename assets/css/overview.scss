@@ -1,17 +1,20 @@
-.overview {
-  margin-bottom: 2rem;
+.page-home-index {
+  .overview {
+    margin-bottom: 2rem;
 
-  h1 {
-    margin-bottom: 0.3rem;
-    float: left;
+    h1 {
+      margin-bottom: 0.3rem;
+      float: left;
+    }
+
+    .form-filter {
+      margin: 1rem 0 0;
+      float: right;
+    }
   }
 
-  .form-filter {
-    margin: 1rem 0 0;
-    float: right;
+  .bestBlock, #blocks, #txs {
+    margin-top: 28px;
+    margin-bottom: 2rem;
   }
-}
-
-.bestBlock {
-  margin-top: 28px
 }

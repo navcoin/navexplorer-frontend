@@ -3,9 +3,9 @@
     <table class="table table-striped table-nav">
         <tbody>
         <tr>
-            <th scope="col">hash</th>
+            <th scope="col">Block Hash</th>
             <td class="text-right">
-                <a href="{{ path('app_block_view', {'height': best.height}) }}" class="break-word">{{ best.hash|slice(0, 32) }}...</a>
+                <a href="{{ path('app_block_view', {'height': best.height}) }}" class="break-word">{{ best.hash[:24] }}...{{ best.hash[60:] }}</a>
             </td>
         </tr>
         <tr>
@@ -28,7 +28,7 @@
         </tr>
         <tr>
             <th scope="col">Transactions</th>
-            <td class="text-right">{{ best.transactions }}</td>
+            <td class="text-right">{{ best.transactions - 2 }}</td>
         </tr>
         <tr>
             <th scope="col">Created At</th>

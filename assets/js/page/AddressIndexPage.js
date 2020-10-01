@@ -83,6 +83,8 @@ class AddressIndexPage {
     }
 
     createHistoryRow(data) {
+        let numberFormatter = new NavNumberFormat();
+
         let $row = $(document.createElement('tr'));
         $row.attr('data-id', data.tx_id);
 
@@ -90,7 +92,7 @@ class AddressIndexPage {
             .attr('data-role', 'transaction')
             .append('<a href="/tx/'+data.tx_id+'" class="break-word d-none d-lg-inline">' + data.tx_id.substr(0, 15) + '...</a>')
             .append('<a href="/tx/'+data.tx_id+'" class="break-word d-sm-inline d-md-inline d-lg-none">' + data.tx_id.substr(0, 15) + '...</a>')
-            .append('<div><small>Block:</small> <a href="/block/'+data.height+'">'+data.height+'</a></small></div>')
+            .append('<div><small>Block:</small> <a href="/block/'+data.height+'">'+numberFormatter.format(data.height)+'</a></small></div>')
         );
 
         let type = $(document.createElement('td'))

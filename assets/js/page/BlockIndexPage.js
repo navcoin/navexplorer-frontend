@@ -17,8 +17,13 @@ class BlockIndexPage {
         let $row = $(document.createElement('tr'));
 
         $row.append($(document.createElement('td'))
+            .attr('data-role', 'hash')
+            .append('<a href="/tx/'+data.hash+'">' + data.hash.substring(1, 12) + '...'+data.hash.slice(-4)+'</a>')
+        );
+
+        $row.append($(document.createElement('td'))
             .attr('data-role', 'height')
-            .append('<a href="/block/'+data.height+'">'+data.height+'</a>')
+            .append('<a href="/block/'+data.height+'">'+numberFormatter.format(data.height)+'</a>')
         );
 
         $row.append($(document.createElement('td'))

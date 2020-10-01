@@ -80,6 +80,28 @@
       tr {
         padding: 0 0 0 0;
         border: 0;
+        background-color: white;
+
+        td {
+          padding: 0.5rem;
+          border-top: 1px solid $dark-grey;
+          border-bottom: 0;
+        }
+
+        td:before {
+          top: 0.5rem;
+        }
+
+        td:nth-of-type(odd) {
+          background-color: $off-white;
+        }
+      }
+
+      tr:nth-of-type(odd) {
+        background-color: white;
+      }
+
+      tr:not(:first-child) {
         border-top: 5px solid $purple;
       }
 
@@ -136,11 +158,13 @@
     td[data-role="hash"]:before { content: "Hash"; }
     td[data-role="height"]:before { content: "Height"; }
     td[data-role="index"]:before { content: "Index"; }
+    td[data-role="inputs"]:before { content: "Inputs"; }
     td[data-role="lastBlock"]:before { content: "Last Block"; }
     td[data-role="navEarned"]:before { content: "NAV Earned"; }
     td[data-role="navRequested"]:before { content: "NAV Requested"; }
     td[data-role="navSpent"]:before { content: "NAV Spent"; }
     td[data-role="numStakes"]:before { content: "Staking TXs"; }
+    td[data-role="outputs"]:before { content: "Outputs"; }
     td[data-role="percentageOfCoins"]:before { content: "% of Coins"; }
     td[data-role="previousOutput"]:before { content: "Previous Output"; }
     td[data-role="proposal"]:before { content: "Proposal"; }
@@ -161,12 +185,12 @@
     td[data-role="type"]:before { content: "Type"; }
     td[data-role="txid"]:before { content: "Txid"; }
     td[data-role="vote"]:before { content: "Vote"; }
+    td[data-role="value out"]:before { content: "Value Out"; }
     td[data-role="votingCycle"]:before { content: "Voting Cycle"; }
     td[data-role="votingStatus"]:before { content: "Voting Status"; }
     td[data-role="votingWeight"]:before { content: "Voting Weight"; }
     td[data-role="votingWeightChange"]:before { content: "Voting Weight Change"; }
     td[data-role="votingWeightBalance"]:before { content: "Voting Weight Balance"; }
-    td[data-role="type"]:before { content: "Type"; }
   }
 }
 

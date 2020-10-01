@@ -82,18 +82,4 @@ class BlockController extends Controller
 
         return new Response($serializer->serialize($transactions, 'json'));
     }
-
-    /**
-     * @Route("/block/{hash/raw.json")
-     */
-    public function rawData(Request $request): Response
-    {
-        try {
-            $rawData = $this->blockApi->getRawBlock($request->get('hash'));
-        } catch (\Exception $e) {
-            return new Response("Unable to load raw data", $e->getCode());
-        }
-
-        return new Response($rawData, 200);
-    }
 }

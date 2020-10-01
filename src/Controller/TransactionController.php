@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Exception\TransactionNotFoundException;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\TransactionApi;
+use Exception;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,19 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TransactionController extends Controller
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $pageSize = 10;
 
-    /**
-     * @var BlockApi
-     */
+    /** @var BlockApi */
     private $blockApi;
 
-    /**
-     * @var TransactionApi
-     */
+    /** @var TransactionApi */
     private $transactionApi;
 
     public function __construct(BlockApi $blockApi, TransactionApi $transactionApi)
@@ -38,8 +33,6 @@ class TransactionController extends Controller
     /**
      * @Route("/tx")
      * @Template()
-     *
-     * @return array
      */
     public function index(): array
     {
@@ -48,30 +41,34 @@ class TransactionController extends Controller
 
     /**
      * @Route("/tx.json")
-     *
-     * @param Request             $request
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
      */
     public function transactions(Request $request, SerializerInterface $serializer): Response
     {
         $transactions = $this->transactionApi->getTransactions(
             $request->get('size', $this->pageSize),
-            $request->get('from', null),
-            $request->get('to', null)
+            $request->get('page', 1)
         );
 
         return new Response($serializer->serialize($transactions, 'json'));
     }
 
     /**
+     * @Route("/tx/latest.json")
+     */
+    public function latest(Request $request, SerializerInterface $serializer): Response
+    {
+        try {
+            $latestTxs = $this->transactionApi->getLatestTransactions($request->get('count'));
+        } catch (Exception $e) {
+            return new Response("Unable to load latest transactions", $e->getCode());
+        }
+
+        return new Response($serializer->serialize($latestTxs->getElements(), 'json'));
+    }
+
+    /**
      * @Route("/tx/{hash}")
      * @Template()
-     *
-     * @param Request $request
-     *
-     * @return array|Response
      */
     public function view(Request $request)
     {
@@ -92,23 +89,5 @@ class TransactionController extends Controller
             'block' => $block,
             'raw' => $rawData,
         ];
-    }
-
-    /**
-     * @Route("/tx/{hash/raw.json")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function rawData(Request $request): Response
-    {
-        try {
-            $rawData = $this->transactionApi->getRawTransaction($request->get('hash'));
-        } catch (\Exception $e) {
-            return new Response("Unable to load raw data", $e->getCode());
-        }
-
-        return new Response($rawData, 200);
     }
 }

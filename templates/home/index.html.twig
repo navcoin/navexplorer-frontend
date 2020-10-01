@@ -7,13 +7,19 @@
 {% block body %}
     <div class="home">
         <div class="container-fluid">
+            {% include 'home/components/hud.html.twig' %}
+
             <div class="row margin-bottom">
-                <div class="col-md-6 col-sm-12">
-                    {% include 'home/components/overview.html.twig' %}
+{#                <div class="col-sm-12 col-md-6">#}
+{#                    {% include 'home/components/overview.html.twig' %}#}
+{#                </div>#}
+
+                <div class="col-sm-12 col-md-6">
+                    {% include 'home/components/blocks.html.twig' %}
                 </div>
 
-                <div class="col-md-6 col-sm-12">
-                    {% include 'home/components/bestBlock.html.twig' %}
+                <div class="col-sm-12 col-md-6">
+                    {% include 'home/components/txs.html.twig' %}
                 </div>
             </div>
         </div>

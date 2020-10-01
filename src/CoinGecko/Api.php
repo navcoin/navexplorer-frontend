@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Navcoin\Client;
 
-use App\Navcoin\Common\Entity\IteratorEntityInterface;
-use App\Navcoin\Common\Entity\Paginator;
+namespace App\CoinGecko;
+
+
+use App\Exception\AddressIndexIncompleteException;
+use App\Exception\ServerRequestException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Http\Discovery\HttpClientDiscovery;
@@ -11,17 +13,10 @@ use Http\Discovery\MessageFactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-class NavcoinClient implements NavcoinClientInterface
+class Api
 {
     /** @var string */
     private $baseUrl;
-
-    /** @var string */
-    private $network;
-
-    /** @var LoggerInterface */
-    private $logger;
-
     /** @var Client */
     private $client;
 
@@ -34,25 +29,29 @@ class NavcoinClient implements NavcoinClientInterface
         'Content-Type' => 'application/json',
     ];
 
-    public function __construct(string $baseUrl, string $network, LoggerInterface $logger)
+    public function __construct()
     {
-        $this->baseUrl = $baseUrl;
-        $this->network = strtolower($network);
-        $this->logger = $logger;
+        $this->baseUrl = "https://api.coingecko.com/api/v3";
 
         $this->client = HttpClientDiscovery::find();
         $this->messageFactory = MessageFactoryDiscovery::find();
     }
 
-    public function get(string $uri): ResponseInterface
+    public function getTicker(): array
     {
-        $this->headers["Network"] = $this->network;
+        try {
+            $response = $this->get('/coins/nav-coin');
+            return $this->getJsonBody($response);
+        } catch (ServerRequestException $e) {
+            throw $e;
+        }
+    }
 
-        $this->logger->debug("Api Request:", [$this->network, $this->baseUrl.$uri, $this->headers]);
+    private function get(string $uri): ResponseInterface
+    {
         $request = $this->messageFactory->createRequest('GET', $this->baseUrl.$uri, $this->headers);
 
         $response = $this->client->sendRequest($request);
-        $this->logger->debug("Api Response:", [$response->getStatusCode(), $response]);
 
         switch ($response->getStatusCode()) {
             case 400:
@@ -66,12 +65,12 @@ class NavcoinClient implements NavcoinClientInterface
         return $response;
     }
 
-    public function getBody(ResponseInterface $response): string
+    private function getBody(ResponseInterface $response): string
     {
         return $response->getBody()->getContents();
     }
 
-    public function getJsonBody(ResponseInterface $response, bool $assoc = true): array
+    private function getJsonBody(ResponseInterface $response, bool $assoc = true): array
     {
         $jsonBody = \GuzzleHttp\json_decode($this->getBody($response), $assoc);
         if ($jsonBody == null) {
@@ -79,22 +78,5 @@ class NavcoinClient implements NavcoinClientInterface
         }
 
         return $jsonBody;
-    }
-
-    public function getPaginator(ResponseInterface $response): Paginator
-    {
-        if ($response->hasHeader('x-pagination')) {
-            $data = \GuzzleHttp\json_decode($response->getHeader('x-pagination')[0], true);
-
-            return new Paginator(
-                $data['size'],
-                $data['total_pages'],
-                $data['number_of_elements'],
-                $data['current_page'],
-                $data['first'],
-                $data['last'],
-                $data['total'],
-            );
-        }
     }
 }
