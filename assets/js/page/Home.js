@@ -2,6 +2,7 @@ import TableManager from "../services/TableManager";
 import NavNumberFormat from "../services/NavNumberFormat";
 import moment from 'moment/src/moment';
 import axios from "axios";
+import Chart from "chart.js";
 
 const $ = require('jquery');
 
@@ -13,6 +14,139 @@ class PageHome {
         this.tableManager = new TableManager('#txs table', 'transaction', this.populateTxs);
 
         this.populateTicker();
+
+        this.populateAddressGroups();
+    }
+
+    populateAddressGroups() {
+        console.info("populateAddressGroups")
+        let addressGroups = $('#address-groups');
+        if (addressGroups.length) {
+            let period = addressGroups.attr("data-period")
+            axios.get('/address/group/' + period + '.json').then(this.loadAddressGroupData.bind(this));
+        }
+    }
+
+    loadAddressGroupData(response) {
+        let elements = response.data.elements.reverse();
+
+        let start = []
+        let end = []
+        let addresses = []
+        let spend = []
+
+        Array.min = function(array) {
+            return Math.min.apply(Math, array);
+        };
+
+        Array.max = function(array) {
+            return Math.max.apply(Math, array);
+        };
+
+        for (let i = 0; i < elements.length; i++) {
+            start[i] = moment(elements[i].start).utc().format('YYYY-MM-DD');
+            end[i] = elements[i].end;
+            addresses[i] = elements[i].addresses;
+            spend[i] = elements[i].spend;
+        }
+
+        let ctx = document.getElementById("address-groups-chart");
+
+        var options = {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    usePointStyle: true,
+                },
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }],
+                yAxes: [{
+                    id: 'A',
+                    type: 'linear',
+                    position: 'left',
+                    offset: false,
+                    gridLines: {
+                        display: true,
+                    },
+                    ticks: {
+                        min: Math.ceil(Array.min(addresses) / 1.2),
+                    },
+                    afterTickToLabelConversion: function(scaleInstance) {
+                        scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
+                        scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
+                    }
+                },
+                {
+                    id: 'B',
+                    type: 'linear',
+                    position: 'right',
+                    offset: false,
+                    gridLines: {
+                        display: false,
+                    },
+                    ticks: {
+                        max: Math.ceil(Array.max(spend) * 1.2),
+                        min: Math.ceil(Array.min(spend) / 1.2),
+                    },
+                    afterTickToLabelConversion: function(scaleInstance) {
+                        scaleInstance.ticks[0] = null;
+                        scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
+
+                        scaleInstance.ticksAsNumbers[0] = null;
+                        scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
+                    }
+                }]
+            },
+            tooltips: {enabled: true},
+            hover: {mode: null},
+        };
+
+        let data = {
+            labels: start,
+            datasets: [
+                {
+                    label: 'All Addresses',
+                    fill: true,
+                    lineTension: 0.4,
+                    backgroundColor: "rgba(0,0,0,0)",
+                    borderColor: "rgb(74, 58, 111)",
+                    borderWidth: 3,
+                    pointRadius: 2,
+                    pointBackgroundColor: "rgb(74, 58, 111)",
+                    data: addresses,
+                    spanGaps: true,
+                    yAxisID: 'A',
+                },
+                {
+                    fill: true,
+                    label: 'Spending Addresses',
+                    lineTension: 0.4,
+                    backgroundColor: "rgba(0,0,0,0)",
+                    borderColor: "rgb(183, 61, 175)",
+                    borderWidth: 3,
+                    pointRadius: 2,
+                    pointBackgroundColor: "rgb(183, 61, 175)",
+                    data: spend,
+                    spanGaps: true,
+                    yAxisID: 'B'
+                },
+            ]
+        };
+
+        let myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options,
+        });
     }
 
     populateTicker() {

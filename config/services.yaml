@@ -48,6 +48,11 @@ services:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Address\Mapper\SummaryMapper'
 
+    App\Navcoin\Address\Api\AddressGroupApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\Address\Mapper\AddressGroupMapper'
+
     App\Navcoin\Address\Api\StakingApi:
         arguments:
             - '@App\Navcoin\Client\NavcoinClient'
