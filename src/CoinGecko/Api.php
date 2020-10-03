@@ -12,16 +12,22 @@ use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class Api
 {
     /** @var string */
     private $baseUrl;
+
     /** @var Client */
     private $client;
 
     /** @var \Http\Message\MessageFactory */
     private $messageFactory;
+
+    /** @var FilesystemAdapter */
+    private $cache;
 
     /** @var array */
     private $headers = [
@@ -32,16 +38,18 @@ class Api
     public function __construct()
     {
         $this->baseUrl = "https://api.coingecko.com/api/v3";
-
         $this->client = HttpClientDiscovery::find();
         $this->messageFactory = MessageFactoryDiscovery::find();
+        $this->cache = new FilesystemAdapter();
     }
 
     public function getTicker(): array
     {
         try {
-            $response = $this->get('/coins/nav-coin');
-            return $this->getJsonBody($response);
+            return $this->cache->get('CoinGecko-Ticker', function (ItemInterface $item) {
+                $item->expiresAfter(60);
+                return $this->getJsonBody($this->get('/coins/nav-coin'));
+            });
         } catch (ServerRequestException $e) {
             throw $e;
         }

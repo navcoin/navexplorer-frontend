@@ -60,7 +60,6 @@ export default class TableManager {
     }
 
     handleResponse(elements, paginator) {
-        console.log(paginator);
         this.emptyTable();
 
         if (elements.length === 0) {
