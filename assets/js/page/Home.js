@@ -114,7 +114,7 @@ class PageHome {
             labels: start,
             datasets: [
                 {
-                    label: 'All Addresses',
+                    label: 'In all TXs',
                     fill: true,
                     lineTension: 0.4,
                     backgroundColor: "rgba(0,0,0,0)",
@@ -128,7 +128,7 @@ class PageHome {
                 },
                 {
                     fill: true,
-                    label: 'Spending Addresses',
+                    label: 'In spending TXs',
                     lineTension: 0.4,
                     backgroundColor: "rgba(0,0,0,0)",
                     borderColor: "rgb(183, 61, 175)",
