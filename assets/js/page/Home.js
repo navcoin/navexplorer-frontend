@@ -54,6 +54,7 @@ class PageHome {
 
         var options = {
             responsive: true,
+            maintainAspectRatio: false,
             legend: {
                 display: true,
                 position: 'bottom',
@@ -147,6 +148,7 @@ class PageHome {
             data: data,
             options: options,
         });
+        myLineChart.canvas.parentNode.style.height = '300px';
     }
 
     populateTicker() {
