@@ -13,6 +13,7 @@ class AddressGroupMapper extends BaseMapper
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['start']),
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['end']),
             $data['addresses'],
+            $data['stake'],
             $data['spend']
         );
     }

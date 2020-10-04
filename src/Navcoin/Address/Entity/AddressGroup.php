@@ -24,17 +24,24 @@ class AddressGroup implements DateRangeInterface
     /**
      * @var int
      */
+    private $stake;
+
+    /**
+     * @var int
+     */
     private $spend;
 
     public function __construct(
         \DateTime $start,
         \DateTime $end,
         int $addresses,
+        int $stake,
         int $spend
     ) {
         $this->start = $start;
         $this->end = $end;
         $this->addresses = $addresses;
+        $this->stake = $stake;
         $this->spend = $spend;
     }
 
@@ -51,6 +58,11 @@ class AddressGroup implements DateRangeInterface
     public function getAddresses(): int
     {
         return $this->addresses;
+    }
+
+    public function getStake(): int
+    {
+        return $this->stake;
     }
 
     public function getSpend(): int

@@ -33,6 +33,7 @@ class PageHome {
         let start = []
         let end = []
         let addresses = []
+        let stake = []
         let spend = []
 
         Array.min = function(array) {
@@ -47,6 +48,7 @@ class PageHome {
             start[i] = moment(elements[i].start).utc().format('YYYY-MM-DD');
             end[i] = elements[i].end;
             addresses[i] = elements[i].addresses;
+            stake[i] = elements[i].stake;
             spend[i] = elements[i].spend;
         }
 
@@ -115,7 +117,7 @@ class PageHome {
             labels: start,
             datasets: [
                 {
-                    label: 'In all TXs',
+                    label: 'Staking TXs',
                     fill: true,
                     lineTension: 0.4,
                     backgroundColor: "rgba(0,0,0,0)",
@@ -123,13 +125,13 @@ class PageHome {
                     borderWidth: 3,
                     pointRadius: 2,
                     pointBackgroundColor: "hsl(199, 81%, 59%)",
-                    data: addresses,
+                    data: stake,
                     spanGaps: true,
                     yAxisID: 'A',
                 },
                 {
                     fill: true,
-                    label: 'In spending TXs',
+                    label: 'Spending TXs',
                     lineTension: 0.4,
                     backgroundColor: "rgba(0,0,0,0)",
                     borderColor: "rgb(183, 61, 175)",
