@@ -36,7 +36,7 @@ class HomeController extends AbstractController
     public function index(Request $request): array
     {
         return [
-            'blocks' => $this->blockGroupApi->getGroupByCategory($request->get('period', 'daily'), 5),
+//            'blocks' => $this->blockGroupApi->getGroupByCategory($request->get('period', 'daily'), 5),
             'best' => $this->blockApi->getBestBlock(),
         ];
     }

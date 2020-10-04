@@ -13,9 +13,9 @@ class PageHome {
         this.tableManager = new TableManager('#blocks table', 'block', this.populateBlocks);
         this.tableManager = new TableManager('#txs table', 'transaction', this.populateTxs);
 
-        this.populateTicker();
-
         this.populateAddressGroups();
+
+        this.populateTicker();
     }
 
     populateAddressGroups() {
