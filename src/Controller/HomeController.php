@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\CoinGecko\Api as CoinGeckoApi;
+use App\Exception\DistributionException;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\BlockGroupApi;
 use App\Navcoin\Common\Network;
+use App\Navcoin\Distribution\Api\DistributionApi;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +24,9 @@ class HomeController extends AbstractController
 
     /** @var BlockApi */
     private $blockApi;
+
+    /** @var DistributionApi */
+    private $distributionApi;
 
     public function __construct(BlockGroupApi $blockGroupApi, BlockApi $blockApi)
     {
@@ -44,15 +49,21 @@ class HomeController extends AbstractController
     /**
      * @Route("/ticker.json")
      */
-    public  function ticker(SerializerInterface $serializer, CoinGeckoApi $coinApi): Response
+    public  function ticker(SerializerInterface $serializer, CoinGeckoApi $coinApi, DistributionApi $distributionApi): Response
     {
         $ticker = $coinApi->getTicker();
+
+        try {
+            $totalSupply = $distributionApi->getTotalSupply();
+        } catch (DistributionException $e) {
+            $totalSupply = 0;
+        }
 
         $response = [
             'btc' => $ticker['market_data']['current_price']['btc'],
             'usd' => $ticker['market_data']['current_price']['usd'],
-            'marketCap' => $ticker['market_data']['market_cap']['usd'],
-            'circulatingSupply' => $ticker['market_data']['circulating_supply'],
+            'marketCap' => floor($totalSupply*$ticker['market_data']['current_price']['usd']),
+            'circulatingSupply' => $totalSupply,
         ];
 
         return new Response($serializer->serialize($response, 'json'));

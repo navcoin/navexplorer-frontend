@@ -9,6 +9,17 @@ use GuzzleHttp\Exception\ClientException;
 
 class DistributionApi extends NavcoinApi
 {
+    public function getTotalSupply(): float
+    {
+        try {
+            $response = $this->getClient()->get('/distribution/total-supply');
+            $data = $this->getClient()->getBody($response);
+        } catch (ClientException $e) {
+            throw new DistributionException("Total supply could not be retrieved", 500, $e);
+        }
+
+        return floatval($data);
+    }
     public function getBalanceDistribution(String $groups = null): Distribution
     {
         try {
