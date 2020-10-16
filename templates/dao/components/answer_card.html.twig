@@ -1,15 +1,21 @@
-<div class="card card-proposal">
+<div class="card card-nav">
     <div class="card-header">
         {% if consultation.isConsensusParameter %}
-            <h5 class="height-2">{{ a.answer|answerType(consensus.type) }}</h5>
+            <h2 class="clamp" data-lines="2">{{ a.answer|answerType(consensus.type) }}</h2>
         {% else %}
-            <h5 class="height-2">{{ a.answer|capitalize }}</h5>
+            <h2 class="clamp" data-lines="2">{{ a.answer|capitalize }}</h2>
         {% endif %}
     </div>
 
+    <div class="card-body">
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
-            <a href="{{ path('app_dao_answer', {'hash': a.hash}) }}" class="break-word">{{ a.hash }}</a>
+            Hash
+            <span class="float-right">
+                <a href="{{ path('app_dao_answer', {'hash': a.hash}) }}" class="break-word">
+                    {{ a.hash[0:10] }}...{{ a.hash[a.hash|length-4:] }}
+                </a>
+            </span>
         </li>
 
         <li class="list-group-item">
@@ -38,10 +44,11 @@
             </span>
         </li>
     </ul>
-
-    <div class="card-footer">
-        <div class="d-flex justify-content-center">
-{#            <a href="{{ path('app_dao_answer', {"hash": a.hash}) }}" class="btn btn-info">View Answer</a>#}
-        </div>
     </div>
+
+{#    <div class="card-footer">#}
+{#        <div class="d-flex justify-content-center">#}
+{#            <a href="{{ path('app_dao_answer', {"hash": a.hash}) }}" class="btn btn-info">View Answer</a>#}
+{#        </div>#}
+{#    </div>#}
 </div>

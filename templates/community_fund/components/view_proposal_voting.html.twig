@@ -1,13 +1,24 @@
-<div class="margin-bottom row">
-    <div class="col-md-6 col-sm-12 margin-bottom">
+<div class="row">
+    <div class="col-12">
         <h3>Voting cycle {{ votes.latestCycle.cycle }}</h3>
+        <hr/>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+        <h2>Progress</h2>
         {{ proposalVoteProgress(proposal, blockCycle, votes.latestCycle) }}
         <p class="text-muted">Accept {{ votes.latestCycle.yes }} / Reject {{ votes.latestCycle.no }} / Abstain {{ votes.latestCycle.abstain }}</p>
     </div>
 
     <div class="col-md-6 col-sm-12">
-        <h3>Voting Trend</h3>
-        <canvas id="trendChart" class="margin-top"></canvas>
+        <h2>Trend</h2>
+        <div>
+            <canvas id="trendChart"></canvas>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <hr/>
     </div>
 </div>
 

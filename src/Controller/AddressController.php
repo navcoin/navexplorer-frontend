@@ -61,7 +61,7 @@ class AddressController extends Controller
             return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
         }
 
-        $period = $request->get('period', "monthly");
+        $period = $request->get('period', "daily");
 
         return $this->render('address/index.html.twig', [
             'address' => $address,

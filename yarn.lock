@@ -1746,6 +1746,11 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+clamp-js-main@^0.11.6:
+  version "0.11.6"
+  resolved "https://registry.yarnpkg.com/clamp-js-main/-/clamp-js-main-0.11.6.tgz#dcb420c7266310867f01bc90457f3ff8ab1f2e2b"
+  integrity sha512-Am5og1TzbYZDUv0MQX3OZB7D/rNZTqNho5sb0M1v+e8X8blV7H/lrJDTYrJqC3nXyokda9EP6mVvQBPOKb8/gA==
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"

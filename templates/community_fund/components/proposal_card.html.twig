@@ -1,12 +1,17 @@
 <div class="card card-proposal card-nav">
     <div class="card-header">
-        <h2>{{ proposal.description|capitalize}}</h2>
+        <h2 class="clamp" data-lines="3">{{ proposal.description|capitalize}}</h2>
     </div>
 
     <div class="card-body">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="break-word">{{ proposal.hash }}</a>
+                Proposal Hash
+                <span class="float-right">
+                    <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="break-word">
+                        {{ proposal.hash[0:10] }}...{{ proposal.hash[proposal.hash|length-4:] }}
+                    </a>
+                </span>
             </li>
             <li class="list-group-item">
                 NAV Requested
@@ -38,7 +43,7 @@
 
     <div class="card-footer">
         <div class="d-flex justify-content-around">
-            <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}" class="">View Proposal</a>
+            <a href="{{ path('app_communityfund_view', {'hash': proposal.hash}) }}">View Proposal</a>
         </div>
     </div>
 </div>

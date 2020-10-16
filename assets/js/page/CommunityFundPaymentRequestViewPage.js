@@ -30,7 +30,7 @@ class CommunityFundPaymentRequestViewPage {
 
     createTrendGraph() {
         if ($('#votes').length) {
-            axios.get('/community-fund/payment-request/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
+            axios.get('/community-fund/payment-request/' + $("#proposal-hash").data("hash") + '/trend.json').then(this.loadChartData.bind(this));
         }
     }
 

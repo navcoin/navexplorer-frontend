@@ -8,26 +8,26 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12 margin-bottom">
                 <h1>DAO</h1>
                 <h2>Consensus Parameter</h2>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row summary">
             <div class="col-md-8">
-                <table class="table table-striped table-proposal">
+                <table class="table table-striped table-nav">
                     <tbody>
                     <tr>
-                        <td><strong>Id</strong></td>
+                        <th>Id</th>
                         <td class="text-right break-word">{{ parameter.id }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Description</strong></td>
+                        <th>Description</th>
                         <td class="text-right break-word">{{ parameter.desc }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Value</strong></td>
+                        <th>Value</th>
                         <td class="text-right break-word">{{ parameter.formattedValue|raw }}</td>
                     </tr>
                     </tbody>
@@ -35,14 +35,14 @@
             </div>
 
             <div class="col-md-4">
-                <table class="table table-striped table-proposal">
+                <table class="table table-striped table-nav table-second">
                     <tbody>
                     <tr>
-                        <td><strong>Last Updated</strong></td>
+                        <th>Last Updated</th>
                         <td class="text-right">{{ parameter.updatedOnBlock ? : 'Never' }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Consultations</strong></td>
+                        <th>Consultations</th>
                         <td class="text-right">{{ consultations|length }}
                     </tr>
                     </tbody>

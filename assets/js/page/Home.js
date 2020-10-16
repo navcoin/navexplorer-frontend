@@ -10,12 +10,13 @@ class PageHome {
     constructor()
     {
         console.log("Home Page");
-        this.tableManager = new TableManager('#blocks table', 'block', this.populateBlocks);
-        this.tableManager = new TableManager('#txs table', 'transaction', this.populateTxs);
 
         this.populateAddressGroups();
 
         this.populateTicker();
+
+        this.tableManager = new TableManager('#blocks table', 'block', this.populateBlocks);
+        this.tableManager = new TableManager('#txs table', 'transaction', this.populateTxs);
     }
 
     populateAddressGroups() {
@@ -117,7 +118,7 @@ class PageHome {
             labels: start,
             datasets: [
                 {
-                    label: 'Staking TXs',
+                    label: 'Staking Addresses',
                     fill: true,
                     lineTension: 0.4,
                     backgroundColor: "rgba(0,0,0,0)",
@@ -131,7 +132,7 @@ class PageHome {
                 },
                 {
                     fill: true,
-                    label: 'Spending TXs',
+                    label: 'Spending Addresses',
                     lineTension: 0.4,
                     backgroundColor: "rgba(0,0,0,0)",
                     borderColor: "rgb(183, 61, 175)",
@@ -194,6 +195,17 @@ class PageHome {
             .append(data.transactions)
         );
 
+        $row.append($(document.createElement('td'))
+            .attr('data-role', 'stakedBy')
+            .append('<a href="/address/' + data.staked_by + '" class="break-word">' + data.staked_by + '</a>')
+        );
+
+        $row.append($(document.createElement('td'))
+            .attr('data-role', 'stake')
+            .addClass("text-right")
+            .append(numberFormatter.formatNav(data.stake))
+        );
+
         return $row;
     }
 
@@ -215,6 +227,18 @@ class PageHome {
         $row.append($(document.createElement('td'))
             .attr('data-role', 'date/time')
             .append(moment(data.time).utc().format('YYYY-MM-DD[,] HH:mm:ss'))
+        );
+
+        $row.append($(document.createElement('td'))
+            .attr('data-role', 'inputs')
+            .attr('class', 'text-center')
+            .append(data.inputs.length)
+        );
+
+        $row.append($(document.createElement('td'))
+            .attr('data-role', 'outputs')
+            .attr('class', 'text-center')
+            .append(data.outputs.length)
         );
 
         let value = 0;

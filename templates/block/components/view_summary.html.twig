@@ -1,10 +1,12 @@
 <div class="block-summary">
-    <h2 class="break-word">{{ block.hash }}</h2>
-
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <table class="table table-striped table-nav">
                 <tbody>
+                    <tr>
+                        <th scope="col">Hash</th>
+                        <td class="text-right break-word">{{ block.hash }}</td>
+                    </tr>
                     <tr>
                         <th scope="col">Height</th>
                         <td class="text-right">{{ block.height|number_format }}</td>
@@ -81,7 +83,7 @@
                 <tr class="d-flex">
                     <th class="col-5" scope="col">Merkle Root</th>
                     <td class="text-right break-word col-7">
-                        {{ block.merkleRoot|slice(0,10) }}...
+                        {{ block.merkleRoot[0:10] }}...{{ block.merkleRoot[block.merkleRoot|length-4:] }}
                     </td>
                 </tr>
                 </tbody>

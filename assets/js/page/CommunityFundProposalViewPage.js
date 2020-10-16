@@ -30,7 +30,7 @@ class CommunityFundProposalViewPage {
 
     createTrendGraph() {
         if ($('#votes').length) {
-            axios.get('/community-fund/proposal/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
+            axios.get('/community-fund/proposal/' + $("#proposal-hash").data("hash") + '/trend.json').then(this.loadChartData.bind(this));
         }
     }
 
@@ -52,6 +52,7 @@ class CommunityFundProposalViewPage {
         let ctx = document.getElementById("trendChart");
         var options = {
             responsive: true,
+            maintainAspectRatio: false,
             legend: {
                 display: false,
             },
@@ -64,6 +65,11 @@ class CommunityFundProposalViewPage {
                 }],
                 yAxes: [{
                     stacked: true,
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 10,
+                        suggestedMax: 100,
+                    },
                 }]
             },
             tooltips: {enabled: false},
@@ -138,6 +144,7 @@ class CommunityFundProposalViewPage {
             data: data,
             options: options,
         });
+        myLineChart.canvas.parentNode.style.height = '200px';
     }
 }
 

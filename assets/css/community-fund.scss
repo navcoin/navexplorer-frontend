@@ -13,9 +13,6 @@
 }
 
 .proposal-description {
-  margin-bottom: 1rem;
-  margin-top: 0.5rem;
-
   a {
     word-break: break-all;
   }
@@ -40,12 +37,10 @@
 
     h2 {
       align-self: flex-end;
-
-      margin-bottom: 0;
+      margin-bottom: 3px;
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: 1.2;
-      height: 3.6em;
     }
     h2.height-2 {
       margin-bottom: 0;

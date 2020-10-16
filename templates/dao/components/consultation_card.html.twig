@@ -1,7 +1,9 @@
-<div class="card card-proposal">
+<div class="card card-proposal card-nav">
     <div class="card-header">
-        <h5>{{ consultation.question|capitalize}}</h5>
+        <h2 class="clamp" data-lines="3">{{ consultation.question|capitalize}}</h2>
     </div>
+
+    <div class="card-body">
 
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -37,10 +39,11 @@
 {#            {{ dump(consultation) }}#}
 {#        </li>#}
     </ul>
+    </div>
 
     <div class="card-footer">
         <div class="d-flex justify-content-center">
-            <a href="{{ path('app_dao_consultation', {"hash": consultation.hash}) }}" class="btn btn-info">View Consultation</a>
+            <a href="{{ path('app_dao_consultation', {"hash": consultation.hash}) }}">View Consultation</a>
         </div>
     </div>
 </div>

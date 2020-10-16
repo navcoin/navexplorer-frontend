@@ -23,24 +23,11 @@
                     {% endif %}
                 </td>
                 <td data-role="address">
-                    {% if transaction.staking %}
+                    {%  for address in input.addresses %}
                         <span class="break-word">
-                            <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
+                            <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                         </span>
-                    {% elseif input.addresses|length > 1 %}
-                        <span class="break-word">
-                            <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
-                        </span>
-                        <span class="break-word">
-                            <a href="{{ path('app_address_index', { 'hash': input.addresses[1] }) }}">{{ input.addresses[1] }}</a>
-                        </span>
-                    {% elseif input.addresses|length == 1 %}
-                        <span class="break-word">
-                            <a href="{{ path('app_address_index', { 'hash': input.addresses[0] }) }}">{{ input.addresses[0] }}</a>
-                        </span>
-                    {% else %}
-                        N/A
-                    {% endif %}
+                    {% endfor %}
                 </td>
                 <td data-role="amount" class="text-right">
                     {{ input.amount|stake_format }}

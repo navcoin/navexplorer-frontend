@@ -12,6 +12,7 @@
 @import 'form';
 @import 'progress';
 @import 'chart';
+@import 'clamp';
 @import 'search';
 @import 'overview';
 @import 'soft-fork';
@@ -20,6 +21,7 @@
 @import 'dao';
 @import 'history';
 @import 'address';
+@import 'darkMode';
 
 html {
   overflow-y: scroll;
@@ -140,6 +142,7 @@ small {
   margin-right: 1rem;
 }
 
+.summary,
 .block-summary,
 .transaction-summary {
   margin-bottom: 1.25rem;

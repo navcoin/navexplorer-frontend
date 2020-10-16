@@ -8,10 +8,11 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 margin-bottom-half">
                 <h1>DAO</h1>
-                <h2>Community Fund Proposals</h2>
-
+                <h2>Proposals</h2>
+            </div>
+            <div class="col-12 margin-bottom-half">
                 {% include "community_fund/components/blockcycle_stats.html.twig" %}
             </div>
         </div>
@@ -36,13 +37,6 @@
                 <div id="block-collapse">
                     {% include "community_fund/components/proposals_list.html.twig" %}
                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <br>
-                <a class="btn btn-info" href="{{ path('app_communityfund_index') }}">Go back</a>
             </div>
         </div>
     </div>

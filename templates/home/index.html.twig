@@ -9,21 +9,39 @@
         <div class="container-fluid">
             {% include 'home/components/hud.html.twig' %}
 
-            <div class="row margin-bottom">
+            <div class="row">
 {#                <div class="col-sm-12 col-md-6">#}
 {#                    {% include 'home/components/overview.html.twig' %}#}
 {#                </div>#}
 
-                <div class="col-sm-12 col-md-12 margin-top">
+                <div class="col-sm-12 col-md-12 margin-top margin-bottom">
                     {% include 'home/components/address-groups.html.twig' %}
                 </div>
+            </div>
 
-                <div class="col-sm-12 col-md-6">
-                    {% include 'home/components/blocks.html.twig' %}
-                </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-toggle="collapse" data-target="#blocks" aria-expanded="true" aria-controls="blocks">
+                                Latest Blocks
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#txs" aria-expanded="false" aria-controls="txs">
+                                Latest TXs
+                            </a>
+                        </li>
+                    </ul>
 
-                <div class="col-sm-12 col-md-6">
-                    {% include 'home/components/txs.html.twig' %}
+                    <div id="block-collapse">
+                        <div id="blocks" class="collapse show" data-parent="#block-collapse">
+                            {% include 'home/components/blocks.html.twig' %}
+                        </div>
+                        <div id="txs" class="collapse collapsed" data-parent="#block-collapse">
+                            {% include 'home/components/txs.html.twig' %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

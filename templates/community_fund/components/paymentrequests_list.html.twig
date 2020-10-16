@@ -5,9 +5,9 @@
         </div>
     {% else %}
         <div class="col-md-12">
-            <div class="alert alert-info">
-                There are no {{ active|proposalState }} payment requests
-            </div>
+            <hr/>
+            <h2>There are no {{ active|proposalState }} payment requests</h2>
+            <hr/>
         </div>
     {% endfor %}
 

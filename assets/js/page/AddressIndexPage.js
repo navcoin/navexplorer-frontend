@@ -103,10 +103,8 @@ class AddressIndexPage {
             type.append('<span class="badge badge-success">Cfund Payout</span>');
         } else if (data.stake_payout === true) {
             type.append('<span class="badge badge-success">Stake Payout</span>');
-        } else if (data.changes.spending < 0) {
-            type.append('<span class="badge badge-warning">Send</span>')
-        } else if (data.changes.spending > 0 || data.changes.staking > 0 || data.changes.voting > 0) {
-            type.append('<span class="badge badge-success">Receive</span>')
+        } else {
+            type.append('<span class="badge badge-success">Spend</span>')
         }
         $row.append(type)
 

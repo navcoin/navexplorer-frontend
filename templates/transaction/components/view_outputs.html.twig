@@ -28,20 +28,11 @@
                             {% endif %}
                         </td>
                         <td data-role="address">
-                            {% if output.type == "PRIVATE_TRANSACTION" %}
-                                <em>Private Address</em>
-                            {% elseif output.type == "COLD_STAKING" %}
-                                <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
-                                <a href="{{ path('app_address_index', { 'hash': output.addresses[1] }) }}" class="break-word">{{ output.addresses[1] }}</a>
-                            {% elseif output.type == "COLD_STAKING_V2" %}
-                                <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
-                                <a href="{{ path('app_address_index', { 'hash': output.addresses[1] }) }}" class="break-word">{{ output.addresses[1] }}</a>
-                                <a href="{{ path('app_address_index', { 'hash': output.addresses[2] }) }}" class="break-word">{{ output.addresses[2] }}</a>
-                            {% elseif output.addresses and output.addresses|length %}
-                                <a href="{{ path('app_address_index', { 'hash': output.addresses[0] }) }}" class="break-word">{{ output.addresses[0] }}</a>
-                            {% elseif output.address %}
-                                <a href="{{ path('app_address_index', { 'hash': output.address }) }}" class="break-word">{{ output.address }}</a>
-                            {% endif %}
+                            {%  for address in output.addresses %}
+                                <span class="break-word">
+                                    <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
+                                </span>
+                            {% endfor %}
                         </td>
                     {% endif %}
                     <td data-role="amount" class="text-right">

@@ -8,18 +8,13 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 margin-bottom">
                 <h1>DAO</h1>
                 <h2>Proposal</h2>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <p class="proposal-description">{{ proposal.description }}</p>
-                {{ include('community_fund/components/view_proposal_details.html.twig') }}
-            </div>
-        </div>
+        {{ include('community_fund/components/view_proposal_details.html.twig') }}
 
         <div class="row">
             <div class="col-md-12">

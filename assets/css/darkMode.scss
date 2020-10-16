@@ -1,0 +1,84 @@
+.dark-mode {
+  background-color: $darkBg !important;
+  color: $darkText;
+
+  a {
+    color: $light-blue;
+    text-decoration: underline;
+  }
+
+  small {
+    color: $pink;
+  }
+
+  header {
+    a {
+      text-decoration: none;
+    }
+    background-color: $darkBg;
+
+    .bg-nav {
+      background-color: $light-black;
+    }
+
+    .navbar-dark .navbar-nav {
+      .nav-link {
+        color: $darkText;
+      }
+      .nav-link:hover {
+        color: $off-white !important;
+      }
+    }
+  }
+
+  footer {
+    background-color: $black;
+    color: $darkText;
+    .network {
+      color: $light-blue;
+      ul li a {
+        color: $light-blue;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .table th, .table td {
+    border-top: 1px solid $black;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: $light-black;
+  }
+
+  .table-nav, #address-groups {
+    border-top: 5px solid $darkText;
+  }
+
+  .card-nav {
+    .card-header {
+      background-color: $darkBg !important;
+    }
+    .card-body {
+      border-top: 5px solid $darkText;
+      background-color: $light-black !important;
+      border-bottom: 1px solid $darkBg;
+    }
+    .card-footer {
+      background-color: $light-black !important;
+    }
+  }
+
+  .form-control {
+    background-color: $darkBg !important;
+    border: 1px solid $black;
+  }
+
+  .input-group-append {
+    button {
+      background-color: $darkBg;
+      border: 1px solid $black;
+      color: $darkText;
+    }
+  }
+}

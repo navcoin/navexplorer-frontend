@@ -8,45 +8,38 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12 margin-bottom-half">
                 <h1>DAO</h1>
                 <h2>Payment Requests</h2>
+            </div>
+            <div class="col-12 margin-bottom-half">
                 {% include "community_fund/components/blockcycle_stats.html.twig" %}
             </div>
         </div>
 
         <div class="row proposals-list">
             <div class="col-md-12">
-                <h3 class="float-left">{{ active|replace({'-': ' '})|capitalize }} Payment Requests</h3>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link {{ active == "pending" ? "active" : "" }}" href="{{ path("app_communityfund_paymentrequests", {'status': 'pending'}) }}">Pending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active == "accepted" ? "active" : "" }}" href="{{ path("app_communityfund_paymentrequests", {'status': 'accepted'}) }}">Accepted</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active == "rejected" ? "active" : "" }}" href="{{ path("app_communityfund_paymentrequests", {'status': 'rejected'}) }}">Rejected</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active == "expired" ? "active" : "" }}" href="{{ path("app_communityfund_paymentrequests", {'status': 'expired'}) }}">Expired</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ active == "paid" ? "active" : "" }}" href="{{ path("app_communityfund_paymentrequests", {'status': 'paid'}) }}">Paid</a>
+                    </li>
+                </ul>
 
-                <div class="filters float-right">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            <a class="{{ active == 'pending' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'pending'}) }}">Pending</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="{{ active == 'accepted' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'accepted'}) }}">Accepted</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="{{ active == 'rejected' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'rejected'}) }}">Rejected</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="{{ active == 'expired' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'expired'}) }}">Expired</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="{{ active == 'paid' ? 'active' : '' }}" href="{{ path('app_communityfund_paymentrequests', {'status': 'paid'}) }}">Paid</a>
-                        </li>
-                    </ul>
+                <div id="block-collapse">
+                    {% include "community_fund/components/paymentrequests_list.html.twig"%}
                 </div>
-            </div>
-        </div>
-
-        {% include "community_fund/components/paymentrequests_list.html.twig"%}
-
-        <div class="row">
-            <div class="col-md-12">
-                <br>
-                <a class="btn btn-info" href="{{ path('app_communityfund_index') }}">Go back</a>
             </div>
         </div>
     </div>
