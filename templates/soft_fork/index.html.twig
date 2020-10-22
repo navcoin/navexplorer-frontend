@@ -124,10 +124,12 @@
                     </thead>
                     <tbody>
                     {% for fork in softForks|filter(fork => fork.expired) %}
-                        <td>{{ fork.name }}</td>
-                        <td class="text-center">{{ fork.startTime|date_localised('Y-m-d, H:i:s') }}</td>
-                        <td class="text-center">{{ fork.timeout|date_localised('Y-m-d, H:i:s') }}</td>
-                        <td class="text-center"><span class="badge badge-danger">Expired</span></td>
+                        <tr>
+                            <td>{{ fork.name }}</td>
+                            <td class="text-center">{{ fork.startTime|date_localised('Y-m-d, H:i:s') }}</td>
+                            <td class="text-center">{{ fork.timeout|date_localised('Y-m-d, H:i:s') }}</td>
+                            <td class="text-center"><span class="badge badge-danger">Expired</span></td>
+                        </tr>
                     {% else %}
                         <tr>
                             <td colspan="4" class="text-center">There are no expired soft forks</td>
