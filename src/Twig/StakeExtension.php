@@ -5,18 +5,8 @@ namespace App\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-/**
- * Class StakeExtension
- *
- * @package App\Twig
- */
 class StakeExtension extends AbstractExtension
 {
-    /**
-     * Get filters
-     *
-     * @return array
-     */
     public function getFilters(): array
     {
         return [
@@ -24,26 +14,24 @@ class StakeExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * Stake filter
-     *
-     * @param float $number
-     * @param bool  $sign
-     * @param int   $decimalPlaces
-     *
-     * @return string
-     */
     public function stakeFormat(float $number, bool $sign = false, int $decimalPlaces = 8): string
     {
-        $stake = rtrim(rtrim(number_format($number, $decimalPlaces,'.', ','), '0'), '.');
-
+        if ($number === 0.0) {
+            return "0&nbsp;Nav";
+        }
+        if ($number < 1) {
+            $stake = sprintf('%.8f', $number);
+        } else {
+            $stake = rtrim(rtrim(number_format($number, $decimalPlaces,'.', ','), '0'), '.');
+        }
         if ($number < 0) {
             $stake = preg_replace('/(\-)/', '-&nbsp;', $stake);
         } else if ($sign === true) {
-            $stake = '+&nbsp;'.$stake;
+            $stake = '+&nbsp;' . $stake;
         }
 
-        return preg_replace('/\.([0-9]*)$/', '.<small>$1</small>', $stake) . '&nbsp;NAV';
-    }
+//        return $stake . '&nbsp;NAV';
 
+        return preg_replace('/\.([0-9]*)$/', '.<small>$1</small>', $stake) . '&nbsp;Nav';
+    }
 }

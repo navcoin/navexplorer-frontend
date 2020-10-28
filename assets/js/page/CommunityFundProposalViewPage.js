@@ -30,7 +30,7 @@ class CommunityFundProposalViewPage {
 
     createTrendGraph() {
         if ($('#votes').length) {
-            axios.get('/community-fund/proposal/' + $("#proposal-hash").html() + '/trend.json').then(this.loadChartData.bind(this));
+            axios.get('/community-fund/proposal/' + $("#proposal-hash").data("hash") + '/trend.json').then(this.loadChartData.bind(this));
         }
     }
 
@@ -52,6 +52,7 @@ class CommunityFundProposalViewPage {
         let ctx = document.getElementById("trendChart");
         var options = {
             responsive: true,
+            maintainAspectRatio: false,
             legend: {
                 display: false,
             },
@@ -64,6 +65,11 @@ class CommunityFundProposalViewPage {
                 }],
                 yAxes: [{
                     stacked: true,
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 10,
+                        suggestedMax: 100,
+                    },
                 }]
             },
             tooltips: {enabled: false},
@@ -77,18 +83,9 @@ class CommunityFundProposalViewPage {
                         mode: "horizontal",
                         scaleID: "y-axis-0",
                         value: 50,
-                        borderColor: "rgb(222,214,201)",
+                        borderColor: "rgb(220,220,220)",
                         borderWidth: 3
                     },
-                    {
-                        drawTime: "beforeDatasetsDraw",
-                        type: "box",
-                        yScaleID: "y-axis-0",
-                        yMin: 0,
-                        yMax: 50,
-                        backgroundColor: "rgba(222,214,201,0.5)",
-                        borderWidth: 0,
-                    }
                 ]
             }
         };
@@ -98,9 +95,22 @@ class CommunityFundProposalViewPage {
             datasets: [
                 {
                     fill: true,
-                    lineTension: 0.3,
+                    lineTension: 0.4,
+                    backgroundColor: "rgba(224, 224, 224, 1)",
+                    borderColor: "rgba(232,232,232, 0)",
+                    pointRadius: 0,
+                    data: abstain,
+                    spanGaps: false,
+                    scaleOverride : true,
+                    scaleSteps : 20,
+                    scaleStepWidth : 50,
+                    scaleStartValue : 0
+                },
+                {
+                    fill: true,
+                    lineTension: 0.4,
                     backgroundColor: "rgba(221,109,109,1)",
-                    borderColor: "rgba(217,83,79,1)",
+                    borderColor: "rgba(217,83,79,0)",
                     pointRadius: 0,
                     data: no,
                     spanGaps: false,
@@ -111,9 +121,9 @@ class CommunityFundProposalViewPage {
                 },
                 {
                     fill: true,
-                    lineTension: 0.3,
+                    lineTension: 0.4,
                     backgroundColor: "rgba(164,204,109,1)",
-                    borderColor: "rgba(147,197,75,1)",
+                    borderColor: "rgba(147,197,75,0)",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
@@ -134,6 +144,7 @@ class CommunityFundProposalViewPage {
             data: data,
             options: options,
         });
+        myLineChart.canvas.parentNode.style.height = '200px';
     }
 }
 

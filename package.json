@@ -5,12 +5,15 @@
     "sass-loader": "^7.0.1"
   },
   "dependencies": {
+    "@popperjs/core": "^2.4.4",
     "anchorme": "^1.1.2",
     "axios": "^0.18.0",
     "chart.js": "^2.7.3",
     "chartjs-plugin-annotation": "^0.5.7",
+    "clamp-js-main": "^0.11.6",
     "d3": "^5.1.0",
     "jquery": "^3.3.1",
+    "js-cookie": "^2.2.1",
     "moment": "^2.22.0"
   }
 }

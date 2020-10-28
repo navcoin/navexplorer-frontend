@@ -1,10 +1,18 @@
 .proposals-list {
-  margin-top: 2rem;
+  margin-top: 0.5rem;
+}
+
+.inline-proposal-description {
+  margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.2;
 }
 
 .proposal-description {
-  margin-bottom: 1rem;
-
   a {
     word-break: break-all;
   }
@@ -20,26 +28,43 @@
 
 .card-proposal {
   margin-bottom: 2rem;
+  border-radius: 0;
 
   .card-header {
-    h5 {
+    display: flex;
+    height: 77px;
+    overflow: hidden;
+
+    h2 {
+      align-self: flex-end;
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+    h2.height-2 {
       margin-bottom: 0;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       line-height: 1.2;
-      height: 3.6em;
+      height: 2.4em;
     }
   }
 
   .card-footer {
-    border-top: 0;
+    background-color: $mid-grey;
+
+    a {
+      margin: 0.2rem 0;
+    }
   }
 }
 
 .filters {
+  margin-bottom: 0.5rem;
   .filters-label {
     float: left;
     margin-right: 0.5rem;
@@ -54,6 +79,7 @@
 
 
       a.active {
+        font-weight: bold;
         pointer-events: none;
         color: inherit;
       }

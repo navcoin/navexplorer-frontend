@@ -1,61 +1,57 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Address {{ address.hash }}{% endblock %}
-{% block description %}Transaction data for the {{ address.hash }} address{% endblock %}
+{% block title %}Address {{ summary.hash }}{% endblock %}
+{% block description %}Transaction data for the {{ summary.hash }} address{% endblock %}
 
 {% block page %}page-address-index{% endblock %}
 
 {% block body %}
-    <div class="address" data-hash="{{ address.hash }}">
+    <div class="address" data-hash="{{ summary.hash }}">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="introduction">
-                        <h1>
-                            Address
-                        </h1>
-                    </div>
+                <div class="col-sm-12">
+                    <h1>Address</h1>
                 </div>
             </div>
 
-            {% include "address/components/index_summary.html.twig" %}
+            <div class="row">
+                <div class="col-md-8">
+                    {% include "address/components/index_summary.html.twig" %}
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link {% if activeTab == "transactions" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#transactions" aria-expanded="true" aria-controls="transactions">
+                            <a class="nav-link {% if activeTab == "history" %}active{% endif %}" href="" data-toggle="collapse" data-target="#history" aria-expanded="true" aria-controls="history">
                                 Transactions
                             </a>
                         </li>
-                        {% if address.coldStakedBalance %}
-                            <li class="nav-item">
-                                <a class="nav-link {% if activeTab == "cold-transactions" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#cold-staking" aria-expanded="false" aria-controls="cold-staking">
-                                    Cold Staking
-                                </a>
-                            </li>
-                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link {% if activeTab == "staking-report" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#staking-report" aria-expanded="true" aria-controls="staking-report">
-                                Staking Report
+                                Staking
                             </a>
                         </li>
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link {% if activeTab == "dao" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#dao" aria-expanded="true" aria-controls="dao">#}
+{#                                DAO#}
+{#                            </a>#}
+{#                        </li>#}
                     </ul>
 
                     <div id="block-collapse">
-                        <div id="transactions" class="collapse {% if activeTab == "transactions" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">
-                            {% include "address/components/index_transactions.html.twig" %}
+                        <div id="history" class="collapse {% if activeTab == "history" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">
+                            {% include "address/components/history.html.twig" %}
                         </div>
-
-                        {% if address.coldStakedBalance %}
-                            <div id="cold-staking" class="collapse {% if activeTab == "cold-transactions" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">
-                                {% include "address/components/index_cold_staking.html.twig" %}
-                            </div>
-                        {% endif %}
 
                         <div id="staking-report" class="collapse {% if activeTab == "staking-report" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">
                             {% include "address/components/index_staking_report.html.twig" %}
                         </div>
+
+{#                        <div id="dao" class="collapse {% if activeTab == "dao" %}show{% else %}collapsed{% endif %}" data-parent="#block-collapse">#}
+{#                            {% include "address/components/index_dao.html.twig" %}#}
+{#                        </div>#}
                     </div>
                 </div>
             </div>

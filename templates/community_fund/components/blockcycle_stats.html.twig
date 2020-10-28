@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="alert alert-info">
-            Votes counted for block <strong>{{ blockCycle.currentBlock|number_format }}</strong> of <strong>{{ blockCycle.blocksInCycle|number_format }}</strong> in the {{ blockCycle.cycle|ordinal }} block cycle.<br/>
+            Votes counted for block <strong>{{ blockCycle.index|number_format }}</strong> of <strong>{{ blockCycle.size|number_format }}</strong>.<br/>
             {% if blockCycle.remainingBlocks == 1 %}
-                There is <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> block remaining.
+                There is <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> block remaining in the current cycle.
             {% else %}
-                There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining.
+                There are <strong>{{ blockCycle.remainingBlocks|number_format }}</strong> blocks remaining in the current cycle.
             {% endif %}
         </div>
     </div>

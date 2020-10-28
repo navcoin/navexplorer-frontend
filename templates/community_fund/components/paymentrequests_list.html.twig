@@ -5,9 +5,23 @@
         </div>
     {% else %}
         <div class="col-md-12">
-            <div class="alert alert-info">
-                There are no {{ active|proposalState }} payment requests
-            </div>
+            <hr/>
+            <h2>There are no {{ active|proposalState }} payment requests</h2>
+            <hr/>
         </div>
     {% endfor %}
+
+    <div class="col-sm-12">
+        <div class="table-pagination">
+            <span class="pagination-details">Showing page {{ paginator.currentPage}} of {{ paginator.totalPages }}</span>
+            <span class="float-right">
+                <ul>
+                    <li><a href="{{ path('app_communityfund_paymentrequests', {'status': active, 'page': 1}) }}" class="paginator paginator-first {% if paginator.first %}disabled{% endif %}">first</a></li>
+                    <li><a href="{{ path('app_communityfund_paymentrequests', {'status': active, 'page': paginator.previousPage }) }}" class="paginator paginator-previous {% if paginator.first %}disabled{% endif %}">previous</a></li>
+                    <li><a href="{{ path('app_communityfund_paymentrequests', {'status': active, 'page': paginator.nextPage }) }}" class="paginator paginator-next {% if paginator.last %}disabled{% endif %}">next</a></li>
+                    <li><a href="{{ path('app_communityfund_paymentrequests', {'status': active, 'page': paginator.totalPages }) }}" class="paginator paginator-last {% if paginator.last %}disabled{% endif %}">last</a></li>
+                </ul>
+            </span>
+        </div>
+    </div>
 </div>

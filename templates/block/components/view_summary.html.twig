@@ -1,50 +1,52 @@
 <div class="block-summary">
     <div class="row">
         <div class="col-sm-12 col-md-8">
-            <table class="table table-striped">
+            <table class="table table-striped table-nav">
                 <tbody>
                     <tr>
-                        <td><strong>Hash</strong></td>
+                        <th scope="col">Hash</th>
                         <td class="text-right break-word">{{ block.hash }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Height</strong></td>
-                        <td class="text-right">{{ block.height }}</td>
+                        <th scope="col">Height</th>
+                        <td class="text-right">{{ block.height|number_format }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Confirmations</strong></td>
+                        <th scope="col">Confirmations</th>
                         <td class="text-right">{{ block.confirmations }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Staked By</strong></td>
+                        <th scope="col">Staked By</th>
                         <td class="text-right break-word">
                             {% if block.stakedBy %}
                                 <a href="{{ path('app_address_index', { 'hash': block.stakedBy }) }}">{{ block.stakedBy }}</a>
+                            {% elseif block.stake != 0 %}
+                                Private Address
                             {% else %}
                                 N/A
                             {% endif %}
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>Stake Reward</strong></td>
+                        <th scope="col">Stake Reward</th>
                         <td class="text-right">{{ block.stake|stake_format }}</td>
                     </tr>
                     {% if block.cfundPayout %}
                     <tr>
-                        <td><strong>Community Fund Payout</strong></td>
+                        <th scope="col">Community Fund Payout</th>
                         <td class="text-right">{{ block.cfundPayout|stake_format }}</td>
                     </tr>
                     {% endif %}
                     <tr>
-                        <td><strong>Fees</strong></td>
+                        <th scope="col">Fees</th>
                         <td class="text-right">{{ block.fees|stake_format }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Spent</strong></td>
+                        <th scope="col">Spent</th>
                         <td class="text-right">{{ block.spend|stake_format }}</td>
                     </tr>
                     <tr>
-                        <td ><strong>Created At</strong></td>
+                        <th scope="col">Created At</th>
                         <td class="text-right">
                             {{ block.created|date_localised('Y-m-d, H:i:s') }}
                         </td>
@@ -54,32 +56,34 @@
         </div>
 
         <div class="col-sm-12 col-md-4">
-            <table class="table table-striped">
+            <table class="table table-striped table-nav table-second">
                 <tbody>
                 <tr class="d-flex">
-                    <td class="col-5"><strong>Difficulty</strong></td>
-                    <td class="text-right col-7">{{ block.difficulty }}</td>
+                    <th class="col-5" scope="col">Difficulty</th>
+                    <td class="text-right break-word col-7">
+                        {{ block.difficulty }}
+                    </td>
                 </tr>
                 <tr class="d-flex">
-                    <td class="col-5"><strong>Bits</strong></td>
+                    <th class="col-5" scope="col">Bits</th>
                     <td class="text-right col-7">{{ block.bits }}</td>
                 </tr>
                 <tr class="d-flex">
-                    <td class="col-5"><strong>Size</strong></td>
+                    <th class="col-5" scope="col">Size</th>
                     <td class="text-right col-7">{{ block.size }}</td>
                 </tr>
                 <tr class="d-flex">
-                    <td class="col-5"><strong>Version</strong></td>
+                    <th class="col-5" scope="col">Version</th>
                     <td class="text-right col-7">{{ block.version }}</td>
                 </tr>
                 <tr class="d-flex">
-                    <td class="col-5"><strong>Nonce</strong></td>
+                    <th class="col-5" scope="col">Nonce</th>
                     <td class="text-right col-7">{{ block.nonce }}</td>
                 </tr>
                 <tr class="d-flex">
-                    <td class="col-5"><strong>Merkle Root</strong></td>
+                    <th class="col-5" scope="col">Merkle Root</th>
                     <td class="text-right break-word col-7">
-                        {{ block.merkleRoot|slice(0,10) }}...
+                        {{ block.merkleRoot[0:10] }}...{{ block.merkleRoot[block.merkleRoot|length-4:] }}
                     </td>
                 </tr>
                 </tbody>

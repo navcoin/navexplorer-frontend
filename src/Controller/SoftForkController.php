@@ -10,35 +10,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class SoftForkController
 {
     /**
-     * @var SoftForkApi
-     */
-    private $softForkApi;
-
-    /**
-     * @var BlockApi
-     */
-    private $blockApi;
-
-    public function __construct(SoftForkApi $softForkApi, BlockApi $blockApi)
-    {
-        $this->softForkApi = $softForkApi;
-        $this->blockApi = $blockApi;
-    }
-
-
-    /**
      * @Route("/soft-forks")
      * @Template()
-     *
-     * @return array
      */
-    public function index()
+    public function index(SoftForkApi $softForkApi, BlockApi $blockApi)
     {
-        $softForks = $this->softForkApi->getAll();
+        $softForks = $softForkApi->getAll();
         $softForks->sortByLockedInHeight();
 
         return [
-            'block' => $this->blockApi->getBestBlock(),
+            'cycle' => $softForkApi->getCycle(),
+            'block' => $blockApi->getBestBlock(),
             'softForks' => $softForks,
         ];
     }

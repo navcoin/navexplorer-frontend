@@ -18,17 +18,17 @@ class PaymentRequestMapper extends BaseMapper
             $data['proposalHash'],
             $data['description'],
             $data['requestedAmount'],
-            $data['votesYes'],
-            $data['votesNo'],
-            $data['votingCycle'],
             $data['state'],
-            array_key_exists('stateChangedOnBlock', $data) ? $data['stateChangedOnBlock'] : null,
+            $this->getData('stateChangedOnBlock', $data, null),
             $data['status'],
-            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['createdAt'])
+            $data['votesYes'],
+            $data['votesAbs'],
+            $data['votesNo'],
+            $data['votingCycle']
         );
 
         if ($data['state'] == "ACCEPTED") {
-            $paymentRequest->setPaidOnBlock($data['paidOnBlock']);
+//            $paymentRequest->setPaidOnBlock($data['paidOnBlock']);
         }
 
         return $paymentRequest;

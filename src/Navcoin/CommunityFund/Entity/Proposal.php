@@ -55,21 +55,6 @@ class Proposal
     private $proposalDuration;
 
     /**
-     * @var int
-     */
-    private $votesYes;
-
-    /**
-     * @var int
-     */
-    private $votesNo;
-
-    /**
-     * @var int
-     */
-    private $votingCycle;
-
-    /**
      * @var string
      */
     private $state;
@@ -94,6 +79,15 @@ class Proposal
      */
     private $expiresOn;
 
+    /** @var int */
+    private $votesYes;
+    /** @var int */
+    private $votesAbs;
+    /** @var int */
+    private $votesNo;
+    /** @var int */
+    private $votingCycle;
+
     public function __construct(
         int $version,
         string $hash,
@@ -105,13 +99,13 @@ class Proposal
         float $userPaidFee,
         string $paymentAddress,
         int $proposalDuration,
-        int $votesYes,
-        int $votesNo,
-        int $votingCycle,
         string $state,
         ?string $stateChangedOnBlock,
         string $status,
-        \DateTime $createdAt
+        int $votesYes,
+        int $votesAbs,
+        int $votesNo,
+        int $votingCycle
     ) {
         $this->version = $version;
         $this->hash = $hash;
@@ -123,13 +117,13 @@ class Proposal
         $this->userPaidFee = $userPaidFee;
         $this->paymentAddress = $paymentAddress;
         $this->proposalDuration = $proposalDuration;
-        $this->votesYes = $votesYes;
-        $this->votesNo = $votesNo;
-        $this->votingCycle = $votingCycle;
         $this->state = $state;
         $this->stateChangedOnBlock = $stateChangedOnBlock;
         $this->status = $status;
-        $this->createdAt = $createdAt;
+        $this->votesYes = $votesYes;
+        $this->votesAbs = $votesAbs;
+        $this->votesNo = $votesNo;
+        $this->votingCycle = $votingCycle;
     }
 
     public function getVersion(): int
@@ -187,10 +181,10 @@ class Proposal
         $inputSeconds = $this->proposalDuration;
 
         $secondsInAMinute = 60;
-        $secondsInAnHour  = 60 * $secondsInAMinute;
-        $secondsInADay    = 24 * $secondsInAnHour;
-        $secondsInAWeek   = 7 * $secondsInADay;
-        $secondsInAYear   = 52 * $secondsInAWeek;
+        $secondsInAnHour = 60 * $secondsInAMinute;
+        $secondsInADay = 24 * $secondsInAnHour;
+        $secondsInAWeek = 7 * $secondsInADay;
+        $secondsInAYear = 52 * $secondsInAWeek;
 
         // extract years
         $years = floor($inputSeconds / $secondsInAYear);
@@ -220,33 +214,13 @@ class Proposal
         $date .= $weeks ? $weeks . ($weeks == 1 ? ' week, ' : ' weeks, ') : '';
         $date .= $days ? $days . ($days == 1 ? ' day, ' : ' days, ') : '';
         $date .= $hours ? $hours . ($hours == 1 ? ' hour, ' : ' hours, ') : '';
-        $date .= $minutes ? $minutes . ($minutes == 1 ? ' minute, ' : ' minutes, ') : '';
-        $date .= $seconds ? $seconds . ($seconds == 1 ? ' second, ' : ' seconds, ') : '';
 
-        $date = trim($date, ', ');
-//        $date = strrev(implode(strrev(' and '), explode(strrev(', '), strrev($date), 2)));
-        return $date;
-    }
+        if ($this->proposalDuration < 604800) {
+            $date .= $minutes ? $minutes . ($minutes == 1 ? ' minute, ' : ' minutes, ') : '';
+            $date .= $seconds ? $seconds . ($seconds == 1 ? ' second, ' : ' seconds, ') : '';
+        }
 
-
-    public function getVotesYes(): int
-    {
-        return $this->votesYes;
-    }
-
-    public function getVotesNo(): int
-    {
-        return $this->votesNo;
-    }
-
-    public function getVotesTotal(): int
-    {
-        return $this->votesYes + $this->votesNo;
-    }
-
-    public function getVotingCycle(): int
-    {
-        return $this->votingCycle;
+        return trim($date, ', ');
     }
 
     public function getState(): string
@@ -279,5 +253,25 @@ class Proposal
         $this->expiresOn = $expiresOn;
 
         return $this;
+    }
+
+    public function getVotesYes(): int
+    {
+        return $this->votesYes;
+    }
+
+    public function getVotesAbs(): int
+    {
+        return $this->votesAbs;
+    }
+
+    public function getVotesNo(): int
+    {
+        return $this->votesNo;
+    }
+
+    public function getVotingCycle(): int
+    {
+        return $this->votingCycle;
     }
 }

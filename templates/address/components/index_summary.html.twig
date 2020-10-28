@@ -1,78 +1,34 @@
-<div class="row transaction-summary">
-    <div class="col-sm-12 col-md-8">
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td><strong>Hash</strong></td>
-                    <td class="text-right break-word">
-                        {{ address.hash }}
-                        {% if address.label %}
-                            {#<br><span class="badge badge-info">{{ address.label }}</span>#}
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Balance</strong></td>
-                    <td class="text-right">
-                        {{ address.balance|stake_format }}
-                    </td>
-                </tr>
-                {% if address.coldStaked or address.coldStakedBalance != 0 %}
-                    <tr>
-                        <td><strong>Cold Staking Balance</strong></td>
-                        <td class="text-right">
-                            {#<span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>#}
-                            {{ (address.coldStakedBalance)|stake_format }}
-                        </td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <td><strong>Sent</strong></td>
-                    <td class="text-right">
-                        <span class="badge badge-info badge-transaction-count">{{ address.sentCount }} txs</span>
-                        {{ address.sent|stake_format }}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Received</strong></td>
-                    <td class="text-right">
-                        <span class="badge badge-info badge-transaction-count">{{ address.receivedCount }} txs</span>
-                        {{ address.received|stake_format }}
-                    </td>
-                </tr>
-                {% if address.staked %}
-                    <tr>
-                        <td><strong>Staked</strong></td>
-                        <td class="text-right">
-                            <span class="badge badge-info badge-transaction-count">{{ address.stakedCount }} txs</span>
-                            {{ (address.staked)|stake_format }}
-                        </td>
-                    </tr>
-                {% endif %}
-                {% if address.coldStaked or address.coldStakedBalance != 0 %}
-                    <tr>
-                        <td><strong>Cold Staked</strong></td>
-                        <td class="text-right">
-                            <span class="badge badge-info badge-transaction-count">{{ address.coldStakedCount }} txs</span>
-                            {{ (address.coldStaked)|stake_format }}
-                        </td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <td><strong>Transactions</strong></td>
-                    <td class="text-right">
-                        {{ address.transactions|number_format }}
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Rich list</strong></td>
-                    <td class="text-right">{{ address.richListPosition|ordinal }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-3 offset-md-1 text-center">
-        <div><img src="{{ qr_code_data_uri("navcoin:"~address.hash) }}" /></div>
-        <div><a href="navcoin:{{ address.hash }}" class="btn btn-success">Send Navcoin</a></div>
-    </div>
+<div class="address-summary">
+    <h2 class="break-word">{{ summary.hash }}</h2>
+    <table class="table table-nav table-striped">
+        <tbody>
+        <tr>
+            <th scope="col">Rich List</th>
+            <td>{{ address.richList.spendable|ordinal }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Spendable Balance</th>
+            <td>{{ summary.spendable.balance|stake_format }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Stakable Balance</th>
+            <td>{{ summary.stakable.balance|stake_format }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Voting Weight</th>
+            <td>{{ summary.votingWeight.balance|stake_format }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Transactions</th>
+            <td>{{ summary.txs }} txs</td>
+        </tr>
+        <tr>
+            <th scope="col">Created At</th>
+            <td>
+                {{ address.createdTime|date_localised('Y-m-d, H:i:s') }}<br/>
+                <small><label>Block&nbsp;</label><a href="{{ path("app_block_view", {'height': address.createdBlock}) }}">{{ address.createdBlock|number_format }}</a></small>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

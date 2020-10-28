@@ -14,19 +14,13 @@ use JMS\Serializer\SerializerInterface;
 
 class BlockController extends Controller
 {
-    /**
-     * @var int
-     */
-    private $pageSize = 100;
+    /** @var int */
+    private $pageSize = 10;
 
-    /**
-     * @var BlockApi
-     */
+    /** @var BlockApi */
     private $blockApi;
 
-    /**
-     * @var TransactionApi
-     */
+    /** @var TransactionApi */
     private $transactionApi;
 
     public function __construct(BlockApi $blockApi, TransactionApi $transactionApi)
@@ -38,8 +32,6 @@ class BlockController extends Controller
     /**
      * @Route("/blocks")
      * @Template()
-     *
-     * @return array
      */
     public function index(): array
     {
@@ -48,12 +40,6 @@ class BlockController extends Controller
 
     /**
      * @Route("/blocks.json")
-     *
-     *
-     * @param Request             $request
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
      */
     public function blocks(Request $request, SerializerInterface $serializer): Response
     {
@@ -67,15 +53,12 @@ class BlockController extends Controller
 
     /**
      * @Route("/block/{height}")
-     *
-     * @param Request $request
-     *
-     * @return array|Response
      */
     public function view(Request $request)
     {
         try {
             $block = $this->blockApi->getBlock($request->get('height'));
+            $rawData = $this->blockApi->getRawBlock($block->getHash());
         } catch (BlockNotFoundException $e) {
             return $this->render(
                 'block/not_found.html.twig',
@@ -86,17 +69,12 @@ class BlockController extends Controller
 
         return $this->render('block/view.html.twig', [
             'block' => $block,
+            'raw' => $rawData,
         ]);
     }
 
     /**
      * @Route("/block/{height}/tx.json")
-     *
-     *
-     * @param Request             $request
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
      */
     public function transactions(Request $request, SerializerInterface $serializer): Response
     {

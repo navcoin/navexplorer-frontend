@@ -1,0 +1,15 @@
+<h3>Answers</h3>
+
+<div class="row">
+    {% for a in consultation.answers %}
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            {% include "dao/components/answer_card.html.twig" %}
+        </div>
+    {% else %}
+        <div class="col-md-12">
+            <hr/>
+            <p>There are no answers available</p>
+            <hr/>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,46 @@
+<div id="history-list">
+    <div class="heading">
+        <form class="form-type" action="{{ path('app_address_index', {hash: summary.hash}) }}">
+            {% set button = "Filter By Type" %}
+            {% if (type == "stake") %}{% set button = "Staking" %}{% endif %}
+            {% if (type == "send") %}{% set button = "Sending" %}{% endif %}
+            {% if (type == "receive") %}{% set button = "Receiving" %}{% endif %}
+
+            <button class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ button }}</button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{ path("app_address_index", {'hash': summary.hash}) }}">
+                    All TXs
+                </a>
+                <a class="dropdown-item {% if (type == "stake") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'type': 'stake'}) }}">
+                    Only Staking TXs
+                </a>
+                <a class="dropdown-item {% if (type == "send") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'type': 'send'}) }}">
+                    Only Sending TXs
+                </a>
+                <a class="dropdown-item {% if (type == "receive") %}selected{% endif %}" href="{{ path("app_address_index", {'hash': summary.hash, 'type': 'receive'}) }}">
+                    Only Receiving TXs
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-striped table-adaptive table-nav" data-url="{{ path('app_address_history', {'hash': summary.hash, 'type': type }) }}">
+        <caption class="caption-top">
+            <div class="table-pagination"></div>
+        </caption>
+        <thead>
+        <tr>
+            <th>Transaction</th>
+            <th>Type</th>
+            <th>Date/Time</th>
+            <th>&nbsp;</th>
+            <th class="text-right">Spendable</th>
+            <th class="text-right">Stakable</th>
+            <th class="text-right">Voting Weight</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><th colspan="7">Loading transactions</th></tr>
+        </tbody>
+    </table>
+</div>

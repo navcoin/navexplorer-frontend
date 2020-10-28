@@ -7,42 +7,75 @@ class ProposalVote
     /**
      * @var int
      */
-    private $votesYes;
+    private $start;
 
     /**
      * @var int
      */
-    private $votesNo;
+    private $end;
 
     /**
      * @var int
      */
-    private $votingCycle;
+    private $cycle;
 
-    public function __construct(int $votesYes, int $votesNo, int $votingCycle)
+    /**
+     * @var int
+     */
+    private $yes;
+
+    /**
+     * @var int
+     */
+    private $no;
+
+    /**
+     * @var int
+     */
+    private $abstain;
+
+    public function __construct(int $start, int $end, int $cycle, int $yes, int $no, int $abstain)
     {
-        $this->votesYes = $votesYes;
-        $this->votesNo = $votesNo;
-        $this->votingCycle = $votingCycle;
+        $this->start = $start;
+        $this->end = $end;
+        $this->cycle = $cycle;
+        $this->yes = $yes;
+        $this->no = $no;
+        $this->abstain = $abstain;
     }
 
-    public function getVotesYes(): int
+    public function getStart(): int
     {
-        return $this->votesYes;
+        return $this->start;
     }
 
-    public function getVotesNo(): int
+    public function getEnd(): int
     {
-        return $this->votesNo;
+        return $this->end;
     }
 
-    public function getVotesTotal(): int
+    public function getCycle(): int
     {
-        return $this->votesYes + $this->votesNo;
+        return $this->cycle;
     }
 
-    public function getVotingCycle(): int
+    public function getYes(): int
     {
-        return $this->votingCycle;
+        return $this->yes;
+    }
+
+    public function getNo(): int
+    {
+        return $this->no;
+    }
+
+    public function getTotal(): int
+    {
+        return $this->yes + $this->no;
+    }
+
+    public function getAbstain(): int
+    {
+        return $this->abstain;
     }
 }

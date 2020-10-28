@@ -3,6 +3,9 @@
 namespace App\Navcoin\Address\Mapper;
 
 use App\Navcoin\Address\Entity\Address;
+use App\Navcoin\Address\Entity\Balance;
+use App\Navcoin\Address\Entity\Changes;
+use App\Navcoin\Address\Entity\RichList;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\Mapper\BaseMapper;
 use App\Navcoin\Common\Mapper\MapperInterface;
@@ -13,21 +16,22 @@ class AddressMapper extends BaseMapper
     {
         return new Address(
             $data['hash'],
-            array_key_exists('received', $data) && $data['received'] !== 0 ? ($data['received'] / 100000000) : 0,
-            array_key_exists('receivedCount', $data) ? $data['receivedCount'] : 0,
-            array_key_exists('sent', $data) && $data['sent'] !== 0 ? ($data['sent'] / 100000000) : 0,
-            array_key_exists('sentCount', $data) ? $data['sentCount'] : 0,
-            array_key_exists('staked', $data) && $data['staked'] !== 0 ? ($data['staked'] / 100000000) : 0,
-            array_key_exists('stakedCount', $data) ? $data['stakedCount'] : 0,
-            array_key_exists('stakedSent', $data) && $data['stakedSent'] !== 0 ? ($data['stakedSent'] / 100000000) : 0,
-            array_key_exists('balance', $data) && $data['balance'] !== 0 ? ($data['balance'] / 100000000) : 0,
-            array_key_exists('blockIndex', $data) ? $data['blockIndex'] : 0,
-            array_key_exists('richListPosition', $data) ? $data['richListPosition'] : 0,
-            array_key_exists('coldStakedBalance', $data) && $data['coldStakedBalance'] !== 0 ? ($data['coldStakedBalance'] / 100000000) : 0,
-            array_key_exists('coldStaked', $data) && $data['coldStaked'] !== 0 ? ($data['coldStaked'] / 100000000) : 0,
-            array_key_exists('coldStakedCount', $data) ? $data['coldStakedCount'] : 0,
-            array_key_exists('coldStakedSent', $data) && $data['coldStakedSent'] !== 0 ? ($data['coldStakedSent'] / 100000000) : 0,
-            array_key_exists('label', $data) ? $data['label'] : null
+            $data['height'],
+            $data['spendable'] / 100000000,
+            $data['stakable'] / 100000000,
+            $data['voting_weight'] / 100000000,
+            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['created_time']),
+            $data['created_block'],
+            $this->mapRichList($data['rich_list'])
+        );
+    }
+
+    public function mapRichList(array $data): RichList
+    {
+        return new RichList(
+            $data['spendable'],
+            $data['stakable'],
+            $data['voting_weight']
         );
     }
 }

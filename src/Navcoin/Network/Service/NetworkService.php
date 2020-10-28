@@ -4,9 +4,7 @@ namespace App\Navcoin\Network\Service;
 
 class NetworkService
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $network;
 
     public function __construct(string $network)

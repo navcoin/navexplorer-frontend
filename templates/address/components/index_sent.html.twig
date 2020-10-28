@@ -1,0 +1,30 @@
+
+<div class="col-sm-12 col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>Sent</h2>
+        </div>
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <td><strong>Spendable</strong></td>
+                <td class="text-right">
+                    {{ summary.spending.sent|stake_format }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Stakable</strong></td>
+                <td class="text-right">
+                    {{ summary.staking.sent|stake_format }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Voting Weight</strong></td>
+                <td class="text-right">
+                    {{ summary.voting.sent|stake_format }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -14,7 +14,7 @@ class TrendApi extends NavcoinApi
     public function getProposalVotingTrend(String $hash): Trends
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/proposal/' . $hash . '/trend');
+            $response = $this->getClient()->get('/dao/cfund/proposal/' . $hash . '/trend');
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -31,7 +31,7 @@ class TrendApi extends NavcoinApi
     public function getPaymentRequestVotingTrend(String $hash): Trends
     {
         try {
-            $response = $this->getClient()->get('/api/community-fund/payment-request/'.$hash.'/trend');
+            $response = $this->getClient()->get('/dao/cfund/payment-request/' . $hash . '/trend');
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {

@@ -38,18 +38,25 @@ services:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Address\Mapper\AddressMapper'
 
+    App\Navcoin\Address\Api\HistoryApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\Address\Mapper\HistoryMapper'
+
+    App\Navcoin\Address\Api\SummaryApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\Address\Mapper\SummaryMapper'
+
+    App\Navcoin\Address\Api\AddressGroupApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\Address\Mapper\AddressGroupMapper'
+
     App\Navcoin\Address\Api\StakingApi:
         arguments:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\Address\Mapper\StakingMapper'
-
-    App\Navcoin\Address\Api\TransactionApi:
-        arguments:
-            - '@App\Navcoin\Client\NavcoinClient'
-            - '@App\Navcoin\Address\Mapper\TransactionMapper'
-        calls:
-            - method: setFilter
-              arguments: ['@App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter']
 
     App\Navcoin\Block\Api\BlockApi:
         arguments:
@@ -89,6 +96,21 @@ services:
         arguments:
             - '@App\Navcoin\Client\NavcoinClient'
             - '@App\Navcoin\CommunityFund\Mapper\PaymentRequestMapper'
+
+    App\Navcoin\Dao\Api\ConsensusApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\Dao\Mapper\ConsensusParameterMapper'
+
+    App\Navcoin\Dao\Api\ConsultationApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\Dao\Mapper\ConsultationMapper'
+
+    App\Navcoin\Dao\Api\AnswerVoteApi:
+        arguments:
+            - '@App\Navcoin\Client\NavcoinClient'
+            - '@App\Navcoin\CommunityFund\Mapper\VoterMapper'
 
     App\Navcoin\CommunityFund\Api\VotersApi:
         arguments:

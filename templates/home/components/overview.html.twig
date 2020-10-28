@@ -1,39 +1,37 @@
-<h1 class="float-left">Overview</h1>
+<div class="overview">
+    <h1 class="float-left">Overview</h1>
 
-<form class="form-filter" action="{{ path('app_home_index') }}">
-    <span class="legend">Group by:</span>
-    <label>
-        <a class="btn btn-sm btn-info" href="{{ path('app_home_index') }}">Hourly</a>
-    </label>
-    <label>
-        <a class="btn btn-sm btn-info" href="{{ path('app_home_index', {'period': 'daily'}) }}">Daily</a>
-    </label>
-    <label>
-        <a class="btn btn-sm btn-info" href="{{ path('app_home_index', {'period': 'monthly'}) }}">Monthly</a>
-    </label>
-</form>
+    <form class="form-filter float-right" action="{{ path('app_home_index') }}">
+        <span class="legend">Group by:</span>
+        <label>
+            <a class="btn btn-sm btn-info" href="{{ path('app_home_index') }}">Hourly</a>
+        </label>
+        <label>
+            <a class="btn btn-sm btn-info" href="{{ path('app_home_index', {'period': 'daily'}) }}">Daily</a>
+        </label>
+        <label>
+            <a class="btn btn-sm btn-info" href="{{ path('app_home_index', {'period': 'monthly'}) }}">Monthly</a>
+        </label>
+    </form>
 
-<table class="table table-striped table-adaptive">
-    <thead>
+    <table class="table table-striped table-adaptive table-nav">
+        <thead>
         <tr>
             <th>Period</th>
-            <th>Height</th>
             <th class="text-center">Blocks</th>
             <th class="text-center">Transactions</th>
-            <th>Stake Rewards</th>
-            <th>Nav Spent</th>
+            <th class="text-right">Nav Spent</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for index, block in blocks %}
-        <tr>
-            <td data-role="hourlyPeriod">{{ period(blocks.period, index, block) }}</td>
-            <td data-role="height"><a href="{{ path('app_block_view', {'height': block.height}) }}">{{ block.height }}</a></td>
-            <td class="text-center" data-role="blocks">{{ block.blocks|number_format }}</td>
-            <td class="text-center" data-role="transactions">{{ block.transactions|number_format }}</td>
-            <td data-role="stakeRewards">{{ block.stake|stake_format(false, 2) }}</td>
-            <td data-role="navSpent">{{ block.spend|stake_format(false, 2) }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for index, block in blocks %}
+            <tr>
+                <td data-role="hourlyPeriod">{{ period(blocks.period, index, block) }}</td>
+                <td class="text-center" data-role="blocks">{{ block.blocks|number_format }}</td>
+                <td class="text-center" data-role="transactions">{{ (block.transactions-block.blocks-block.blocks)|number_format }}</td>
+                <td data-role="navSpent" class="text-right">{{ block.spend|stake_format(false, 2) }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -46,7 +46,6 @@ class BlockCycle
 
     public function __construct(
         int $blocksInCycle,
-        float $minQuorum,
         BlockCycleVoting $proposalVoting,
         BlockCycleVoting $paymentVoting,
         int $height,
@@ -55,7 +54,6 @@ class BlockCycle
         int $currentBlock
     ) {
         $this->blocksInCycle = $blocksInCycle;
-        $this->minQuorum = $minQuorum;
         $this->proposalVoting = $proposalVoting;
         $this->paymentVoting = $paymentVoting;
         $this->height = $height;
@@ -67,11 +65,6 @@ class BlockCycle
     public function getBlocksInCycle(): int
     {
         return $this->blocksInCycle;
-    }
-
-    public function getMinQuorum(): float
-    {
-        return $this->minQuorum;
     }
 
     public function getProposalVoting(): BlockCycleVoting

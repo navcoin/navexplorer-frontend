@@ -1,11 +1,19 @@
-$black: #000000;
-$purple: #7d59b5;
+$black: #111;
+$light-black: #1d1d1d;
+$light-purple: #7d59b5;
+$purple: rgb(74, 58, 111);
 $dark-purple: #4d3474;
-$blue: hsl(199, 81%, 59%);
+$blue: rgb(34, 93, 248);
+$light-blue: hsl(199, 81%, 59%);
 $grey: grey;
-$mid-grey: hsla(37, 25%, 83%, 0.75);
+$mid-grey: rgb(232, 232, 232);
+$dark-grey: rgb(208, 208, 208);
 $green: green;
 $light-grey: #f9f9f9;
-$white: #f9f9f9;
-$off-white: #cccccc;
-$yellow: #f0c067
+$white: #ffffff;
+$off-white: #f9f9f9;
+$yellow: #f0c067;
+$pink: rgb(183, 61, 175);
+
+$darkBg: #222;
+$darkText: #a7e !important;

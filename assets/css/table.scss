@@ -1,9 +1,23 @@
 .table {
   margin-bottom: 0;
 
+  th {
+    font-weight: normal;
+    color: $grey;
+  }
+
   th,
   td {
     padding: 0.5rem 0.25rem;
+
+    label {
+      color: $grey;
+      margin-bottom: 0;
+    }
+  }
+
+  td.td-adaptive {
+    display: none;
   }
 
   badge {
@@ -25,7 +39,21 @@
   }
 }
 
-@media only screen and (max-width: 576px) {
+.table-nav {
+  border-top: 5px solid $purple;
+
+  td, th {
+    padding: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .table-second {
+    border-top: 0;
+  }
+}
+
+@media only screen and (max-width: 855px) {
   .table-adaptive {
 
     .table-pagination {
@@ -50,12 +78,44 @@
 
     tbody {
       tr {
-        border: 1px solid #ccc;
-        border-bottom: 0;
+        padding: 0 0 0 0;
+        border: 0;
+        background-color: white;
+
+        td {
+          padding: 0.5rem;
+          border-top: 1px solid $dark-grey;
+          border-bottom: 0;
+        }
+
+        td:before {
+          top: 0.5rem;
+        }
+
+        td:nth-of-type(odd) {
+          background-color: $off-white;
+        }
+      }
+
+      tr:nth-of-type(odd) {
+        background-color: white;
+      }
+
+      tr:not(:first-child) {
+        border-top: 5px solid $purple;
       }
 
       th {
         font-weight: normal;
+      }
+
+      td.td-adaptive {
+        display: inherit;
+      }
+
+      td.hide {
+        display: none;
+        visibility: hidden;
       }
 
       td {
@@ -79,37 +139,58 @@
       }
     }
 
+    td:before {
+      color: $grey;
+    }
+
     td[data-role="address"]:before { content: "Address"; }
+    td[data-role="answer"]:before { content: "Answer"; }
     td[data-role="amount"]:before { content: "Amount"; }
     td[data-role="annualPercentage"]:before { content: "Annual %"; }
     td[data-role="balance"]:before { content: "Balance"; }
     td[data-role="block"]:before { content: "Block"; }
     td[data-role="blocks"]:before { content: "Blocks"; }
+    td[data-role="changes"]:before { content: "Changes"; }
     td[data-role="date/time"]:before { content: "Date/Time"; }
     td[data-role="description"]:before { content: "Description"; }
+    td[data-role="forBalance"]:before { content: "For Balance"; }
     td[data-role="hourlyPeriod"]:before { content: "Period"; }
     td[data-role="hash"]:before { content: "Hash"; }
     td[data-role="height"]:before { content: "Height"; }
     td[data-role="index"]:before { content: "Index"; }
+    td[data-role="inputs"]:before { content: "Inputs"; }
     td[data-role="lastBlock"]:before { content: "Last Block"; }
     td[data-role="navEarned"]:before { content: "NAV Earned"; }
     td[data-role="navRequested"]:before { content: "NAV Requested"; }
     td[data-role="navSpent"]:before { content: "NAV Spent"; }
-    td[data-role="numStakes"]:before { content: "# Stakes"; }
+    td[data-role="numStakes"]:before { content: "Staking TXs"; }
+    td[data-role="outputs"]:before { content: "Outputs"; }
     td[data-role="percentageOfCoins"]:before { content: "% of Coins"; }
     td[data-role="previousOutput"]:before { content: "Previous Output"; }
     td[data-role="proposal"]:before { content: "Proposal"; }
     td[data-role="rank"]:before { content: "Rank"; }
     td[data-role="redeemedIn"]:before { content: "Redeemed In"; }
+    td[data-role="spendable"]:before { content: "Spendable"; }
+    td[data-role="spendableChange"]:before { content: "Spendable Change"; }
+    td[data-role="spendableBalance"]:before { content: "Spendable Balance"; }
+    td[data-role="stakable"]:before { content: "Stakable"; }
+    td[data-role="stakableChange"]:before { content: "Stakable Change"; }
+    td[data-role="stakableBalance"]:before { content: "Stakable Balance"; }
     td[data-role="stakedBy"]:before { content: "Staked By"; }
     td[data-role="stakeRewards"]:before { content: "Stake Rewards"; }
     td[data-role="stake"]:before { content: "Stake"; }
     td[data-role="status"]:before { content: "Status"; }
+    td[data-role="transaction"]:before { content: "Transaction"; }
     td[data-role="transactions"]:before { content: "Transactions"; }
     td[data-role="type"]:before { content: "Type"; }
+    td[data-role="txid"]:before { content: "Txid"; }
     td[data-role="vote"]:before { content: "Vote"; }
+    td[data-role="value out"]:before { content: "Value Out"; }
+    td[data-role="votingCycle"]:before { content: "Voting Cycle"; }
     td[data-role="votingStatus"]:before { content: "Voting Status"; }
-    td[data-role="type"]:before { content: "Type"; }
+    td[data-role="votingWeight"]:before { content: "Voting Weight"; }
+    td[data-role="votingWeightChange"]:before { content: "Voting Weight Change"; }
+    td[data-role="votingWeightBalance"]:before { content: "Voting Weight Balance"; }
   }
 }
 
@@ -132,4 +213,16 @@
       content: "| ";
     }
   }
+}
+
+.tr-alt {
+  background-color: #f9f9f9;
+}
+
+.tr-sub td {
+  border-top: 0;
+}
+
+.caption-top {
+  padding-bottom: 0;
 }

@@ -2,13 +2,12 @@
 
 namespace App\Navcoin\Common\Mapper;
 
+use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\Entity\Paginator;
 
 abstract class BaseMapper implements MapperInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options;
 
     abstract function mapEntity(array $data);
@@ -17,7 +16,9 @@ abstract class BaseMapper implements MapperInterface
     {
         $this->options = $options;
 
-        $container = $paginator !== null ? $paginator : new $class;
+        /** @var IteratorEntityInterface $container */
+        $container = new $class;
+        $container->setPaginator($paginator);
 
         foreach ($this->getElements($data) as $entity) {
             $element = $this->mapEntity($entity);

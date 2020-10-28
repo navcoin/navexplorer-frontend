@@ -1,39 +1,29 @@
 <h2>Top {{ count }} Addresses</h2>
 
 <div>
-    <table class="table table-striped">
+    <table class="table table-striped table-nav">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Address</th>
-                <th>Balance</th>
+                <th colspan="2">Balance</th>
                 <th class="d-none d-md-table-cell">Last&nbsp;Block</th>
-                <th class="d-none d-md-table-cell">Stake&nbsp;Rewards</th>
             </tr>
         </thead>
         <tbody>
-            {% for rank, address in richList %}
+            {% for richListItem in richList %}
                 <tr>
-                    <td>{{ rank+1 }}</td>
+                    <td>{{ richListItem.richList.spendable }}</td>
                     <td>
-                        <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">
-                            {{ address.hash }}
-                        </a>
-                        {% if address.label %}
-                            <span class="badge badge-info">{{ address.label }}</span>
-                        {% endif %}
+                        <a href="{{ path('app_address_index', { 'hash': richListItem.hash }) }}" class="break-word">{{ richListItem.hash }}</a>
                     </td>
+                    <td>Spendable<br/>Stakable<br/>Voting Weight</td>
                     <td>
-                        {{ address.balance|stake_format(false, 2) }}<br/>
-                        {% set balance = ((address.balance/bestBlock.balance)*100)|round(2, 'floor') %}
-                        {% if balance == 0 %}
-                            < 0.01%
-                        {% else %}
-                            {{ balance|number_format(2) }}%
-                        {% endif %}
+                        {{ richListItem.spendable|stake_format(false, 2) }}<br/>
+                        {{ richListItem.stakable|stake_format(false, 2) }}<br/>
+                        {{ richListItem.votingWeight|stake_format(false, 2) }}
                     </td>
-                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': address.blockIndex}) }}">{{ address.blockIndex }}</a></td>
-                    <td class="d-none d-md-table-cell">{{ address.staked|stake_format(false, 2) }}</td>
+                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': richListItem.height}) }}">{{ richListItem.height }}</a></td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,0 +1,28 @@
+{% if consultations|length == 0 %}
+    <p>There are no consensus consultations</p>
+{% else %}
+<table class="table table-striped table-adaptive">
+    <thead>
+    <tr>
+        <th>Hash</th>
+        <th>Height</th>
+        <th class="text-center">Answer</th>
+        <th class="text-center">Voting Cycle</th>
+        <th class="text-center">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for idx, consultation in consultations %}
+        <tr class="{% if idx is even %}tr-alt {% endif %}">
+            <td data-role="hash">
+                <a href="{{ path('app_dao_consultation', {'hash': consultation.hash}) }}" class="break-word">{{ consultation.hash }}</a>
+            </td>
+            <td data-role="height">{{ consultation.height|number_format }}</td>
+            <td data-role="answer" class="text-center">{{ consultation.acceptedAnswer ? consultation.acceptedAnswer.answer|answerType(parameter.type) : '--' }}</td>
+            <td data-role="votingCycle" class="text-center">{{ consultation.status != "expired" ? consultation.votingCycleForState|ordinal : '--' }}</td>
+            <td data-role="status" class="text-center">{{ consultation.status|capitalize }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}

@@ -2,50 +2,71 @@
 
 namespace App\Controller;
 
+use App\CoinGecko\Api as CoinGeckoApi;
+use App\Exception\DistributionException;
+use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\BlockGroupApi;
 use App\Navcoin\Common\Network;
+use App\Navcoin\Distribution\Api\DistributionApi;
+use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends Controller
+class HomeController extends AbstractController
 {
-    /**
-     * @var BlockGroupApi
-     */
+    /** @var BlockGroupApi */
     private $blockGroupApi;
 
-    public function __construct(BlockGroupApi $blockGroupApi)
+    /** @var BlockApi */
+    private $blockApi;
+
+    public function __construct(BlockGroupApi $blockGroupApi, BlockApi $blockApi)
     {
         $this->blockGroupApi = $blockGroupApi;
+        $this->blockApi = $blockApi;
     }
 
     /**
      * @Route("/")
      * @Template()
-     *
-     * @param Request $request
-     *
-     * @return array
      */
-    public function index(Request $request): array
+    public function index(): array
     {
         return [
-            'blocks' => $this->blockGroupApi->getGroupByCategory($request->get('period', 'hourly'), 10)
+            'best' => $this->blockApi->getBestBlock(),
         ];
+    }
+
+    /**
+     * @Route("/ticker.json")
+     */
+    public  function ticker(SerializerInterface $serializer, CoinGeckoApi $coinApi, DistributionApi $distributionApi): Response
+    {
+        $ticker = $coinApi->getTicker();
+        try {
+            $totalSupply = $distributionApi->getTotalSupply();
+        } catch (DistributionException $e) {
+            $totalSupply = 0;
+        }
+
+        $response = [
+            'btc' => $ticker['market_data']['current_price']['btc'],
+            'usd' => $ticker['market_data']['current_price']['usd'],
+            'marketCap' => floor($totalSupply*$ticker['market_data']['current_price']['usd']),
+            'circulatingSupply' => $totalSupply,
+        ];
+
+        return new Response($serializer->serialize($response, 'json'));
     }
 
     /**
      * @Route("/network/{network}")
      * @Template()
-     *
-     * @param Request $request
-     * @param Session $session
-     *
-     * @return RedirectResponse
      */
     public function network(Request $request, Session $session): RedirectResponse
     {

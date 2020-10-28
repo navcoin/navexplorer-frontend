@@ -12,7 +12,7 @@ class BlockGroupApi extends NavcoinApi
     public function getGroupByCategory(string $period, $count = 10): IteratorEntityInterface
     {
         try {
-            $response = $this->getClient()->get(sprintf('/api/blockgroup?period=%s&count=%d', $period, $count));
+            $response = $this->getClient()->get(sprintf('/blockgroup?period=%s&count=%d', $period, $count));
             $data = $this->getClient()->getJsonBody($response);
         } catch (ServerRequestException $e) {
             return new BlockGroups();

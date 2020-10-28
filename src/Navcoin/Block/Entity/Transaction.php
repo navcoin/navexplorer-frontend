@@ -56,6 +56,16 @@ class Transaction
     private $raw;
 
     /**
+     * @var int
+     */
+    private $size;
+
+    /**
+     * @var int
+     */
+    private $version;
+
+    /**
      * @var ProposalVotes
      */
     private $proposalVotes;
@@ -70,7 +80,8 @@ class Transaction
         Outputs $outputs,
         string $type,
         string $raw,
-        ?ProposalVotes $proposalVotes
+        string $size,
+        string $version
     ) {
         $this->hash = $hash;
         $this->height = $height;
@@ -81,10 +92,8 @@ class Transaction
         $this->outputs = $outputs;
         $this->type = $type;
         $this->raw = $raw;
-
-        if (!is_null($proposalVotes)) {
-            $this->proposalVotes = $proposalVotes;
-        }
+        $this->size = $size;
+        $this->version = $version;
     }
 
     public function getId(): string
@@ -162,6 +171,16 @@ class Transaction
         return $this->raw;
     }
 
+    public function getSize(): int
+    {
+        return $this->size;
+    }
+
+    public function getVersion(): int
+    {
+        return $this->version;
+    }
+
     public function getProposalVotes(): ProposalVotes
     {
         return $this->proposalVotes;
@@ -169,6 +188,6 @@ class Transaction
 
     public function isCoinbase(): bool
     {
-        return $this->type == "COINBASE" || $this->type == "EMPTY";
+        return $this->type == "coinbase";
     }
 }

@@ -1,0 +1,124 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ consultation.question }}{% endblock %}
+{% block description %}NavCoin DAO Consultation {{ consultation.hash }}{% endblock %}
+
+{% block page %}page-dao-consultation{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 margin-bottom-half">
+                <h1>DAO</h1>
+                <h2>Consultation</h2>
+            </div>
+
+            <div class="col-12 margin-bottom-half">
+                {% if consultation.state == 3 %}
+                    <div class="alert alert-danger">
+                        This consultation has expired
+                    </div>
+                {% else %}
+                    {% include "community_fund/components/blockcycle_stats.html.twig" %}
+                {% endif %}
+
+                {% if consultation.state == 9 and consultation.votingCyclesFromCreation < 3 %}
+                    <div class="col-12 margin-bottom-half">
+                        <div class="alert alert-success">
+                            Consultation has found support. Waiting until the end of the 2nd voting cycle to begin final voting
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row margin-bottom">
+            <div class="col-sm-12 col-md-8">
+                <table class="table table-striped table-nav">
+                    <tbody>
+                    <tr>
+                        {% if consultation.consensusParameter %}
+                            <th>Consensus change for</th>
+                            <td class="text-right break-word">{{ consultation.question|trim('Consensus change for: ', 'left') }}</td>
+                        {% else %}
+                            <th>Question</th>
+                            <td class="text-right break-word">{{ consultation.question }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <th>Hash</th>
+                        <td class="text-right break-word">
+                            {{ consultation.hash[0:20] }}...{{ consultation.hash[consultation.hash|length-4:] }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Block Hash</th>
+                        <td class="text-right break-word">
+                            <a href="{{ path('app_block_view', {'height': consultation.blockHash}) }}">
+                                {{ consultation.blockHash[0:20] }}...{{ consultation.blockHash[consultation.blockHash|length-4:] }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Proposed By</th>
+                        <td class="text-right break-word">
+                            <a href="{{ path('app_address_index', { 'hash': consultation.proposedBy }) }}">{{ consultation.proposedBy }}</a>
+                        </td>
+                    </tr>
+                    {% if consultation.status == "passed" %}
+                        <tr>
+                            <th>Activated On Block</th>
+                            <td class="text-right break-word">
+                                <a href="{{ path("app_block_view", {"height": consultation.updatedOnBlock}) }}">
+                                    {{ consultation.updatedOnBlock[0:20] }}...{{ consultation.updatedOnBlock[consultation.updatedOnBlock|length-4:] }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Status</th>
+                        <td class="text-right break-word">{{ consultation.status|capitalize }}</td>
+                    </tr>
+                    <tr>
+                        <th>Voting Cycle </th>
+                        <td class="text-right break-word">{{ consultation.votingCycleForState|ordinal }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-12 col-md-4">
+                <table class="table table-striped table-nav table-second">
+                    <tbody>
+                    <tr class="d-flex">
+                        <td class="col-7"><strong>Version</th>
+                        <td class="text-right break-word col-5">
+                            {{ consultation.version }}
+                        </td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="col-7"><strong>Supports a range of answers</th>
+                        <td class="text-right break-word col-5">
+                            {{ consultation.isARange ? 'true' : 'false' }}
+                        </td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="col-7"><strong>Supports additional answers</th>
+                        <td class="text-right break-word col-5">
+                            {{ consultation.allowsMoreAnswers ? 'true' : 'false' }}
+                        </td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="col-7"><strong>Changes consensus</th>
+                        <td class="text-right break-word col-5">
+                            {{ consultation.consensusParameter ? 'true' : 'false' }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% include "dao/components/answers_list.html.twig" %}
+    </div>
+{% endblock %}

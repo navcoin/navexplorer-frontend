@@ -5,118 +5,138 @@
 
 {% block page %}page-soft-forks-index{% endblock %}
 
-{% set blocksInCycle = softForks.blocksInCycle %}
-{% set firstBlock = (blocksInCycle * softForks.blockCycle) - blocksInCycle %}
-{% set currentBlock = (block.height - firstBlock) %}
-{% set remainingBlocks = blocksInCycle - currentBlock %}
-
 {% block body %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Soft forks</h1>
+                <h1>Soft Forks</h1>
 
                 <div class="alert alert-info">
-                    Signaling for block <strong>{{ currentBlock|number_format }}</strong> of <strong>{{ softForks.blocksInCycle|number_format }}</strong> in the {{ softForks.blockCycle|ordinal }} block cycle.<br/>
-                    There are <strong>{{ remainingBlocks|number_format }}</strong> blocks remaining.
+                    Signaling for block <strong>{{ (cycle.currentBlock-cycle.firstBlock)|number_format }}</strong> of <strong>{{ cycle.blocksInCycle|number_format }}</strong> in the {{ cycle.blockCycle|ordinal }} block cycle.<br/>
+                    There are <strong>{{ cycle.remainingBlocks|number_format }}</strong> blocks remaining.
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-7 col-lg-8">
-                <div class="content">
-                    <h2>Signalling soft forks</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>Name</td>
-                                <td class="text-center">Blocks Signalling</td>
-                                <td class="text-center d-none d-sm-table-cell">Blocks Required</td>
-                                <td class="text-center d-none d-sm-table-cell">Blocks Remaining</td>
-                                <td class="text-center">Vote&nbsp;%</td>
-                                <td class="text-center">Status</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for fork in softForks if fork.state not in ['ACTIVE', 'LOCKED_IN'] and fork.blocksSignalling != 0 %}
-                                <tr>
-                                    <td>{{ fork.name }}</td>
-                                    <td class="text-center">{{ fork.blocksSignalling|number_format }}</td>
-                                    <td class="text-center d-none d-sm-table-cell">{{ (softForks.blocksInCycle * 0.75)|number_format }}</td>
-                                    <td class="text-center d-none d-sm-table-cell">{{ softForks.blocksRemaining|number_format }}</td>
-                                    <td class="text-center">{{ ((fork.blocksSignalling / currentBlock) * 100)|number_format(1) }}%</td>
-                                    <td class="text-center">
-                                        {% if (softForks.blocksInCycle * 0.75) - fork.blocksSignalling > softForks.blocksRemaining %}
-                                            <span class="badge badge-warning">Missed</span>
-                                        {% elseif (fork.blocksSignalling >= (softForks.blocksInCycle * 0.75)) %}
-                                            <span class="badge badge-success">Locked In</span>
-                                        {% else %}
-                                            <span class="badge badge-info">{{ fork.state|capitalize }}</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="6" class="text-center">There are no signalling soft forks</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+        <div class="row margin-bottom">
 
-                <div class="content">
-                    <h2>Active / Locked In soft forks</h2>
-                    <table class="table table-striped">
-                        <thead>
+
+
+            <div class="col-sm-12 col-md-6">
+                <h2>Active / Locked-in</h2>
+                <table class="table table-striped table-nav margin-bottom">
+                    <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td class="text-center">Locked In Height</td>
+                        <td class="text-center">Activation Height</td>
+                        <td class="text-center">Votes</td>
+                        <td class="text-center">Status</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for fork in softForks|filter(fork => fork.active) %}
                         <tr>
-                            <td>Name</td>
-                            <td class="text-center">Locked In Height</td>
-                            <td class="text-center">Activation Height</td>
-                            <td class="text-center">Vote&nbsp;%</td>
-                            <td class="text-center">Status</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {% for fork in softForks if fork.state in ['ACTIVE', 'LOCKED_IN'] %}
-                            <tr>
-                                <td>{{ fork.name }}</td>
-                                <td class="text-center"><a href="{{ path('app_block_view', {'height': fork.lockedInHeight }) }}">{{ fork.lockedInHeight }}</a></td>
-                                <td class="text-center">
-                                    {% if fork.state == 'ACTIVE' %}
-                                        <a href="{{ path('app_block_view', {'height': fork.activationHeight }) }}">{{ fork.activationHeight }}</a>
-                                    {% else %}
+                            <td>{{ fork.name|replace({"_": " "})|capitalize }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('app_block_view', {'height': fork.lockedInHeight }) }}">{{ fork.lockedInHeight }}</a>
+                            </td>
+                            <td class="text-center">
+                                {% if fork.state == 'ACTIVE' %}
+                                    <a href="{{ path('app_block_view', {'height': fork.activationHeight }) }}">{{ fork.activationHeight }}</a>
+                                {% else %}
+                                    {% if block.height < fork.activationHeight %}
                                         {{ fork.activationHeight }}
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">{{ ((fork.blocksSignalling / softForks.blocksInCycle) * 100)|number_format(1) }}%</td>
-                                <td class="text-center">
-                                    {% if fork.state == 'ACTIVE' %}
-                                        <span class="badge badge-success">{{ fork.state|capitalize }}</span>
-                                    {% elseif fork.state == 'LOCKED_IN' %}
-                                        <span class="badge badge-info">Locked In</span>
                                     {% else %}
-                                        <span class="badge badge-info">{{ fork.state|capitalize }}</span>
+                                        <a href="{{ path('app_block_view', {'height': fork.activationHeight }) }}">
+                                            {{ fork.activationHeight }}
+                                        </a>
                                     {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {{ ((fork.bestCycle / cycle.blocksInCycle) * 100)|number_format(1) }}%
+                            </td>
+                            <td class="text-center">
+                                {% if fork.state == 'active' %}
+                                    <span class="badge badge-success">{{ fork.state|capitalize }}</span>
+                                {% elseif fork.state == 'locked_in' %}
+                                    <span class="badge badge-info">Locked In</span>
+                                {% else %}
+                                    <span class="badge badge-info">{{ fork.state|capitalize }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
 
-            <div class="col-md-5 col-lg-4">
-                <div class="card content">
-                    <div class="card-body">
-                        <h3>What are soft forks?</h3>
-                        <p>Soft forks are changes to the protocols that govern the NavCoin blockchain.</p>
-                        <p>At the end of each {{ (softForks.blocksInCycle)|number_format }} block cycle the number of blocks that signalled support for a soft fork are counted.</p>
-                        <p>If the number of signalling blocks is greater than 75% the soft fork is locked in and will be activated at the end of the next block cycle.</p>
-                        <p>If the block cycle fails to reach the required 75% a new attempt to lock in the soft fork is started in the next block cycle.</p>
-                    </div>
-                </div>
+            <div class="col-sm-12 col-md-6">
+                <h2>Signalling</h2>
+                <table class="table table-striped table-nav margin-bottom">
+                    <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td class="text-center">Blocks Signalling</td>
+                        <td class="text-center d-none d-sm-table-cell">Blocks Required</td>
+                        <td class="text-center d-none d-sm-table-cell">Blocks Remaining</td>
+                        <td class="text-center">Votes</td>
+                        <td class="text-center">Status</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for fork in softForks|filter(fork => fork.signalling) %}
+                        <tr>
+                            <td>{{ fork.name|replace({"_": " "})|capitalize }}</td>
+                            <td class="text-center">{{ fork.bestCycle|number_format }}</td>
+                            <td class="text-center d-none d-sm-table-cell">{{ (cycle.blocksInCycle * 0.75)|number_format }}</td>
+                            <td class="text-center d-none d-sm-table-cell">{{ cycle.remainingBlocks|number_format }}</td>
+                            <td class="text-center">{{ ((fork.bestCycle / (cycle.blocksInCycle-cycle.remainingBlocks)) * 100)|number_format(1) }}%</td>
+                            <td class="text-center">
+                                {% if (cycle.blocksInCycle * 0.75) - fork.bestCycle > cycle.remainingBlocks %}
+                                    <span class="badge badge-warning">Missed</span>
+                                {% elseif (fork.bestCycle >= (cycle.blocksInCycle * 0.75)) %}
+                                    <span class="badge badge-info">Locked In</span>
+                                {% else %}
+                                    <span class="badge badge-info">{{ fork.state|capitalize }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center">There are no signalling soft forks</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2>Expired</h2>
+                <table class="table table-striped table-nav margin-bottom">
+                    <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td class="text-center">Start Time</td>
+                        <td class="text-center">Timeout</td>
+                        <td class="text-center">Status</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for fork in softForks|filter(fork => fork.expired) %}
+                        <tr>
+                            <td>{{ fork.name }}</td>
+                            <td class="text-center">{{ fork.startTime|date_localised('Y-m-d, H:i:s') }}</td>
+                            <td class="text-center">{{ fork.timeout|date_localised('Y-m-d, H:i:s') }}</td>
+                            <td class="text-center"><span class="badge badge-danger">Expired</span></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center">There are no expired soft forks</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

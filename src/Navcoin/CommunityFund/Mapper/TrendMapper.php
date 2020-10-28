@@ -12,11 +12,12 @@ class TrendMapper extends BaseMapper
         return new Trend(
             $data['start'],
             $data['end'],
-            $data['votesYes'],
-            $data['votesNo'],
-            $data['trendYes'],
-            $data['trendNo'],
-            $data['trendAbstain']
+            $data['votes']['yes'],
+            $data['votes']['no'],
+            $data['votes']['abstain'],
+            $data['trend']['yes'],
+            $data['trend']['no'],
+            $data['trend']['abstain']
         );
     }
 }

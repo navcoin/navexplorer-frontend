@@ -13,7 +13,7 @@ class BlockMapper extends BaseMapper
     {
         return new Block(
             $data['hash'],
-            $data['merkleRoot'],
+            $data['merkleroot'],
             $data['bits'],
             $data['size'],
             $data['version'],
@@ -21,16 +21,15 @@ class BlockMapper extends BaseMapper
             $data['height'],
             $data['difficulty'],
             $data['confirmations'],
-            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['created']),
+            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['time']),
             $data['stake'],
             $data['fees'],
             $data['spend'],
             $this->getData('cfundPayout', $data, 0),
             $data['stakedBy'] ?: '',
-            $data['transactions'],
-            $this->getData('best', $data),
-            array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
-            $data['balance']
+            $data['tx_count'],
+            $this->getData('best', $data, false),
+            array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : ''
         );
     }
 }

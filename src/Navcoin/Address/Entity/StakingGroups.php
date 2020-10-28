@@ -4,12 +4,13 @@ namespace App\Navcoin\Address\Entity;
 
 use App\Navcoin\Common\Entity\IteratorEntity;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
+use App\Navcoin\Common\Entity\Paginated;
 
 class StakingGroups extends IteratorEntity implements IteratorEntityInterface
 {
-    /**
-     * @var string
-     */
+    use Paginated;
+
+    /** @var string */
     private $period;
 
     public function setSupportedTypes()

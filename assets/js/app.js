@@ -3,6 +3,7 @@ require('../css/app.scss');
 require('./services/Header');
 require('./services/Timezone');
 require('./services/Tabs');
+require('./services/Clamp');
 
 require('./page/AddressIndexPage');
 require('./page/BlockIndexPage');

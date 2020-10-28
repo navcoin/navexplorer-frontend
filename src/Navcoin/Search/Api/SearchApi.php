@@ -12,10 +12,10 @@ class SearchApi extends NavcoinApi
     public function search(String $hash): SearchResult
     {
         try {
-            $response = $this->getClient()->get('/api/search?query=' . $hash);
+            $response = $this->getClient()->get('/search?query=' . $hash);
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
-            throw new SearchResultMissException('No results for hash: ' . $hash);
+            throw new SearchResultMissException('No results for query: ' . $hash);
         }
 
         return new SearchResult($data['type'], $data['value']);

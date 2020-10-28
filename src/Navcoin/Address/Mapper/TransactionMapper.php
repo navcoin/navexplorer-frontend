@@ -9,18 +9,18 @@ class TransactionMapper extends BaseMapper
 {
     public function mapEntity(array $data): Transaction
     {
-        return new Transaction(
-            $data['transaction'],
-            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['time']),
+       return new Transaction(
+            $data['hash'],
+            $data['txid'],
             $data['height'],
-            $data['balance'] / 100000000,
-            $data['sent'] / 100000000,
-            $data['received'] / 100000000,
+            $data['index'],
+            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['time']),
             $data['type'],
-            $data['address'],
-            $data['coldStakingBalance'] / 100000000,
-            $data['coldStakingSent'] / 100000000,
-            $data['coldStakingReceived'] / 100000000
+            $data['cold'],
+            $data['input'] / 100000000,
+            $data['output'] / 100000000,
+            $data['total'] / 100000000,
+            ($data['balance']) / 100000000
         );
     }
 }

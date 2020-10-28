@@ -4,12 +4,13 @@ namespace App\Navcoin\Block\Entity;
 
 use App\Navcoin\Common\Entity\IteratorEntity;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
+use App\Navcoin\Common\Entity\Paginated;
 
 class BlockGroups extends IteratorEntity implements IteratorEntityInterface
 {
-    /**
-     * @var string
-     */
+    use Paginated;
+
+    /** @var string */
     private $period;
 
     public function setSupportedTypes()
@@ -28,5 +29,4 @@ class BlockGroups extends IteratorEntity implements IteratorEntityInterface
 
         return $this;
     }
-
 }

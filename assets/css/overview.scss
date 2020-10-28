@@ -1,0 +1,21 @@
+.page-home-index {
+  .overview {
+    margin-bottom: 2rem;
+
+    h1 {
+      margin-bottom: 0.3rem;
+      float: left;
+    }
+
+    .form-filter {
+      margin: 1rem 0 0;
+      float: right;
+    }
+  }
+
+  #address-groups, #market-chart {
+    border-top: 5px solid $purple;
+    padding-top: 0.4rem;
+    height: 300px;
+  }
+}

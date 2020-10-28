@@ -40,9 +40,10 @@ export default class TableManager {
             if (this.paginated === true) {
                 this.pagination.hide();
             }
+            this.handleResponse(response.data);
         } else {
             this.pagination.init(response.data);
-            this.handleResponse(elements);
+            this.handleResponse(elements, response.data.paginator);
         }
     }
 
@@ -58,7 +59,7 @@ export default class TableManager {
         }
     }
 
-    handleResponse(elements) {
+    handleResponse(elements, paginator) {
         this.emptyTable();
 
         if (elements.length === 0) {
@@ -66,7 +67,7 @@ export default class TableManager {
         }
 
         elements.forEach(function (tx) {
-            this.table.append(this.rowCreatedCallback(tx));
+            this.table.append(this.rowCreatedCallback(tx, paginator));
         }.bind(this));
 
         this.pagination.render();

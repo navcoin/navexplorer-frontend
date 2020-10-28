@@ -4,7 +4,7 @@ namespace App\Navcoin\Address\Type;
 
 abstract class AddressTransactionType
 {
-    const STAKING = 'staking';
+    const STAKE = 'stake';
     const SENT = 'send';
     const RECEIVED = 'receive';
 }

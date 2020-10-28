@@ -1,11 +1,22 @@
+.btn {
+  text-transform: inherit;
+  font-size: 0.875rem;
+  font-weight: normal;
+}
+
 .btn-info {
+  color: $white;
+  background-color: $purple;
+  border-color: $dark-purple;
+}
+
+.btn-info:hover {
   color: $white;
   background-color: $dark-purple;
   border-color: $purple;
 }
 
-.btn-info:hover {
-  color: $off-white;
-  background-color: $dark-purple;
-  border-color: $purple;
+.btn:focus {
+  box-shadow: none !important;
+  outline: none !important;
 }

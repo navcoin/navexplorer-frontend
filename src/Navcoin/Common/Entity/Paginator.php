@@ -2,99 +2,43 @@
 
 namespace App\Navcoin\Common\Entity;
 
-use JMS\Serializer\Annotation\Accessor;
-
-class Paginator implements IteratorEntityInterface
+class Paginator
 {
-    /**
-     * @var bool
-     */
-    private $last;
+    /** @var int */
+    private $pageSize;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $totalPages;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $totalElements;
 
-    /**
-     * @var bool
-     */
+    /** @var int */
+    private $currentPage;
+
+    /** @var bool */
     private $first;
 
-    /**
-     * @var int
-     */
-    private $numberOfElements;
+    /** @var bool */
+    private $last;
 
-    /**
-     * @var int
-     */
-    private $size;
+    /** @var int */
+    private $total;
 
-    /**
-     * @var int
-     */
-    private $number;
-
-    /**
-     * @var array
-     * @Accessor(getter="getElements",setter="setElements")
-     */
-    private $elements = [];
-
-    public function add($element): IteratorEntityInterface
+    public function __construct(int $pageSize, int $totalPages, int $totalElements, int $currentPage, bool $first, bool $last, int $total)
     {
-        array_push($this->elements, $element);
-
-        return $this;
-    }
-
-    public function getElement(int $index)
-    {
-        if (!array_key_exists($index, $this->getElements())) {
-            throw new \RuntimeException(sprintf("Element %d does not exist", $index));
-        }
-
-        return $this->getElements()[0];
-    }
-
-    public function getElements(): array
-    {
-        return $this->elements;
-    }
-
-    public function countElements(): int
-    {
-        return count($this->elements);
-    }
-
-    public function setElements(array $elements): IteratorEntityInterface
-    {
-        $this->elements = $elements;
-
-        return $this;
-    }
-
-    public function getIterator(): \ArrayIterator
-    {
-        return new \ArrayIterator($this->elements);
-    }
-
-    public function isLast(): bool
-    {
-        return $this->last;
-    }
-
-    public function setLast(bool $last): self
-    {
+        $this->pageSize = $pageSize;
+        $this->totalPages = $totalPages;
+        $this->totalElements = $totalElements;
+        $this->currentPage = $currentPage;
+        $this->first = $first;
         $this->last = $last;
+        $this->total = $total;
+    }
 
-        return $this;
+    public function getPageSize(): int
+    {
+        return $this->pageSize;
     }
 
     public function getTotalPages(): int
@@ -102,23 +46,14 @@ class Paginator implements IteratorEntityInterface
         return $this->totalPages;
     }
 
-    public function setTotalPages(int $totalPages): self
-    {
-        $this->totalPages = $totalPages;
-
-        return $this;
-    }
-
     public function getTotalElements(): int
     {
         return $this->totalElements;
     }
 
-    public function setTotalElements(int $totalElements): self
+    public function getCurrentPage(): int
     {
-        $this->totalElements = $totalElements;
-
-        return $this;
+        return $this->currentPage;
     }
 
     public function isFirst(): bool
@@ -126,46 +61,23 @@ class Paginator implements IteratorEntityInterface
         return $this->first;
     }
 
-    public function setFirst(bool $first): self
+    public function isLast(): bool
     {
-        $this->first = $first;
-
-        return $this;
+        return $this->last;
     }
 
-    public function getNumberOfElements(): int
+    public function getPreviousPage(): int
     {
-        return $this->numberOfElements;
+        return $this->currentPage == 1 ? 1 : $this->currentPage - 1;
     }
 
-    public function setNumberOfElements(int $numberOfElements): self
+    public function getNextPage(): int
     {
-        $this->numberOfElements = $numberOfElements;
-
-        return $this;
+        return $this->currentPage == $this->totalPages ? $this->totalPages : $this->currentPage + 1;
     }
 
-    public function getSize(): int
+    public function getTotal(): int
     {
-        return $this->size;
-    }
-
-    public function setSize(int $size): self
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    public function getNumber(): int
-    {
-        return $this->number;
-    }
-
-    public function setNumber(int $number): self
-    {
-        $this->number = $number;
-
-        return $this;
+        return $this->total;
     }
 }

@@ -1,0 +1,81 @@
+.card {
+  overflow: hidden;
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+}
+
+.card-padded {
+  overflow: hidden;
+  margin-bottom: 1rem;
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+.card-header {
+  padding: 0.5rem 0;
+  margin-bottom: -1px;
+  background-color: $white;
+  h2 {
+    font-size: 1.2rem;
+    margin:0;
+  }
+}
+
+.card-body {
+  padding: 0;
+
+  p:not(:last-child) {
+    padding-bottom: 0;
+  }
+  p {
+    padding: 0.5rem;
+    margin: 0;
+  }
+}
+
+.card-footer {
+  padding: 0.5rem;
+  border: 0;
+  background-color: $light-grey;
+  .btn {
+    margin-right: 0.5rem;
+  }
+  .btn:last-child {
+    margin-right: 0rem;
+  }
+}
+
+.card-nav {
+  border: 0;
+  padding: 0;
+  margin-bottom: 2rem;
+
+  .card-header {
+    padding: 0;
+    margin-bottom: -1px;
+    background-color: white !important;
+
+    h2 {
+      font-size: 1.2rem;
+      margin: 0 0 0.3rem 0;
+      padding: 0;
+    }
+  }
+
+  .card-body {
+    border-top: 5px solid $purple;
+    border-bottom: 1px solid $dark-grey;
+    border-radius: 0;
+    background-color: $off-white;
+
+    .list-group-item {
+      background-color: inherit;
+      padding: 0.6rem 0.3rem;
+    }
+  }
+
+  .card-footer {
+
+  }
+}

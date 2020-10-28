@@ -1,0 +1,34 @@
+.address-summary {
+  margin-bottom: 2rem;
+}
+
+.address-balance {
+  margin-bottom: 2rem;
+
+  h2 {
+    margin: 0;
+  }
+  hr {
+    color: grey;
+    margin: 0.1rem 0;
+  }
+  ul {
+    display: flex;
+    align-items: stretch; /* Default */
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem 0.2rem 0 0.2rem;
+    background-color: $off-white;
+
+    li {
+      display: block;
+      flex: 0 1 auto; /* Default */
+      list-style-type: none;
+
+      label {
+        color:$grey;
+      }
+    }
+  }
+}

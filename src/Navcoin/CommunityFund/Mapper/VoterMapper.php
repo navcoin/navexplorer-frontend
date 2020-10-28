@@ -4,15 +4,25 @@ namespace App\Navcoin\CommunityFund\Mapper;
 
 use App\Navcoin\Common\Mapper\BaseMapper;
 use App\Navcoin\CommunityFund\Entity\Voter;
+use App\Navcoin\CommunityFund\Entity\VoterAddress;
 
 class VoterMapper extends BaseMapper
 {
     public function mapEntity(array $data): Voter
     {
-        return new Voter(
-            $data['address'],
-            $data['votes'],
-            $this->options['vote']
+        $voter = new Voter(
+            $data['cycle'],
+            $data['yes'],
+            $data['no'],
+            $data['abstain']
         );
+
+        $addresses = [];
+        foreach($data['addresses'] as $address) {
+            $addresses[] = new VoterAddress($address['address'], $address['yes'], $address['no'], $address['abstain']);
+        }
+        $voter->setAddresses($addresses);
+
+        return $voter;
     }
 }

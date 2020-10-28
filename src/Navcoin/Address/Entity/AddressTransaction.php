@@ -3,23 +3,19 @@
 namespace App\Navcoin\Address\Entity;
 
 use App\Navcoin\Address\Type\AddressTransactionType;
+use DateTime;
 
 class AddressTransaction
 {
     /**
-     * @var String
+     * @var string
      */
-    private $id;
+    protected $address;
 
     /**
-     * @var String
+     * @var string
      */
     private $transaction;
-
-    /**
-     * @var \DateTime
-     */
-    private $time;
 
     /**
      * @var int
@@ -27,170 +23,145 @@ class AddressTransaction
     private $height;
 
     /**
-     * @var float
+     * @var int
      */
-    private $balance;
+    private $index;
 
     /**
-     * @var float
+     * @var DateTime
      */
-    private $amount;
+    private $time;
 
     /**
-     * @var float
-     */
-    private $sent;
-
-    /**
-     * @var float
-     */
-    private $received;
-
-    /**
-     * @var String
+     * @var string
      */
     private $type;
 
     /**
-     * @var String
+     * @var boolean
      */
-    protected $address;
-
-    /**
-     * @var bool
-     */
-    protected $coldStaking;
-
-    /**
-     * @var String
-     */
-    protected $coldStakingAddress;
+    private $cold;
 
     /**
      * @var float
      */
-    private $coldStakingBalance;
+    private $input;
 
     /**
      * @var float
      */
-    private $coldStakingAmount;
+    private $output;
 
     /**
      * @var float
      */
-    private $coldStakingSent;
+    private $total;
 
     /**
      * @var float
      */
-    private $coldStakingReceived;
+    private $balance;
 
-    public function __construct(
-        String $transaction,
-        \DateTime $time,
-        int $height,
-        float $balance,
-        float $sent,
-        float $received,
-        String $type,
-        String $address,
-        float $coldStakingBalance,
-        float $coldStakingSent,
-        float $coldStakingReceived
-    ) {
-        $this->transaction = $transaction;
-        $this->time = $time;
-        $this->height = $height;
-        $this->balance = $balance;
-        $this->sent = $sent;
-        $this->received = $received;
-        $this->amount = $this->received - $this->sent;
-        $this->type = $type;
+    public function __construct(string $address, string $transaction, int $height, int $index, DateTime $time, string $type, bool $cold, float $input, float $output, float $total, float $balance)
+    {
         $this->address = $address;
-        $this->coldStakingBalance = $coldStakingBalance;
-        $this->coldStakingSent = $coldStakingSent;
-        $this->coldStakingReceived = $coldStakingReceived;
-        $this->coldStakingAmount = $this->coldStakingReceived - ($this->type !== 'RECEIVE' ? $this->coldStakingSent : 0);
+        $this->transaction = $transaction;
+        $this->height = $height;
+        $this->index = $index;
+        $this->time = $time;
+        $this->type = $type;
+        $this->cold = $cold;
+        $this->input = $input;
+        $this->output = $output;
+        $this->total = $total;
+        $this->balance = $balance;
     }
 
+    /**
+     * @return string
+     */
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @return string
+     */
     public function getTransaction(): string
     {
         return $this->transaction;
     }
 
-    public function getTime(): \DateTime
-    {
-        return $this->time;
-    }
-
+    /**
+     * @return int
+     */
     public function getHeight(): int
     {
         return $this->height;
     }
 
+    /**
+     * @return int
+     */
+    public function getIndex(): int
+    {
+        return $this->index;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getTime(): DateTime
+    {
+        return $this->time;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCold(): bool
+    {
+        return $this->cold;
+    }
+
+    /**
+     * @return float
+     */
+    public function getInput(): float
+    {
+        return $this->input;
+    }
+
+    /**
+     * @return float
+     */
+    public function getOutput(): float
+    {
+        return $this->output;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
+    /**
+     * @return float
+     */
     public function getBalance(): float
     {
         return $this->balance;
-    }
-
-    public function getAmount(): float
-    {
-        return $this->amount;
-    }
-
-    public function getSent(): float
-    {
-        return $this->sent;
-    }
-
-    public function getReceived(): float
-    {
-        return $this->received;
-    }
-
-    public function isStaking(): bool
-    {
-        return $this->type == AddressTransactionType::STAKING;
-    }
-
-    public function getType(): String
-    {
-        return $this->getType();
-    }
-
-    public function getAddress(): String
-    {
-        return $this->address;
-    }
-
-    public function isColdStaking(): bool
-    {
-        return $this->coldStaking;
-    }
-
-    public function getColdStakingAddress(): String
-    {
-        return $this->coldStakingAddress;
-    }
-
-    public function getColdStakingBalance(): float
-    {
-        return $this->coldStakingBalance;
-    }
-
-    public function getColdStakingAmount(): float
-    {
-        return $this->coldStakingAmount;
-    }
-
-    public function getColdStakingSent(): float
-    {
-        return $this->coldStakingSent;
-    }
-
-    public function getColdStakingReceived(): float
-    {
-        return $this->coldStakingReceived;
     }
 }

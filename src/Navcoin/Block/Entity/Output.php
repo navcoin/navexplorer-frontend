@@ -39,11 +39,6 @@ class Output
      */
     private $hash;
 
-    /**
-     * @var bool
-     */
-    private $proposalVote;
-
     public function __construct(string $type, int $index, float $amount, array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock)
     {
         $this->type = $type;
@@ -105,20 +100,28 @@ class Output
         return $this;
     }
 
-    public function getProposalVote(): ?bool
-    {
-        switch (true) {
-            case $this->getType() == 'PROPOSAL_YES_VOTE':
-                return true;
-            case $this->getType() == 'PROPOSAL_NO_VOTE':
-                return false;
-            default:
-                return null;
-        }
-    }
-
     public function isCommunityFund(): bool
     {
         return in_array($this->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE', 'PAYMENT_REQUEST_YES_VOTE', 'PAYMENT_REQUEST_NO_VOTE']);
+    }
+
+    public function isProposalVote(): bool
+    {
+        return in_array($this->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE', 'PROPOSAL_ABSTAIN_VOTE', 'PROPOSAL_REMOVE_VOTE']);
+    }
+
+    public function isPaymentRequestVote(): bool
+    {
+        return in_array($this->getType(), ['PAYMENT_REQUEST_YES_VOTE', 'PAYMENT_REQUEST_NO_VOTE', 'PAYMENT_REQUEST_ABSTAIN_VOTE', 'PAYMENT_REQUEST_REMOVE_VOTE']);
+    }
+
+    public function isConsultationVote(): bool
+    {
+        return in_array($this->getType(), ['CONSULTATION_VOTE', 'CONSULTATION_VOTE_REMOVE', 'CONSULTATION_VOTE_ABSTENTION', 'DAO_SUPPORT', 'DAO_SUPPORT_REMOVE']);
+    }
+
+    public function isSupportVote(): bool
+    {
+        return in_array($this->getType(), ['DAO_SUPPORT', 'DAO_SUPPORT_REMOVE']);
     }
 }

@@ -19,11 +19,17 @@ class BlockCycleVoting
      */
     private $reject;
 
-    public function __construct(int $cycles, float $accept, float $reject)
+    /**
+     * @var float
+     */
+    private $quorum;
+
+    public function __construct(int $cycles, float $accept, float $reject, float $quorum)
     {
         $this->cycles = $cycles;
         $this->accept = $accept;
         $this->reject = $reject;
+        $this->quorum = $quorum;
     }
 
     public function getCycles(): int
@@ -41,5 +47,8 @@ class BlockCycleVoting
         return $this->reject;
     }
 
-
+    public function getQuorum(): float
+    {
+        return $this->quorum;
+    }
 }

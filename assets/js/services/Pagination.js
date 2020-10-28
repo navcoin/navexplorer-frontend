@@ -22,14 +22,16 @@ export default class Pagination {
     }
 
     init(data) {
-        this.state = {};
-        this.state.first = typeof data.first !== "undefined" ? data.first : true;
-        this.state.last = typeof data.last !== "undefined" ? data.last : true;
-        this.state.page = typeof data.number !== "undefined" ? data.number : 1;
-        this.state.size = typeof data.size !== "undefined" ? data.size : 50;
-        this.state.numberOfElements = typeof data.number_of_elements !== "undefined" ? data.number_of_elements : 0;
-        this.state.totalElements = typeof data.total_elements !== "undefined" ? data.total_elements : 0;
-        this.state.totalPages = typeof data.total_pages !== "undefined" ? data.total_pages : 1;
+        let paginator = data.paginator;
+
+        this.state = {
+            first: paginator.first,
+            last: paginator.last,
+            page: paginator.current_page,
+            size: paginator.total_pages,
+            totalElements: paginator.total_elements,
+            totalPages: paginator.total_pages,
+        }
 
         let lastPageSize = (this.state.totalElements % this.state.size);
         this.state.lastPageElements = (lastPageSize === 0) ? this.state.size : lastPageSize;
@@ -67,10 +69,14 @@ export default class Pagination {
 
     clickFirst() {
         this.tableManager.loadNextPage(this.tableManager.dataUrl);
-        this.state.page = 0;
+        this.state.page = 1;
     }
 
     clickPrevious() {
+        if (this.state.page === 1) {
+            return;
+        }
+
         let urlSplit = this.tableManager.dataUrl.split('?');
         let queryParam = (urlSplit.length > 1 && urlSplit[1] !== '') ? '&' : '?'
 
@@ -106,6 +112,10 @@ export default class Pagination {
     }
 
     render() {
+        if (!this.containers) {
+            return;
+        }
+
         var pagination = this;
         this.containers.each(function () {
             $(this).empty();

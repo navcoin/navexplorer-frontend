@@ -4,6 +4,7 @@
 @import 'buttons';
 @import 'table';
 @import 'nav-tabs';
+@import 'card';
 @import 'code';
 @import 'header';
 @import 'footer';
@@ -11,13 +12,20 @@
 @import 'form';
 @import 'progress';
 @import 'chart';
+@import 'clamp';
 @import 'search';
+@import 'overview';
 @import 'soft-fork';
 @import 'distribution';
 @import 'community-fund';
+@import 'dao';
+@import 'history';
+@import 'address';
+@import 'darkMode';
 
 html {
   overflow-y: scroll;
+  cursor: default;
 }
 
 .body {
@@ -29,7 +37,14 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-  margin: 2rem 0 1rem;
+  margin: 1rem 0;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 0 0 0.3rem;
+  font-size: 1.2rem;
 }
 
 p, li {
@@ -37,7 +52,7 @@ p, li {
 }
 
 a {
-  color: $purple;
+  color: $light-purple;
   span {
     position: absolute;
     top: -9999px;
@@ -52,7 +67,7 @@ a.disabled {
 }
 
 a:hover {
-  color: $blue;
+  color: $pink;
   text-decoration: none;
 }
 
@@ -61,7 +76,7 @@ p {
 }
 
 .margin-top {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .margin-bottom {
@@ -92,14 +107,42 @@ small {
   margin: 2rem 0 1rem;
 }
 
+.badge {
+  padding: 4px;
+}
+
+.badge-tooltip {
+  color: $white;
+  background-color: $black;
+  cursor: pointer;
+}
+
 .badge-transaction-count {
   margin-right: 1rem;
+}
+
+.badge-info {
+  background-color: $light-blue;
+}
+
+.badge-pink {
+  color: $white;
+  background-color: $pink;
+}
+
+.badge-purple {
+  background-color: $purple;
+}
+
+.badge-info {
+  background-color: $light-blue;
 }
 
 .badge-staking {
   margin-right: 1rem;
 }
 
+.summary,
 .block-summary,
 .transaction-summary {
   margin-bottom: 1.25rem;
@@ -129,7 +172,7 @@ small {
 
 
 .card-list {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   .card-header {
     font-size: 1.25rem;
@@ -151,7 +194,6 @@ small {
 .break-word {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
   /* These are technically the same, but use both */

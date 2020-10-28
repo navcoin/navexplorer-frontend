@@ -2,122 +2,52 @@
 
 namespace App\Navcoin\Address\Entity;
 
+use DateTime;
+
 class Address
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $hash;
 
-    /**
-     * @var float
-     */
-    private $received;
+    /** @var int */
+    private $height;
 
-    /**
-     * @var int
-     */
-    private $receivedCount;
+    /** @var float */
+    private $spendable;
 
-    /**
-     * @var float
-     */
-    private $sent;
+    /** @var float */
+    private $stakable;
 
-    /**
-     * @var int
-     */
-    private $sentCount;
+    /** @var float */
+    private $votingWeight;
 
-    /**
-     * @var float
-     */
-    private $staked;
+    /** @var DateTime */
+    private $createdTime;
 
-    /**
-     * @var int
-     */
-    private $stakedCount;
+    /** @var int */
+    private $createdBlock;
 
-    /**
-     * @var float
-     */
-    private $stakedSent;
-
-    /**
-     * @var float
-     */
-    private $balance;
-
-    /**
-     * @var int
-     */
-    private $blockIndex;
-
-    /**
-     * @var int
-     */
-    private $richListPosition;
-
-    /**
-     * @var null|string
-     */
-    private $label;
-
-    /**
-     * @var float
-     */
-    private $coldStakedBalance = 0;
-
-    /**
-     * @var float
-     */
-    private $coldStaked = 0;
-
-    /**
-     * @var int
-     */
-    private $coldStakedCount;
-
-    /**
-     * @var float
-     */
-    private $coldStakedSent;
+    /** @var RichList */
+    private $richList;
 
     public function __construct(
         string $hash,
-        float $received,
-        int $receivedCount,
-        float $sent,
-        int $sentCount,
-        float $staked,
-        int $stakedCount,
-        float $stakeSent,
-        float $balance,
-        int $blockIndex,
-        int $richListPosition,
-        float $coldStakedBalance,
-        float $coldStaked,
-        int $coldStakedCount,
-        float $coldStakeSent,
-        ?string $label
+        int $height,
+        float $spendable,
+        float $stakable,
+        float $votingWeight,
+        DateTime $createdTime,
+        int $createdBlock,
+        RichList $richList
     ) {
         $this->hash = $hash;
-        $this->received = $received;
-        $this->receivedCount = $receivedCount;
-        $this->sent = $sent;
-        $this->sentCount = $sentCount;
-        $this->staked = $staked;
-        $this->stakedCount = $stakedCount;
-        $this->stakedSent = $stakeSent;
-        $this->balance = $balance;
-        $this->blockIndex = $blockIndex;
-        $this->richListPosition = $richListPosition;
-        $this->coldStakedBalance = $coldStakedBalance;
-        $this->coldStaked = $coldStaked;
-        $this->coldStakedCount = $coldStakedCount;
-        $this->coldStakedSent = $coldStakeSent;
-        $this->label = $label;
+        $this->height = $height;
+        $this->spendable = $spendable;
+        $this->stakable = $stakable;
+        $this->votingWeight = $votingWeight;
+        $this->createdTime = $createdTime;
+        $this->createdBlock = $createdBlock;
+        $this->richList = $richList;
     }
 
     public function getHash(): string
@@ -125,83 +55,38 @@ class Address
         return $this->hash;
     }
 
-    public function getReceived(): float
+    public function getHeight(): int
     {
-        return $this->received;
+        return $this->height;
     }
 
-    public function getReceivedCount(): int
+    public function getSpendable(): float
     {
-        return $this->receivedCount;
+        return $this->spendable;
     }
 
-    public function getSent(): float
+    public function getStakable(): float
     {
-        return $this->sent;
+        return $this->stakable;
     }
 
-    public function getSentCount(): int
+    public function getVotingWeight(): float
     {
-        return $this->sentCount;
+        return $this->votingWeight;
     }
 
-    public function getStaked(): float
+    public function getCreatedTime(): DateTime
     {
-        return $this->staked;
+        return $this->createdTime;
     }
 
-    public function getStakedCount(): int
+    public function getCreatedBlock(): int
     {
-        return $this->stakedCount;
+        return $this->createdBlock;
     }
 
-    public function getStakedSent(): float
+    public function getRichList(): RichList
     {
-        return $this->stakedSent;
-    }
-
-    public function getBalance(): float
-    {
-        return $this->balance;
-    }
-
-    public function getBlockIndex(): int
-    {
-        return $this->blockIndex;
-    }
-
-    public function getRichListPosition(): int
-    {
-        return $this->richListPosition;
-    }
-
-    public function getTransactions(): int
-    {
-        return $this->sentCount + $this->receivedCount + $this->stakedCount;
-    }
-
-    public function getColdStakedBalance(): float
-    {
-        return $this->coldStakedBalance;
-    }
-
-    public function getColdStaked(): float
-    {
-        return $this->coldStaked;
-    }
-
-    public function getColdStakedCount(): int
-    {
-        return $this->coldStakedCount;
-    }
-
-    public function getColdStakedSent()
-    {
-        return $this->coldStakedSent;
-    }
-
-    public function getLabel(): string
-    {
-        return $this->label ?: "";
+        return $this->richList;
     }
 }

@@ -1,11 +1,17 @@
 <div class="row transaction-summary">
+    <div class="col-sm-12">
+        <h2 class="break-word">{{ transaction.hash }}</h2>
+    </div>
+
     <div class="col-sm-12 col-md-12 col-lg-8">
-        <table class="table table-striped">
+        <table class="table table-striped table-nav">
             <tbody>
                 <tr>
-                    <td><strong>Hash</strong></td>
-                    <td class="text-right break-word">
-                        {{ transaction.hash }}
+                    <td><strong>Height</strong></td>
+                    <td class="text-right">
+                        <a href="{{ path('app_block_view', {'height': transaction.height}) }}">
+                            {{ transaction.height|number_format }}
+                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -33,19 +39,19 @@
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-4">
-        <table class="table table-striped">
+        <table class="table table-striped table-nav">
             <tbody>
-                <tr>
-                    <td><strong>Height</strong></td>
-                    <td class="text-right">
-                        <a href="{{ path('app_block_view', {'height': transaction.height}) }}">
-                            {{ transaction.height }}
-                        </a>
-                    </td>
-                </tr>
                 <tr>
                     <td><strong>Confirmations</strong></td>
                     <td class="text-right">{{ block.confirmations }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Size</strong></td>
+                    <td class="text-right">{{ transaction.size }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Version</strong></td>
+                    <td class="text-right">{{ transaction.version }}</td>
                 </tr>
                 <tr>
                     <td><strong>Time</strong></td>

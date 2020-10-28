@@ -13,34 +13,22 @@ use Psr\Log\LoggerInterface;
 
 class NavcoinClient implements NavcoinClientInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $baseUrl;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $network;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     private $logger;
 
-    /**
-     * @var Client
-     */
+    /** @var Client */
     private $client;
 
-    /**
-     * @var \Http\Message\MessageFactory
-     */
+    /** @var \Http\Message\MessageFactory */
     private $messageFactory;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $headers = [
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
@@ -68,7 +56,7 @@ class NavcoinClient implements NavcoinClientInterface
 
         switch ($response->getStatusCode()) {
             case 400:
-                throw new ClientException("Request not valid", $request, $response);
+                throw new ClientException($response->getBody()->getContents(), $request, $response);
             case 404:
                 throw new ClientException("Resource not found", $request, $response);
             case 500:
@@ -93,20 +81,20 @@ class NavcoinClient implements NavcoinClientInterface
         return $jsonBody;
     }
 
-    public function getPaginator(ResponseInterface $response): IteratorEntityInterface
+    public function getPaginator(ResponseInterface $response): Paginator
     {
         if ($response->hasHeader('x-pagination')) {
             $data = \GuzzleHttp\json_decode($response->getHeader('x-pagination')[0], true);
 
-            return (new Paginator())
-                ->setFirst($data['first'])
-                ->setLast($data['last'])
-                ->setTotalElements($data['total'])
-                ->setSize($data['size'])
-                ->setTotalPages($data['total_pages'])
-                ->setNumberOfElements($data['number_of_elements']);
+            return new Paginator(
+                $data['size'],
+                $data['total_pages'],
+                $data['number_of_elements'],
+                $data['current_page'],
+                $data['first'],
+                $data['last'],
+                $data['total'],
+            );
         }
-
-        return null;
     }
 }
