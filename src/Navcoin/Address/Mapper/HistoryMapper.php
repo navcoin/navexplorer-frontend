@@ -30,18 +30,18 @@ class HistoryMapper extends BaseMapper
     public function mapChanges(array $data): Changes
     {
         return new Changes(
-            $data['spending'] / 100000000,
-            $data['staking'] / 100000000,
-            $data['voting'] / 100000000
+            $data['spendable'] / 100000000,
+            $data['stakable'] / 100000000,
+            $data['voting_weight'] / 100000000
         );
     }
 
     public function mapBalance(array $data): Balance
     {
         return new Balance(
-          $data['spending'] / 100000000,
-          $data['staking'] / 100000000,
-          $data['voting'] / 100000000
+          $data['spendable'] / 100000000,
+          $data['stakable'] / 100000000,
+          $data['voting_weight'] / 100000000
         );
     }
 }

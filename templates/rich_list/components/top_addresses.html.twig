@@ -13,15 +13,15 @@
         <tbody>
             {% for richListItem in richList %}
                 <tr>
-                    <td>{{ richListItem.richList.spending }}</td>
+                    <td>{{ richListItem.richList.spendable }}</td>
                     <td>
                         <a href="{{ path('app_address_index', { 'hash': richListItem.hash }) }}" class="break-word">{{ richListItem.hash }}</a>
                     </td>
                     <td>Spendable<br/>Stakable<br/>Voting Weight</td>
                     <td>
-                        {{ richListItem.spending|stake_format(false, 2) }}<br/>
-                        {{ richListItem.staking|stake_format(false, 2) }}<br/>
-                        {{ richListItem.voting|stake_format(false, 2) }}
+                        {{ richListItem.spendable|stake_format(false, 2) }}<br/>
+                        {{ richListItem.stakable|stake_format(false, 2) }}<br/>
+                        {{ richListItem.votingWeight|stake_format(false, 2) }}
                     </td>
                     <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': richListItem.height}) }}">{{ richListItem.height }}</a></td>
                 </tr>

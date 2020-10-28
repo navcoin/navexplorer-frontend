@@ -4,14 +4,10 @@ namespace App\Navcoin\Search\Entity;
 
 class SearchResult
 {
-    /**
-     * @var String
-     */
+    /** @var String */
     private $type;
 
-    /**
-     * @var String
-     */
+    /** @var String */
     private $value;
 
     public function __construct(String $type, String $value)

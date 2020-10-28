@@ -4,19 +4,19 @@
         <tbody>
         <tr>
             <th scope="col">Rich List</th>
-            <td>{{ address.richList.spending|ordinal }}</td>
+            <td>{{ address.richList.spendable|ordinal }}</td>
         </tr>
         <tr>
             <th scope="col">Spendable Balance</th>
-            <td>{{ summary.spending.balance|stake_format }}</td>
+            <td>{{ summary.spendable.balance|stake_format }}</td>
         </tr>
         <tr>
             <th scope="col">Stakable Balance</th>
-            <td>{{ summary.staking.balance|stake_format }}</td>
+            <td>{{ summary.stakable.balance|stake_format }}</td>
         </tr>
         <tr>
             <th scope="col">Voting Weight</th>
-            <td>{{ summary.voting.balance|stake_format }}</td>
+            <td>{{ summary.votingWeight.balance|stake_format }}</td>
         </tr>
         <tr>
             <th scope="col">Transactions</th>

@@ -33,16 +33,16 @@
                         <td data-role="numStakes" class="text-center">{{ row.stakes|number_format }}</td>
                         <td class="hide text-right"><label>Reward<br/>Annual %</label></td>
                         <td class="text-right" data-role="spendable">
-                            {{ row.spending|stake_format }}<br/>
-                            {{ row.spendingRatioAnnualised(summary.spending.balance, stakingReport.period)|number_format(2) }}%
+                            {{ row.spendable|stake_format }}<br/>
+                            {{ row.spendableRatioAnnualised(summary.spendable.balance, stakingReport.period)|number_format(2) }}%
                         </td>
                         <td class="text-right" data-role="stakable">
-                            {{ row.staking|stake_format }}<br/>
-                            {{ row.stakingRatioAnnualised(summary.staking.balance, stakingReport.period)|number_format(2) }}%
+                            {{ row.stakable|stake_format }}<br/>
+                            {{ row.stakableRatioAnnualised(summary.stakable.balance, stakingReport.period)|number_format(2) }}%
                         </td>
                         <td class="text-right" data-role="votingWeight">
-                            {{ row.voting|stake_format }}<br/>
-                            {{ row.votingRatioAnnualised(summary.voting.balance, stakingReport.period)|number_format(2) }}%
+                            {{ row.votingWeight|stake_format }}<br/>
+                            {{ row.votingWeightRatioAnnualised(summary.votingWeight.balance, stakingReport.period)|number_format(2) }}%
                         </td>
                     </tr>
                 {% endfor %}

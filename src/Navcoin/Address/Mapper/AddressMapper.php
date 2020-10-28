@@ -17,9 +17,9 @@ class AddressMapper extends BaseMapper
         return new Address(
             $data['hash'],
             $data['height'],
-            $data['spending'] / 100000000,
-            $data['staking'] / 100000000,
-            $data['voting'] / 100000000,
+            $data['spendable'] / 100000000,
+            $data['stakable'] / 100000000,
+            $data['voting_weight'] / 100000000,
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['created_time']),
             $data['created_block'],
             $this->mapRichList($data['rich_list'])
@@ -29,9 +29,9 @@ class AddressMapper extends BaseMapper
     public function mapRichList(array $data): RichList
     {
         return new RichList(
-            $data['spending'],
-            $data['staking'],
-            $data['voting']
+            $data['spendable'],
+            $data['stakable'],
+            $data['voting_weight']
         );
     }
 }

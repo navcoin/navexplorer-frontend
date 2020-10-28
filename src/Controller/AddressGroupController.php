@@ -10,22 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AddressGroupController
 {
-    /** @var AddressGroupApi */
-    private $addressGroupApi;
-
-    public function __construct(AddressGroupApi $addressGroupApi)
-    {
-        $this->addressGroupApi = $addressGroupApi;
-    }
-
     /**
-     * @Route("/address/group/{category}.json")
+     * @Route("/address/group/{category}/{days}.json")
      */
-    public function blocks(Request $request, SerializerInterface $serializer): Response
+    public function blocks(Request $request, SerializerInterface $serializer, AddressGroupApi $addressGroupApi): Response
     {
-        $addressGroups = $this->addressGroupApi->getGroupByCategory(
+        $addressGroups = $addressGroupApi->getGroupByCategory(
             $request->get('category'),
-            $request->get('count', 10)
+            $request->get('days', 10)
         );
 
         return new Response($serializer->serialize($addressGroups, 'json'));

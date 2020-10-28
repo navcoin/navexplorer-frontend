@@ -14,9 +14,6 @@ class SearchController extends Controller
 {
     /**
      * @Route("/search")
-     * @Template()
-     *
-     * @return array
      */
     public function searchAction()
     {
@@ -26,11 +23,6 @@ class SearchController extends Controller
     /**
      * @Route("/search/results")
      * @Template()
-     *
-     * @param Request   $request
-     * @param SearchApi $searchApi
-     *
-     * @return array|RedirectResponse
      */
     public function resultsAction(Request $request, SearchApi $searchApi)
     {

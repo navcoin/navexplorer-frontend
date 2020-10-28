@@ -16,28 +16,28 @@ class StakingGroup implements DateRangeInterface
     private $stakes;
 
     /** @var float */
-    private $staking;
+    private $stakable;
 
     /** @var float */
-    private $spending;
+    private $spendable;
 
     /** @var float */
-    private $voting;
+    private $votingWeight;
 
     public function __construct(
         \DateTime $start,
         \DateTime $end,
         int $stakes,
-        float $staking,
-        float $spending,
-        float $voting
+        float $stakable,
+        float $spendable,
+        float $votingWeight
     ) {
         $this->start = $start;
         $this->end = $end;
         $this->stakes = $stakes;
-        $this->staking = $staking;
-        $this->spending = $spending;
-        $this->voting = $voting;
+        $this->stakable = $stakable;
+        $this->spendable = $spendable;
+        $this->votingWeight = $votingWeight;
     }
 
     public function getStart(): \DateTime
@@ -55,54 +55,54 @@ class StakingGroup implements DateRangeInterface
         return $this->stakes;
     }
 
-    public function getStaking(): float
+    public function getStakable(): float
     {
-        return $this->staking;
+        return $this->stakable;
     }
 
-    public function getSpending(): float
+    public function getSpendable(): float
     {
-        return $this->spending;
+        return $this->spendable;
     }
 
-    public function getVoting(): float
+    public function getVotingWeight(): float
     {
-        return $this->voting;
+        return $this->votingWeight;
     }
 
     
-    public function getSpendingRatio(float $balance): float
+    public function getSpendableRatio(float $balance): float
     {
-        if ($balance == 0 || $this->spending == 0) {
+        if ($balance == 0 || $this->spendable == 0) {
             return 0;
         }
 
-        return ($this->spending / $balance) * 100;
+        return ($this->spendable / $balance) * 100;
     }
 
 
-    public function getStakingRatio(float $balance): float
+    public function getStakableRatio(float $balance): float
     {
-        if ($balance == 0 || $this->staking == 0) {
+        if ($balance == 0 || $this->stakable == 0) {
             return 0;
         }
 
-        return ($this->staking / $balance) * 100;
+        return ($this->stakable / $balance) * 100;
     }
 
 
-    public function getVotingRatio(float $balance): float
+    public function getVotingWeightRatio(float $balance): float
     {
-        if ($balance == 0 || $this->voting == 0) {
+        if ($balance == 0 || $this->votingWeight == 0) {
             return 0;
         }
 
-        return ($this->voting / $balance) * 100;
+        return ($this->votingWeight / $balance) * 100;
     }
 
-    public function getSpendingRatioAnnualised(float $balance, string $period): float
+    public function getSpendableRatioAnnualised(float $balance, string $period): float
     {
-        $ratio = $this->getSpendingRatio($balance);
+        $ratio = $this->getSpendableRatio($balance);
         switch ($period) {
             case 'hourly':
                 return $ratio * 8760;
@@ -113,9 +113,9 @@ class StakingGroup implements DateRangeInterface
         }
     }
 
-    public function getStakingRatioAnnualised(float $balance, string $period): float
+    public function getStakableRatioAnnualised(float $balance, string $period): float
     {
-        $ratio = $this->getStakingRatio($balance);
+        $ratio = $this->getStakableRatio($balance);
         switch ($period) {
             case 'hourly':
                 return $ratio * 8760;
@@ -126,9 +126,9 @@ class StakingGroup implements DateRangeInterface
         }
     }
 
-    public function getVotingRatioAnnualised(float $balance, string $period): float
+    public function getVotingWeightRatioAnnualised(float $balance, string $period): float
     {
-        $ratio = $this->getVotingRatio($balance);
+        $ratio = $this->getVotingWeightRatio($balance);
         switch ($period) {
             case 'hourly':
                 return $ratio * 8760;

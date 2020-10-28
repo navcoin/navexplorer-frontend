@@ -13,13 +13,13 @@ class Address
     private $height;
 
     /** @var float */
-    private $spending;
+    private $spendable;
 
     /** @var float */
-    private $staking;
+    private $stakable;
 
     /** @var float */
-    private $voting;
+    private $votingWeight;
 
     /** @var DateTime */
     private $createdTime;
@@ -33,18 +33,18 @@ class Address
     public function __construct(
         string $hash,
         int $height,
-        float $spending,
-        float $staking,
-        float $voting,
+        float $spendable,
+        float $stakable,
+        float $votingWeight,
         DateTime $createdTime,
         int $createdBlock,
         RichList $richList
     ) {
         $this->hash = $hash;
         $this->height = $height;
-        $this->spending = $spending;
-        $this->staking = $staking;
-        $this->voting = $voting;
+        $this->spendable = $spendable;
+        $this->stakable = $stakable;
+        $this->votingWeight = $votingWeight;
         $this->createdTime = $createdTime;
         $this->createdBlock = $createdBlock;
         $this->richList = $richList;
@@ -60,19 +60,19 @@ class Address
         return $this->height;
     }
 
-    public function getSpending(): float
+    public function getSpendable(): float
     {
-        return $this->spending;
+        return $this->spendable;
     }
 
-    public function getStaking(): float
+    public function getStakable(): float
     {
-        return $this->staking;
+        return $this->stakable;
     }
 
-    public function getVoting(): float
+    public function getVotingWeight(): float
     {
-        return $this->voting;
+        return $this->votingWeight;
     }
 
     public function getCreatedTime(): DateTime

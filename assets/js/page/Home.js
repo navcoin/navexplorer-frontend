@@ -14,6 +14,7 @@ class PageHome {
         this.populateAddressGroups();
 
         this.populateTicker();
+        this.populateMarketChart();
 
         this.tableManager = new TableManager('#blocks table', 'block', this.populateBlocks);
         this.tableManager = new TableManager('#txs table', 'transaction', this.populateTxs);
@@ -24,7 +25,8 @@ class PageHome {
         let addressGroups = $('#address-groups');
         if (addressGroups.length) {
             let period = addressGroups.attr("data-period")
-            axios.get('/address/group/' + period + '.json').then(this.loadAddressGroupData.bind(this));
+            let days = addressGroups.attr("data-days")
+            axios.get('/address/group/' + period + '/' + days + '.json').then(this.loadAddressGroupData.bind(this));
         }
     }
 
@@ -52,8 +54,11 @@ class PageHome {
             stake[i] = elements[i].stake;
             spend[i] = elements[i].spend;
         }
-
         let ctx = document.getElementById("address-groups-chart");
+
+        let minAddresses = Math.ceil(Array.min(addresses) / 1.2);
+        let minStaking = Math.ceil(Array.min(spend) / 1.2);
+        let maxStaking = Math.ceil(Array.min(spend) * 1.2);
 
         var options = {
             responsive: true,
@@ -71,6 +76,9 @@ class PageHome {
                     type: 'time',
                     time: {
                         unit: 'day'
+                    },
+                    gridLines: {
+                        display: false,
                     }
                 }],
                 yAxes: [{
@@ -80,13 +88,15 @@ class PageHome {
                     offset: false,
                     gridLines: {
                         display: true,
-                    },
-                    ticks: {
-                        min: Math.ceil(Array.min(addresses) / 1.2),
-                    },
-                    afterTickToLabelConversion: function(scaleInstance) {
-                        scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
-                        scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
+                    // },
+                    // ticks: {
+                    //     min: minAddresses,
+                    // },
+                    // afterTickToLabelConversion: function(scaleInstance) {
+                    //     if (minAddresses !== 0) {
+                    //         scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
+                    //         scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
+                    //     }
                     }
                 },
                 {
@@ -98,15 +108,19 @@ class PageHome {
                         display: false,
                     },
                     ticks: {
-                        max: Math.ceil(Array.max(spend) * 1.2),
-                        min: Math.ceil(Array.min(spend) / 1.2),
+                        min: minStaking,
+                        // max: maxStaking !== 0 ? maxStaking : 1
                     },
                     afterTickToLabelConversion: function(scaleInstance) {
-                        scaleInstance.ticks[0] = null;
-                        scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
+                        // if (minStaking !== 0) {
+                        //     scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
+                        //     scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
+                        // }
 
-                        scaleInstance.ticksAsNumbers[0] = null;
-                        scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
+                        // if (maxStaking != 0) {
+                        //     scaleInstance.ticks[0] = null;
+                        //     scaleInstance.ticksAsNumbers[0] = null;
+                        // }
                     }
                 }]
             },
@@ -143,6 +157,126 @@ class PageHome {
                     spanGaps: true,
                     yAxisID: 'B'
                 },
+            ]
+        };
+
+        let myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options,
+        });
+        myLineChart.canvas.parentNode.style.height = '300px';
+    }
+
+    populateMarketChart() {
+        console.info("populateMarketChart")
+        let marketChart = $('#market-chart');
+        if (marketChart.length) {
+            let currency = marketChart.attr("data-currency")
+            let days = marketChart.attr("data-days")
+            axios.get('/market/chart/' + currency + '/' + days + '.json').then(this.loadMarketChartData.bind(this));
+        }
+    }
+
+    loadMarketChartData(response) {
+        let elements = response.data;
+
+        let date = []
+        let usdPrice = []
+        let btcPrice = []
+
+        Array.min = function(array) {
+            return Math.min.apply(Math, array);
+        };
+
+        Array.max = function(array) {
+            return Math.max.apply(Math, array);
+        };
+
+        for (let i = 0; i < elements.length; i++) {
+            let timestamp = String(elements[i]['time'].toString());
+            date[i] = moment.unix(timestamp).utc().format('YYYY-MM-DD');
+            usdPrice[i] = elements[i]['usd'].toFixed(4);
+            btcPrice[i] = elements[i]['btc'];
+        }
+        let ctx = document.getElementById("market-chart-chart");
+
+        // let minAddresses = Math.ceil(Array.min(addresses) / 1.2);
+        // let minStaking = Math.ceil(Array.min(spend) / 1.2);
+        // let maxStaking = Math.ceil(Array.min(spend) * 1.2);
+
+        var options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    usePointStyle: true,
+                },
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    },
+                    gridLines: {
+                        display: false,
+                    }
+                }],
+                yAxes: [{
+                    id: 'A',
+                    type: 'linear',
+                    position: 'left',
+                    offset: false,
+                    gridLines: {
+                        display: true,
+                    }
+                },{
+                    id: 'B',
+                    type: 'linear',
+                    position: 'right',
+                    offset: false,
+                    gridLines: {
+                        display: false,
+                    }
+                }],
+            },
+            tooltips: {enabled: true},
+            hover: {mode: null},
+        };
+
+        let data = {
+            labels: date,
+            datasets: [
+                {
+                    label: 'Price (USD)',
+                    fill: true,
+                    lineTension: 0.4,
+                    backgroundColor: "rgba(0,0,0,0)",
+                    borderColor: "hsl(199, 81%, 59%)",
+                    borderWidth: 3,
+                    pointRadius: 2,
+                    pointBackgroundColor: "hsl(199, 81%, 59%)",
+                    data: usdPrice,
+                    spanGaps: true,
+                    yAxisID: 'A',
+                },
+                {
+                    label: 'Price (BTC)',
+                    fill: true,
+                    lineTension: 0.4,
+                    backgroundColor: "rgba(0,0,0,0)",
+                    borderColor: "rgb(183, 61, 175)",
+                    borderWidth: 3,
+                    pointRadius: 2,
+                    pointBackgroundColor: "rgb(183, 61, 175)",
+                    data: btcPrice,
+                    spanGaps: true,
+                    yAxisID: 'B',
+                }
             ]
         };
 

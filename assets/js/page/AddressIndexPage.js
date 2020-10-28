@@ -122,47 +122,47 @@ class AddressIndexPage {
         $row.append(changesLabel)
 
         let spendableRow = $(document.createElement('td')).attr('class', 'text-right hide').attr('data-role', 'spendable')
-        spendableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'spending', true)).append('&nbsp;Nav'));
-        spendableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'spending', false)).append('&nbsp;Nav'));
+        spendableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'spendable', true)).append('&nbsp;Nav'));
+        spendableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'spendable', false)).append('&nbsp;Nav'));
         $row.append(spendableRow)
 
         if (data.changes.spending !== 0) {
             let spendableChangeRow = $(document.createElement('td')).attr('class', 'text-right td-adaptive').attr('data-role', 'spendableChange')
-            spendableChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'spending', true)).append('&nbsp;Nav'));
+            spendableChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'spendable', true)).append('&nbsp;Nav'));
             $row.append(spendableChangeRow)
 
             let spendableBalanceRow = $(document.createElement('td')).attr('class', 'text-right td-adaptive').attr('data-role', 'spendableBalance')
-            spendableBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'spending', false)).append('&nbsp;Nav'));
+            spendableBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'spendable', false)).append('&nbsp;Nav'));
             $row.append(spendableBalanceRow)
         }
 
         let stakableRow = $(document.createElement('td')).attr('class', 'text-right hide').attr('data-role', 'stakable')
-        stakableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'staking', true)).append('&nbsp;Nav'));
-        stakableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'staking', false)).append('&nbsp;Nav'));
+        stakableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'stakable', true)).append('&nbsp;Nav'));
+        stakableRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'stakable', false)).append('&nbsp;Nav'));
         $row.append(stakableRow)
 
         if (data.changes.staking !== 0) {
             let stakableChangeRow = $(document.createElement('td')).attr('class', 'td-adaptive').attr('data-role', 'stakableChange')
-            stakableChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'staking', true)).append('&nbsp;Nav'));
+            stakableChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'stakable', true)).append('&nbsp;Nav'));
             $row.append(stakableChangeRow)
 
             let stakableBalanceRow = $(document.createElement('td')).attr('class', 'td-adaptive').attr('data-role', 'stakableBalance')
-            stakableBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'staking', false)).append('&nbsp;Nav'));
+            stakableBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'stakable', false)).append('&nbsp;Nav'));
             $row.append(stakableBalanceRow)
         }
 
         let votingRow = $(document.createElement('td')).attr('class', 'text-right hide').attr('data-role', 'votingWeight')
-        votingRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'voting', true)).append('&nbsp;Nav'));
-        votingRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'voting', false)).append('&nbsp;Nav'));
+        votingRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'voting_weight', true)).append('&nbsp;Nav'));
+        votingRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'voting_weight', false)).append('&nbsp;Nav'));
         $row.append(votingRow)
 
         if (data.changes.voting !== 0) {
             let votingChangeRow = $(document.createElement('td')).attr('class', 'text-right td-adaptive').attr('data-role', 'votingWeightChange')
-            votingChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'voting', true)).append('&nbsp;Nav'));
+            votingChangeRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.changes, 'voting_weight', true)).append('&nbsp;Nav'));
             $row.append(votingChangeRow)
 
             let votingBalanceRow = $(document.createElement('td')).attr('class', 'text-right td-adaptive').attr('data-role', 'votingWeightBalance')
-            votingBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'voting', false)).append('&nbsp;Nav'));
+            votingBalanceRow.append($(document.createElement('div')).append(AddressIndexPage.addChanges(data.balance, 'voting_weight', false)).append('&nbsp;Nav'));
             $row.append(votingBalanceRow)
         }
 

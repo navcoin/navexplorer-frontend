@@ -43,6 +43,18 @@ class Api
         $this->cache = new FilesystemAdapter();
     }
 
+    public function getMarketChart(string $vsCurrency, string $days): array
+    {
+        try {
+            return $this->cache->get(sprintf('CoinGeko-MarketChart-%s-%s', $vsCurrency, $days), function(ItemInterface $item) use ($vsCurrency, $days) {
+                $item->expiresAfter(60);
+                return $this->getJsonBody($this->get(sprintf('/coins/nav-coin/market_chart?vs_currency=%s&days=%s', $vsCurrency, $days)));
+            });
+        } catch (ServerRequestException $e) {
+            throw $e;
+        }
+    }
+
     public function getTicker(): array
     {
         try {

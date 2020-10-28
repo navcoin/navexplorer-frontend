@@ -10,14 +10,11 @@ use App\Navcoin\Common\NavcoinApi;
 
 class TransactionApi extends NavcoinApi
 {
-    /**
-     * @var AddressTransactionTypeFilter
-     */
+    /** @var AddressTransactionTypeFilter */
     private $addressTransactionTypeFilter;
 
     public function setFilter(AddressTransactionTypeFilter $addressTransactionTypeFilter)
     {
         $this->addressTransactionTypeFilter = $addressTransactionTypeFilter;
     }
-
 }

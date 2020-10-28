@@ -3,41 +3,27 @@
 namespace App\Navcoin\Address\Entity;
 
 use App\Navcoin\Common\Entity\DateRangeInterface;
+use DateTime;
 
 class AddressGroup implements DateRangeInterface
 {
-    /**
-     * @var \DateTime
-     */
+    /** @var DateTime */
     private $start;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var DateTime */
     private $end;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $addresses;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $stake;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $spend;
 
-    public function __construct(
-        \DateTime $start,
-        \DateTime $end,
-        int $addresses,
-        int $stake,
-        int $spend
-    ) {
+    public function __construct(DateTime $start, DateTime $end, int $addresses, int $stake, int $spend)
+    {
         $this->start = $start;
         $this->end = $end;
         $this->addresses = $addresses;
@@ -45,12 +31,12 @@ class AddressGroup implements DateRangeInterface
         $this->spend = $spend;
     }
 
-    public function getStart(): \DateTime
+    public function getStart(): DateTime
     {
         return $this->start;
     }
 
-    public function getEnd(): \DateTime
+    public function getEnd(): DateTime
     {
         return $this->end;
     }

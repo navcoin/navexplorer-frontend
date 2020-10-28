@@ -5,33 +5,33 @@ namespace App\Navcoin\Address\Entity;
 class Balance
 {
     /** @var float */
-    private $spending;
+    private $spendable;
 
     /** @var float */
-    private $staking;
+    private $stakable;
 
     /** @var float */
-    private $voting;
+    private $votingWeight;
 
-    public function __construct(float $spending, float $staking, float $voting)
+    public function __construct(float $spendable, float $stakable, float $votingWeight)
     {
-        $this->spending = $spending;
-        $this->staking = $staking;
-        $this->voting = $voting;
+        $this->spendable = $spendable;
+        $this->stakable = $stakable;
+        $this->votingWeight = $votingWeight;
     }
 
-    public function getSpending(): float
+    public function getSpendable(): float
     {
-        return $this->spending;
+        return $this->spendable;
     }
 
-    public function getStaking(): float
+    public function getStakable(): float
     {
-        return $this->staking;
+        return $this->stakable;
     }
 
-    public function getVoting(): float
+    public function getVotingWeight(): float
     {
-        return $this->voting;
+        return $this->votingWeight;
     }
 }

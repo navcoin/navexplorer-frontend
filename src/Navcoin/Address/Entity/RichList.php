@@ -5,33 +5,33 @@ namespace App\Navcoin\Address\Entity;
 class RichList
 {
     /** @var int */
-    private $spending;
-    /** @var int */
-
-    private $staking;
+    private $spendable;
 
     /** @var int */
-    private $voting;
+    private $stakable;
+
+    /** @var int */
+    private $votingWeight;
 
     public function __construct(int $spending, int $staking, int $voting)
     {
-        $this->spending = $spending;
-        $this->staking = $staking;
-        $this->voting = $voting;
+        $this->spendable = $spending;
+        $this->stakable = $staking;
+        $this->votingWeight = $voting;
     }
 
-    public function getSpending(): int
+    public function getSpendable(): int
     {
-        return $this->spending;
+        return $this->spendable;
     }
 
-    public function getStaking(): int
+    public function getStakable(): int
     {
-        return $this->staking;
+        return $this->stakable;
     }
 
-    public function getVoting(): int
+    public function getVotingWeight(): int
     {
-        return $this->voting;
+        return $this->votingWeight;
     }
 }

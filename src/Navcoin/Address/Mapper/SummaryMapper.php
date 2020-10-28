@@ -15,9 +15,9 @@ class SummaryMapper extends BaseMapper
             $data['height'],
             $data['hash'],
             $data['txs'],
-            $this->mapAccount($data['spending']),
-            $this->mapAccount($data['staking']),
-            $this->mapAccount($data['voting'])
+            $this->mapAccount($data['spendable']),
+            $this->mapAccount($data['stakable']),
+            $this->mapAccount($data['voting_weight'])
         );
     }
 

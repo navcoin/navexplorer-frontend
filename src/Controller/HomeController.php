@@ -25,9 +25,6 @@ class HomeController extends AbstractController
     /** @var BlockApi */
     private $blockApi;
 
-    /** @var DistributionApi */
-    private $distributionApi;
-
     public function __construct(BlockGroupApi $blockGroupApi, BlockApi $blockApi)
     {
         $this->blockGroupApi = $blockGroupApi;
@@ -38,10 +35,9 @@ class HomeController extends AbstractController
      * @Route("/")
      * @Template()
      */
-    public function index(Request $request): array
+    public function index(): array
     {
         return [
-//            'blocks' => $this->blockGroupApi->getGroupByCategory($request->get('period', 'daily'), 5),
             'best' => $this->blockApi->getBestBlock(),
         ];
     }
@@ -52,7 +48,6 @@ class HomeController extends AbstractController
     public  function ticker(SerializerInterface $serializer, CoinGeckoApi $coinApi, DistributionApi $distributionApi): Response
     {
         $ticker = $coinApi->getTicker();
-
         try {
             $totalSupply = $distributionApi->getTotalSupply();
         } catch (DistributionException $e) {
