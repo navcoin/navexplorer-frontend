@@ -23,8 +23,8 @@ class MarketController extends AbstractController
             $time = strtotime("0:00",intval(floor($price[0]/1000)));
             $prices[$time] = [
                 'time' => $time,
-                'usd' => $price[1],
-                'btc' => $btcResponse['prices'][$key][1] * 100000000,
+                'usd' => $this->getParameter('navcoin.network') == "MAINNET" ? $price[1] : 0,
+                'btc' => $this->getParameter('navcoin.network') == "MAINNET" ? $btcResponse['prices'][$key][1] * 100000000 : 0,
             ];
         }
 
