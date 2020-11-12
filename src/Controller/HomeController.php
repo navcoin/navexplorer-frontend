@@ -53,6 +53,11 @@ class HomeController extends AbstractController
         } catch (DistributionException $e) {
             $totalSupply = 0;
         }
+        
+        if ($this->getParameter('navcoin.network') == "TESTNET") {
+            $ticker['market_data']['current_price']['btc'] = 0;
+            $ticker['market_data']['current_price']['usd'] = 0;
+        }
 
         $response = [
             'btc' => $ticker['market_data']['current_price']['btc'],
