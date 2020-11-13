@@ -18,7 +18,7 @@ class BlockIndexPage {
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'hash')
-            .append('<a href="/block/'+data.height+'">' + data.hash.substring(1, 12) + '...'+data.hash.slice(-4)+'</a>')
+            .append('<a href="/block/'+data.height+'">' + data.hash.substring(0, 12) + '...'+data.hash.slice(-4)+'</a>')
         );
 
         $row.append($(document.createElement('td'))
