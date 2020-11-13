@@ -54,7 +54,7 @@ class HomeController extends AbstractController
             $totalSupply = 0;
         }
         
-        if ($this->getParameter('navcoin.network') == "TESTNET") {
+        if ($this->getParameter('navcoin.network') != "MAINNET") {
             $ticker['market_data']['current_price']['btc'] = 0;
             $ticker['market_data']['current_price']['usd'] = 0;
         }
