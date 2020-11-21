@@ -4,40 +4,32 @@ namespace App\Navcoin\Block\Entity;
 
 class Output
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $index;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $amount;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $addresses = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $redeemedInTransaction;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $redeemedInBlock;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $hash;
+
+    /** @var bool */
+    private $private;
+
+    /** @var bool */
+    private $privateFee;
 
     public function __construct(string $type, int $index, float $amount, array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock)
     {
@@ -98,6 +90,26 @@ class Output
         $this->hash = $hash;
 
         return $this;
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->private ? true : false;
+    }
+
+    public function setPrivate(bool $private): void
+    {
+        $this->private = $private;
+    }
+
+    public function isPrivateFee(): bool
+    {
+        return $this->privateFee ? true : false;
+    }
+
+    public function setPrivateFee(bool $privateFee): void
+    {
+        $this->privateFee = $privateFee;
     }
 
     public function isCommunityFund(): bool

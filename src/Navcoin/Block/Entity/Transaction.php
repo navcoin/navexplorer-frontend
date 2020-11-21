@@ -70,6 +70,11 @@ class Transaction
      */
     private $proposalVotes;
 
+    /**
+     * @var bool
+     */
+    private $private;
+
     public function __construct(
         String $hash,
         int $height,
@@ -81,7 +86,8 @@ class Transaction
         string $type,
         string $raw,
         string $size,
-        string $version
+        string $version,
+        bool $private
     ) {
         $this->hash = $hash;
         $this->height = $height;
@@ -94,6 +100,7 @@ class Transaction
         $this->raw = $raw;
         $this->size = $size;
         $this->version = $version;
+        $this->private = $private;
     }
 
     public function getId(): string
@@ -184,6 +191,11 @@ class Transaction
     public function getProposalVotes(): ProposalVotes
     {
         return $this->proposalVotes;
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->private;
     }
 
     public function isCoinbase(): bool

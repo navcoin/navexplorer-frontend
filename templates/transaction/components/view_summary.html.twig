@@ -15,9 +15,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Total&nbsp;Input</th>
+                    <th>Input</th>
                     <td class="text-right">
                         {{ transaction.inputs.value|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Output</th>
+                    <td class="text-right">
+                        {{ transaction.outputs.value|stake_format }}
                     </td>
                 </tr>
                 {% if transaction.staking %}
