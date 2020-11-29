@@ -19,12 +19,12 @@ export default class NavNumberFormat {
         return parts.join(".");
     }
 
-    formatNav(x, decimals = true) {
+    formatNav(x, decimals = true, isPrivate = false) {
         let number = this.format(x, decimals);
         if (number === false) {
             return false;
         }
 
-        return number + " NAV";
+        return number + (isPrivate ? " xNav" : " NAV");
     }
 }
