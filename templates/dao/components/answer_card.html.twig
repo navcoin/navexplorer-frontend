@@ -3,7 +3,7 @@
         {% if consultation.isConsensusParameter %}
             <h2 class="autolink clamp" data-lines="2" data-truncate="50">{{ a.answer|answerType(consensus.type) }}</h2>
         {% else %}
-            <h2 class="autolink clamp" data-lines="2" data-truncate="50">{{ a.answer|capitalize }}</h2>
+            <h2 class="autolink clamp" data-lines="2" data-truncate="50">{{ a.answer }}</h2>
         {% endif %}
     </div>
 
