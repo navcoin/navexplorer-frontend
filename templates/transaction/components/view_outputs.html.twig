@@ -21,8 +21,8 @@
                                 <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                             </span>
                         {% else %}
-                            {% if output.isPrivate %} Private&nbsp;Output
-                            {% elseif output.isPrivateFee %} Private&nbsp;Fee
+                            {% if output.isPrivate %} xNav <small>Private Address</small>
+                            {% elseif output.isPrivateFee %} xNav&nbsp;<small>Fee</small>
                             {% else %} N/A
                             {% endif %}
                         {% endfor %}

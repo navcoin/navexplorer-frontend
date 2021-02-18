@@ -8,7 +8,7 @@
   }
 
   small {
-    color: $pink;
+    color: inherit;
   }
 
   header {
@@ -26,7 +26,7 @@
         color: $darkText;
       }
       .nav-link:hover {
-        color: $off-white !important;
+        color: $light-blue !important;
       }
     }
   }
@@ -34,35 +34,42 @@
   footer {
     background-color: $black;
     color: $darkText;
-    .network {
+    //.network {
       color: $light-blue;
       ul li a {
         color: $light-blue;
         text-decoration: underline;
       }
-    }
+    //}
   }
 
   .table th, .table td {
     border-top: 1px solid $black;
   }
 
+  .table-striped tbody tr:nth-of-type(even) {
+    background-color: $black;
+  }
+
   .table-striped tbody tr:nth-of-type(odd) {
     background-color: $light-black;
   }
 
-  .table-nav, #address-groups {
-    border-top: 5px solid $darkText;
+  .card {
+    background-color: inherit !important;
   }
-
+  .card-raw {
+    border: 1px solid $black;
+  }
   .card-nav {
     .card-header {
-      background-color: $darkBg !important;
+      background-color: inherit !important;
+      padding: 0 5px;
     }
     .card-body {
-      border-top: 5px solid $darkText;
+      border-top: 2px solid #4a3a6f;
       background-color: $light-black !important;
-      border-bottom: 1px solid $darkBg;
+      border-bottom: 1px solid $light-black;
     }
     .card-footer {
       background-color: $light-black !important;
@@ -79,6 +86,113 @@
       background-color: $darkBg;
       border: 1px solid $black;
       color: $darkText;
+    }
+  }
+
+  .nav-tabs {
+    margin-bottom: -1px;
+    border: 1px solid $darkBg;
+    background-color: $light-black;
+  }
+
+  #block-collapse {
+    border: 1px solid $light-black;
+    background-color: $light-black !important;
+  }
+
+  #market-chart,
+  #address-groups {
+    background-color: $light-black !important;
+  }
+
+  .nav-tabs {
+    border-top: 5px solid #4a3a6f;
+    a.active {
+      color: $darkText;
+      text-decoration: none !important;
+    }
+    a:hover {
+      color: $darkText;
+      text-decoration: underline !important;
+    }
+    .nav-link {
+      padding: 1rem;
+      border-top: 5px solid $light-black !important;
+      background-color: $light-black !important;
+      border-right: 1px solid $light-black;
+      color: $light-blue;
+    }
+
+    .nav-link:hover {
+      border-top: 5px solid $darkText !important;
+    }
+  }
+
+  .progress {
+    border: 1px solid $light-black;
+    background-color: $darkBg;
+  }
+
+  .list-group-item {
+    border-top: 1px solid #4a3a6f;
+    border-bottom: 1px solid #4a3a6f;
+  }
+
+  .alert, .badge {
+    color: $darkBg;
+  }
+  .alert-info,
+  .alert-success,
+  .alert-danger {
+    border-color: $darkBg;
+  }
+
+  .block-links {
+    border-top: 1px solid $black;
+  }
+
+  pre {
+    color: #808080;
+    .key {
+      color: #808080;
+    }
+    .string, .number {
+      color: $darkText;
+    }
+  }
+
+  button {
+    background-color: $darkText;
+    span {
+      color: #4a3a6f;
+    }
+  }
+
+  .dropdown-menu {
+    background-color: $darkText;
+  }
+
+  .dropdown-item:hover {
+    background-color: $darkText;
+    color: #4a3a6f;
+  }
+}
+
+@media only screen and (max-width: 855px) {
+  .dark-mode {
+    table-striped {
+      tbody tr:nth-of-type(odd) {
+        background-color: $black;
+      }
+      tbody tr:nth-of-type(even) {
+        background-color: $light-black;
+      }
+    }
+    .table-adaptive tbody tr td:nth-of-type(odd) {
+      background-color: $black;
+    }
+    .table-adaptive tbody tr td:nth-of-type(even) {
+      background-color: $light-black;
     }
   }
 }

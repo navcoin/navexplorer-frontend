@@ -5,6 +5,7 @@ require('./services/Timezone');
 require('./services/Tabs');
 require('./services/Clamp');
 require('./services/AutoLink');
+require('./services/DarkMode');
 
 require('./page/AddressIndexPage');
 require('./page/BlockIndexPage');
