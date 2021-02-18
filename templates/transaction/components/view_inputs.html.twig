@@ -1,10 +1,11 @@
+<div class="margin-bottom">
 <h2>Inputs</h2>
 <table class="table table-striped table-adaptive table-nav">
     <thead>
         <tr>
-            <th style="width: 5%">Index</th>
-            <th style="width: 40%">Previous Output</th>
-            <th style="width: 35%">Address</th>
+            <th class="text-center" style="width:5%">Index</th>
+            <th style="width:55%">Address</th>
+            <th style="width: 20%">Previous Output</th>
             <th style="width: 20%" class="text-right">Amount</th>
         </tr>
     </thead>
@@ -12,22 +13,28 @@
         {% for input in transaction.inputs %}
             <tr>
                 <td data-role="index" class="text-center">{{ input.index }}</td>
-                <td data-role="previousOutput">
-                    {% if input.previousOutput %}
-                        <a href="{{ path('app_transaction_view', {'hash': input.previousOutput}) }}">{{ input.previousOutput|slice(0, 20) }}</a>...:{{ input.index }}
-                        {% if input.previousOutputBlock %}
-                            <small>in <a href="{{ path('app_block_view', {'height': input.previousOutputBlock}) }}">{{ input.previousOutputBlock }}</a></small>
-                        {% endif %}
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </td>
                 <td data-role="address">
                     {%  for address in input.addresses %}
                         <span class="break-word">
                             <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                         </span>
+                    {% else %}
+                        xNav <small>Private Address</small>
                     {% endfor %}
+                </td>
+                <td data-role="previousOutput">
+                    {% if input.previousOutput %}
+                        <span style="white-space: nowrap">
+                            <a href="{{ path('app_transaction_view', {'hash': input.previousOutput}) }}">
+                                {{ input.previousOutput[0:10] }}...{{ input.previousOutput[input.previousOutput|length-4:] }}:{{ input.previousOutputIndex }}
+                            </a>
+                            {% if input.previousOutputHeight %}
+                                <small>in <a href="{{ path('app_block_view', {'height': input.previousOutputHeight}) }}">{{ input.previousOutputHeight }}</a></small>
+                            {% endif %}
+                        </span>
+                    {% else %}
+                        N/A
+                    {% endif %}
                 </td>
                 <td data-role="amount" class="text-right">
                     {{ input.amount|stake_format }}
@@ -40,3 +47,4 @@
         {% endfor %}
     </tbody>
 </table>
+</div>

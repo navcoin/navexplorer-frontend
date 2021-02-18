@@ -51,7 +51,7 @@ class HomeController extends AbstractController
         try {
             $totalSupply = $distributionApi->getTotalSupply();
         } catch (DistributionException $e) {
-            $totalSupply = 0;
+            $totalSupply = ['public' => 0, 'private' => 0];
         }
         
         if ($this->getParameter('navcoin.network') != "MAINNET") {
@@ -62,8 +62,9 @@ class HomeController extends AbstractController
         $response = [
             'btc' => $ticker['market_data']['current_price']['btc'],
             'usd' => $ticker['market_data']['current_price']['usd'],
-            'marketCap' => floor($totalSupply*$ticker['market_data']['current_price']['usd']),
-            'circulatingSupply' => $totalSupply,
+            'marketCap' => floor(($totalSupply['public']+$totalSupply['private'])*$ticker['market_data']['current_price']['usd']),
+            'circulatingSupply' => $totalSupply['public'],
+            'privateSupply' => $totalSupply['private'],
         ];
 
         return new Response($serializer->serialize($response, 'json'));

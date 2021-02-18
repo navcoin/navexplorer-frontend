@@ -7,7 +7,7 @@
         <table class="table table-striped table-nav">
             <tbody>
                 <tr>
-                    <td><strong>Height</strong></td>
+                    <th>Height</th>
                     <td class="text-right">
                         <a href="{{ path('app_block_view', {'height': transaction.height}) }}">
                             {{ transaction.height|number_format }}
@@ -15,46 +15,52 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><strong>Total&nbsp;Output</strong></td>
+                    <th>Input</th>
+                    <td class="text-right">
+                        {{ transaction.inputs.value|stake_format }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Output</th>
                     <td class="text-right">
                         {{ transaction.outputs.value|stake_format }}
                     </td>
                 </tr>
-                <tr>
-                    <td><strong>Fees</strong></td>
-                    <td class="text-right">
-                        {{ transaction.fees|stake_format }}
-                    </td>
-                </tr>
                 {% if transaction.staking %}
                     <tr>
-                        <td><strong>Stake&nbsp;Reward</strong></td>
+                        <th>Stake&nbsp;Reward</th>
                         <td class="text-right">
                             {{ transaction.stake|stake_format }}
                         </td>
                     </tr>
                 {% endif %}
+                <tr>
+                    <th>Fees Paid</th>
+                    <td class="text-right">
+                        {{ transaction.fees|stake_format }}
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-4">
-        <table class="table table-striped table-nav">
+        <table class="table table-striped table-nav table-second">
             <tbody>
                 <tr>
-                    <td><strong>Confirmations</strong></td>
+                    <th>Confirmations</th>
                     <td class="text-right">{{ block.confirmations }}</td>
                 </tr>
                 <tr>
-                    <td><strong>Size</strong></td>
+                    <th>Size</th>
                     <td class="text-right">{{ transaction.size }}</td>
                 </tr>
                 <tr>
-                    <td><strong>Version</strong></td>
+                    <th>Version</th>
                     <td class="text-right">{{ transaction.version }}</td>
                 </tr>
                 <tr>
-                    <td><strong>Time</strong></td>
+                    <th>Time</th>
                     <td class="text-right">
                         {{ transaction.time|date_localised('Y-m-d, H:i:s') }}
                     </td>

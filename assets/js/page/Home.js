@@ -81,35 +81,33 @@ class PageHome {
                         display: false,
                     }
                 }],
-                yAxes: [{
-                    id: 'A',
+                yAxes: [
+                //     {
+                //     id: 'A',
+                //     type: 'linear',
+                //     position: 'right',
+                //     offset: false,
+                //     gridLines: {
+                //         display: true,
+                //     // },
+                //     // ticks: {
+                //     //     min: minAddresses,
+                //     // },
+                //     // afterTickToLabelConversion: function(scaleInstance) {
+                //     //     if (minAddresses !== 0) {
+                //     //         scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
+                //     //         scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
+                //     //     }
+                //     }
+                // },
+                {
+
+                    id: 'B',
                     type: 'linear',
                     position: 'left',
                     offset: false,
                     gridLines: {
                         display: true,
-                    // },
-                    // ticks: {
-                    //     min: minAddresses,
-                    // },
-                    // afterTickToLabelConversion: function(scaleInstance) {
-                    //     if (minAddresses !== 0) {
-                    //         scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
-                    //         scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
-                    //     }
-                    }
-                },
-                {
-                    id: 'B',
-                    type: 'linear',
-                    position: 'right',
-                    offset: false,
-                    gridLines: {
-                        display: false,
-                    },
-                    ticks: {
-                        min: minStaking,
-                        // max: maxStaking !== 0 ? maxStaking : 1
                     },
                     afterTickToLabelConversion: function(scaleInstance) {
                         // if (minStaking !== 0) {
@@ -131,22 +129,25 @@ class PageHome {
         let data = {
             labels: start,
             datasets: [
+                // {
+                //     label: 'Staking Addresses',
+                //     fill: true,
+                //     lineTension: 0.4,
+                //     backgroundColor: "rgba(0,0,0,0)",
+                //     borderColor: "hsl(199, 81%, 59%)",
+                //     borderWidth: 3,
+                //     pointRadius: 2,
+                //     pointBackgroundColor: "hsl(199, 81%, 59%)",
+                //     data: stake,
+                //     spanGaps: true,
+                //     yAxisID: 'A',
+                // },
                 {
-                    label: 'Staking Addresses',
+                    gridLines: {
+                        display: true,
+                    },
                     fill: true,
-                    lineTension: 0.4,
-                    backgroundColor: "rgba(0,0,0,0)",
-                    borderColor: "hsl(199, 81%, 59%)",
-                    borderWidth: 3,
-                    pointRadius: 2,
-                    pointBackgroundColor: "hsl(199, 81%, 59%)",
-                    data: stake,
-                    spanGaps: true,
-                    yAxisID: 'A',
-                },
-                {
-                    fill: true,
-                    label: 'Spending Addresses',
+                    label: 'Active Addresses',
                     lineTension: 0.4,
                     backgroundColor: "rgba(0,0,0,0)",
                     borderColor: "rgb(183, 61, 175)",
@@ -296,6 +297,7 @@ class PageHome {
             $('#ticker-usd').html('$&nbsp;'+response.data.usd.toFixed(6));
             $('#market-cap').html('$&nbsp;'+numberFormatter.format(response.data.marketCap));
             $('#circulating-supply').html(numberFormatter.formatNav(response.data.circulatingSupply, false));
+            $('#private-supply').html(numberFormatter.formatNav(response.data.privateSupply, false));
         });
     }
 
@@ -331,13 +333,8 @@ class PageHome {
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'stakedBy')
-            .append('<a href="/address/' + data.staked_by + '" class="break-word">' + data.staked_by + '</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'stake')
-            .addClass("text-right")
-            .append(numberFormatter.formatNav(data.stake))
+            .attr('class', 'text-right')
+            .append('<a href="/address/'+data.staked_by+'">' + data.staked_by.substring(0, 12) + '...'+data.staked_by.slice(-4)+'</a>')
         );
 
         return $row;

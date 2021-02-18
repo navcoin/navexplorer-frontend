@@ -39,6 +39,7 @@ export default class TransactionLoader {
     }
 
     inputList(inputs, tx) {
+        console.log(inputs);
         let BreakException = {};
         let list = $(document.createElement('ul'));
         let self = this;
@@ -65,15 +66,17 @@ export default class TransactionLoader {
                             '<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[2] + '">' + input.addresses[2] + '</a>' +
                             '</span>');
+                    } else if (input.private_fee === true) {
+                        address.html('xNav <small>Fee</small>');
+                    } else if (input.private === true) {
+                        address.html('xNav <small>Private Address</small>');
                     } else if (typeof input.type !== 'undefined' && input.type !== 'PUBKEY' && input.type !== 'PUBKEYHASH') {
                         address.html(input.type.toLowerCase());
+                    } else if (tx.type === 'spend' && input.addresses.length === 0) {
+                        address.html('xNav <small>Private Address</small>');
                     } else if (typeof input.addresses !== 'undefined') {
                         if (input.addresses.length === 0) {
-                            if (tx.type === "PRIVATE_STAKING") {
-                                address.html('Private address');
-                            } else {
-                                address.html('N/A');
-                            }
+                            address.html('N/A');
                         } else {
                             let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
                             address.append(a);

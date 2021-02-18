@@ -26,7 +26,8 @@ class TransactionMapper extends BaseMapper
             $data['type'],
             array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
             $data['size'],
-            $data['version']
+            $data['version'],
+            $this->getData("private", $data, false)
         );
 
         return $transaction;
@@ -43,7 +44,8 @@ class TransactionMapper extends BaseMapper
                     $this->getData('value', $inputData, 0),
                     $key,
                     $this->getData('txid', $inputData, ''),
-                    $inputData['previousOutput']['height']
+                    $this->getData('vout', $inputData),
+                    $this->hasData('previousOutput', $inputData) && $this->hasData('height', $inputData['previousOutput']) ? $inputData['previousOutput']['height'] : null
                 )
             );
         }
@@ -69,8 +71,19 @@ class TransactionMapper extends BaseMapper
                     $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['height'] : null
                 );
 
-                if ($this->hasData('scriptPubKey', $outputData) && $this->hasData('hash', $outputData['scriptPubKey'])) {
-                    $output->setHash($this->getData('hash', $outputData['scriptPubKey'], null));
+                if ($this->hasData('scriptPubKey', $outputData)) {
+                    if ($this->hasData('hash', $outputData['scriptPubKey'])) {
+                        $output->setHash($this->getData('hash', $outputData['scriptPubKey'], null));
+                    }
+                    if ($this->hasData('asm', $outputData['scriptPubKey'])) {
+                        if ($outputData['scriptPubKey']['asm'] == "OP_RETURN" && $outputData['scriptPubKey']['type'] == "nulldata") {
+                            $output->setPrivateFee(true);
+                        }
+
+                        if ($outputData['scriptPubKey']['type'] == "nonstandard" && $outputData['scriptPubKey']['asm']) {
+                            $output->setPrivate(true);
+                        }
+                    }
                 }
 
                 $outputs->add($output);

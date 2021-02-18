@@ -1,54 +1,50 @@
 <div class="card card-nav">
     <div class="card-header">
         {% if consultation.isConsensusParameter %}
-            <h2 class="clamp" data-lines="2">{{ a.answer|answerType(consensus.type) }}</h2>
+            <h2 class="autolink clamp" data-lines="2" data-truncate="50">{{ a.answer|answerType(consensus.type) }}</h2>
         {% else %}
-            <h2 class="clamp" data-lines="2">{{ a.answer|capitalize }}</h2>
+            <h2 class="autolink clamp" data-lines="2" data-truncate="50">{{ a.answer }}</h2>
         {% endif %}
     </div>
 
     <div class="card-body">
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            Hash
-            <span class="float-right">
-                <a href="{{ path('app_dao_answer', {'hash': a.hash}) }}" class="break-word">
-                    {{ a.hash[0:10] }}...{{ a.hash[a.hash|length-4:] }}
-                </a>
-            </span>
-        </li>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                Hash
+                <span class="float-right">{{ a.hash }}</span>
+            </li>
 
-        <li class="list-group-item">
-            Support
-            <span class="float-right">{{ a.support }}</span>
-        </li>
+            <li class="list-group-item">
+                Support
+                <span class="float-right">{{ a.support }}</span>
+            </li>
 
-        <li class="list-group-item">
-            Votes
-            <span class="float-right">{{ a.votes }}</span>
-        </li>
+            <li class="list-group-item">
+                Votes
+                <span class="float-right">{{ a.votes }}</span>
+            </li>
 
-        <li class="list-group-item">
-            Version
-            <span class="float-right">{{ a.version }}</span>
-        </li>
+            <li class="list-group-item">
+                Version
+                <span class="float-right">{{ a.version }}</span>
+            </li>
 
-        <li class="list-group-item">
-            Status
-            <span class="float-right">
+            <li class="list-group-item">
+                Status
+                <span class="float-right">
                 {% if consultation.state == 0 and a.foundSupport %}
                     Found support, waiting for end of voting period
                 {% else %}
                     {{ a.status|capitalize }}
                 {% endif %}
             </span>
-        </li>
-    </ul>
+            </li>
+        </ul>
     </div>
 
-{#    <div class="card-footer">#}
-{#        <div class="d-flex justify-content-center">#}
-{#            <a href="{{ path('app_dao_answer', {"hash": a.hash}) }}" class="btn btn-info">View Answer</a>#}
-{#        </div>#}
-{#    </div>#}
+    {#    <div class="card-footer">#}
+    {#        <div class="d-flex justify-content-center">#}
+    {#            <a href="{{ path('app_dao_answer', {"hash": a.hash}) }}" class="btn btn-info">View Answer</a>#}
+    {#        </div>#}
+    {#    </div>#}
 </div>

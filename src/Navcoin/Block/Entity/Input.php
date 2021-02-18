@@ -4,38 +4,36 @@ namespace App\Navcoin\Block\Entity;
 
 class Input
 {
-    /**
-     * @var string[]
-     */
+    /** @var string[]$previousOutputIndex*/
     private $addresses;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $amount;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $index;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $previousOutput;
 
-    /**
-     * @var int
-     */
-    private $previousOutputBlock;
+    /** @var int */
+    private $previousOutputIndex;
 
-    public function __construct(array $addresses, ?float $amount, ?int $index, ?string $previousOutput, ?int $previousOutputBlock)
-    {
+    /** @var int */
+    private $previousOutputHeight;
+
+    public function __construct(array $addresses,
+                                ?float $amount,
+                                ?int $index,
+                                ?string $previousOutput,
+                                ?int $previousOutputIndex,
+                                ?int $previousOutputHeight) {
         $this->addresses = $addresses;
         $this->amount = $amount;
         $this->index = $index;
         $this->previousOutput = $previousOutput;
-        $this->previousOutputBlock = $previousOutputBlock;
+        $this->previousOutputIndex = $previousOutputIndex;
+        $this->previousOutputHeight = $previousOutputHeight;
     }
 
     public function getAddress(): ?string
@@ -67,8 +65,13 @@ class Input
         return $this->previousOutput;
     }
 
-    public function getPreviousOutputBlock(): ?int
+    public function getPreviousOutputIndex(): ?int
     {
-        return $this->previousOutputBlock;
+        return $this->previousOutputIndex;
+    }
+
+    public function getPreviousOutputHeight(): int
+    {
+        return $this->previousOutputHeight;
     }
 }
