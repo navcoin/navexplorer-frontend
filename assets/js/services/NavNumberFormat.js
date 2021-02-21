@@ -1,5 +1,5 @@
 export default class NavNumberFormat {
-    format(x, decimals = true) {
+    format(x, decimals = true, fixed = 0) {
         if (typeof x === "undefined") {
             return false;
         }
@@ -13,7 +13,7 @@ export default class NavNumberFormat {
         }
 
         if (typeof parts[1] !== 'undefined') {
-            parts[1] = '<small>' + parts[1] + '</small>';
+            parts[1] = '<small>' + parts[1].substring(0, fixed) + '</small>';
         }
 
         return parts.join(".");
