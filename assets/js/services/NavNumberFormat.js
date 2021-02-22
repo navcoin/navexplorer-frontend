@@ -1,5 +1,5 @@
 export default class NavNumberFormat {
-    format(x, decimals = true, fixed = 0) {
+    format(x, decimals = true, fixed = 2) {
         if (typeof x === "undefined") {
             return false;
         }
