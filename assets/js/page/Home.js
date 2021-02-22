@@ -3,6 +3,7 @@ import NavNumberFormat from "../services/NavNumberFormat";
 import moment from 'moment/src/moment';
 import axios from "axios";
 import Chart from "chart.js";
+import Distribution from "../services/Distribution";
 
 const $ = require('jquery');
 
@@ -296,17 +297,14 @@ class PageHome {
             $('#ticker-btc').html(response.data.btc.toFixed(8) + '&nbsp;BTC');
             $('#ticker-usd').html('$&nbsp;'+response.data.usd.toFixed(6));
             $('#market-cap').html('$&nbsp;'+numberFormatter.format(response.data.marketCap));
-            $('#circulating-supply').html(numberFormatter.formatNav(response.data.circulatingSupply, false));
-            $('#private-supply').html(numberFormatter.formatNav(response.data.privateSupply, false));
+            $('#circulating-supply  ').html(numberFormatter.formatNav(response.data.circulatingSupply, false));
+            $('#public-supply').html(numberFormatter.formatNav(response.data.publicSupply, false));
+            $('#private-supply').html(numberFormatter.formatNav(response.data.privateSupply, false, true));
         });
     }
 
     populateBlocks(data, paginator) {
         let numberFormatter = new NavNumberFormat();
-
-        if (typeof paginator !== "undefined") {
-            $('#total-blocks').html(numberFormatter.format(paginator.total));
-        }
 
         let $row = $(document.createElement('tr'));
 

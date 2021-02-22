@@ -63,7 +63,8 @@ class HomeController extends AbstractController
             'btc' => $ticker['market_data']['current_price']['btc'],
             'usd' => $ticker['market_data']['current_price']['usd'],
             'marketCap' => floor(($totalSupply['public']+$totalSupply['private'])*$ticker['market_data']['current_price']['usd']),
-            'circulatingSupply' => $totalSupply['public'],
+            'circulatingSupply' => $totalSupply['public'] + $totalSupply['private'],
+            'publicSupply' => $totalSupply['public'],
             'privateSupply' => $totalSupply['private'],
         ];
 

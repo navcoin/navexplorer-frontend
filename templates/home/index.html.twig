@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}NavCoin Block Explorer{% endblock %}
+{% block title %}Navcoin Block Explorer{% endblock %}
 
 {% block page %}page-home-index{% endblock %}
 
@@ -9,15 +9,12 @@
         <div class="container-fluid">
             {% include 'home/components/hud.html.twig' %}
 
-            <div class="row">
-{#                <div class="col-sm-12 col-md-6">#}
-{#                    {% include 'home/components/overview.html.twig' %}#}
-{#                </div>#}
-                <div class="col-sm-12 col-md-6 margin-top margin-bottom">
+            <div class="row margin-top margin-bottom">
+                <div class="col-sm-12 col-md-6 col-lg-6">
                     {% include 'home/components/market-chart.html.twig' %}
                 </div>
 
-                <div class="col-sm-12 col-md-6 margin-top margin-bottom">
+                <div class="col-sm-12 col-md-6 col-lg-6">
                     {% include 'home/components/address-groups.html.twig' %}
                 </div>
             </div>
