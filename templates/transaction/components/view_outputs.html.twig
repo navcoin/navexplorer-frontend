@@ -5,10 +5,9 @@
         <thead>
             <tr>
                 <th style="width: 5%" class="text-center">Index</th>
-                <th style="width: 40%">Address</th>
-                <th style="width: 15%">Type</th>
-                <th style="width: 20%">Redeemed&nbsp;In</th>
-                <th style="width: 20%" class="text-right">Amount</th>
+                <th style="width: 50%">Address</th>
+                <th style="width: 30%">Redeemed&nbsp;In</th>
+                <th style="width: 15%" class="text-right">Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -21,18 +20,20 @@
                                 <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                             </span>
                         {% else %}
-                            {% if output.isPrivate %} xNav <small>Private Address</small>
-                            {% elseif output.isPrivateFee %} xNav&nbsp;<small>Fee</small>
-                            {% else %} N/A
+                            {% if output.isWrapped %}
+                                {% for address in output.wrappedAddresses %}{{ address }}<br/>{% endfor %}
+                            {% elseif output.isPrivate %} Hidden
+                            {% elseif output.isPrivateFee %}
+                                <a href="{{ path('app_address_index', { 'hash': block.stakedBy }) }}">{{ block.stakedBy }}</a>
+                            {% else %} n/a
                             {% endif %}
                         {% endfor %}
                     </td>
-                    <td data-role="type">{{ output.type|capitalize }}</td>
                     <td data-role="redeemedIn">
                         {% if output.redeemedInTransaction and output.redeemedInBlock %}
                             <span style="white-space: nowrap">
                                 <a href="{{ path('app_transaction_view', {'hash': output.redeemedInTransaction}) }}">
-                                    {{ output.redeemedInTransaction[0:10] }}...{{ output.redeemedInTransaction[output.redeemedInTransaction|length-4:] }}
+                                    {{ output.redeemedInTransaction[0:20] }}...{{ output.redeemedInTransaction[output.redeemedInTransaction|length-4:] }}
                                 </a>
                                 <small>in <a href="{{ path('app_block_view', {'height': output.redeemedInBlock}) }}">{{ output.redeemedInBlock }}</a></small>
                             </span>
@@ -40,14 +41,19 @@
                             Unspent
                         {% elseif output.type == 'CFUND_CONTRIBUTION' %}
                             Community&nbsp;Fund&nbsp;Contribution
-                        {% elseif output.address == '' %}
-                            &nbsp;-----&nbsp;
                         {% else %}
                             Unspent
                         {% endif %}
+                        {% if output.isPrivateFee %}<br/><small>Private TX Fee</small>{% endif %}
                     </td>
                     <td data-role="amount" class="text-right">
-                        {{ output.amount|stake_format }}
+                        {% if output.wrapped %}
+                            {{ output.amount|wnav }}
+                        {% elseif output.private %}
+                            {{ output.amount|xnav }}
+                        {% else %}
+                            {{ output.amount|nav }}
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

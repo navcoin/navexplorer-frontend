@@ -14,6 +14,6 @@ class DistributionController
      */
     public function balance(SerializerInterface $serializer, DistributionApi $distributionApi)
     {
-        return new Response($serializer->serialize($distributionApi->getBalanceDistribution(),'json'));
+        return new Response($serializer->serialize($distributionApi->getWealth(),'json'));
     }
 }

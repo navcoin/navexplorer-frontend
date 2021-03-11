@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Exception\TransactionNotFoundException;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\TransactionApi;
+use App\Navcoin\Block\Entity\Output;
+use App\Navcoin\Block\Entity\Transaction;
 use Exception;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

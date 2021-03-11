@@ -8,19 +8,19 @@
         </tr>
         <tr>
             <th scope="col">Spendable Balance</th>
-            <td>{{ summary.spendable.balance|stake_format }}</td>
+            <td>{{ summary.spendable.balance|nav }}</td>
         </tr>
         <tr>
             <th scope="col">Stakable Balance</th>
-            <td>{{ summary.stakable.balance|stake_format }}</td>
+            <td>{{ summary.stakable.balance|nav }}</td>
         </tr>
         <tr>
             <th scope="col">Voting Weight</th>
-            <td>{{ summary.votingWeight.balance|stake_format }}</td>
+            <td>{{ summary.votingWeight.balance|nav }}</td>
         </tr>
         <tr>
             <th scope="col">Transactions</th>
-            <td>{{ summary.txs }} txs</td>
+            <td>{{ summary.txs|number_format }}</td>
         </tr>
         <tr>
             <th scope="col">Created At</th>

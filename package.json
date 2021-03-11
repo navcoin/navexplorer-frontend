@@ -11,6 +11,7 @@
     "chart.js": "^2.7.3",
     "chartjs-plugin-annotation": "^0.5.7",
     "clamp-js-main": "^0.11.6",
+    "core-js": "2",
     "d3": "^5.1.0",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.1",

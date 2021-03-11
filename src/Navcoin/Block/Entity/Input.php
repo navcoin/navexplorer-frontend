@@ -4,7 +4,7 @@ namespace App\Navcoin\Block\Entity;
 
 class Input
 {
-    /** @var string[]$previousOutputIndex*/
+    /** @var string[] */
     private $addresses;
 
     /** @var float */
@@ -22,18 +22,31 @@ class Input
     /** @var int */
     private $previousOutputHeight;
 
+    /** @var bool */
+    private $private;
+
+    /** @var bool */
+    private $wrapped;
+
+    /** @var string[] */
+    private $wrappedAddresses;
+
     public function __construct(array $addresses,
                                 ?float $amount,
                                 ?int $index,
                                 ?string $previousOutput,
                                 ?int $previousOutputIndex,
-                                ?int $previousOutputHeight) {
+                                ?int $previousOutputHeight,
+                                ?bool $private,
+                                ?bool $wrapped) {
         $this->addresses = $addresses;
         $this->amount = $amount;
         $this->index = $index;
         $this->previousOutput = $previousOutput;
         $this->previousOutputIndex = $previousOutputIndex;
         $this->previousOutputHeight = $previousOutputHeight;
+        $this->private = $private;
+        $this->wrapped = $wrapped;
     }
 
     public function getAddress(): ?string
@@ -73,5 +86,25 @@ class Input
     public function getPreviousOutputHeight(): int
     {
         return $this->previousOutputHeight;
+    }
+
+    public function isPrivate(): ?bool
+    {
+        return $this->private;
+    }
+
+    public function isWrapped(): bool
+    {
+        return $this->wrapped;
+    }
+
+    public function getWrappedAddresses(): array
+    {
+        return $this->wrappedAddresses;
+    }
+
+    public function setWrappedAddresses(array $wrappedAddresses): void
+    {
+        $this->wrappedAddresses = $wrappedAddresses;
     }
 }

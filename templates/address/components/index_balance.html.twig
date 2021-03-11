@@ -7,17 +7,17 @@
             <tbody>
             <tr>
                 <th width="33%"><label>Spendable</label></th>
-                <td class="text-right">{{ summary.spending.balance|stake_format }}</td>
+                <td class="text-right">{{ summary.spending.balance|nav }}</td>
                 <td class="text-right">{{ summary.spending.balance ? address.richList.spending|ordinal : '' }}</td>
             </tr>
             <tr>
                 <th width="33%"><label>Stakable</label></th>
-                <td class="text-right">{{ summary.staking.balance|stake_format }}</td>
+                <td class="text-right">{{ summary.staking.balance|nav }}</td>
                 <td class="text-right">{{ summary.staking.balance ? address.richList.staking|ordinal : '' }}</td>
             </tr>
             <tr>
                 <th width="33%"><label>Voting Weight</label></th>
-                <td class="text-right">{{ summary.voting.balance|stake_format }}</td>
+                <td class="text-right">{{ summary.voting.balance|nav }}</td>
                 <td class="text-right">{{ summary.voting.balance ? address.richList.voting|ordinal : '' }}</td>
             </tr>
             </tbody>

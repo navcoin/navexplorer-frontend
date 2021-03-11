@@ -4,9 +4,9 @@
     <thead>
         <tr>
             <th class="text-center" style="width:5%">Index</th>
-            <th style="width:55%">Address</th>
-            <th style="width: 20%">Previous Output</th>
-            <th style="width: 20%" class="text-right">Amount</th>
+            <th style="width:50%">Address</th>
+            <th style="width: 30%">Previous Output</th>
+            <th style="width: 15%" class="text-right">Amount</th>
         </tr>
     </thead>
     <tbody>
@@ -14,13 +14,17 @@
             <tr>
                 <td data-role="index" class="text-center">{{ input.index }}</td>
                 <td data-role="address">
-                    {%  for address in input.addresses %}
-                        <span class="break-word">
-                            <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
-                        </span>
+                    {% if input.wrapped %}
+                        {% for address in input.wrappedAddresses %}{{ address }}<br/>{% endfor %}
                     {% else %}
-                        xNav <small>Private Address</small>
-                    {% endfor %}
+                        {% for address in input.addresses %}
+                            <span class="break-word">
+                                <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
+                            </span>
+                        {% else %}
+                            Hidden
+                        {% endfor %}
+                    {% endif %}
                 </td>
                 <td data-role="previousOutput">
                     {% if input.previousOutput %}
@@ -37,7 +41,13 @@
                     {% endif %}
                 </td>
                 <td data-role="amount" class="text-right">
-                    {{ input.amount|stake_format }}
+                    {% if input.wrapped %}
+                        {{ input.amount|wnav }}
+                    {% elseif input.private %}
+                        {{ input.amount|xnav }}
+                    {% else %}
+                        {{ input.amount|nav }}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

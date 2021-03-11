@@ -75,6 +75,11 @@ class Transaction
      */
     private $private;
 
+    /**
+     * @var bool
+     */
+    private $wrapped;
+
     public function __construct(
         String $hash,
         int $height,
@@ -87,7 +92,8 @@ class Transaction
         string $raw,
         string $size,
         string $version,
-        bool $private
+        bool $private,
+        bool $wrapped
     ) {
         $this->hash = $hash;
         $this->height = $height;
@@ -101,6 +107,7 @@ class Transaction
         $this->size = $size;
         $this->version = $version;
         $this->private = $private;
+        $this->wrapped = $wrapped;
     }
 
     public function getId(): string
@@ -196,6 +203,11 @@ class Transaction
     public function isPrivate(): bool
     {
         return $this->private;
+    }
+
+    public function isWrapped(): bool
+    {
+        return $this->wrapped;
     }
 
     public function isCoinbase(): bool

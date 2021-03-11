@@ -19,9 +19,9 @@
                     </td>
                     <td>Spendable<br/>Stakable<br/>Voting Weight</td>
                     <td>
-                        {{ richListItem.spendable|stake_format(false, 2) }}<br/>
-                        {{ richListItem.stakable|stake_format(false, 2) }}<br/>
-                        {{ richListItem.votingWeight|stake_format(false, 2) }}
+                        {{ richListItem.spendable|nav(false, 2) }}<br/>
+                        {{ richListItem.stakable|nav(false, 2) }}<br/>
+                        {{ richListItem.votingWeight|nav(false, 2) }}
                     </td>
                     <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': richListItem.height}) }}">{{ richListItem.height }}</a></td>
                 </tr>

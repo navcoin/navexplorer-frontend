@@ -25,6 +25,6 @@ export default class NavNumberFormat {
             return false;
         }
 
-        return number + (isPrivate ? " xNav" : " NAV");
+        return number + (isPrivate ? " xNav" : " Nav");
     }
 }

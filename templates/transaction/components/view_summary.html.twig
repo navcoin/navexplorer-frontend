@@ -17,27 +17,27 @@
                 <tr>
                     <th>Input</th>
                     <td class="text-right">
-                        {{ transaction.inputs.value|stake_format }}
+                        {{ transaction.inputs.value|nav }}
                     </td>
                 </tr>
                 <tr>
                     <th>Output</th>
                     <td class="text-right">
-                        {{ transaction.outputs.value|stake_format }}
+                        {{ transaction.outputs.value|nav }}
                     </td>
                 </tr>
                 {% if transaction.staking %}
                     <tr>
                         <th>Stake&nbsp;Reward</th>
                         <td class="text-right">
-                            {{ transaction.stake|stake_format }}
+                            {{ transaction.stake|nav }}
                         </td>
                     </tr>
                 {% endif %}
                 <tr>
                     <th>Fees Paid</th>
                     <td class="text-right">
-                        {{ transaction.fees|stake_format }}
+                        {{ transaction.fees|nav }}
                     </td>
                 </tr>
             </tbody>

@@ -27,7 +27,8 @@ class TransactionMapper extends BaseMapper
             array_key_exists('raw', $data)  && $data['raw'] ? $data['raw'] : '',
             $data['size'],
             $data['version'],
-            $this->getData("private", $data, false)
+            $this->getData("private", $data, false),
+            $this->getData("wrapped", $data, false)
         );
 
         return $transaction;
@@ -38,16 +39,20 @@ class TransactionMapper extends BaseMapper
         $inputs = new Inputs();
 
         foreach ($data as $key => $inputData) {
-            $inputs->add(
-                new Input(
-                    array_key_exists('addresses', $inputData) ? $inputData['addresses'] : (array_key_exists('address', $inputData) ? [$inputData['address']] : []),
-                    $this->getData('value', $inputData, 0),
-                    $key,
-                    $this->getData('txid', $inputData, ''),
-                    $this->getData('vout', $inputData),
-                    $this->hasData('previousOutput', $inputData) && $this->hasData('height', $inputData['previousOutput']) ? $inputData['previousOutput']['height'] : null
-                )
+            $input = new Input(
+                array_key_exists('addresses', $inputData) ? $inputData['addresses'] : (array_key_exists('address', $inputData) ? [$inputData['address']] : []),
+                $this->getData('value', $inputData, 0),
+                $key,
+                $this->getData('txid', $inputData, ''),
+                $this->getData('vout', $inputData),
+                $this->hasData('previousOutput', $inputData) && $this->hasData('height', $inputData['previousOutput']) ? $inputData['previousOutput']['height'] : null,
+                $this->getData('private', $inputData, false),
+                $this->getData('wrapped', $inputData, false)
             );
+            if ($input->isWrapped()) {
+                $input->setWrappedAddresses($this->getData('wrappedAddresses', $inputData, []));
+            }
+            $inputs->add($input);
         }
 
         return $inputs;
@@ -75,7 +80,12 @@ class TransactionMapper extends BaseMapper
                     if ($this->hasData('hash', $outputData['scriptPubKey'])) {
                         $output->setHash($this->getData('hash', $outputData['scriptPubKey'], null));
                     }
-                    if ($this->hasData('asm', $outputData['scriptPubKey'])) {
+                    if ($this->hasData("wrapped", $outputData)) {
+                        $output->setWrapped($this->getData("wrapped", $outputData));
+                        $output->setWrappedAddresses($this->getData('wrappedAddresses', $outputData, []));
+                    }
+
+                    if (!$output->isWrapped() && $this->hasData('asm', $outputData['scriptPubKey'])) {
                         if ($outputData['scriptPubKey']['asm'] == "OP_RETURN" && $outputData['scriptPubKey']['type'] == "nulldata") {
                             $output->setPrivateFee(true);
                         }

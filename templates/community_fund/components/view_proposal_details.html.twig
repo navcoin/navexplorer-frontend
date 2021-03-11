@@ -47,16 +47,16 @@
         <table class="table table-striped table-nav table-second">
             <tbody>
             <tr>
-                <th>NAV&nbsp;Requested</th>
-                <td class="text-right break-word">{{ proposal.requestedAmount|stake_format }}</td>
+                <th>Nav&nbsp;Requested</th>
+                <td class="text-right break-word">{{ proposal.requestedAmount|nav }}</td>
             </tr>
             <tr>
-                <th>NAV&nbsp;Paid</th>
-                <td class="text-right break-word">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</td>
+                <th>Nav&nbsp;Paid</th>
+                <td class="text-right break-word">{{ (proposal.requestedAmount - proposal.notYetPaid)|nav }}</td>
             </tr>
             <tr>
                 <th>Fee</th>
-                <td class="text-right break-word">{{ proposal.userPaidFee|stake_format }}</td>
+                <td class="text-right break-word">{{ proposal.userPaidFee|nav }}</td>
             </tr>
             <tr>
                 <th>Status</th>

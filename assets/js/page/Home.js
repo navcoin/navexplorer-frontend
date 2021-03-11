@@ -297,9 +297,10 @@ class PageHome {
             $('#ticker-btc').html(response.data.btc.toFixed(8) + '&nbsp;BTC');
             $('#ticker-usd').html('$&nbsp;'+response.data.usd.toFixed(6));
             $('#market-cap').html('$&nbsp;'+numberFormatter.format(response.data.marketCap));
-            $('#circulating-supply  ').html(numberFormatter.formatNav(response.data.circulatingSupply, false));
-            $('#public-supply').html(numberFormatter.formatNav(response.data.publicSupply, false));
-            $('#private-supply').html(numberFormatter.formatNav(response.data.privateSupply, false, true));
+            $('#market-cap-rank').html('(#'+numberFormatter.format(response.data.marketCapRank)+')');
+            $('#public-supply').html(numberFormatter.format(response.data.publicSupply, false) + ' Nav');
+            $('#private-supply').html(numberFormatter.format(response.data.privateSupply, false) + ' xNav');
+            $('#wrapped-supply').html(numberFormatter.format(response.data.wrappedSupply, false) + ' wNav');
         });
     }
 

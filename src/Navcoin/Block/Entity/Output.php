@@ -31,6 +31,12 @@ class Output
     /** @var bool */
     private $privateFee;
 
+    /** @var bool */
+    private $wrapped;
+
+    /** @var string[] */
+    private $wrappedAddresses;
+
     public function __construct(string $type, int $index, float $amount, array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock)
     {
         $this->type = $type;
@@ -110,6 +116,26 @@ class Output
     public function setPrivateFee(bool $privateFee): void
     {
         $this->privateFee = $privateFee;
+    }
+
+    public function isWrapped(): bool
+    {
+        return $this->wrapped;
+    }
+
+    public function setWrapped(bool $wrapped): void
+    {
+        $this->wrapped = $wrapped;
+    }
+
+    public function getWrappedAddresses(): array
+    {
+        return $this->wrappedAddresses;
+    }
+
+    public function setWrappedAddresses(array $wrappedAddresses): void
+    {
+        $this->wrappedAddresses = $wrappedAddresses;
     }
 
     public function isCommunityFund(): bool
