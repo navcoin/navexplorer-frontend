@@ -2,8 +2,6 @@
 
 namespace App\Navcoin\Block\Entity;
 
-use JMS\Serializer\Annotation\Accessor;
-
 class Transaction
 {
     /**
@@ -38,15 +36,11 @@ class Transaction
 
     /**
      * @var Inputs
-     *
-     * @Accessor(getter="getInputElements")
      */
     private $inputs;
 
     /**
      * @var Outputs
-     *
-     * @Accessor(getter="getOutputElements")
      */
     private $outputs;
 
@@ -108,11 +102,6 @@ class Transaction
         $this->version = $version;
         $this->private = $private;
         $this->wrapped = $wrapped;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
     }
 
     public function getHash(): string
@@ -195,7 +184,7 @@ class Transaction
         return $this->version;
     }
 
-    public function getProposalVotes(): ProposalVotes
+    public function getProposalVotes(): ?ProposalVotes
     {
         return $this->proposalVotes;
     }

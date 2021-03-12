@@ -5,17 +5,15 @@ namespace App\Controller;
 use App\Exception\TransactionNotFoundException;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\TransactionApi;
-use App\Navcoin\Block\Entity\Output;
-use App\Navcoin\Block\Entity\Transaction;
 use Exception;
-use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
-class TransactionController extends Controller
+class TransactionController extends AbstractController
 {
     /** @var int */
     private $pageSize = 10;
@@ -51,7 +49,9 @@ class TransactionController extends Controller
             $request->get('page', 1)
         );
 
-        return new Response($serializer->serialize($transactions, 'json'));
+        return new Response($serializer->serialize($transactions, 'json'), 200, [
+            'paginator' => $serializer->serialize($transactions->getPaginator(), 'json')
+        ]);
     }
 
     /**

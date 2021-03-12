@@ -12,13 +12,13 @@ use App\Navcoin\Address\Api\SummaryApi;
 use App\Navcoin\Address\Api\TransactionApi;
 use App\Navcoin\Address\Entity\StakingGroups;
 use App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter;
-use JMS\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
-class AddressController extends Controller
+class AddressController extends AbstractController
 {
     /** @var AddressApi */
     private $addressApi;
@@ -85,7 +85,9 @@ class AddressController extends Controller
             $request->get('type')
         );
 
-        return new Response($serializer->serialize($history, 'json'));
+        return new Response($serializer->serialize($history, 'json'), 200, [
+            'paginator' => $serializer->serialize($history->getPaginator(), 'json'),
+    ]);
     }
 
     private function getStakingReport(string $hash, string $period): ?StakingGroups

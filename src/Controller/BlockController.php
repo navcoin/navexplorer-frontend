@@ -6,13 +6,13 @@ use App\Exception\BlockNotFoundException;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\TransactionApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use JMS\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
-class BlockController extends Controller
+class BlockController extends AbstractController
 {
     /** @var int */
     private $pageSize = 10;
@@ -48,7 +48,9 @@ class BlockController extends Controller
             $request->get('page', 1)
         );
 
-        return new Response($serializer->serialize($blocks, 'json'));
+        return new Response($serializer->serialize($blocks, 'json'), 200, [
+            'paginator' => $serializer->serialize($blocks->getPaginator(), 'json'),
+        ]);
     }
 
     /**
@@ -80,6 +82,8 @@ class BlockController extends Controller
     {
         $transactions = $this->transactionApi->getTransactionsForBlock($request->get('height'));
 
-        return new Response($serializer->serialize($transactions, 'json'));
+        return new Response($serializer->serialize($transactions, 'json'), 200, [
+            'paginator' => $serializer->serialize($transactions->getPaginator(), 'json'),
+        ]);
     }
 }

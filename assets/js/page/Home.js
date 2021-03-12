@@ -1,6 +1,6 @@
 import TableManager from "../services/TableManager";
 import NavNumberFormat from "../services/NavNumberFormat";
-import moment from 'moment/src/moment';
+import * as moment from 'moment';
 import axios from "axios";
 import Chart from "chart.js";
 import Distribution from "../services/Distribution";
@@ -32,7 +32,7 @@ class PageHome {
     }
 
     loadAddressGroupData(response) {
-        let elements = response.data.elements.reverse();
+        let elements = response.data.reverse();
 
         let start = []
         let end = []
@@ -333,7 +333,7 @@ class PageHome {
         $row.append($(document.createElement('td'))
             .attr('data-role', 'stakedBy')
             .attr('class', 'text-right')
-            .append('<a href="/address/'+data.staked_by+'">' + data.staked_by.substring(0, 12) + '...'+data.staked_by.slice(-4)+'</a>')
+            .append('<a href="/address/'+data.stakedBy+'">' + data.stakedBy.substring(0, 12) + '...'+data.stakedBy.slice(-4)+'</a>')
         );
 
         return $row;

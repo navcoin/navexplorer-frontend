@@ -21,7 +21,7 @@ export default class TransactionLoader {
     transactionHtml(data) {
         let self = this;
         let $transactionList = $(".transaction-list");
-        data.elements.forEach(function (tx) {
+        data.forEach(function (tx) {
             $transactionList.append(
                 '<div class="card card-nav">\n' +
                 '  <div class="card-header">' +
@@ -72,7 +72,6 @@ export default class TransactionLoader {
                     } else if (typeof input.addresses !== 'undefined') {
                         if (input.addresses.length === 0) {
                             address.html('n/a');
-                            console.log(input)
                         } else {
                             let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
                             address.append(a);

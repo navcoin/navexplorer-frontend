@@ -2,7 +2,7 @@ const $ = require('jquery');
 
 import TableManager from "../services/TableManager";
 import NavNumberFormat from "../services/NavNumberFormat";
-import moment from 'moment/src/moment';
+import * as moment from 'moment';
 import Cookies from 'js-cookie'
 
 class AddressIndexPage {
@@ -90,8 +90,8 @@ class AddressIndexPage {
 
         $row.append($(document.createElement('td'))
             .attr('data-role', 'transaction')
-            .append('<a href="/tx/'+data.tx_id+'" class="break-word d-none d-lg-inline">' + data.tx_id.substr(0, 15) + '...</a>')
-            .append('<a href="/tx/'+data.tx_id+'" class="break-word d-sm-inline d-md-inline d-lg-none">' + data.tx_id.substr(0, 15) + '...</a>')
+            .append('<a href="/tx/'+data.txId+'" class="break-word d-none d-lg-inline">' + data.txId.substr(0, 15) + '...</a>')
+            .append('<a href="/tx/'+data.txId+'" class="break-word d-sm-inline d-md-inline d-lg-none">' + data.txId.substr(0, 15) + '...</a>')
             .append('<div><small>Block:</small> <a href="/block/'+data.height+'">'+numberFormatter.format(data.height)+'</a></small></div>')
         );
 

@@ -2,7 +2,7 @@ const $ = require('jquery');
 
 import TableManager from "../services/TableManager";
 import NavNumberFormat from "../services/NavNumberFormat";
-import moment from 'moment/src/moment';
+import * as moment from 'moment';
 
 class BlockIndexPage {
     constructor() {
@@ -38,8 +38,8 @@ class BlockIndexPage {
         );
 
         let stakedBy = 'N/A';
-        if (data.staked_by) {
-            stakedBy = '<a href="/address/' + data.staked_by + '" class="break-word">' + data.staked_by + '</a>';
+        if (data.stakedBy) {
+            stakedBy = '<a href="/address/' + data.stakedBy + '" class="break-word">' + data.stakedBy + '</a>';
         } else if (data.stake !== 0) {
             stakedBy = 'Private Address';
         }

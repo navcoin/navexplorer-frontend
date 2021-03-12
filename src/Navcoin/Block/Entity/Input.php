@@ -98,7 +98,7 @@ class Input
         return $this->wrapped;
     }
 
-    public function getWrappedAddresses(): array
+    public function getWrappedAddresses(): ?array
     {
         return $this->wrappedAddresses;
     }

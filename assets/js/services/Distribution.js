@@ -22,14 +22,12 @@ export default class Distribution {
             return;
         }
 
-        this.rawData = response.data;
-
-        if (typeof this.rawData.segments === "undefined") {
+        if (typeof response.data === "undefined") {
             return;
         }
 
-        this.buildChart(this.rawData.segments);
-        this.buildTable(this.rawData.segments);
+        this.buildChart(response.data);
+        this.buildTable(response.data);
     }
 
     buildChart(segments) {

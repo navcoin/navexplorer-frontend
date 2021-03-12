@@ -1,6 +1,6 @@
 const $ = require('jquery');
 
-import moment from 'moment/src/moment';
+import * as moment from 'moment';
 
 class Timezone {
     constructor() {

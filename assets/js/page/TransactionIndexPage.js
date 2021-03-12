@@ -3,7 +3,7 @@ const $ = require('jquery');
 
 import TableManager from "../services/TableManager";
 import NavNumberFormat from "../services/NavNumberFormat";
-import moment from 'moment/src/moment';
+import * as moment from 'moment';
 
 class PageTransaction {
     constructor() {

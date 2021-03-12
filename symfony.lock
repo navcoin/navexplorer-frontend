@@ -47,9 +47,6 @@
     "guzzlehttp/psr7": {
         "version": "1.4.2"
     },
-    "jean85/pretty-package-versions": {
-        "version": "1.2"
-    },
     "jms/metadata": {
         "version": "1.6.0"
     },
@@ -134,8 +131,14 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/event-dispatcher": {
+        "version": "1.0.0"
+    },
     "psr/http-client": {
         "version": "1.0.0"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
     },
     "psr/http-message": {
         "version": "1.0.1"
@@ -153,18 +156,6 @@
             "branch": "master",
             "version": "4.0",
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
-        }
-    },
-    "sentry/sentry": {
-        "version": "1.10.0"
-    },
-    "sentry/sentry-symfony": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "fa1a2dfc020798cd7076b5419596e72dca07047a"
         }
     },
     "symfony/asset": {
@@ -193,6 +184,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v3.4.6"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/dotenv": {
         "version": "v3.4.6"
@@ -243,7 +237,7 @@
         "version": "v3.4.6"
     },
     "symfony/mime": {
-        "version": "v5.0.2"
+        "version": "v5.0.11"
     },
     "symfony/monolog-bridge": {
         "version": "v3.4.11"
@@ -266,6 +260,9 @@
     "symfony/polyfill-intl-idn": {
         "version": "v1.13.1"
     },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.22.1"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.7.0"
     },
@@ -275,14 +272,26 @@
     "symfony/polyfill-php73": {
         "version": "v1.13.1"
     },
+    "symfony/polyfill-php80": {
+        "version": "v1.22.1"
+    },
     "symfony/process": {
-        "version": "v3.4.6"
+        "version": "v5.0.11"
     },
     "symfony/profiler-pack": {
-        "version": "v1.0.3"
+        "version": "v1.0.5"
     },
     "symfony/property-access": {
         "version": "v3.4.6"
+    },
+    "symfony/requirements-checker": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "02c6e4b9b117c39e8a23eab7f3840ef6e62293b9"
+        }
     },
     "symfony/routing": {
         "version": "3.3",
@@ -292,9 +301,6 @@
             "version": "3.3",
             "ref": "a249484db698d1a847a30291c8f732414ac47e25"
         }
-    },
-    "symfony/security-core": {
-        "version": "v3.4.18"
     },
     "symfony/serializer": {
         "version": "v3.4.6"
@@ -333,7 +339,12 @@
             "branch": "master",
             "version": "3.3",
             "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
-        }
+        },
+        "files": [
+            "config/packages/dev/web_profiler.yaml",
+            "config/packages/test/web_profiler.yaml",
+            "config/routes/dev/web_profiler.yaml"
+        ]
     },
     "symfony/web-server-bundle": {
         "version": "3.3",
@@ -341,8 +352,30 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
-            "ref": "c72d107d077f1654428edaed69415d0228c1aefe"
+            "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
         }
+    },
+    "symfony/webpack-encore-bundle": {
+        "version": "1.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.9",
+            "ref": "9399a0bfc6ee7a0c019f952bca46d6a6045dd451"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/bootstrap.js",
+            "assets/controllers.json",
+            "assets/controllers/hello_controller.js",
+            "assets/styles/app.css",
+            "config/packages/assets.yaml",
+            "config/packages/prod/webpack_encore.yaml",
+            "config/packages/test/webpack_encore.yaml",
+            "config/packages/webpack_encore.yaml",
+            "package.json",
+            "webpack.config.js"
+        ]
     },
     "symfony/webpack-encore-pack": {
         "version": "1.0",

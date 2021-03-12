@@ -31,24 +31,26 @@ export default class TableManager {
     }
 
     loadNextPage(dataUrl) {
+        console.log(dataUrl);
         axios.get(dataUrl).then(this.handleNextResponse.bind(this));
     }
 
     handleDefaultResponse(response) {
-        let elements = response.data.elements;
-        if (typeof elements === "undefined") {
+        let elements = response.data;
+
+        if (typeof response.headers.paginator === "undefined") {
             if (this.paginated === true) {
                 this.pagination.hide();
             }
             this.handleResponse(response.data);
         } else {
-            this.pagination.init(response.data);
-            this.handleResponse(elements, response.data.paginator);
+            this.pagination.init(JSON.parse(response.headers.paginator));
+            this.handleResponse(elements, JSON.parse(response.headers.paginator));
         }
     }
 
     handleNextResponse(response) {
-        let elements = response.data.elements;
+        let elements = response.data;
 
         if (typeof elements === "undefined") {
             if (this.paginated === true) {

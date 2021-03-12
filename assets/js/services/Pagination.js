@@ -21,16 +21,14 @@ export default class Pagination {
         }
     }
 
-    init(data) {
-        let paginator = data.paginator;
-
+    init(paginator) {
         this.state = {
             first: paginator.first,
             last: paginator.last,
-            page: paginator.current_page,
-            size: paginator.total_pages,
-            totalElements: paginator.total_elements,
-            totalPages: paginator.total_pages,
+            page: paginator.currentPage,
+            size: paginator.totalPages,
+            totalElements: paginator.totalElements,
+            totalPages: paginator.totalPages,
         }
 
         let lastPageSize = (this.state.totalElements % this.state.size);

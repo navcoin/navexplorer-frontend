@@ -2,13 +2,12 @@
 
 namespace App\Navcoin\Common\Entity;
 
-use JMS\Serializer\Annotation\Exclude;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 abstract class IteratorEntity implements \IteratorAggregate, IteratorEntityInterface
 {
     /**
      * @var string[]
-     * @Exclude()
      */
     protected $supportedTypes = [];
 
