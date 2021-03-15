@@ -8,7 +8,7 @@
 ###< symfony/framework-bundle ###
 docker/logs/nginx/*
 
-/bin
+!/bin/build
 !/bin/console
 ###> symfony/webpack-encore-bundle ###
 /node_modules/

@@ -1,7 +1,6 @@
 {
   "devDependencies": {
     "@symfony/webpack-encore": "^1.1.2",
-    "copy-webpack-plugin": "^8.0.0",
     "node-sass": "^4.8.1",
     "sass-loader": "^10.0.0"
   },
@@ -14,7 +13,6 @@
     "clamp-js-main": "^0.11.6",
     "core-js": "3",
     "d3": "^5.1.0",
-    "file-loader": "^6.2.0",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.1",
     "moment": "^2.22.0"
