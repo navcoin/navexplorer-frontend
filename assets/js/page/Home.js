@@ -3,7 +3,6 @@ import NavNumberFormat from "../services/NavNumberFormat";
 import * as moment from 'moment';
 import axios from "axios";
 import Chart from "chart.js";
-import Distribution from "../services/Distribution";
 
 const $ = require('jquery');
 

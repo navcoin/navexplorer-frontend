@@ -23,6 +23,9 @@ class Api
     /** @var Client */
     private $client;
 
+    /** @var LoggerInterface */
+    private $logger;
+
     /** @var \Http\Message\MessageFactory */
     private $messageFactory;
 
@@ -35,19 +38,22 @@ class Api
         'Content-Type' => 'application/json',
     ];
 
-    public function __construct()
+    public function __construct(LoggerInterface $logger)
     {
         $this->baseUrl = "https://api.coingecko.com/api/v3";
         $this->client = HttpClientDiscovery::find();
         $this->messageFactory = MessageFactoryDiscovery::find();
         $this->cache = new FilesystemAdapter();
+        $this->logger = $logger;
     }
 
     public function getMarketChart(string $vsCurrency, string $days): array
     {
         try {
             return $this->cache->get(sprintf('CoinGeko-MarketChart-%s-%s', $vsCurrency, $days), function(ItemInterface $item) use ($vsCurrency, $days) {
+                $this->logger->debug("CoinGecko API Request:", [$this->baseUrl.sprintf('/coins/nav-coin/market_chart?vs_currency=%s&days=%s', $vsCurrency, $days), $this->headers]);
                 $item->expiresAfter(60);
+
                 return $this->getJsonBody($this->get(sprintf('/coins/nav-coin/market_chart?vs_currency=%s&days=%s', $vsCurrency, $days)));
             });
         } catch (ServerRequestException $e) {
@@ -59,7 +65,9 @@ class Api
     {
         try {
             return $this->cache->get('CoinGecko-Ticker', function (ItemInterface $item) {
+                $this->logger->debug("CoinGecko API Request:", [$this->baseUrl.'/coins/nav-coin', $this->headers]);
                 $item->expiresAfter(60);
+
                 return $this->getJsonBody($this->get('/coins/nav-coin'));
             });
         } catch (ServerRequestException $e) {

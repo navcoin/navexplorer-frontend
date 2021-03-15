@@ -25,6 +25,9 @@ class Consultation
     /** @var Answer[] */
     private $answers;
 
+    /** @var [] */
+    private $rangeAnswers;
+
     /** @var int */
     private $min;
 
@@ -71,7 +74,6 @@ class Consultation
         string $question,
         int $support,
         ?int $abstain,
-        array $answers,
         int $min,
         int $max,
         int $votingCyclesFromCreation,
@@ -92,7 +94,6 @@ class Consultation
         $this->question = $question;
         $this->support = $support;
         $this->abstain = $abstain;
-        $this->answers = $answers;
         $this->min = $min;
         $this->max = $max;
         $this->votingCyclesFromCreation = $votingCyclesFromCreation;
@@ -138,9 +139,14 @@ class Consultation
         return $this->abstain;
     }
 
-    public function getAnswers(): array
+    public function getAnswers(): ?array
     {
         return $this->answers;
+    }
+
+    public function setAnswers(?array $answers): void
+    {
+        $this->answers = $answers;
     }
 
     public function getAnswer(string $hash): ?Answer
@@ -228,5 +234,20 @@ class Consultation
         }
 
         return null;
+    }
+
+    public function getRangeAnswers(): ?array
+    {
+        return $this->rangeAnswers;
+    }
+
+    public function setRangeAnswers(?array $rangeAnswers): void
+    {
+        $this->rangeAnswers = $rangeAnswers;
+    }
+
+    public function getTotalRangeAnswers(): int
+    {
+        return array_sum($this->rangeAnswers);
     }
 }
