@@ -119,6 +119,10 @@
             </div>
         </div>
 
-        {% include "dao/components/answers_list.html.twig" %}
+        {% if consultation.isARange %}
+            {% include "dao/components/answers_range.html.twig" %}
+        {% else %}
+            {% include "dao/components/answers_list.html.twig" %}
+        {% endif %}
     </div>
 {% endblock %}

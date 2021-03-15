@@ -1,0 +1,41 @@
+<h3>Answers</h3>
+
+<div class="row">
+    {% if consultation.rangeAnswers|length %}
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <table class="table table-striped margin-bottom">
+            <thead>
+                <tr>
+                    <th>Answer</th>
+                    <th class="text-center">Votes</th>
+                    <th class="text-center">% of Votes</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for answer, votes in consultation.rangeAnswers %}
+                {% set votePercent = (votes / consultation.totalRangeAnswers) * 100 %}
+                <tr>
+                    <th style="width:10%">{{ answer }}</th>
+                    <th style="width:10%" class="text-center">{{ votes }}</th>
+                    <th style="width:10%" class="text-center">{{ votePercent|number_format(2) }}%</th>
+                    <td>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ votePercent }}%" aria-valuenow="{{ votePercent }}" aria-valuemin="0" aria-valuemax="100">
+
+                    </div>
+                </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="col-md-12">
+            <hr/>
+            <p>There are no answers available</p>
+            <hr/>
+        </div>
+    {% endif %}
+</div>

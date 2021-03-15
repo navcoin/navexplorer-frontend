@@ -10,14 +10,13 @@ class ConsultationMapper extends BaseMapper
 {
     public function mapEntity(array $data): Consultation
     {
-        return new Consultation(
+        $consultation = new Consultation(
             $data['version'],
             $data['hash'],
             $data['blockHash'],
             $data['question'],
             $data['support'],
             $this->getData('abstain', $data),
-            $this->mapAnswers($data['answers']),
             $data['min'],
             $data['max'],
             $data['votingCyclesFromCreation'],
@@ -32,6 +31,15 @@ class ConsultationMapper extends BaseMapper
             $this->getData('height', $data),
             $this->getData('updatedOnBlock', $data)
         );
+
+        if ($consultation->IsARange()) {
+            ksort($data['rangeAnswers']);
+            $consultation->setRangeAnswers($this->getData('rangeAnswers', $data, []));
+        } else {
+            $consultation->setAnswers($this->mapAnswers($this->getData('answers', $data, [])));
+        }
+
+        return $consultation;
     }
 
     public function mapAnswer(array $data): Answer
