@@ -13,6 +13,7 @@ class DistributionApi extends NavcoinApi
     {
         try {
             $response = $this->getClient()->get('/distribution/total-supply');
+
             return $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             throw new DistributionException("Total supply could not be retrieved", 500, $e);

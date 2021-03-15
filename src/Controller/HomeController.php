@@ -54,7 +54,7 @@ class HomeController extends AbstractController
             $totalSupply = ['public' => 0, 'private' => 0];
         }
         
-        if ($this->getParameter('navcoin.network') != "MAINNET") {
+        if ($this->getParameter('navcoin.network') != "mainnet") {
             $ticker['market_data']['current_price']['btc'] = 0;
             $ticker['market_data']['current_price']['usd'] = 0;
         }

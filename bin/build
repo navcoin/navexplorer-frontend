@@ -10,10 +10,6 @@ fi
 
 echo "Using tag $tag"
 
-rm -rf node_modules
-rm -rf var/*
-rm -rf vendor/*
-
 export DOCKER_BUILDKIT=1
 
 docker build . -t navexplorer/frontend-php:$tag

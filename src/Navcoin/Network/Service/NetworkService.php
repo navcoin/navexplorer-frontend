@@ -14,11 +14,11 @@ class NetworkService
 
     public function isMainNet(): bool
     {
-        return $this->network == "MAINNET";
+        return $this->network == "mainnet";
     }
 
     public function isTestNet(): bool
     {
-        return $this->network == "TESTNET";
+        return $this->network == "testnet";
     }
 }
