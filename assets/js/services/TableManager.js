@@ -31,21 +31,23 @@ export default class TableManager {
     }
 
     loadNextPage(dataUrl) {
-        console.log(dataUrl);
         axios.get(dataUrl).then(this.handleNextResponse.bind(this));
     }
 
     handleDefaultResponse(response) {
-        let elements = response.data;
+        if (typeof response.headers['x-pagination'] !== "undefined") {
+            let paginationData = JSON.parse(response.headers['x-pagination']);
+            this.pagination.init(paginationData);
+            this.handleResponse(response.data, paginationData);
 
-        if (typeof response.headers.paginator === "undefined") {
+        } else if (typeof response.headers.paginator === "undefined") {
             if (this.paginated === true) {
                 this.pagination.hide();
             }
             this.handleResponse(response.data);
         } else {
             this.pagination.init(JSON.parse(response.headers.paginator));
-            this.handleResponse(elements, JSON.parse(response.headers.paginator));
+            this.handleResponse(response.data, JSON.parse(response.headers.paginator));
         }
     }
 
@@ -61,14 +63,14 @@ export default class TableManager {
         }
     }
 
-    handleResponse(elements, paginator) {
+    handleResponse(data, paginator) {
         this.emptyTable();
 
-        if (elements.length === 0) {
+        if (data.length === 0) {
             this.noResultsFound();
         }
 
-        elements.forEach(function (tx) {
+        data.forEach(function (tx) {
             this.table.append(this.rowCreatedCallback(tx, paginator));
         }.bind(this));
 

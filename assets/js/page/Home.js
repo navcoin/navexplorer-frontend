@@ -15,6 +15,7 @@ class PageHome {
 
         this.populateTicker();
         this.populateMarketChart();
+        this.populateCfund();
 
         this.tableManager = new TableManager('#blocks table', 'block', this.populateBlocks);
         this.tableManager = new TableManager('#txs table', 'transaction', this.populateTxs);
@@ -379,6 +380,16 @@ class PageHome {
         );
 
         return $row;
+    }
+
+    populateCfund() {
+        let numberFormatter = new NavNumberFormat();
+
+        axios.get("/community-fund/stats.json").then((response) => {
+            $('#cfund-available').html(numberFormatter.format(response.data.available, false) + '&nbsp;Nav');
+            $('#cfund-locked').html(numberFormatter.format(response.data.locked, false) + '&nbsp;Nav');
+            $('#cfund-spent').html(numberFormatter.format(response.data.paid, false) + '&nbsp;Nav');
+        });
     }
 }
 

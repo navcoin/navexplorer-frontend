@@ -45,6 +45,7 @@ class TransactionController extends AbstractController
     public function transactions(Request $request, SerializerInterface $serializer): Response
     {
         $transactions = $this->transactionApi->getTransactions(
+            $request->get('filters', []),
             $request->get('size', $this->pageSize),
             $request->get('page', 1)
         );

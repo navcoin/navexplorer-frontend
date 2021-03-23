@@ -4,6 +4,7 @@ namespace App\Navcoin\Block\Api;
 
 use App\Navcoin\Block\Entity\Transaction;
 use App\Navcoin\Block\Entity\Transactions;
+use App\Navcoin\Common\FilterQuery;
 use App\Exception\BlockNotFoundException;
 use App\Exception\ServerRequestException;
 use App\Exception\TransactionNotFoundException;
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TransactionApi extends NavcoinApi
 {
-    public function getTransaction(String $hash): Transaction
+    public function getTransaction(string $hash): Transaction
     {
         try {
             $response = $this->getClient()->get('/tx/' . $hash);
@@ -32,10 +33,10 @@ class TransactionApi extends NavcoinApi
         return $this->getMapper()->mapEntity($data);
     }
 
-    public function getRawTransaction(String $hash): String
+    public function getRawTransaction(string $hash): string
     {
         try {
-            $response = $this->getClient()->get('/tx/'.$hash.'/raw');
+            $response = $this->getClient()->get('/tx/' . $hash . '/raw');
             $data = $this->getClient()->getBody($response);
         } catch (ClientException $e) {
             switch ($e->getResponse()->getStatusCode()) {
@@ -49,10 +50,16 @@ class TransactionApi extends NavcoinApi
         return $data;
     }
 
-    public function getTransactions(int $size = 50, int $page = 1, $paginate = true): IteratorEntityInterface
+    public function getTransactions(array $filters, int $size = 50, int $page = 1, $paginate = true): IteratorEntityInterface
     {
+        $params = [
+            'filter' => FilterQuery::generate($filters),
+            'size' => $size,
+            'page' => $page,
+        ];
+
         try {
-            $response = $this->getClient()->get(sprintf('/tx?size=%d&page=%d', $size, $page));
+            $response = $this->getClient()->get('/tx?'. http_build_query($params));
             $data = $this->getClient()->getJsonBody($response);
         } catch (ClientException $e) {
             return new Transactions();

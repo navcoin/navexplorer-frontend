@@ -1,16 +1,30 @@
 <div id="transaction-list">
     <h1>Transactions</h1>
 
-    <table class="table table-striped table-adaptive table-nav" data-url="{{ path('app_transaction_transactions') }}">
+    <div class="table-buttons">
+        <div class="btn btn-xs btn-info">All</div>
+        <div class="btn btn-xs btn-secondary">Coinbase</div>
+        <div class="btn btn-xs btn-secondary">Staking</div>
+        <div class="btn btn-xs btn-secondary">Transfer</div>
+        <div class="btn btn-xs btn-secondary">Private</div>
+    </div>
+
+    <div class="table-right">
+        <div class="table-label">21321323 total</div>
+    </div>
+
+    <table class="table table-striped table-adaptive table-nav">
         <caption>
             <div class="table-pagination"></div>
         </caption>
         <thead>
             <tr>
+                <th>&nbsp;</th>
                 <th>Hash</th>
+                <th>Age</th>
                 <th>Height</th>
-                <th>Date/Time</th>
-                <th class="text-right">Amount</th>
+                <th>Value</th>
+                <th>Fee</th>
             </tr>
         </thead>
         <tbody>

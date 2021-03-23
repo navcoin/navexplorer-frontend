@@ -13,7 +13,9 @@ use App\Navcoin\Dao\Exception\AnswerNotFound;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class DaoController extends AbstractController
 {
@@ -135,6 +137,14 @@ class DaoController extends AbstractController
             'consultation' => $consultation,
             'consensus' => $consensusParameter,
         ];
+    }
+
+
+    /**
+     * @Route("/community-fund/stats.json")
+     */
+    public function statsAction(SerializerInterface $serializer) {
+        return new Response($serializer->serialize($this->proposalApi->getStats(), 'json'));
     }
 
 

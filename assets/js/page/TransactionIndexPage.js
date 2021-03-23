@@ -1,15 +1,30 @@
 const $ = require('jquery');
 
-
-import TableManager from "../services/TableManager";
 import NavNumberFormat from "../services/NavNumberFormat";
+import ExplorerApi from "../services/ExplorerApi";
 import * as moment from 'moment';
 
-class PageTransaction {
+class TransactionIndexPage {
     constructor() {
-        console.log("Transaction Index Page");
+        this.table = $('#transaction-list table');
 
-        this.tableManager = new TableManager('#transaction-list table', 'transactions', this.createTableRow);
+        this.numberFormatter = new NavNumberFormat();
+        this.explorerApi = new ExplorerApi();
+        this.explorerApi.getTransactions({
+            sort: [
+                {txheight: "desc"},
+                {index: "asc"},
+            ],
+        }, this.handleData.bind(this))
+    }
+
+    handleData(data) {
+        this.emptyTable()
+        data.elements.forEach(this.createTableRow, this);
+    }
+
+    emptyTable() {
+        this.table.find('tbody').empty();
     }
 
     createTableRow(data) {
@@ -19,13 +34,13 @@ class PageTransaction {
         $row.attr('data-id', data.id);
 
         $row.append($(document.createElement('td'))
-            .attr('data-role', 'hash')
-            .append('<a href="/tx/' + data.hash + '" class="break-word">' + data.hash.substring(20) + '...</a>')
+            .attr('data-role', 'type')
+            .append(data.type)
         );
 
         $row.append($(document.createElement('td'))
-            .attr('data-role', 'height')
-            .append('<a href="/block/'+ data.height + '">'+ data.height + '</a>')
+            .attr('data-role', 'hash')
+            .append('<a href="/tx/' + data.hash + '" class="break-word">' + data.hash.substring(20) + '...</a>')
         );
 
         $row.append($(document.createElement('td'))
@@ -33,31 +48,38 @@ class PageTransaction {
             .append(moment(data.time).utc().format('YYYY-MM-DD[,] H:mm:ss'))
         );
 
-        if (data.stake) {
+        $row.append($(document.createElement('td'))
+            .attr('data-role', 'height')
+            .append('<a href="/block/'+ data.height + '">'+ data.height + '</a>')
+        );
+
+        if (data.type == "staking") {
             $row.append($(document.createElement('td'))
-                .addClass("text-right")
                 .attr('data-role', 'amount')
-                .append('<span class="badge badge-info badge-staking">Staking</span>')
-                .append(numberFormatter.format(data.stake) + '&nbsp;NAV')
+                .append(numberFormatter.format(data.stake/100000000) + '&nbsp;Nav')
             );
         } else {
             let amount = 0;
-            data.outputs.forEach(function (output) {
-                amount += output.amount;
+            data.vout.forEach(function (output) {
+                amount += output.valuesat;
             });
             $row.append($(document.createElement('td'))
-                .addClass("text-right")
                 .attr('data-role', 'amount')
-                .append(numberFormatter.format(amount) + '&nbsp;NAV')
+                .append(numberFormatter.format(amount) + '&nbsp;Nav')
             );
         }
 
-        return $row;
+        $row.append($(document.createElement('td'))
+            .attr('data-role', 'fees')
+            .append(numberFormatter.format(data.fees) + '&nbsp;Nav')
+        );
+
+        this.table.append($row)
     }
 }
 
 $(function() {
     if ($('body').is('.page-transaction-index')) {
-        new PageTransaction();
+        new TransactionIndexPage();
     }
 });

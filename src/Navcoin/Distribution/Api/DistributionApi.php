@@ -18,6 +18,7 @@ class DistributionApi extends NavcoinApi
             throw new DistributionException("Total supply could not be retrieved", 500, $e);
         }
     }
+
     public function getWealth(String $groups = null): Distribution
     {
         try {

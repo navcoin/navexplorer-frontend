@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
+const Dotenv = require('dotenv-webpack');
 
 Encore
     // the project directory where compiled assets will be stored
@@ -18,6 +19,15 @@ Encore
     // uncomment if you use Sass/SCSS files
     .enableSassLoader(function(options) {}, {
         resolveUrlLoader: false
+    })
+
+    .configureDefinePlugin(options => {
+        let dotenv = new Dotenv({
+            path: "./.env",
+        })
+        let vars = dotenv.gatherVariables();
+
+        options['process.env'].EXPLORER_API = JSON.stringify(vars["BACKEND_URI"]);
     })
 
     // uncomment for legacy applications that require $/jQuery as a global variable

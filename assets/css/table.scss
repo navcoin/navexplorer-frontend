@@ -226,3 +226,21 @@
 .caption-top {
   padding-bottom: 0;
 }
+
+.table-right {
+  float:right;
+  margin-bottom: 0.60rem;
+}
+
+.table-label {
+  color: $white;
+  background-color: $purple;
+  border-color: $dark-purple;
+
+  text-transform: inherit;
+  font-size: 0.80rem;
+  font-weight: normal;
+  padding: 0.1rem 0.60rem;
+  margin-left: 0.30rem;
+  line-height: 22px;
+}

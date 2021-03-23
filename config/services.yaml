@@ -2,6 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     navcoin.network: '%env(NETWORK)%'
+    explorer.api.url: '%env(BACKEND_URI)%'
     navcoin.base_uri: '%env(BACKEND_URI)%'
 
 services:
