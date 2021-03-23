@@ -15,7 +15,7 @@
         <link rel="shortcut icon" href="/images/favicon-1.png">
         <link rel="apple-touch-icon-precomposed" href="/images/nav-square.jpg">
     </head>
-    <body class="{% block page %}{% endblock %}">
+    <body class="{% if network == 'testnet' %}testnet {% endif %}{% block page %}{% endblock %}">
         {% block header %}
             {% include "components/header.html.twig" %}
         {% endblock %}

@@ -9,27 +9,22 @@ header {
   }
 
   a, a:hover {
-    color: $light-blue;
+    color: $dark-purple;
     text-decoration: none;
   }
 
   h1 {
-    font-size: 4.4em;
+    text-transform: inherit;
+    font-size: 3.4em;
     margin-top: 0;
     margin-bottom: 12px;
     padding: 0.5rem;
 
     @media (min-width: 576px) {
-      padding: 14px 0 2px 210px;
-
-      span {
-        display: none;
-      }
-
-      background: url("../images/logo.png") 0 62% no-repeat;
-      background-size: 206px 46px;
+      padding: 14px 0 2px 0;
     }
   }
+
 
   .navbar-dark .navbar-nav {
     .nav-item {
@@ -73,7 +68,7 @@ header {
   font-size: 14px;
   background-color: $blue;
   color: $white;
-  padding: 0.5rem;
+  padding: 0.3rem;
   text-align: center;
 }
 
@@ -83,5 +78,13 @@ header {
   }
   .fa-search:before {
     content: "\f002";
+  }
+}
+
+.testnet {
+  header {
+    h1 {
+      padding-top: 40px;
+    }
   }
 }
