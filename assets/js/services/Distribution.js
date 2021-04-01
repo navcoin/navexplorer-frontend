@@ -2,7 +2,7 @@ const $ = require('jquery');
 
 import axios from "axios";
 import * as d3 from "d3";
-import NavNumberFormat from "../services/NavNumberFormat";
+import NumberFormat from "./NumberFormat";
 
 export default class Distribution {
     constructor(target, dataUrl) {
@@ -31,11 +31,10 @@ export default class Distribution {
     }
 
     buildChart(segments) {
-        let navNumberFormat = new NavNumberFormat();
         let excluded = 0
         segments.forEach(function (segment) {
             this.dataSet.push({
-                'label': segment.group ? 'Top ' + segment.group + ' (' + segment.percentage + '%) - ' + navNumberFormat.formatNav(segment.balance, false) : 'All - ' + navNumberFormat.formatNav(segment.balance, false),
+                'label': segment.group ? 'Top ' + segment.group + ' (' + segment.percentage + '%) - ' + NumberFormat.formatNav(segment.balance, false) : 'All - ' + NumberFormat.formatNav(segment.balance, false),
                 'count': segment.balance - excluded,
             });
             excluded = segment.balance;
@@ -61,7 +60,7 @@ export default class Distribution {
             .value(function(d) { return d.count; })
             .sort(null);
 
-        let path = svg.selectAll('path')
+        svg.selectAll('path')
             .data(pie(this.dataSet))
             .enter()
             .append('path')
@@ -72,8 +71,6 @@ export default class Distribution {
     }
 
     buildTable(segments) {
-        let numberFormatter = new NavNumberFormat();
-
         let $table = $(this.target + " table");
         let $tablebody = $table.find("tbody").empty();
         let colors = this.colors;
@@ -87,16 +84,16 @@ export default class Distribution {
             );
 
             $row.append($(document.createElement('td'))
-                .append(segment.group ? numberFormatter.format(segment.group) : 'All')
+                .append(segment.group ? NumberFormat.format(segment.group) : 'All')
             );
 
             $row.append($(document.createElement('td'))
-                .append(numberFormatter.formatNav(segment.balance, false))
+                .append(NumberFormat.formatNav(segment.balance, false))
             );
 
             $row.append($(document.createElement('td'))
                 .attr('class', 'text-center')
-                .append(numberFormatter.format(segment.percentage, false) + '%')
+                .append(NumberFormat.format(segment.percentage, false) + '%')
             );
             $tablebody.append($row);
         });

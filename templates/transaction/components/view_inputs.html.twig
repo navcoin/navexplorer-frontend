@@ -4,20 +4,31 @@
     <thead>
         <tr>
             <th class="text-center" style="width:5%">Index</th>
-            <th style="width:50%">Address</th>
+            <th style="width:10%">Type</th>
+            <th style="width:40%">Address</th>
             <th style="width: 30%">Previous Output</th>
             <th style="width: 15%" class="text-right">Amount</th>
         </tr>
     </thead>
     <tbody>
-        {% for input in transaction.inputs %}
+        {% for vin in transaction.vins.elements %}
             <tr>
-                <td data-role="index" class="text-center">{{ input.index }}</td>
+                <td data-role="index" class="text-center">{{ vin.vout }}</td>
+                <td data-role="type" >
+                    {% if vin.isMultiSig %} MultiSig
+                    {% elseif vin.isWrapped %} Wrapped
+                    {% elseif vin.isPrivate %} Private
+{#                    {% elseif vin.isPrivateFee %} Private Fee#}
+                    {% elseif vin.previousOutput and vin.previousOutput.type == "pubkey" %} PubKey
+                    {% elseif vin.previousOutput and vin.previousOutput.type == "pubkeyhash" %} PubKeyHash
+                    {% elseif vin.previousOutput and vin.previousOutput.type =="nonstandard" %} NonStandard
+                    {% endif %}
+                </td>
                 <td data-role="address">
-                    {% if input.wrapped %}
-                        {% for address in input.wrappedAddresses %}{{ address }}<br/>{% endfor %}
+                    {% if vin.previousOutput.multiSig %}
+                        {% for address in vin.previousOutput.multisig.signatures %}{{ address }}<br/>{% endfor %}
                     {% else %}
-                        {% for address in input.addresses %}
+                        {% for address in vin.addresses %}
                             <span class="break-word">
                                 <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                             </span>
@@ -27,13 +38,13 @@
                     {% endif %}
                 </td>
                 <td data-role="previousOutput">
-                    {% if input.previousOutput %}
+                    {% if vin.previousOutput %}
                         <span style="white-space: nowrap">
-                            <a href="{{ path('app_transaction_view', {'hash': input.previousOutput}) }}">
-                                {{ input.previousOutput[0:10] }}...{{ input.previousOutput[input.previousOutput|length-4:] }}:{{ input.previousOutputIndex }}
+                            <a href="{{ path('app_transaction_view', {'hash': vin.txid}) }}">
+                                {{ vin.txid[0:10] }}...{{ vin.txid[vin.txid|length-4:] }}:{{ vin.vout }}
                             </a>
-                            {% if input.previousOutputHeight %}
-                                <small>in <a href="{{ path('app_block_view', {'height': input.previousOutputHeight}) }}">{{ input.previousOutputHeight }}</a></small>
+                            {% if vin.previousOutput.height %}
+                                <small>in <a href="{{ path('app_block_view', {'height': vin.previousOutput.height}) }}">{{ vin.previousOutput.height }}</a></small>
                             {% endif %}
                         </span>
                     {% else %}
@@ -41,12 +52,12 @@
                     {% endif %}
                 </td>
                 <td data-role="amount" class="text-right">
-                    {% if input.wrapped %}
-                        {{ input.amount|wnav }}
-                    {% elseif input.private %}
-                        {{ input.amount|xnav }}
+                    {% if vin.previousOutput.wrapped %}
+                        {{ vin.value|wnav }}
+                    {% elseif vin.previousOutput.private %}
+                        {{ vin.value|xnav }}
                     {% else %}
-                        {{ input.amount|nav }}
+                        {{ vin.value|nav }}
                     {% endif %}
                 </td>
             </tr>

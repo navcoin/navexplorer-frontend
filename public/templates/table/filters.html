@@ -1,0 +1,5 @@
+{% for item in data %}
+    {% for filter in item.filters %}
+        <div class="btn btn-xs {{ "btn-info" if filter.active else "btn-secondary" }} table-filter" data-field="{{item.field}}">{{ filter.name }}</div>
+    {% endfor %}
+{% endfor %}

@@ -52,14 +52,14 @@ class AddressController extends AbstractController
      */
     public function index(Request $request, String $hash): Response
     {
-        try {
+//        try {
             $address = $this->addressApi->getAddress($hash);
             $summary = $this->summaryApi->getSummary($hash);
-        } catch (AddressNotFoundException $e) {
-            return $this->render('address/not_found.html.twig', ['hash' => $hash]);
-        } catch (AddressInvalidException $e) {
-            return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
-        }
+//        } catch (AddressNotFoundException $e) {
+//            return $this->render('address/not_found.html.twig', ['hash' => $hash]);
+//        } catch (AddressInvalidException $e) {
+//            return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
+//        }
 
         $period = $request->get('period', "daily");
 

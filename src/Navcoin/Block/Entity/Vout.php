@@ -2,7 +2,7 @@
 
 namespace App\Navcoin\Block\Entity;
 
-class Output
+class Vout
 {
     /** @var string */
     private $type;
@@ -30,6 +30,9 @@ class Output
 
     /** @var bool */
     private $privateFee;
+
+    /** @var MultiSig */
+    private $multiSig;
 
     /** @var bool */
     private $wrapped;
@@ -116,6 +119,21 @@ class Output
     public function setPrivateFee(bool $privateFee): void
     {
         $this->privateFee = $privateFee;
+    }
+
+    public function isMultiSig(): bool
+    {
+        return $this->multiSig != null;
+    }
+
+    public function getMultiSig(): ?MultiSig
+    {
+        return $this->multiSig;
+    }
+
+    public function setMultiSig(MultiSig $multiSig): void
+    {
+        $this->multiSig = $multiSig;
     }
 
     public function isWrapped(): bool

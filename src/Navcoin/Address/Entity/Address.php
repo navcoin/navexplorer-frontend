@@ -38,7 +38,8 @@ class Address
         float $votingWeight,
         DateTime $createdTime,
         int $createdBlock,
-        RichList $richList
+        RichList $richList,
+        ?MultiSig $multiSig
     ) {
         $this->hash = $hash;
         $this->height = $height;
@@ -48,6 +49,7 @@ class Address
         $this->createdTime = $createdTime;
         $this->createdBlock = $createdBlock;
         $this->richList = $richList;
+        $this->multiSig = $multiSig;
     }
 
     public function getHash(): string
@@ -88,5 +90,15 @@ class Address
     public function getRichList(): RichList
     {
         return $this->richList;
+    }
+
+    public function isMultiSig(): bool
+    {
+        return $this->multiSig != null;
+    }
+
+    public function getMultiSig(): MultiSig
+    {
+        return $this->multiSig;
     }
 }

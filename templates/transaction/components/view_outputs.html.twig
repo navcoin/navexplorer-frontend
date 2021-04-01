@@ -5,54 +5,71 @@
         <thead>
             <tr>
                 <th style="width: 5%" class="text-center">Index</th>
-                <th style="width: 50%">Address</th>
+                <th style="width: 10%">Type</th>
+                <th style="width: 40%">Address</th>
                 <th style="width: 30%">Redeemed&nbsp;In</th>
                 <th style="width: 15%" class="text-right">Amount</th>
             </tr>
         </thead>
         <tbody>
-            {% for key, output in transaction.outputs %}
+            {% for key, vout in transaction.vouts %}
                 <tr>
-                    <td data-role="index" class="text-center">{{ output.index }}</td>
+                    <td data-role="index" class="text-center">{{ vout.index }}</td>
+                    <td data-role="type">
+                        {% if vout.isMultiSig %} MultiSig ({{ vout.multisig.required }}/{{ vout.multisig.total }})
+                        {% elseif vout.isWrapped %} Wrapped
+                        {% elseif vout.isPrivate %} Private
+                        {% elseif vout.isPrivateFee %} Private Fee
+                        {% elseif vout.type == "PUBKEY" %} PubKey
+                        {% elseif vout.type == "PUBKEYHASH" %} PubKeyHash
+                        {% elseif vout.type == "NONSTANDARD" %} NonStandard
+                        {% endif %}
+                    </td>
                     <td data-role="address">
-                        {%  for address in output.addresses %}
+                        {%  for address in vout.addresses %}
                             <span class="break-word">
                                 <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                             </span>
                         {% else %}
-                            {% if output.isWrapped %}
-                                {% for address in output.wrappedAddresses %}{{ address }}<br/>{% endfor %}
-                            {% elseif output.isPrivate %} Hidden
-                            {% elseif output.isPrivateFee %}
+                            {% if vout.isMultiSig %}
+                                <span class="no-break">
+                                    <a class="break-word" href="{{ path('app_address_index', { 'hash': vout.multisig.key }) }}">{{ vout.multisig.hash }}</a>
+                                </span>
+                            {% elseif vout.isWrapped %}
+                                {% for address in vout.wrappedAddresses %}{{ address }}<br/>{% endfor %}
+                            {% elseif vout.isPrivate %} Hidden
+                            {% elseif vout.isPrivateFee %}
                                 <a href="{{ path('app_address_index', { 'hash': block.stakedBy }) }}">{{ block.stakedBy }}</a>
+                            {% elseif vout.type == "NONSTANDARD" %}
+                                NonStandard
                             {% else %} n/a
                             {% endif %}
                         {% endfor %}
                     </td>
                     <td data-role="redeemedIn">
-                        {% if output.redeemedInTransaction and output.redeemedInBlock %}
+                        {% if vout.redeemedInTransaction and vout.redeemedInBlock %}
                             <span style="white-space: nowrap">
-                                <a href="{{ path('app_transaction_view', {'hash': output.redeemedInTransaction}) }}">
-                                    {{ output.redeemedInTransaction[0:20] }}...{{ output.redeemedInTransaction[output.redeemedInTransaction|length-4:] }}
+                                <a href="{{ path('app_transaction_view', {'hash': vout.redeemedInTransaction}) }}">
+                                    {{ vout.redeemedInTransaction[0:20] }}...{{ vout.redeemedInTransaction[vout.redeemedInTransaction|length-4:] }}
                                 </a>
-                                <small>in <a href="{{ path('app_block_view', {'height': output.redeemedInBlock}) }}">{{ output.redeemedInBlock }}</a></small>
+                                <small>in <a href="{{ path('app_block_view', {'height': vout.redeemedInBlock}) }}">{{ vout.redeemedInBlock }}</a></small>
                             </span>
-                        {% elseif output.private == true %}
+                        {% elseif vout.private == true %}
                             Unspent
-                        {% elseif output.type == 'CFUND_CONTRIBUTION' %}
+                        {% elseif vout.type == 'CFUND_CONTRIBUTION' %}
                             Community&nbsp;Fund&nbsp;Contribution
                         {% else %}
                             Unspent
                         {% endif %}
-                        {% if output.isPrivateFee %}<br/><small>Private TX Fee</small>{% endif %}
+                        {% if vout.isPrivateFee %}<br/><small>Private TX Fee</small>{% endif %}
                     </td>
                     <td data-role="amount" class="text-right">
-                        {% if output.wrapped %}
-                            {{ output.amount|wnav }}
-                        {% elseif output.private %}
-                            {{ output.amount|xnav }}
+                        {% if vout.wrapped %}
+                            {{ vout.amount|wnav }}
+                        {% elseif vout.private %}
+                            {{ vout.amount|xnav }}
                         {% else %}
-                            {{ output.amount|nav }}
+                            {{ vout.amount|nav }}
                         {% endif %}
                     </td>
                 </tr>

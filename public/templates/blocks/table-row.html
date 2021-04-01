@@ -1,0 +1,23 @@
+{% for item in data %}
+<tr>
+    <td data-role="hash">
+        <a href="/block/{{ item.hash }}" class="break-word">{{ item.hash }}</a>
+    </td>
+    <td data-role="height" class="">
+        {{ item.height }}
+    </td>
+    <td data-role="age" class="no-break">
+        {{ item.age }}<br/>
+        <small>{{ item.time }}</small>
+    </td>
+    <td data-role="transactions" class="text-center">
+        {{ item.tx_count }}
+    </td>
+    <td data-role="stakedBy">
+        <a href="/address/{{ item.stakedBy }}" class="break-word">{{ item.stakedBy }}</a>
+    </td>
+    <td data-role="stake" class="text-right">
+        {{ item.stake }}
+    </td>
+</tr>
+{% endfor %}

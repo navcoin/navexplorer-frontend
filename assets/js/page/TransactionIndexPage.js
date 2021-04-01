@@ -1,80 +1,62 @@
 const $ = require('jquery');
 
-import NavNumberFormat from "../services/NavNumberFormat";
-import ExplorerApi from "../services/ExplorerApi";
+import NumberFormat from "../services/NumberFormat";
 import * as moment from 'moment';
+import CreateTable from '../services/Table';
 
 class TransactionIndexPage {
     constructor() {
-        this.table = $('#transaction-list table');
-
-        this.numberFormatter = new NavNumberFormat();
-        this.explorerApi = new ExplorerApi();
-        this.explorerApi.getTransactions({
-            sort: [
-                {txheight: "desc"},
-                {index: "asc"},
-            ],
-        }, this.handleData.bind(this))
+        CreateTable($("#transaction-list"),
+            "/tx",
+            this.getRowData,
+            'transactions/table-rows.html',
+            {
+                sort: [
+                    { txheight: "desc" },
+                    { index: "asc" },
+                ],
+                size: 20,
+                page: 1,
+            },
+            [
+                {
+                    "field": "type",
+                    "primary": true,
+                    "filters": [
+                        {"name": "All", "value": "coinbase|staking|transfer|spend", "active": true},
+                        {"name": "Coinbase", "value": "coinbase"},
+                        {"name": "Staking", "value": "staking"},
+                        {"name": "Transfer", "value": "transfer|spend"},
+                    ]
+                }],
+            true
+        );
     }
 
-    handleData(data) {
-        this.emptyTable()
-        data.elements.forEach(this.createTableRow, this);
-    }
-
-    emptyTable() {
-        this.table.find('tbody').empty();
-    }
-
-    createTableRow(data) {
-        let numberFormatter = new NavNumberFormat();
-
-        let $row = $(document.createElement('tr'));
-        $row.attr('data-id', data.id);
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'type')
-            .append(data.type)
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'hash')
-            .append('<a href="/tx/' + data.hash + '" class="break-word">' + data.hash.substring(20) + '...</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'date/time')
-            .append(moment(data.time).utc().format('YYYY-MM-DD[,] H:mm:ss'))
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'height')
-            .append('<a href="/block/'+ data.height + '">'+ data.height + '</a>')
-        );
-
-        if (data.type == "staking") {
-            $row.append($(document.createElement('td'))
-                .attr('data-role', 'amount')
-                .append(numberFormatter.format(data.stake/100000000) + '&nbsp;Nav')
-            );
+    getRowData(data) {
+        let amount;
+        if (data.type === "staking") {
+            amount = NumberFormat.format(data.stake/100000000);
         } else {
-            let amount = 0;
-            data.vout.forEach(function (output) {
-                amount += output.valuesat;
-            });
-            $row.append($(document.createElement('td'))
-                .attr('data-role', 'amount')
-                .append(numberFormatter.format(amount) + '&nbsp;Nav')
-            );
+            let total = data.vout.reduce(function(prev, cur) {
+                return prev + cur.value;
+            }, 0);
+            amount = NumberFormat.format(total)
         }
+        if (data.type === "spend") data.type="transfer";
 
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'fees')
-            .append(numberFormatter.format(data.fees) + '&nbsp;Nav')
-        );
-
-        this.table.append($row)
+        return {
+            type: data.type,
+            hash: data.hash,
+            hash_small: data.hash.substring(0, 12) + '...'+ data.hash.slice(-4),
+            link: "/tx/"+data.hash,
+            age: moment(data.time).utc().fromNow(),
+            time: moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss'),
+            height: NumberFormat.format(data.height, false),
+            confirmations: NumberFormat.format(data.confirmations ? data.confirmations : 0, false),
+            amount: amount,
+            fees: NumberFormat.format(data.fees/100000000, true, 4),
+        }
     }
 }
 

@@ -1,0 +1,46 @@
+{% for item in data %}
+    <tr>
+        <td data-role="type" class="ucwords">
+            {{ item.type }}
+        </td>
+        <td data-role="hash" class="break-word">
+            <a href="/tx/{{ item.txid }}">{{ item.txid }}</a>
+        </td>
+        <td data-role="age" class="no-break">
+            {{ item.age }}<br/>
+            <small>{{ item.time }}</small>
+        </td>
+        <td data-role="spendable" class="hide text-right">
+            {{ item.changes.spendable }}<br/>
+            <small class="no-break">{{ item.balance.spendable }}</small>
+        </td>
+        {% if item.changes.spending !== 0 %}
+            <td data-role="spendable" class="text-right td-adaptive">
+                {{ item.changes.spendable }}<br/>
+                <small class="no-break">{{ item.balance.spendable }}</small>
+            </td>
+        {% endif %}
+
+        <td data-role="stakable" class="hide text-right">
+            {{ item.changes.stakable }}<br/>
+            <small class="no-break">{{ item.balance.stakable }}</small>
+        </td>
+        {% if item.changes.stakable !== 0 %}
+            <td data-role="stakable" class="text-right td-adaptive">
+                {{ item.changes.stakable }}<br/>
+                <small class="no-break">{{ item.balance.stakable }}</small>
+            </td>
+        {% endif %}
+
+        <td data-role="votingWeight" class="hide text-right">
+            {{ item.changes.voting_weight }}<br/>
+            <small class="no-break">{{ item.balance.voting_weight }}</small>
+        </td>
+        {% if item.changes.voting_weight !== 0 %}
+        <td data-role="votingWeight" class="text-right td-adaptive">
+            {{ item.changes.voting_weight }}<br/>
+            <small class="no-break">{{ item.balance.voting_weight }}</small>
+        </td>
+        {% endif %}
+    </tr>
+{% endfor %}

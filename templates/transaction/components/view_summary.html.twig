@@ -1,11 +1,13 @@
 <div class="row transaction-summary">
-    <div class="col-sm-12">
-        <h2 class="break-word">{{ transaction.hash }}</h2>
-    </div>
-
     <div class="col-sm-12 col-md-12 col-lg-8">
         <table class="table table-striped table-nav">
             <tbody>
+                <tr>
+                    <th>Hash</th>
+                    <td class="text-right break-word">
+                        {{ transaction.hash }}
+                    </td>
+                </tr>
                 <tr>
                     <th>Height</th>
                     <td class="text-right">
@@ -17,13 +19,13 @@
                 <tr>
                     <th>Input</th>
                     <td class="text-right">
-                        {{ transaction.inputs.value|nav }}
+                        {{ transaction.vins.value|nav }}
                     </td>
                 </tr>
                 <tr>
                     <th>Output</th>
                     <td class="text-right">
-                        {{ transaction.outputs.value|nav }}
+                        {{ transaction.vouts.value|nav }}
                     </td>
                 </tr>
                 {% if transaction.staking %}

@@ -1,34 +1,67 @@
-<div class="address-summary">
-    <h2 class="break-word">{{ summary.hash }}</h2>
-    <table class="table table-nav table-striped">
-        <tbody>
-        <tr>
-            <th scope="col">Rich List</th>
-            <td>{{ address.richList.spendable|ordinal }}</td>
-        </tr>
-        <tr>
-            <th scope="col">Spendable Balance</th>
-            <td>{{ summary.spendable.balance|nav }}</td>
-        </tr>
-        <tr>
-            <th scope="col">Stakable Balance</th>
-            <td>{{ summary.stakable.balance|nav }}</td>
-        </tr>
-        <tr>
-            <th scope="col">Voting Weight</th>
-            <td>{{ summary.votingWeight.balance|nav }}</td>
-        </tr>
-        <tr>
-            <th scope="col">Transactions</th>
-            <td>{{ summary.txs|number_format }}</td>
-        </tr>
-        <tr>
-            <th scope="col">Created At</th>
-            <td>
-                {{ address.createdTime|date_localised('Y-m-d, H:i:s') }}<br/>
-                <small><label>Block&nbsp;</label><a href="{{ path("app_block_view", {'height': address.createdBlock}) }}">{{ address.createdBlock|number_format }}</a></small>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div class="row margin-bottom">
+    <div class="col-md-8">
+        <table class="table table-nav table-striped">
+            <tbody>
+            {% if address.ismultisig %}
+                <tr>
+                    <th scope="col" class="no-break">Address Type</th>
+                    <td class="text-right">MultiSig ({{ address.multisig.required }}/{{ address.multisig.total }})</td>
+                </tr>
+                <tr>
+                    <th scope="col" class="no-break">Staking Address</th>
+                    <td class="text-right">{{ address.multisig.hash }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Signatures</th>
+                    <td class="text-right break-word">
+                        {% for sigsignature in address.multisig.signatures %}
+                            {{ sigsignature }}<br/>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th scope="col" class="no-break">Address Type</th>
+                    <td class="text-right">Standard</td>
+                </tr>
+                <tr>
+                    <th scope="col">Address</th>
+                    <td class="text-right">{{ summary.hash }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th scope="col">Transactions</th>
+                <td class="text-right">{{ summary.txs|number_format }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Created At</th>
+                <td class="text-right">
+                    {{ address.createdTime|date_localised('Y-m-d, H:i:s') }}<br/>
+                    <small><label>Block&nbsp;</label><a href="{{ path("app_block_view", {'height': address.createdBlock}) }}">{{ address.createdBlock|number_format }}</a></small>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <table class="table table-nav table-striped table-second">
+            <tr>
+                <th scope="col">Rich List</th>
+                <td class="text-right">{{ address.richList.spendable|ordinal }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Spendable Balance</th>
+                <td class="text-right">{{ summary.spendable.balance|nav }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Stakable Balance</th>
+                <td class="text-right">{{ summary.stakable.balance|nav }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Voting Weight</th>
+                <td class="text-right">{{ summary.votingWeight.balance|nav }}</td>
+            </tr>
+        </table>
+    </div>
 </div>

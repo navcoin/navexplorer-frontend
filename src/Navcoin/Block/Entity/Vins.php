@@ -6,27 +6,27 @@ use App\Navcoin\Common\Entity\IteratorEntity;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\Entity\Paginated;
 
-class Inputs extends IteratorEntity implements IteratorEntityInterface
+class Vins extends IteratorEntity implements IteratorEntityInterface
 {
     use Paginated;
 
     public function setSupportedTypes()
     {
-        $this->supportedTypes = [Input::class];
+        $this->supportedTypes = [Vin::class];
     }
 
     public function getValue(): float
     {
         return array_reduce($this->getElements(), function($value, $input) {
-            /** @var Input $input */
-            return $value += $input->getAmount();
+            /** @var Vin $input */
+            return $value += $input->getValue();
         }, 0);
     }
 
     public function getBalanceForAddress($address): float
     {
         return array_reduce($this->getElements(), function($value, $input) use ($address) {
-            /** @var Input $input */
+            /** @var Vin $input */
             return $value -= ($input->getAddress() === $address) ? $input->getAmount() : 0;
         }, 0);
     }
@@ -34,7 +34,7 @@ class Inputs extends IteratorEntity implements IteratorEntityInterface
     public function getAddresses() {
         $addresses = [];
 
-        /** @var Input $input */
+        /** @var Vin $input */
         foreach ($this->getElements() as $input) {
             $addresses = array_merge($addresses, $input->getAddresses());
         }

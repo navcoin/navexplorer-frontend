@@ -1,61 +1,40 @@
+import CreateTable from "../services/Table";
+
 const $ = require('jquery');
 
-import TableManager from "../services/TableManager";
-import NavNumberFormat from "../services/NavNumberFormat";
+import NumberFormat from "../services/NumberFormat";
 import * as moment from 'moment';
 
 class BlockIndexPage {
     constructor() {
-        console.log("Block Index Page");
-
-        this.tableManager = new TableManager('#block-list table', 'blocks', this.createTableRow);
+        CreateTable($("#block-list"),
+            "/block",
+            this.getRowData,
+            'blocks/table-row.html',
+            {
+                sort: [
+                    { height: "desc" }
+                ],
+                size: 20,
+                page: 1,
+            },
+            [],
+            true
+        );
     }
 
-    createTableRow(data) {
-        let numberFormatter = new NavNumberFormat();
-
-        let $row = $(document.createElement('tr'));
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'hash')
-            .append('<a href="/block/'+data.height+'">' + data.hash.substring(0, 12) + '...'+data.hash.slice(-4)+'</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'height')
-            .append(numberFormatter.format(data.height))
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'date/time')
-            .append(moment(data.created).utc().format('YYYY-MM-DD[,] HH:mm:ss'))
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'transactions')
-            .addClass('text-center')
-            .append(data.transactions)
-        );
-
-        let stakedBy = 'N/A';
-        if (data.stakedBy) {
-            stakedBy = '<a href="/address/' + data.stakedBy + '" class="break-word">' + data.stakedBy + '</a>';
-        } else if (data.stake !== 0) {
-            stakedBy = 'Private Address';
+    getRowData(data) {
+        return {
+            hash: data.hash,
+            hash_small: data.hash.substring(0, 12) + '...'+ data.hash.slice(-4),
+            link: "/block/"+data.height,
+            age: moment(data.time).utc().fromNow(),
+            time: moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss'),
+            height: NumberFormat.format(data.height, false),
+            tx_count: data.tx_count,
+            stakedBy: data.stakedBy,
+            stake: NumberFormat.formatNav(data.stake/100000000)
         }
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'stakedBy')
-            .append(stakedBy)
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'stake')
-            .addClass("text-right")
-            .append(numberFormatter.formatNav(data.stake))
-        );
-
-        return $row;
     }
 }
 

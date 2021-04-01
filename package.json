@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@symfony/webpack-encore": "^1.1.2",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.0.5"
@@ -16,6 +17,7 @@
     "dotenv-webpack": "^7.0.2",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.1",
-    "moment": "^2.22.0"
+    "moment": "^2.22.0",
+    "nunjucks": "^3.2.3"
   }
 }

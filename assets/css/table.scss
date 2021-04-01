@@ -6,6 +6,12 @@
     color: $grey;
   }
 
+  th.loading {
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
   th,
   td {
     padding: 0.5rem 0.25rem;
@@ -43,8 +49,13 @@
   border-top: 5px solid $purple;
 
   td, th {
-    padding: 0.5rem;
+    padding: 0.45rem;
   }
+}
+
+.table-bottom-stripe {
+  border-bottom: 5px solid $purple;
+  margin-bottom: 5px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -53,15 +64,16 @@
   }
 }
 
+
+@media only screen and (max-width: 575px) {
+
+  .table-pagination {
+    float: none !important;
+    text-align: left !important;
+  }
+}
 @media only screen and (max-width: 855px) {
   .table-adaptive {
-
-    .table-pagination {
-      .float-right {
-        float: none !important;
-      }
-    }
-
     margin-bottom: 1.75rem;
 
     thead, tbody, th, td, tr {
@@ -83,7 +95,7 @@
         background-color: white;
 
         td {
-          padding: 0.5rem;
+          padding: 0.5rem 0.5rem 0.5rem 125px;
           border-top: 1px solid $dark-grey;
           border-bottom: 0;
         }
@@ -144,6 +156,7 @@
     }
 
     td[data-role="address"]:before { content: "Address"; }
+    td[data-role="age"]:before { content: "Age"; }
     td[data-role="answer"]:before { content: "Answer"; }
     td[data-role="amount"]:before { content: "Amount"; }
     td[data-role="annualPercentage"]:before { content: "Annual %"; }
@@ -151,8 +164,10 @@
     td[data-role="block"]:before { content: "Block"; }
     td[data-role="blocks"]:before { content: "Blocks"; }
     td[data-role="changes"]:before { content: "Changes"; }
+    td[data-role="confirmations"]:before { content: "Confirmations"; }
     td[data-role="date/time"]:before { content: "Date/Time"; }
     td[data-role="description"]:before { content: "Description"; }
+    td[data-role="fees"]:before { content: "Fees"; }
     td[data-role="forBalance"]:before { content: "For Balance"; }
     td[data-role="hourlyPeriod"]:before { content: "Period"; }
     td[data-role="hash"]:before { content: "Hash"; }
@@ -185,6 +200,7 @@
     td[data-role="type"]:before { content: "Type"; }
     td[data-role="txid"]:before { content: "Txid"; }
     td[data-role="vote"]:before { content: "Vote"; }
+    td[data-role="value"]:before { content: "Value"; }
     td[data-role="value out"]:before { content: "Value Out"; }
     td[data-role="votingCycle"]:before { content: "Voting Cycle"; }
     td[data-role="votingStatus"]:before { content: "Voting Status"; }
@@ -196,13 +212,22 @@
 
 
 .table-pagination {
+  float: right;
+  text-align: right;
+  margin-bottom: 3px;
+
+  .pagination-pages {
+    position: relative;
+    line-height: 11px;
+  }
+
   ul {
     list-style: none;
     padding: 0;
+    margin-bottom: 0;
 
     li {
       display: inline-block;
-      padding-right: 0.2rem;
 
       a {
         text-transform: capitalize;
@@ -232,7 +257,18 @@
   margin-bottom: 0.60rem;
 }
 
-.table-label {
+thead.loading {
+  display: none;
+}
+
+.table-filters {
+  float:left;
+  margin-bottom: 0.60rem;
+}
+
+
+
+.table-total {
   color: $white;
   background-color: $purple;
   border-color: $dark-purple;
@@ -241,6 +277,7 @@
   font-size: 0.80rem;
   font-weight: normal;
   padding: 0.1rem 0.60rem;
-  margin-left: 0.30rem;
+  margin: 1.25rem 0.30rem;
   line-height: 22px;
+  float:right;
 }

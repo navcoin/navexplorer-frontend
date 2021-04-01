@@ -7,6 +7,7 @@
         "php": "^7.3",
         "ext-bcmath": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "endroid/qr-code-bundle": "^3.2",
         "guzzlehttp/guzzle": "*",
         "nyholm/psr7": "^1.4",

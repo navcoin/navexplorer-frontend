@@ -95,11 +95,11 @@
             <div class="block-links">
 
                 <span class="float-left">
-                    <a href="{{ path('app_block_view', {'height': block.height-1}) }}"{% if block.height == 1 %} class="disabled"{% endif %}>Previous Block</a>
+                    <a href="{{ path('app_block_view', {'height': block.height-1}) }}" class="btn {% if block.height != 1 %}btn-info{% else %}btn-secondary disabled{% endif %}">Previous Block</a>
                 </span>
 
                 <span class="float-right">
-                    <a href="{{ path('app_block_view', {'height': block.height+1}) }}"{% if block.best == true %} class="disabled"{% endif %}>Next Block</a>
+                    <a href="{{ path('app_block_view', {'height': block.height+1}) }}" class="btn {% if block.best != true %}btn-info{% else %}btn-secondary disabled{% endif %}">Next Block</a>
                 </span>
             </div>
         </div>

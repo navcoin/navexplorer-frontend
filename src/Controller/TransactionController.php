@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Throwable;
 
 class TransactionController extends AbstractController
 {
@@ -31,7 +32,7 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * @Route("/tx")
+     * @Route("/txs")
      * @Template()
      */
     public function index(): array
@@ -79,7 +80,9 @@ class TransactionController extends AbstractController
             $transaction = $this->transactionApi->getTransaction($request->get('hash'));
             $block = $this->blockApi->getBlock($transaction->getHeight());
             $rawData = $this->transactionApi->getRawTransaction($transaction->getHash());
-        } catch(TransactionNotFoundException $e) {
+            $jsonData = json_decode($rawData, true);
+            $strdzeel = $jsonData['strdzeel'];
+        } catch(TransactionNotFoundException|Throwable $e) {
             return $this->render(
                 'transaction/not_found.html.twig',
                 ['hash' => $request->get('hash')],
@@ -91,6 +94,7 @@ class TransactionController extends AbstractController
             'transaction' => $transaction,
             'block' => $block,
             'raw' => $rawData,
+            'strdzeel' => $strdzeel,
         ];
     }
 }

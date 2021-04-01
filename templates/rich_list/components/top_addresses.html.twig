@@ -11,19 +11,26 @@
             </tr>
         </thead>
         <tbody>
-            {% for richListItem in richList %}
+            {% for address in richList %}
                 <tr>
-                    <td>{{ richListItem.richList.spendable }}</td>
+                    <td>{{ address.richList.spendable }}</td>
+                    {% if address.ismultisig %}
+                        <td>
+                            <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">{{ address.multisig.hash }}</a>
+                            (MultiSig {{ address.multisig.required }}/{{ address.multisig.total }})
+                        </td>
+                    {% else %}
+                        <td>
+                            <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">{{ address.hash }}</a>
+                        </td>
+                    {% endif %}
+                    <td class="no-break">Spendable<br/>Stakable<br/>Voting Weight</td>
                     <td>
-                        <a href="{{ path('app_address_index', { 'hash': richListItem.hash }) }}" class="break-word">{{ richListItem.hash }}</a>
+                        {{ address.spendable|nav(false, 2) }}<br/>
+                        {{ address.stakable|nav(false, 2) }}<br/>
+                        {{ address.votingWeight|nav(false, 2) }}
                     </td>
-                    <td>Spendable<br/>Stakable<br/>Voting Weight</td>
-                    <td>
-                        {{ richListItem.spendable|nav(false, 2) }}<br/>
-                        {{ richListItem.stakable|nav(false, 2) }}<br/>
-                        {{ richListItem.votingWeight|nav(false, 2) }}
-                    </td>
-                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': richListItem.height}) }}">{{ richListItem.height }}</a></td>
+                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': address.height}) }}">{{ address.height }}</a></td>
                 </tr>
             {% endfor %}
         </tbody>

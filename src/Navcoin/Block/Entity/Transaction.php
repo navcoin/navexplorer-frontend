@@ -4,75 +4,50 @@ namespace App\Navcoin\Block\Entity;
 
 class Transaction
 {
-    /**
-     * @var String
-     */
+    /** @var String */
     private $hash;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $height;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     private $time;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $stake;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $fees;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type;
 
-    /**
-     * @var Inputs
-     */
-    private $inputs;
+    /** @var Vins */
+    private $vins;
 
-    /**
-     * @var Outputs
-     */
-    private $outputs;
+    /** @var Vouts */
+    private $vouts;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $raw;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $size;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $version;
 
-    /**
-     * @var ProposalVotes
-     */
+    /** @var ProposalVotes*/
     private $proposalVotes;
 
-    /**
-     * @var bool
-     */
+    /** @var bool*/
     private $private;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $wrapped;
+
+    /** @var bool */
+    private $script;
 
     public function __construct(
         String $hash,
@@ -80,28 +55,30 @@ class Transaction
         \DateTime $time,
         float $stake,
         float $fees,
-        Inputs $inputs,
-        Outputs $outputs,
+        Vins $vins,
+        Vouts $vouts,
         string $type,
         string $raw,
         string $size,
         string $version,
         bool $private,
-        bool $wrapped
+        bool $wrapped,
+        bool $script
     ) {
         $this->hash = $hash;
         $this->height = $height;
         $this->time = $time;
         $this->stake = $stake;
         $this->fees = $fees;
-        $this->inputs = $inputs;
-        $this->outputs = $outputs;
+        $this->vins = $vins;
+        $this->vouts = $vouts;
         $this->type = $type;
         $this->raw = $raw;
         $this->size = $size;
         $this->version = $version;
         $this->private = $private;
         $this->wrapped = $wrapped;
+        $this->script = $script;
     }
 
     public function getHash(): string
@@ -139,19 +116,19 @@ class Transaction
         return $this->fees ? true : false;
     }
 
-    public function getInputs(): Inputs
+    public function getVins(): Vins
     {
-        return $this->inputs;
+        return $this->vins;
     }
 
     public function getInputElements(): array
     {
-        return $this->inputs->getElements();
+        return $this->vins->getElements();
     }
 
-    public function getOutputs(): Outputs
+    public function getVouts(): Vouts
     {
-        return $this->outputs;
+        return $this->vouts;
     }
 
     public function getType(): string
@@ -161,12 +138,12 @@ class Transaction
 
     public function getOutputElements(): array
     {
-        return $this->outputs->getElements();
+        return $this->vouts->getElements();
     }
 
     public function getSpendForAddress(String $address): float
     {
-        return (float) $this->outputs->getBalanceForAddress($address) + $this->inputs->getBalanceForAddress($address);
+        return (float) $this->vouts->getBalanceForAddress($address) + $this->vins->getBalanceForAddress($address);
     }
 
     public function getRaw()
@@ -202,5 +179,10 @@ class Transaction
     public function isCoinbase(): bool
     {
         return $this->type == "coinbase";
+    }
+
+    public function isScript(): bool
+    {
+        return $this->script;
     }
 }

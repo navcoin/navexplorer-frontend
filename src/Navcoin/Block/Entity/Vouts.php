@@ -6,19 +6,19 @@ use App\Navcoin\Common\Entity\IteratorEntity;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\Entity\Paginated;
 
-class Outputs extends IteratorEntity implements IteratorEntityInterface
+class Vouts extends IteratorEntity implements IteratorEntityInterface
 {
     use Paginated;
 
     public function setSupportedTypes()
     {
-        $this->supportedTypes = [Output::class];
+        $this->supportedTypes = [Vout::class];
     }
 
     public function getValue(): float
     {
         return array_reduce($this->getElements(), function($value, $output) {
-            /** @var Output $output */
+            /** @var Vout $output */
             return $value += $output->getAmount();
         }, 0);
     }
@@ -26,7 +26,7 @@ class Outputs extends IteratorEntity implements IteratorEntityInterface
     public function getBalanceForAddress(string $address): float
     {
         return array_reduce($this->getElements(), function($value, $output) use ($address) {
-            /** @var Output $output */
+            /** @var Vout $output */
             return $value += ($output->getAddress() === $address) ? $output->getAmount() : 0;
         }, 0);
     }
@@ -35,7 +35,7 @@ class Outputs extends IteratorEntity implements IteratorEntityInterface
     {
         $addresses = [];
 
-        /** @var Input $input */
+        /** @var Vin $input */
         foreach ($this->getElements() as $input) {
             $addresses = array_merge($addresses, $input->getAddresses());
         }
@@ -44,7 +44,7 @@ class Outputs extends IteratorEntity implements IteratorEntityInterface
     }
 
     public function hasCommunityFundVotes() {
-        /** @var Output $output */
+        /** @var Vout $output */
         foreach ($this->getElements() as $output) {
             if (in_array($output->getType(), ['PROPOSAL_YES_VOTE', 'PROPOSAL_NO_VOTE'])) {
                 return true;

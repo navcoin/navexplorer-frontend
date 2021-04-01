@@ -1,5 +1,9 @@
 require('../css/app.scss');
 
+require('@fortawesome/fontawesome-free/css/all.min.css');
+require('@fortawesome/fontawesome-free/js/all.js');
+
+require('./services/Nunjucks');
 require('./services/Header');
 require('./services/Timezone');
 require('./services/Tabs');

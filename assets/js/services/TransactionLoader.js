@@ -30,7 +30,7 @@ export default class TransactionLoader {
                 '  <div class="card-body">\n' +
                 '    <div class="row">\n' +
                 '      <div class="col-sm-12 col-md-6 inputs"><span class="caption">Inputs</span>' + self.inputList(tx.inputs, tx) + '</div>\n' +
-                '      <div class="col-sm-12 col-md-6 outputs"><span class="caption">Outputs</span>' + self.inputList(tx.outputs, tx) + '</div>\n' +
+                '      <div class="col-sm-12 col-md-6 outputs"><span class="caption">Vouts</span>' + self.inputList(tx.outputs, tx) + '</div>\n' +
                 '    </div>\n' +
                 '  </div>\n' +
                 '</div>'

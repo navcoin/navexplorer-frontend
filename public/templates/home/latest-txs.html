@@ -1,0 +1,34 @@
+<table class="table table-striped table-adaptive table-nav margin-bottom-half">
+    <thead>
+    <tr>
+        <th>Hash</th>
+        <th>Height</th>
+        <th>Age</th>
+        <th class="text-right">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tx in txs %}
+    <tr>
+        <td data-role="hash" class="break-word">
+            <a href="/tx/{{ tx.hash }}">{{ tx.hash }}</a>
+        </td>
+        <td data-role="height">
+            <a href="/block/{{ tx.height }}">{{ tx.height }}</a>
+        </td>
+        <td data-role="age" class="no-break">
+            {{ tx.age }}<br/>
+            <small>{{ tx.time }}</small>
+        </td>
+        <td data-role="value" class="no-break text-right">
+            {{ tx.value }}
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+<div class="table-filters">
+    <a class="btn btn-xs btn-info" href="/txs">View All</a>
+</div>

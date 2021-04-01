@@ -6,11 +6,14 @@ export default class Code {
 
     styldCodeBlocks() {
         $('pre').each(function() {
-            let json = JSON.parse($(this).html());
-
-            $(this).html(
-                Code.syntaxHighlight(JSON.stringify(json, null, 2))
-            );
+            try {
+                let json = JSON.parse($(this).html());
+                $(this).html(
+                    Code.syntaxHighlight(JSON.stringify(json, null, 2))
+                );
+            } catch(e) {
+                // console.error(e);
+            }
         });
     }
 

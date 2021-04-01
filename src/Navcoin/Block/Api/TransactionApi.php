@@ -6,7 +6,6 @@ use App\Navcoin\Block\Entity\Transaction;
 use App\Navcoin\Block\Entity\Transactions;
 use App\Navcoin\Common\FilterQuery;
 use App\Exception\BlockNotFoundException;
-use App\Exception\ServerRequestException;
 use App\Exception\TransactionNotFoundException;
 use App\Navcoin\Common\Entity\IteratorEntityInterface;
 use App\Navcoin\Common\NavcoinApi;
@@ -91,5 +90,16 @@ class TransactionApi extends NavcoinApi
         }
 
         return $this->getMapper()->mapIterator( Transactions::class, $data);
+    }
+
+    public function count(): int
+    {
+        try {
+            $response = $this->getClient()->get('/txcount');
+            $data = $this->getClient()->getBody($response);
+            return intval($data);
+        } catch (ClientException $e) {
+            return 0;
+        }
     }
 }
