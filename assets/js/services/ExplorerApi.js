@@ -4,7 +4,7 @@ import axios from "axios";
 
 class ExplorerApi {
     constructor() {
-        this.url = process.env['EXPLORER_API'];
+        this.url = window.EXPLORER_API;
     }
 
     get(path, options, callback) {
