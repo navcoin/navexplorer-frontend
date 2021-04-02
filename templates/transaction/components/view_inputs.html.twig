@@ -15,7 +15,7 @@
             <tr>
                 <td data-role="index" class="text-center">{{ vin.vout }}</td>
                 <td data-role="type" >
-                    {% if vin.isMultiSig %} MultiSig
+                    {% if vin.isMultiSig %} MultiSig ({{ vin.previousOutput.multisig.required }}/{{ vin.previousOutput.multisig.total }})
                     {% elseif vin.isWrapped %} Wrapped
                     {% elseif vin.isPrivate %} Private
 {#                    {% elseif vin.isPrivateFee %} Private Fee#}
@@ -26,7 +26,9 @@
                 </td>
                 <td data-role="address">
                     {% if vin.previousOutput.multiSig %}
-                        {% for address in vin.previousOutput.multisig.signatures %}{{ address }}<br/>{% endfor %}
+                        <span class="no-break">
+                            <a class="break-word" href="{{ path('app_address_index', { 'hash': vin.previousOutput.multisig.key }) }}">{{ vin.previousOutput.multisig.hash }}</a>
+                        </span>
                     {% else %}
                         {% for address in vin.addresses %}
                             <span class="break-word">
