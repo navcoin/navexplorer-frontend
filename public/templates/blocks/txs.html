@@ -54,16 +54,16 @@
                                 </div>
                             </li>
                         {% else %}
-                            {% for address in vout.scriptPubKey.addresses %}
-                                <li>
-                                    <div class="address float-left">
-                                        <a href="/address/{{ address }}">{{ address }}</a>
-                                    </div>
-                                    <div class="amount float-right no-break">
-                                        {{ vout.value }} Nav
-                                    </div>
-                                </li>
-                            {% endfor %}
+                            <li>
+                                <div class="address float-left">
+                                    {% for address in vout.scriptPubKey.addresses %}
+                                        <a href="/address/{{ address }}">{{ address }}</a><br/>
+                                    {% endfor %}
+                                </div>
+                                <div class="amount float-right no-break">
+                                    {{ vout.value }} Nav
+                                </div>
+                            </li>
                         {% endif %}
                     {% endfor %}
                 </div>
