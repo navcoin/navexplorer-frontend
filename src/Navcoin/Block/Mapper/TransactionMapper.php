@@ -66,7 +66,7 @@ class TransactionMapper extends BaseMapper
         return new PreviousOutput(
             $this->getData('height', $data),
             $this->getData('type', $data),
-            $this->mapMultiSig($this->getData('multi_sig', $data, null)),
+            $this->mapMultiSig($this->getData('multisig', $data, null)),
             $this->getData('private', $data, false),
             $this->getData('wrapped', $data, false),
         );
