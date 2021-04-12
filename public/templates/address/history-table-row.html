@@ -4,7 +4,8 @@
             {{ item.type }}
         </td>
         <td data-role="hash" class="break-word">
-            <a href="/tx/{{ item.txid }}">{{ item.txid }}</a>
+            <a href="/tx/{{ item.txid }}">{{ item.txid }}</a><br/>
+            <small>Block: <a href="/block/{{ item.height }}">{{ item.height }}</a></small>
         </td>
         <td data-role="age" class="no-break">
             {{ item.age }}<br/>

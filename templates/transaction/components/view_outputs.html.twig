@@ -23,6 +23,9 @@
                         {% elseif vout.type == "PUBKEY" %} PubKey
                         {% elseif vout.type == "PUBKEYHASH" %} PubKeyHash
                         {% elseif vout.type == "NONSTANDARD" %} NonStandard
+                        {% elseif vout.type == "CFUND_CONTRIBUTION" %} CfundContribution
+                        {% else %}
+                            {{ vout.type }}
                         {% endif %}
                     </td>
                     <td data-role="address">

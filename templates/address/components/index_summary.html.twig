@@ -37,7 +37,7 @@
                 <th scope="col">Created At</th>
                 <td class="text-right">
                     {{ address.createdTime|date_localised('Y-m-d, H:i:s') }}<br/>
-                    <small><label>Block&nbsp;</label><a href="{{ path("app_block_view", {'height': address.createdBlock}) }}">{{ address.createdBlock|number_format }}</a></small>
+                    <small><label>Block:</label> <a href="{{ path("app_block_view", {'height': address.createdBlock}) }}">{{ address.createdBlock|number_format }}</a></small>
                 </td>
             </tr>
             </tbody>

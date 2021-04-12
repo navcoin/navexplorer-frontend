@@ -11,10 +11,10 @@
         {% for block in blocks %}
             <tr>
                 <td data-role="hash">
-                    <a href="/block/{{ block.hash}}" class="break-word scale" data-maxheight="20">{{ block.hash }}</a>
+                    <a href="/block/{{ block.hash}}" class="break-word scale" data-maxheight="20">{{ block.short_hash }}</a>
                 </td>
                 <td data-role="height">
-                    <a href="/block/{{ block.height }}">{{ block.height }}</a>
+                    <a href="/block/{{ block.hash }}">{{ block.height }}</a>
                 </td>
                 <td data-role="age" class="no-break">
                     {{ block.age }}<br/>
@@ -29,5 +29,5 @@
 </table>
 
 <div class="table-filters">
-    <a class="btn btn-xs btn-info" href="/blocks">View All</a>
+    <a class="btn btn-xs btn-info" href="/blocks">View All Blocks</a>
 </div>

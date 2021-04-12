@@ -28,6 +28,7 @@ class PageHome {
             page: 1,
         }, function(data) {
             data.elements.forEach(function(element) {
+                element.short_hash = element.hash.substring(0, 20) + '...' + element.hash.slice(-4)
                 element.height = NumberFormat.format(element.height, false)
                 element.age = moment(element.time).utc().fromNow()
                 element.time = moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss');
@@ -46,6 +47,7 @@ class PageHome {
 
         ExplorerApi.get("/tx", options, function(data) {
             data.elements.forEach(function(element) {
+                element.short_hash = element.hash.substring(0, 20) + '...' + element.hash.slice(-4)
                 element.age = moment(element.time).utc().fromNow()
                 element.time = moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss');
                 element.height = NumberFormat.format(element.height, false)

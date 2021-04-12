@@ -11,7 +11,7 @@
     {% for tx in txs %}
     <tr>
         <td data-role="hash" class="break-word">
-            <a href="/tx/{{ tx.hash }}">{{ tx.hash }}</a>
+            <a href="/tx/{{ tx.hash }}">{{ tx.short_hash }}</a>
         </td>
         <td data-role="height">
             <a href="/block/{{ tx.height }}">{{ tx.height }}</a>
@@ -30,5 +30,5 @@
 </table>
 
 <div class="table-filters">
-    <a class="btn btn-xs btn-info" href="/txs">View All</a>
+    <a class="btn btn-xs btn-info" href="/txs">View All Transactions</a>
 </div>
