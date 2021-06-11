@@ -53,4 +53,14 @@ class Vouts extends IteratorEntity implements IteratorEntityInterface
 
         return false;
     }
+
+    public function hasMultiSig() {
+        /** @var Vout $output */
+        foreach ($this->getElements() as $output) {
+            if ($output->isMultiSig()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

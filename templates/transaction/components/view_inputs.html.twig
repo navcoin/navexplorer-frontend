@@ -5,8 +5,14 @@
         <tr>
             <th class="text-center" style="width:5%">Index</th>
             <th style="width:10%">Type</th>
-            <th style="width:40%">Address</th>
-            <th style="width: 30%">Previous Output</th>
+            {% if transaction.vins.hasMultiSig %}
+                <th style="width:30%">Address</th>
+                <th style="width:30%">MultiSig</th>
+                <th style="width:10%">Previous Output</th>
+            {% else %}
+                <th style="width:40%">Address</th>
+                <th style="width:30%">Previous Output</th>
+            {% endif %}
             <th style="width: 15%" class="text-right">Amount</th>
         </tr>
     </thead>
@@ -22,23 +28,28 @@
                     {% elseif vin.previousOutput and vin.previousOutput.type == "pubkey" %} PubKey
                     {% elseif vin.previousOutput and vin.previousOutput.type == "pubkeyhash" %} PubKeyHash
                     {% elseif vin.previousOutput and vin.previousOutput.type =="nonstandard" %} NonStandard
+                    {% elseif vin.previousOutput and vin.previousOutput.type =="cold_staking" %} ColdStaking
+                    {% elseif vin.previousOutput %} {{ vin.previousOutput.type }}
                     {% endif %}
                 </td>
                 <td data-role="address">
-                    {% if vin.previousOutput.multiSig %}
-                        <span class="no-break">
-                            <a class="break-word" href="{{ path('app_address_index', { 'hash': vin.previousOutput.multisig.key }) }}">{{ vin.previousOutput.multisig.hash }}</a>
+                    {% for address in vin.addresses %}
+                        <span class="break-word">
+                            <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                         </span>
                     {% else %}
-                        {% for address in vin.addresses %}
-                            <span class="break-word">
-                                <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
-                            </span>
-                        {% else %}
-                            Hidden
-                        {% endfor %}
-                    {% endif %}
+                        {% if vin.previousOutput.private %}Private{% endif %}
+                    {% endfor %}
                 </td>
+
+                {% if vin.isMultiSig %}
+                    <td data-role="multiSigs">
+                        {% for signature in vin.previousOutput.multisig.signatures %}
+                            {{ signature[0:30] }}...{{ signature[signature|length-6:] }}<br>
+                        {% endfor %}
+                    </td>
+                {% endif %}
+
                 <td data-role="previousOutput">
                     {% if vin.previousOutput %}
                         <span style="white-space: nowrap">
@@ -46,7 +57,7 @@
                                 {{ vin.txid[0:10] }}...{{ vin.txid[vin.txid|length-4:] }}:{{ vin.vout }}
                             </a>
                             {% if vin.previousOutput.height %}
-                                <small>in <a href="{{ path('app_block_view', {'height': vin.previousOutput.height}) }}">{{ vin.previousOutput.height }}</a></small>
+                                <br><small>Block <a href="{{ path('app_block_view', {'height': vin.previousOutput.height}) }}">{{ vin.previousOutput.height }}</a></small>
                             {% endif %}
                         </span>
                     {% else %}

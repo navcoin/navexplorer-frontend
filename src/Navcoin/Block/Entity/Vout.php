@@ -19,6 +19,9 @@ class Vout
     /** @var string */
     private $redeemedInTransaction;
 
+    /** @var bool */
+    private $redeemed;
+
     /** @var int */
     private $redeemedInBlock;
 
@@ -40,12 +43,13 @@ class Vout
     /** @var string[] */
     private $wrappedAddresses;
 
-    public function __construct(string $type, int $index, float $amount, array $addresses, ?string $redeemedInTransaction, ?int $redeemedInBlock)
+    public function __construct(string $type, int $index, float $amount, array $addresses, bool $redeemed, ?string $redeemedInTransaction, ?int $redeemedInBlock)
     {
         $this->type = $type;
         $this->index = $index;
         $this->amount = $amount != 0 ? $amount / 100000000 : 0;
         $this->addresses = $addresses;
+        $this->redeemed = $redeemed;
         $this->redeemedInTransaction = $redeemedInTransaction;
         $this->redeemedInBlock = $redeemedInBlock;
     }
@@ -82,6 +86,11 @@ class Vout
     public function getRedeemedInTransaction(): ?string
     {
         return $this->redeemedInTransaction;
+    }
+
+    public function isRedeemed(): bool
+    {
+        return $this->redeemed;
     }
 
     public function getRedeemedInBlock(): ?int

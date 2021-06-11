@@ -13,14 +13,40 @@
                     {% else %}
                         {% for vin in item.vin %}
                             <li>
-                                <div class="address float-left">
-                                    {% for address in vin.addresses %}
-                                        <a href="/address/{{ address }}">{{ address }}</a>
-                                    {% endfor %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        {% for address in vin.addresses %}
+                                            <a href="/address/{{ address }}">{{ address }}</a><br>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="amount float-right no-break">
+                                        {% if vin.previousOutput.wrapped %}
+                                            {{ vin.value }} wNav
+                                        {% elseif vin.previousOutput.private %}
+                                            {{ vin.value }} xNav
+                                        {% else %}
+                                            {{ vin.value }} Nav
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="amount float-right no-break">
-                                    {{ vin.value }} Nav
+                                {% if vin.previousOutput.multisig %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        <div>MultiSig ({{ vin.previousOutput.multisig.required }}/{{ vin.previousOutput.multisig.total }})</div>
+                                    </div>
+                                    {% if vin.addresses|length == 0 %}
+                                    <div class="amount float-right no-break">
+                                        {% if vin.previousOutput.wrapped %}
+                                            {{ vin.value }} wNav
+                                        {% elseif vin.previousOutput.private %}
+                                            {{ vin.value }} xNav
+                                        {% else %}
+                                            {{ vin.value }} Nav
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
                                 </div>
+                                {% endif %}
                             </li>
                         {% endfor %}
                     {% endif %}
@@ -30,41 +56,54 @@
                 <span class="caption">Outputs</span>
                 <ul>
                     {% for vout in item.vout %}
-                        {% if vout.multisig %}
-                            <li>
-                                <div class="address float-left">
-                                    <div>
-                                        <a href="/address/{{ vout.multisig.hash }}-{% for signature in vout.multisig.signatures %}-{{signature}}{% endfor %}">
-                                            {{ vout.multisig.hash }}
-                                        </a><br/>
-                                        MultiSig ({{ vout.multisig.required }}/{{ vout.multisig.total }})
+                        <li>
+                            {% if vout.scriptPubKey.addresses == null and vout.scriptPubKey.type == "nonstandard" %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        <div>NonStandard</div>
+                                    </div>
+                                    <div class="amount float-right no-break">
+                                        {% if vout.wrapped %}
+                                            {{ vout.value }} wNav
+                                        {% elseif vout.private %}
+                                            {{ vout.value }} xNav
+                                        {% else %}
+                                            {{ vout.value }} Nav
+                                        {% endif %}
                                     </div>
                                 </div>
-                                <div class="amount float-right no-break">
-                                    {{ vout.value }} Nav
+                            {% else %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        {% for address in vout.scriptPubKey.addresses %}
+                                            <a href="/address/{{ address }}">{{ address }}</a><br/>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="amount float-right no-break">
+                                        {% if vout.wrapped %}
+                                            {{ vout.value }} wNav
+                                        {% elseif vout.private %}
+                                            {{ vout.value }} xNav
+                                        {% else %}
+                                            {{ vout.value }} Nav
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            </li>
-                        {% elseif vout.scriptPubKey.addresses == null and vout.scriptPubKey.type == "nonstandard" %}
-                            <li>
-                                <div class="address float-left">
-                                    <div>NonStandard</div>
+                            {% endif %}
+
+                            {% if vout.multisig %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        <div>MultiSig ({{ vout.multisig.required }}/{{ vout.multisig.total }})</div>
+                                    </div>
+                                    {% if vout.scriptPubKey.addresses|length == 0 %}
+                                        <div class="amount float-right no-break">
+                                            {{ vout.value }} Nav
+                                        </div>
+                                    {% endif %}
                                 </div>
-                                <div class="amount float-right no-break">
-                                    {{ vout.value }} Nav
-                                </div>
-                            </li>
-                        {% else %}
-                            <li>
-                                <div class="address float-left">
-                                    {% for address in vout.scriptPubKey.addresses %}
-                                        <a href="/address/{{ address }}">{{ address }}</a><br/>
-                                    {% endfor %}
-                                </div>
-                                <div class="amount float-right no-break">
-                                    {{ vout.value }} Nav
-                                </div>
-                            </li>
-                        {% endif %}
+                            {% endif %}
+                        </li>
                     {% endfor %}
                 </div>
             </div>

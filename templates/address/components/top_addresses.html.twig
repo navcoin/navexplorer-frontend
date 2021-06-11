@@ -1,0 +1,38 @@
+<h2>Top {{ count }} Addresses</h2>
+
+<div>
+    <table class="table table-striped table-nav">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Address</th>
+                <th colspan="2">Balance</th>
+                <th class="d-none d-md-table-cell">Last&nbsp;Block</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for address in richList %}
+                <tr>
+                    <td>{{ address.richList.spendable }}</td>
+                    {% if address.ismultisig %}
+                        <td>
+                            <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">{{ address.multisig.hash }}</a>
+                            (MultiSig {{ address.multisig.required }}/{{ address.multisig.total }})
+                        </td>
+                    {% else %}
+                        <td>
+                            <a href="{{ path('app_address_index', { 'hash': address.hash }) }}" class="break-word">{{ address.hash }}</a>
+                        </td>
+                    {% endif %}
+                    <td class="no-break">Spendable<br/>Stakable<br/>Voting Weight</td>
+                    <td>
+                        {{ address.spendable|nav(false, 2) }}<br/>
+                        {{ address.stakable|nav(false, 2) }}<br/>
+                        {{ address.votingWeight|nav(false, 2) }}
+                    </td>
+                    <td class="d-none d-md-table-cell"><a href="{{ path('app_block_view', {'height': address.height}) }}">{{ address.height }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

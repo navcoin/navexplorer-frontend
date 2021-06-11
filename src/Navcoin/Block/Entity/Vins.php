@@ -41,4 +41,14 @@ class Vins extends IteratorEntity implements IteratorEntityInterface
 
         return $addresses;
     }
+
+    public function hasMultiSig() {
+        /** @var Vin $input */
+        foreach ($this->getElements() as $input) {
+            if ($input->isMultiSig()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

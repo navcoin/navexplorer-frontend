@@ -36,11 +36,25 @@
           .inputs {
             padding-left: 0;
             padding-right: 2rem;
+
+            li {
+              border-bottom: 1px solid $dark-grey;
+              &:last-child{
+                border: 0;
+              }
+            }
           }
 
           .outputs {
             padding-left: 2rem;
             padding-right: 0;
+
+            li {
+              border-bottom: 1px solid $dark-grey;
+              &:last-child{
+                border: 0;
+              }
+            }
           }
         }
 
@@ -53,6 +67,11 @@
 
           li {
             overflow: hidden;
+
+            .address-container {
+              overflow: hidden;
+              zoom: 1;
+            }
 
             .address {
               max-width: 65%;

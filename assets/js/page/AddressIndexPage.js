@@ -15,7 +15,8 @@ class AddressIndexPage {
             'address/history-table-row.html',
             {
                 sort: [
-                    { height: "desc" }
+                    { height: "desc" },
+                    { txindex: "desc" },
                 ],
                 size: 20,
                 page: 1,

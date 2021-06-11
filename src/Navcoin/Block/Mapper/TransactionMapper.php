@@ -99,6 +99,7 @@ class TransactionMapper extends BaseMapper
                     $key,
                     $this->getData('valuesat', $outputData, 0),
                     $this->getData('addresses', $outputData['scriptPubKey'], []),
+                    $this->getData('redeemed', $outputData, false),
                     $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['hash'] : null,
                     $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['height'] : null
                 );

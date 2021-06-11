@@ -11,7 +11,8 @@ use App\Navcoin\Address\Api\StakingApi;
 use App\Navcoin\Address\Api\SummaryApi;
 use App\Navcoin\Address\Api\TransactionApi;
 use App\Navcoin\Address\Entity\StakingGroups;
-use App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter;
+use App\Navcoin\Block\Api\BlockApi;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,9 @@ class AddressController extends AbstractController
 {
     /** @var AddressApi */
     private $addressApi;
+
+    /** @var BlockApi */
+    private $blockApi;
 
     /** @var HistoryApi */
     private $historyApi;
@@ -38,9 +42,10 @@ class AddressController extends AbstractController
     /** @var int */
     private $pageSize = 10;
 
-    public function __construct(AddressApi $addressApi, HistoryApi $historyApi, SummaryApi $summaryApi, StakingApi $stakingApi, TransactionApi $transactionApi)
+    public function __construct(AddressApi $addressApi, BlockApi $blockApi, HistoryApi $historyApi, SummaryApi $summaryApi, StakingApi $stakingApi, TransactionApi $transactionApi)
     {
         $this->addressApi = $addressApi;
+        $this->blockApi = $blockApi;
         $this->historyApi = $historyApi;
         $this->summaryApi = $summaryApi;
         $this->stakingApi = $stakingApi;
@@ -48,18 +53,33 @@ class AddressController extends AbstractController
     }
 
     /**
+     * @Route("/addresses")
+     * @Template()
+     */
+    public function addresses(): array
+    {
+        $count = 100;
+
+        return [
+            'count' => $count,
+            'richList' => $this->addressApi->getAddresses($count),
+            'bestBlock' => $this->blockApi->getBestBlock()
+        ];
+    }
+
+    /**
      * @Route("/address/{hash}")
      */
     public function index(Request $request, String $hash): Response
     {
-//        try {
+        try {
             $address = $this->addressApi->getAddress($hash);
             $summary = $this->summaryApi->getSummary($hash);
-//        } catch (AddressNotFoundException $e) {
-//            return $this->render('address/not_found.html.twig', ['hash' => $hash]);
-//        } catch (AddressInvalidException $e) {
-//            return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
-//        }
+        } catch (AddressNotFoundException $e) {
+            return $this->render('address/not_found.html.twig', ['hash' => $hash]);
+        } catch (AddressInvalidException $e) {
+            return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
+        }
 
         $period = $request->get('period', "daily");
 
