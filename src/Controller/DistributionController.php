@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Navcoin\Distribution\Api\DistributionApi;
-use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class DistributionController
 {
@@ -14,6 +14,6 @@ class DistributionController
      */
     public function balance(SerializerInterface $serializer, DistributionApi $distributionApi)
     {
-        return new Response($serializer->serialize($distributionApi->getBalanceDistribution(),'json'));
+        return new Response($serializer->serialize($distributionApi->getWealth("10,100,1000"),'json'));
     }
 }

@@ -11,7 +11,7 @@ trait Paginated
         $this->paginator = $paginator;
     }
 
-    public function getPaginator(): Paginator
+    public function getPaginator(): ?Paginator
     {
         return $this->paginator;
     }

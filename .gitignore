@@ -6,13 +6,9 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-
-###> symfony/web-server-bundle ###
-.web-server-pid
-###< symfony/web-server-bundle ###
 docker/logs/nginx/*
 
-/bin
+!/bin/build
 !/bin/console
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
@@ -20,3 +16,7 @@ docker/logs/nginx/*
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###

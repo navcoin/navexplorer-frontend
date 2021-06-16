@@ -1,0 +1,12 @@
+<div class="pagination-pages text-right">
+    <small class="no-break">Showing page {{ data.current_page }} of {{ data.total_pages }}</small>
+</div>
+
+<div class="clear-fix text-right">
+    <ul>
+        <li><a href="#" data-page="1" class="{% if data.first %}disabled{% endif %}">First</a></li>
+        <li><a href="#" data-page="{{ data.current_page-1 }}" class="{% if data.first %}disabled{% endif %}">Prev</a></li>
+        <li><a href="#" data-page="{{ data.current_page+1 }}" class="{% if data.last %}disabled{% endif %}">Next</a></li>
+        <li><a href="#" data-page="{{ data.total_pages }}" class="{% if data.last %}disabled{% endif %}">Last</a></li>
+    </ul>
+</div>

@@ -11,17 +11,21 @@ use App\Navcoin\Address\Api\StakingApi;
 use App\Navcoin\Address\Api\SummaryApi;
 use App\Navcoin\Address\Api\TransactionApi;
 use App\Navcoin\Address\Entity\StakingGroups;
-use App\Navcoin\Address\Type\Filter\AddressTransactionTypeFilter;
-use JMS\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Navcoin\Block\Api\BlockApi;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
-class AddressController extends Controller
+class AddressController extends AbstractController
 {
     /** @var AddressApi */
     private $addressApi;
+
+    /** @var BlockApi */
+    private $blockApi;
 
     /** @var HistoryApi */
     private $historyApi;
@@ -38,13 +42,29 @@ class AddressController extends Controller
     /** @var int */
     private $pageSize = 10;
 
-    public function __construct(AddressApi $addressApi, HistoryApi $historyApi, SummaryApi $summaryApi, StakingApi $stakingApi, TransactionApi $transactionApi)
+    public function __construct(AddressApi $addressApi, BlockApi $blockApi, HistoryApi $historyApi, SummaryApi $summaryApi, StakingApi $stakingApi, TransactionApi $transactionApi)
     {
         $this->addressApi = $addressApi;
+        $this->blockApi = $blockApi;
         $this->historyApi = $historyApi;
         $this->summaryApi = $summaryApi;
         $this->stakingApi = $stakingApi;
         $this->transactionApi = $transactionApi;
+    }
+
+    /**
+     * @Route("/addresses")
+     * @Template()
+     */
+    public function addresses(): array
+    {
+        $count = 100;
+
+        return [
+            'count' => $count,
+            'richList' => $this->addressApi->getAddresses($count),
+            'bestBlock' => $this->blockApi->getBestBlock()
+        ];
     }
 
     /**
@@ -85,7 +105,9 @@ class AddressController extends Controller
             $request->get('type')
         );
 
-        return new Response($serializer->serialize($history, 'json'));
+        return new Response($serializer->serialize($history, 'json'), 200, [
+            'paginator' => $serializer->serialize($history->getPaginator(), 'json'),
+    ]);
     }
 
     private function getStakingReport(string $hash, string $period): ?StakingGroups

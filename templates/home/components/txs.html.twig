@@ -1,4 +1,6 @@
-<table class="table table-striped table-adaptive table-nav" data-url="{{ path('app_transaction_transactions', {'size': 10}) }}">
+{% set url = path('app_transaction_transactions', {'filters': {'include_coinbase_txs': 'false', 'include_staking_txs': 'false'  }, 'size': 10}) %}
+
+<table class="table table-striped table-adaptive table-nav" data-url="{{ url }}">
     <thead>
     <tr>
         <th>Hash</th>

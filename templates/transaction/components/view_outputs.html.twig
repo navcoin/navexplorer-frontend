@@ -5,49 +5,92 @@
         <thead>
             <tr>
                 <th style="width: 5%" class="text-center">Index</th>
-                <th style="width: 40%">Address</th>
-                <th style="width: 15%">Type</th>
-                <th style="width: 20%">Redeemed&nbsp;In</th>
-                <th style="width: 20%" class="text-right">Amount</th>
+                <th style="width: 10%">Type</th>
+                {% if transaction.vouts.hasMultiSig %}
+                    <th style="width:30%">Address</th>
+                    <th style="width:30%">MultiSig</th>
+                    <th style="width:10%">Redeemed&nbsp;In</th>
+                {% else %}
+                    <th style="width:40%">Address</th>
+                    <th style="width:30%">Redeemed&nbsp;In</th>
+                {% endif %}
+                <th style="width: 15%" class="text-right">Amount</th>
             </tr>
         </thead>
         <tbody>
-            {% for key, output in transaction.outputs %}
+            {% for key, vout in transaction.vouts %}
                 <tr>
-                    <td data-role="index" class="text-center">{{ output.index }}</td>
+                    <td data-role="index" class="text-center">{{ vout.index }}</td>
+                    <td data-role="type">
+                        {% if vout.isMultiSig %} MultiSig ({{ vout.multisig.required }}/{{ vout.multisig.total }})
+                        {% elseif vout.isWrapped %} Wrapped
+                        {% elseif vout.isPrivate %} Private
+                        {% elseif vout.isPrivateFee %} Private Fee
+                        {% elseif vout.type == "PUBKEY" %} PubKey
+                        {% elseif vout.type == "PUBKEYHASH" %} PubKeyHash
+                        {% elseif vout.type == "NONSTANDARD" %} NonStandard
+                        {% elseif vout.type == "CFUND_CONTRIBUTION" %} CfundContribution
+                        {% elseif vout.type == "COLD_STAKING" %} ColdStaking
+                        {% elseif vout.type == "COLD_STAKING_V2" %} ColdStakingV2
+                        {% else %}
+                            {{ vout.type }}
+                        {% endif %}
+                    </td>
                     <td data-role="address">
-                        {%  for address in output.addresses %}
+                        {% for address in vout.addresses %}
                             <span class="break-word">
                                 <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                             </span>
                         {% else %}
-                            {% if output.isPrivate %} xNav <small>Private Address</small>
-                            {% elseif output.isPrivateFee %} xNav&nbsp;<small>Fee</small>
-                            {% else %} N/A
+                            {% if vout.isPrivate %}
+                                Private
+                            {% elseif vout.isPrivateFee %}
+                                <a href="{{ path('app_address_index', { 'hash': block.stakedBy }) }}">{{ block.stakedBy }}</a>
+                            {% elseif vout.type == "NONSTANDARD" %}
+                                NonStandard
+                            {% else %} n/a
                             {% endif %}
                         {% endfor %}
                     </td>
-                    <td data-role="type">{{ output.type|capitalize }}</td>
+
+                    {% if transaction.vouts.hasMultiSig %}
+                        <td data-role="multiSigs" class="break-word">
+                            {% if vout.multisig %}
+                                {% for signature in vout.multisig.signatures %}
+                                    {{ signature[0:30] }}...{{ signature[signature|length-6:] }}<br>
+                                {% else %}
+                                {% endfor %}
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                    {% endif %}
+
                     <td data-role="redeemedIn">
-                        {% if output.redeemedInTransaction and output.redeemedInBlock %}
+                        {% if vout.redeemed and vout.redeemedInTransaction and vout.redeemedInBlock %}
                             <span style="white-space: nowrap">
-                                <a href="{{ path('app_transaction_view', {'hash': output.redeemedInTransaction}) }}">
-                                    {{ output.redeemedInTransaction[0:10] }}...{{ output.redeemedInTransaction[output.redeemedInTransaction|length-4:] }}
-                                </a>
-                                <small>in <a href="{{ path('app_block_view', {'height': output.redeemedInBlock}) }}">{{ output.redeemedInBlock }}</a></small>
+                                <a href="{{ path('app_transaction_view', {'hash': vout.redeemedInTransaction}) }}">
+                                    {{ vout.redeemedInTransaction[0:20] }}...{{ vout.redeemedInTransaction[vout.redeemedInTransaction|length-4:] }}
+                                </a><br>
+                                <small>Block <a href="{{ path('app_block_view', {'height': vout.redeemedInBlock}) }}">{{ vout.redeemedInBlock }}</a></small>
                             </span>
-                        {% elseif output.private == true %}
+                        {% elseif vout.private == true %}
                             Unspent
-                        {% elseif output.type == 'CFUND_CONTRIBUTION' %}
+                        {% elseif vout.type == 'CFUND_CONTRIBUTION' %}
                             Community&nbsp;Fund&nbsp;Contribution
-                        {% elseif output.address == '' %}
-                            &nbsp;-----&nbsp;
                         {% else %}
                             Unspent
                         {% endif %}
+                        {% if vout.isPrivateFee %}<br/><small>Private TX Fee</small>{% endif %}
                     </td>
                     <td data-role="amount" class="text-right">
-                        {{ output.amount|stake_format }}
+                        {% if vout.wrapped %}
+                            {{ vout.amount|wnav }}
+                        {% elseif vout.private %}
+                            {{ vout.amount|xnav }}
+                        {% else %}
+                            {{ vout.amount|nav }}
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

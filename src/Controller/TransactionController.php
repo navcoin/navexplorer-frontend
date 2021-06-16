@@ -6,14 +6,15 @@ use App\Exception\TransactionNotFoundException;
 use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\TransactionApi;
 use Exception;
-use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Throwable;
 
-class TransactionController extends Controller
+class TransactionController extends AbstractController
 {
     /** @var int */
     private $pageSize = 10;
@@ -31,7 +32,7 @@ class TransactionController extends Controller
     }
 
     /**
-     * @Route("/tx")
+     * @Route("/txs/{type}/{includes}", defaults={"type"="all","includes"="all"})
      * @Template()
      */
     public function index(): array
@@ -45,11 +46,14 @@ class TransactionController extends Controller
     public function transactions(Request $request, SerializerInterface $serializer): Response
     {
         $transactions = $this->transactionApi->getTransactions(
+            $request->get('filters', []),
             $request->get('size', $this->pageSize),
             $request->get('page', 1)
         );
 
-        return new Response($serializer->serialize($transactions, 'json'));
+        return new Response($serializer->serialize($transactions, 'json'), 200, [
+            'paginator' => $serializer->serialize($transactions->getPaginator(), 'json')
+        ]);
     }
 
     /**
@@ -76,7 +80,9 @@ class TransactionController extends Controller
             $transaction = $this->transactionApi->getTransaction($request->get('hash'));
             $block = $this->blockApi->getBlock($transaction->getHeight());
             $rawData = $this->transactionApi->getRawTransaction($transaction->getHash());
-        } catch(TransactionNotFoundException $e) {
+            $jsonData = json_decode($rawData, true);
+            $strdzeel = $jsonData['strdzeel'];
+        } catch(TransactionNotFoundException|Throwable $e) {
             return $this->render(
                 'transaction/not_found.html.twig',
                 ['hash' => $request->get('hash')],
@@ -88,6 +94,7 @@ class TransactionController extends Controller
             'transaction' => $transaction,
             'block' => $block,
             'raw' => $rawData,
+            'strdzeel' => $strdzeel,
         ];
     }
 }

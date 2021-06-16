@@ -29,21 +29,21 @@
                     </tr>
                     <tr>
                         <th scope="col">Stake Reward</th>
-                        <td class="text-right">{{ block.stake|stake_format }}</td>
+                        <td class="text-right">{{ block.stake|nav }}</td>
                     </tr>
                     {% if block.cfundPayout %}
                     <tr>
                         <th scope="col">Community Fund Payout</th>
-                        <td class="text-right">{{ block.cfundPayout|stake_format }}</td>
+                        <td class="text-right">{{ block.cfundPayout|nav }}</td>
                     </tr>
                     {% endif %}
                     <tr>
                         <th scope="col">Fees</th>
-                        <td class="text-right">{{ block.fees|stake_format }}</td>
+                        <td class="text-right">{{ block.fees|nav }}</td>
                     </tr>
                     <tr>
                         <th scope="col">Nav Spent</th>
-                        <td class="text-right">{{ block.spend|stake_format }}</td>
+                        <td class="text-right">{{ block.spend|nav }}</td>
                     </tr>
                     <tr>
                         <th scope="col">Created At</th>
@@ -95,11 +95,11 @@
             <div class="block-links">
 
                 <span class="float-left">
-                    <a href="{{ path('app_block_view', {'height': block.height-1}) }}"{% if block.height == 1 %} class="disabled"{% endif %}>Previous Block</a>
+                    <a href="{{ path('app_block_view', {'height': block.height-1}) }}" class="btn {% if block.height != 1 %}btn-info{% else %}btn-secondary disabled{% endif %}">Previous Block</a>
                 </span>
 
                 <span class="float-right">
-                    <a href="{{ path('app_block_view', {'height': block.height+1}) }}"{% if block.best == true %} class="disabled"{% endif %}>Next Block</a>
+                    <a href="{{ path('app_block_view', {'height': block.height+1}) }}" class="btn {% if block.best != true %}btn-info{% else %}btn-secondary disabled{% endif %}">Next Block</a>
                 </span>
             </div>
         </div>

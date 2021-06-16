@@ -1,0 +1,47 @@
+{% if data|length == 0 %}
+<tr>
+    <td colspan="7" class="text-center">
+        There are no transactions that match your filter combination.
+    </td>
+</tr>
+{% endif %}
+{% for item in data %}
+<tr>
+    <td data-role="type" class="ucwords">
+        {% switch item.type %}
+        {% case "coinbase" %}
+            <i class="fas fa-coins" data-toggle="tooltip" data-placement="top" title="{{ item.type }}"></i>
+        {% case "staking" %}
+            <i class="fas fa-piggy-bank" data-toggle="tooltip" data-placement="top" title="{{ item.type }}"></i>
+        {% case "cold_staking" %}
+            <i class="fas fa-piggy-bank" data-toggle="tooltip" data-placement="top" title="{{ item.type }}"></i>
+        {% case "cold_staking_v2" %}
+            <i class="fas fa-piggy-bank" data-toggle="tooltip" data-placement="top" title="{{ item.type }}"></i>
+        {% case "transfer" %}
+            <i class="fas fa-exchange-alt" data-toggle="tooltip" data-placement="top" title="{{ item.type }}"></i>
+        {% case "private" %}
+            <i class="fas fa-user-secret" data-toggle="tooltip" data-placement="top" title="{{ item.type }}"></i>
+        {% endswitch %}
+        &nbsp;{{ item.type | replace("_", " ") }}
+    </td>
+    <td data-role="hash" class="break-word">
+        <a href="{{ item.link }}">{{ item.hash }}</a>
+    </td>
+    <td data-role="age" class="no-break">
+        {{ item.age }}<br/>
+        <small>{{ item.time }}</small>
+    </td>
+    <td data-role="height" class="text-center">
+        <a href="/block/{{ item.height }}">{{ item.height }}</a>
+    </td>
+    <td data-role="confirmations" class="text-center">
+        {{ item.confirmations }}
+    </td>
+    <td data-role="amount">
+        {{ item.amount }}&nbsp;Nav
+    </td>
+    <td data-role="fees">
+        {{ item.fees }}&nbsp;Nav
+    </td>
+</tr>
+{% endfor %}

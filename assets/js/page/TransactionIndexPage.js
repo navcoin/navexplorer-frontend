@@ -1,63 +1,79 @@
 const $ = require('jquery');
 
+import NumberFormat from "../services/NumberFormat";
+import * as moment from 'moment';
+import CreateTable from '../services/Table';
 
-import TableManager from "../services/TableManager";
-import NavNumberFormat from "../services/NavNumberFormat";
-import moment from 'moment/src/moment';
-
-class PageTransaction {
+class TransactionIndexPage {
     constructor() {
-        console.log("Transaction Index Page");
-
-        this.tableManager = new TableManager('#transaction-list table', 'transactions', this.createTableRow);
+        CreateTable($("#transaction-list"),
+            "/tx",
+            this.getRowData,
+            'transactions/table-rows.html',
+            {
+                sort: [
+                    { txheight: "desc" },
+                    { index: "asc" },
+                ],
+                size: 20,
+                page: 1,
+            },
+            [
+                {
+                    "field": "type",
+                    "name": "Tx Type",
+                    "primary": true,
+                    "filters": [
+                        {"name": "all", "value": "coinbase|staking|cold_staking|cold_staking_v2|transfer|spend", "active": true, default: true},
+                        {"name": "coinbase", "value": "coinbase"},
+                        {"name": "staking", "value": "staking|cold_staking|cold_staking_v2"},
+                        {"name": "transfer", "value": "transfer|spend"},
+                    ]
+                },
+                {
+                    "field": "wOrXNav",
+                    "name": "Includes",
+                    "primary": false,
+                    "filters": [
+                        {"name": "all", "value": "All", active: true, default: true},
+                        {"name": "nav", "value": "Nav"},
+                        {"name": "wNav", "value": "wNav"},
+                        {"name": "xNav", "value": "xNav"},
+                    ]
+                }],
+            true
+        );
     }
 
-    createTableRow(data) {
-        let numberFormatter = new NavNumberFormat();
-
-        let $row = $(document.createElement('tr'));
-        $row.attr('data-id', data.id);
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'hash')
-            .append('<a href="/tx/' + data.hash + '" class="break-word">' + data.hash.substring(20) + '...</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'height')
-            .append('<a href="/block/'+ data.height + '">'+ data.height + '</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'date/time')
-            .append(moment(data.time).utc().format('YYYY-MM-DD[,] H:mm:ss'))
-        );
-
-        if (data.stake) {
-            $row.append($(document.createElement('td'))
-                .addClass("text-right")
-                .attr('data-role', 'amount')
-                .append('<span class="badge badge-info badge-staking">Staking</span>')
-                .append(numberFormatter.format(data.stake) + '&nbsp;NAV')
-            );
+    getRowData(data) {
+        let amount;
+        if (data.type === "staking") {
+            amount = NumberFormat.format(data.stake/100000000);
         } else {
-            let amount = 0;
-            data.outputs.forEach(function (output) {
-                amount += output.amount;
-            });
-            $row.append($(document.createElement('td'))
-                .addClass("text-right")
-                .attr('data-role', 'amount')
-                .append(numberFormatter.format(amount) + '&nbsp;NAV')
-            );
+            let total = data.vout.reduce(function(prev, cur) {
+                return prev + cur.value;
+            }, 0);
+            amount = NumberFormat.format(total)
         }
+        if (data.type === "spend") data.type="transfer";
 
-        return $row;
+        return {
+            type: data.type,
+            hash: data.hash,
+            hash_small: data.hash.substring(0, 12) + '...'+ data.hash.slice(-4),
+            link: "/tx/"+data.hash,
+            age: moment(data.time).utc().fromNow(),
+            time: moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss'),
+            height: NumberFormat.format(data.height, false),
+            confirmations: NumberFormat.format(data.confirmations ? data.confirmations : 0, false),
+            amount: amount,
+            fees: NumberFormat.format(data.fees/100000000, true, 4),
+        }
     }
 }
 
 $(function() {
     if ($('body').is('.page-transaction-index')) {
-        new PageTransaction();
+        new TransactionIndexPage();
     }
 });

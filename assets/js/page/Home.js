@@ -1,24 +1,68 @@
-import TableManager from "../services/TableManager";
-import NavNumberFormat from "../services/NavNumberFormat";
-import moment from 'moment/src/moment';
+import NumberFormat from "../services/NumberFormat";
+import * as moment from 'moment';
 import axios from "axios";
 import Chart from "chart.js";
+import nunjucks from "../services/Nunjucks";
+import ExplorerApi from "../services/ExplorerApi";
 
 const $ = require('jquery');
 
 class PageHome {
-    constructor()
-    {
+    constructor() {
         console.log("Home Page");
+
+        this.getLatestBlocks()
+            .getLatestTxs()
 
         this.populateAddressGroups();
 
         this.populateTicker();
         this.populateMarketChart();
-
-        this.tableManager = new TableManager('#blocks table', 'block', this.populateBlocks);
-        this.tableManager = new TableManager('#txs table', 'transaction', this.populateTxs);
+        this.populateCfund();
     }
+
+    getLatestBlocks() {
+        ExplorerApi.get("/block", {
+            sort: [{ height: "desc" }],
+            size: 5,
+            page: 1,
+        }, function(data) {
+            data.elements.forEach(function(element) {
+                element.short_hash = element.hash.substring(0, 20) + '...' + element.hash.slice(-4)
+                element.height = NumberFormat.format(element.height, false)
+                element.age = moment(element.time).utc().fromNow()
+                element.time = moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss');
+            })
+            nunjucks.render("home/latest-blocks.html", {blocks: data.elements, total: data.pagination.total}, function(err, html) {
+                $('#blocks').html(html)
+            }.bind(this))
+        }.bind(this))
+
+        return this
+    }
+
+    getLatestTxs() {
+        let options = {sort: [{ txheight: "desc" }], size: 5, page: 1, filters: []}
+        options.filters["type"] = "transfer|spend"
+
+        ExplorerApi.get("/tx", options, function(data) {
+            data.elements.forEach(function(element) {
+                element.short_hash = element.hash.substring(0, 20) + '...' + element.hash.slice(-4)
+                element.age = moment(element.time).utc().fromNow()
+                element.time = moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss');
+                element.height_formatted = NumberFormat.format(element.height, false)
+                let value = 0;
+                element.vout.forEach(function(output) { value += output.valuesat });
+                element.value = NumberFormat.formatSatNav(value, true, false)
+            })
+            nunjucks.render("home/latest-txs.html", {txs: data.elements, total: data.pagination.total}, function(err, html) {
+                $('#txs').html(html)
+            }.bind(this))
+        }.bind(this))
+
+        return this
+    }
+
 
     populateAddressGroups() {
         console.info("populateAddressGroups")
@@ -31,12 +75,9 @@ class PageHome {
     }
 
     loadAddressGroupData(response) {
-        let elements = response.data.elements.reverse();
+        let elements = response.data.reverse();
 
         let start = []
-        let end = []
-        let addresses = []
-        let stake = []
         let spend = []
 
         Array.min = function(array) {
@@ -49,16 +90,9 @@ class PageHome {
 
         for (let i = 0; i < elements.length; i++) {
             start[i] = moment(elements[i].start).utc().format('YYYY-MM-DD');
-            end[i] = elements[i].end;
-            addresses[i] = elements[i].addresses;
-            stake[i] = elements[i].stake;
             spend[i] = elements[i].spend;
         }
         let ctx = document.getElementById("address-groups-chart");
-
-        let minAddresses = Math.ceil(Array.min(addresses) / 1.2);
-        let minStaking = Math.ceil(Array.min(spend) / 1.2);
-        let maxStaking = Math.ceil(Array.min(spend) * 1.2);
 
         var options = {
             responsive: true,
@@ -81,44 +115,13 @@ class PageHome {
                         display: false,
                     }
                 }],
-                yAxes: [
-                //     {
-                //     id: 'A',
-                //     type: 'linear',
-                //     position: 'right',
-                //     offset: false,
-                //     gridLines: {
-                //         display: true,
-                //     // },
-                //     // ticks: {
-                //     //     min: minAddresses,
-                //     // },
-                //     // afterTickToLabelConversion: function(scaleInstance) {
-                //     //     if (minAddresses !== 0) {
-                //     //         scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
-                //     //         scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
-                //     //     }
-                //     }
-                // },
-                {
-
+                yAxes: [{
                     id: 'B',
                     type: 'linear',
                     position: 'left',
                     offset: false,
                     gridLines: {
                         display: true,
-                    },
-                    afterTickToLabelConversion: function(scaleInstance) {
-                        // if (minStaking !== 0) {
-                        //     scaleInstance.ticks[scaleInstance.ticks.length - 1] = null;
-                        //     scaleInstance.ticksAsNumbers[scaleInstance.ticksAsNumbers.length - 1] = null;
-                        // }
-
-                        // if (maxStaking != 0) {
-                        //     scaleInstance.ticks[0] = null;
-                        //     scaleInstance.ticksAsNumbers[0] = null;
-                        // }
                     }
                 }]
             },
@@ -128,37 +131,22 @@ class PageHome {
 
         let data = {
             labels: start,
-            datasets: [
-                // {
-                //     label: 'Staking Addresses',
-                //     fill: true,
-                //     lineTension: 0.4,
-                //     backgroundColor: "rgba(0,0,0,0)",
-                //     borderColor: "hsl(199, 81%, 59%)",
-                //     borderWidth: 3,
-                //     pointRadius: 2,
-                //     pointBackgroundColor: "hsl(199, 81%, 59%)",
-                //     data: stake,
-                //     spanGaps: true,
-                //     yAxisID: 'A',
-                // },
-                {
-                    gridLines: {
-                        display: true,
-                    },
-                    fill: true,
-                    label: 'Active Addresses',
-                    lineTension: 0.4,
-                    backgroundColor: "rgba(0,0,0,0)",
-                    borderColor: "rgb(183, 61, 175)",
-                    borderWidth: 3,
-                    pointRadius: 2,
-                    pointBackgroundColor: "rgb(183, 61, 175)",
-                    data: spend,
-                    spanGaps: true,
-                    yAxisID: 'B'
+            datasets: [{
+                gridLines: {
+                    display: true,
                 },
-            ]
+                fill: true,
+                label: 'Active Addresses',
+                lineTension: 0.4,
+                backgroundColor: "rgba(0,0,0,0)",
+                borderColor: "rgb(183, 61, 175)",
+                borderWidth: 3,
+                pointRadius: 2,
+                pointBackgroundColor: "rgb(183, 61, 175)",
+                data: spend,
+                spanGaps: true,
+                yAxisID: 'B'
+            }]
         };
 
         let myLineChart = new Chart(ctx, {
@@ -290,94 +278,24 @@ class PageHome {
     }
 
     populateTicker() {
-        let numberFormatter = new NavNumberFormat();
-
         axios.get("/ticker.json").then((response) => {
             $('#ticker-btc').html(response.data.btc.toFixed(8) + '&nbsp;BTC');
             $('#ticker-usd').html('$&nbsp;'+response.data.usd.toFixed(6));
-            $('#market-cap').html('$&nbsp;'+numberFormatter.format(response.data.marketCap));
-            $('#circulating-supply  ').html(numberFormatter.formatNav(response.data.circulatingSupply, false));
-            $('#public-supply').html(numberFormatter.formatNav(response.data.publicSupply, false));
-            $('#private-supply').html(numberFormatter.formatNav(response.data.privateSupply, false, true));
+            $('#market-cap').html('$&nbsp;'+NumberFormat.format(response.data.marketCap));
+            $('#market-cap-rank').html('(#'+NumberFormat.format(response.data.marketCapRank)+')');
+            $('#public-supply').html(NumberFormat.format(response.data.publicSupply, false) + ' Nav');
+            $('#private-supply').html(NumberFormat.format(response.data.privateSupply, false) + ' xNav');
+            $('#wrapped-supply').html(NumberFormat.format(response.data.wrappedSupply, false) + ' wNav');
         });
     }
 
-    populateBlocks(data, paginator) {
-        let numberFormatter = new NavNumberFormat();
+    populateCfund() {
 
-        let $row = $(document.createElement('tr'));
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'hash')
-            .append('<a href="/block/'+data.height+'">' + data.hash.substring(0, 12) + '...'+data.hash.slice(-4)+'</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'height')
-            .append('<a href="/block/'+data.height+'">' + numberFormatter.format(data.height) + '</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'date/time')
-            .append(moment(data.created).utc().format('YYYY-MM-DD[,] HH:mm:ss'))
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'transactions')
-            .attr('class', 'text-center')
-            .append(data.transactions)
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'stakedBy')
-            .attr('class', 'text-right')
-            .append('<a href="/address/'+data.staked_by+'">' + data.staked_by.substring(0, 12) + '...'+data.staked_by.slice(-4)+'</a>')
-        );
-
-        return $row;
-    }
-
-    populateTxs(data) {
-        let numberFormatter = new NavNumberFormat();
-
-        let $row = $(document.createElement('tr'));
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'hash')
-            .append('<a href="/tx/'+data.hash+'">' + data.hash.substring(0, 12) + '...'+data.hash.slice(-4)+'</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'height')
-            .append('<a href="/block/'+data.height+'">' + numberFormatter.format(data.height) + '</a>')
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'date/time')
-            .append(moment(data.time).utc().format('YYYY-MM-DD[,] HH:mm:ss'))
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'inputs')
-            .attr('class', 'text-center')
-            .append(data.inputs.length)
-        );
-
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'outputs')
-            .attr('class', 'text-center')
-            .append(data.outputs.length)
-        );
-
-        let value = 0;
-        data.outputs.forEach(function(output) { value += output.amount });
-        $row.append($(document.createElement('td'))
-            .attr('data-role', 'value out')
-            .attr('class', 'text-right')
-            .append(numberFormatter.format(value) + '&nbsp;Nav')
-        );
-
-        return $row;
+        axios.get("/community-fund/stats.json").then((response) => {
+            $('#cfund-available').html(NumberFormat.format(response.data.available, false) + '&nbsp;Nav');
+            $('#cfund-locked').html(NumberFormat.format(response.data.locked, false) + '&nbsp;Nav');
+            $('#cfund-spent').html(NumberFormat.format(response.data.paid, false) + '&nbsp;Nav');
+        });
     }
 }
 

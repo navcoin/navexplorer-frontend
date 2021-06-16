@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use App\Navcoin\Address\Api\AddressGroupApi;
-use JMS\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class AddressGroupController
 {
@@ -20,6 +21,6 @@ class AddressGroupController
             $request->get('days', 10)
         );
 
-        return new Response($serializer->serialize($addressGroups, 'json'));
+        return JsonResponse::fromJsonString($serializer->serialize($addressGroups, 'json'));
     }
 }

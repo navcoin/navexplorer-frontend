@@ -14,11 +14,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-8">
-                    {% include "address/components/index_summary.html.twig" %}
-                </div>
-            </div>
+            {% include "address/components/index_summary.html.twig" %}
 
             <div class="row">
                 <div class="col-md-12">
@@ -29,8 +25,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if activeTab == "staking-report" %}active{% endif %}" href="#" data-toggle="collapse" data-target="#staking-report" aria-expanded="true" aria-controls="staking-report">
-                                Staking
+                            <a class="nav-link {% if activeTab == "staking-report" %}active{% endif %} no-break" href="#" data-toggle="collapse" data-target="#staking-report" aria-expanded="true" aria-controls="staking-report">
+                                Staking Rewards
                             </a>
                         </li>
 {#                        <li class="nav-item">#}

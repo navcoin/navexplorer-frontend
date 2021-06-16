@@ -29,7 +29,7 @@
                 <td data-role="hourlyPeriod">{{ period(blocks.period, index, block) }}</td>
                 <td class="text-center" data-role="blocks">{{ block.blocks|number_format }}</td>
                 <td class="text-center" data-role="transactions">{{ (block.transactions-block.blocks-block.blocks)|number_format }}</td>
-                <td data-role="navSpent" class="text-right">{{ block.spend|stake_format(false, 2) }}</td>
+                <td data-role="navSpent" class="text-right">{{ block.spend|nav(false, 2) }}</td>
             </tr>
         {% endfor %}
         </tbody>

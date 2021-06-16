@@ -4,3 +4,8 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         network: '%navcoin.network%'
+        explorer:
+            api:
+                url: '%explorer.api.url%'
+
+    exception_controller: null

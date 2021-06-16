@@ -14,12 +14,12 @@
                 </span>
             </li>
             <li class="list-group-item">
-                NAV Requested
-                <span class="float-right">{{ proposal.requestedAmount|stake_format }}</span>
+                Nav Requested
+                <span class="float-right">{{ proposal.requestedAmount|nav }}</span>
             </li>
             <li class="list-group-item">
-                NAV Paid
-                <span class="float-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|stake_format }}</span>
+                Nav Paid
+                <span class="float-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|nav }}</span>
             </li>
             <li class="list-group-item">
                 Duration

@@ -12,13 +12,13 @@ use App\Navcoin\CommunityFund\Constants\PaymentRequestState;
 use App\Navcoin\CommunityFund\Constants\PaymentRequestStatus;
 use App\Navcoin\CommunityFund\Constants\ProposalState;
 use App\Navcoin\CommunityFund\Constants\ProposalStatus;
-use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CommunityFundController extends AbstractController
 {
@@ -210,10 +210,6 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/dao/proposal/{hash}/payment-requests")
-     * @Template()
-     *
-     * @param Request $request
-     * @return array|RedirectResponse
      */
     public function viewPaymentRequestsAction(Request $request)
     {
@@ -245,10 +241,6 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/dao/payment-request/{hash}")
-     * @Template()
-     *
-     * @param Request $request
-     * @return array
      */
     public function viewPaymentRequestAction(Request $request)
     {
@@ -264,11 +256,6 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/community-fund/proposal/{hash}/trend.json")
-     *
-     * @param Request             $request
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
      */
     public function proposalVoteTrends(Request $request, SerializerInterface $serializer): Response
     {
@@ -282,11 +269,6 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/community-fund/payment-request/{hash}/trend.json")
-     *
-     * @param Request             $request
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
      */
     public function paymentRequestVoteTrends(Request $request, SerializerInterface $serializer): Response
     {

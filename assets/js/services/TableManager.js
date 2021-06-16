@@ -35,20 +35,24 @@ export default class TableManager {
     }
 
     handleDefaultResponse(response) {
-        let elements = response.data.elements;
-        if (typeof elements === "undefined") {
+        if (typeof response.headers['x-pagination'] !== "undefined") {
+            let paginationData = JSON.parse(response.headers['x-pagination']);
+            this.pagination.init(paginationData);
+            this.handleResponse(response.data, paginationData);
+
+        } else if (typeof response.headers.paginator === "undefined") {
             if (this.paginated === true) {
                 this.pagination.hide();
             }
             this.handleResponse(response.data);
         } else {
-            this.pagination.init(response.data);
-            this.handleResponse(elements, response.data.paginator);
+            this.pagination.init(JSON.parse(response.headers.paginator));
+            this.handleResponse(response.data, JSON.parse(response.headers.paginator));
         }
     }
 
     handleNextResponse(response) {
-        let elements = response.data.elements;
+        let elements = response.data;
 
         if (typeof elements === "undefined") {
             if (this.paginated === true) {
@@ -59,14 +63,14 @@ export default class TableManager {
         }
     }
 
-    handleResponse(elements, paginator) {
+    handleResponse(data, paginator) {
         this.emptyTable();
 
-        if (elements.length === 0) {
+        if (data.length === 0) {
             this.noResultsFound();
         }
 
-        elements.forEach(function (tx) {
+        data.forEach(function (tx) {
             this.table.append(this.rowCreatedCallback(tx, paginator));
         }.bind(this));
 

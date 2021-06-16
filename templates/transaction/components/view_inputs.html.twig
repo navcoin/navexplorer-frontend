@@ -4,32 +4,63 @@
     <thead>
         <tr>
             <th class="text-center" style="width:5%">Index</th>
-            <th style="width:55%">Address</th>
-            <th style="width: 20%">Previous Output</th>
-            <th style="width: 20%" class="text-right">Amount</th>
+            <th style="width:10%">Type</th>
+            {% if transaction.vins.hasMultiSig %}
+                <th style="width:30%">Address</th>
+                <th style="width:30%">MultiSig</th>
+                <th style="width:10%">Previous Output</th>
+            {% else %}
+                <th style="width:40%">Address</th>
+                <th style="width:30%">Previous Output</th>
+            {% endif %}
+            <th style="width: 15%" class="text-right">Amount</th>
         </tr>
     </thead>
     <tbody>
-        {% for input in transaction.inputs %}
+        {% for vin in transaction.vins.elements %}
             <tr>
-                <td data-role="index" class="text-center">{{ input.index }}</td>
+                <td data-role="index" class="text-center">{{ vin.vout }}</td>
+                <td data-role="type" >
+                    {% if vin.isMultiSig %} MultiSig ({{ vin.previousOutput.multisig.required }}/{{ vin.previousOutput.multisig.total }})
+                    {% elseif vin.isWrapped %} Wrapped
+                    {% elseif vin.isPrivate %} Private
+{#                    {% elseif vin.isPrivateFee %} Private Fee#}
+                    {% elseif vin.previousOutput and vin.previousOutput.type == "pubkey" %} PubKey
+                    {% elseif vin.previousOutput and vin.previousOutput.type == "pubkeyhash" %} PubKeyHash
+                    {% elseif vin.previousOutput and vin.previousOutput.type =="nonstandard" %} NonStandard
+                    {% elseif vin.previousOutput and vin.previousOutput.type =="cold_staking" %} ColdStaking
+                    {% elseif vin.previousOutput and vin.previousOutput.type =="cold_stakin_v2" %} ColdStakingV2
+                    {% elseif vin.previousOutput %} {{ vin.previousOutput.type }}
+                    {% endif %}
+                </td>
                 <td data-role="address">
-                    {%  for address in input.addresses %}
+                    {% for address in vin.addresses %}
                         <span class="break-word">
                             <a href="{{ path('app_address_index', { 'hash': address }) }}">{{ address }}</a>
                         </span>
                     {% else %}
-                        xNav <small>Private Address</small>
+                        {% if vin.previousOutput.private %}Private{% endif %}
                     {% endfor %}
                 </td>
+
+                {% if vin.isMultiSig %}
+                    <td data-role="multiSigs" class="break-word">
+                        {% for signature in vin.previousOutput.multisig.signatures %}
+                            {{ signature[0:30] }}...{{ signature[signature|length-6:] }}<br>
+                        {% else %}
+                            &nbsp;
+                        {% endfor %}
+                    </td>
+                {% endif %}
+
                 <td data-role="previousOutput">
-                    {% if input.previousOutput %}
+                    {% if vin.previousOutput %}
                         <span style="white-space: nowrap">
-                            <a href="{{ path('app_transaction_view', {'hash': input.previousOutput}) }}">
-                                {{ input.previousOutput[0:10] }}...{{ input.previousOutput[input.previousOutput|length-4:] }}:{{ input.previousOutputIndex }}
+                            <a href="{{ path('app_transaction_view', {'hash': vin.txid}) }}">
+                                {{ vin.txid[0:10] }}...{{ vin.txid[vin.txid|length-4:] }}:{{ vin.vout }}
                             </a>
-                            {% if input.previousOutputHeight %}
-                                <small>in <a href="{{ path('app_block_view', {'height': input.previousOutputHeight}) }}">{{ input.previousOutputHeight }}</a></small>
+                            {% if vin.previousOutput.height %}
+                                <br><small>Block <a href="{{ path('app_block_view', {'height': vin.previousOutput.height}) }}">{{ vin.previousOutput.height }}</a></small>
                             {% endif %}
                         </span>
                     {% else %}
@@ -37,7 +68,13 @@
                     {% endif %}
                 </td>
                 <td data-role="amount" class="text-right">
-                    {{ input.amount|stake_format }}
+                    {% if vin.previousOutput.wrapped %}
+                        {{ vin.value|wnav }}
+                    {% elseif vin.previousOutput.private %}
+                        {{ vin.value|xnav }}
+                    {% else %}
+                        {{ vin.value|nav }}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

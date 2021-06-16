@@ -8,7 +8,6 @@ use App\Navcoin\Block\Api\BlockApi;
 use App\Navcoin\Block\Api\BlockGroupApi;
 use App\Navcoin\Common\Network;
 use App\Navcoin\Distribution\Api\DistributionApi;
-use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class HomeController extends AbstractController
 {
@@ -49,9 +49,9 @@ class HomeController extends AbstractController
     {
         $ticker = $coinApi->getTicker();
         try {
-            $totalSupply = $distributionApi->getTotalSupply();
+            $supply = $distributionApi->getSupply();
         } catch (DistributionException $e) {
-            $totalSupply = ['public' => 0, 'private' => 0];
+            $supply = ['public' => 0, 'private' => 0];
         }
         
         if ($this->getParameter('navcoin.network') != "mainnet") {
@@ -62,10 +62,12 @@ class HomeController extends AbstractController
         $response = [
             'btc' => $ticker['market_data']['current_price']['btc'],
             'usd' => $ticker['market_data']['current_price']['usd'],
-            'marketCap' => floor(($totalSupply['public']+$totalSupply['private'])*$ticker['market_data']['current_price']['usd']),
-            'circulatingSupply' => $totalSupply['public'] + $totalSupply['private'],
-            'publicSupply' => $totalSupply['public'],
-            'privateSupply' => $totalSupply['private'],
+            'marketCap' => floor($supply['total']*$ticker['market_data']['current_price']['usd']),
+            'marketCapRank' => $ticker['market_cap_rank'],
+            'circulatingSupply' => $supply['total'],
+            'publicSupply' => $supply['public'],
+            'privateSupply' => $supply['private'],
+            'wrappedSupply' => $supply['wrapped'],
         ];
 
         return new Response($serializer->serialize($response, 'json'));

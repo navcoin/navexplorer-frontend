@@ -6,7 +6,7 @@
 {% block page %}page-transaction-view{% endblock %}
 
 {% block body %}
-    <div class="transaction" data-height="{{ transaction.hash }}">
+    <div class="transaction" data-hash="{{ transaction.hash }}">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -32,6 +32,13 @@
                                 Raw Data
                             </a>
                         </li>
+                        {% if transaction.script %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#script" aria-expanded="false" aria-controls="script">
+                                Script
+                            </a>
+                        </li>
+                        {% endif %}
                     </ul>
 
                     <div id="block-collapse">
@@ -46,6 +53,10 @@
 
                         <div id="raw-transaction" class="collapse collapsed" data-parent="#block-collapse">
                             {% include "transaction/components/view_raw_transaction.html.twig" %}
+                        </div>
+
+                        <div id="script" class="collapse collapsed" data-parent="#block-collapse">
+                            {% include "transaction/components/view_raw_transaction.html.twig" with {"raw": strdzeel } %}
                         </div>
                     </div>
                 </div>

@@ -21,7 +21,7 @@ export default class TransactionLoader {
     transactionHtml(data) {
         let self = this;
         let $transactionList = $(".transaction-list");
-        data.elements.forEach(function (tx) {
+        data.forEach(function (tx) {
             $transactionList.append(
                 '<div class="card card-nav">\n' +
                 '  <div class="card-header">' +
@@ -30,7 +30,7 @@ export default class TransactionLoader {
                 '  <div class="card-body">\n' +
                 '    <div class="row">\n' +
                 '      <div class="col-sm-12 col-md-6 inputs"><span class="caption">Inputs</span>' + self.inputList(tx.inputs, tx) + '</div>\n' +
-                '      <div class="col-sm-12 col-md-6 outputs"><span class="caption">Outputs</span>' + self.inputList(tx.outputs, tx) + '</div>\n' +
+                '      <div class="col-sm-12 col-md-6 outputs"><span class="caption">Vouts</span>' + self.inputList(tx.outputs, tx) + '</div>\n' +
                 '    </div>\n' +
                 '  </div>\n' +
                 '</div>'
@@ -39,7 +39,6 @@ export default class TransactionLoader {
     }
 
     inputList(inputs, tx) {
-        console.log(inputs);
         let BreakException = {};
         let list = $(document.createElement('ul'));
         let self = this;
@@ -66,17 +65,13 @@ export default class TransactionLoader {
                             '<span class="break-word">' +
                             '  <a href="/address/' + input.addresses[2] + '">' + input.addresses[2] + '</a>' +
                             '</span>');
-                    } else if (input.private_fee === true) {
-                        address.html('xNav <small>Fee</small>');
                     } else if (input.private === true) {
-                        address.html('xNav <small>Private Address</small>');
-                    } else if (typeof input.type !== 'undefined' && input.type !== 'PUBKEY' && input.type !== 'PUBKEYHASH') {
-                        address.html(input.type.toLowerCase());
-                    } else if (tx.type === 'spend' && input.addresses.length === 0) {
-                        address.html('xNav <small>Private Address</small>');
+                        address.html('Hidden');
+                    } else if (typeof input.wrapped_addresses !== 'undefined' && input.wrapped_addresses.length !== 0) {
+                        input.wrapped_addresses.forEach(element => address.append(element+'<br/>'));
                     } else if (typeof input.addresses !== 'undefined') {
                         if (input.addresses.length === 0) {
-                            address.html('N/A');
+                            address.html('n/a');
                         } else {
                             let a = $(document.createElement('a')).attr('href', '/address/' + input.addresses[0]).html(input.addresses[0]);
                             address.append(a);
@@ -85,16 +80,24 @@ export default class TransactionLoader {
                         let a = $(document.createElement('a')).attr('href', '/address/' + input.address).html(input.address);
                         address.append(a);
                     } else {
-                        address.html('N/A');
+                        address.html('n/a');
                     }
 
-                    let amount = $(document.createElement('div'));
-                    amount.attr('class', 'amount float-right');
-                    amount.html((input.amount ? self.numberWithCommas(input.amount) : '0') + ' NAV');
+                    let amount = input.amount ? self.numberWithCommas(input.amount) : '0';
+                    if (input.wrapped) {
+                        amount += "&nbsp;wNav"
+                    } else if (input.private) {
+                        amount += "&nbsp;xNav"
+                    } else {
+                        amount += "&nbsp;Nav"
+                    }
+                    let amountDiv = $(document.createElement('div'));
+                    amountDiv.attr('class', 'amount float-right');
+                    amountDiv.html(amount);
 
                     let item = $(document.createElement('li'));
                     item.append(address);
-                    item.append(amount);
+                    item.append(amountDiv);
 
                     list.append(item);
                 });

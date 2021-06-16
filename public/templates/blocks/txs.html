@@ -1,0 +1,113 @@
+{% for item in data %}
+<div class="card card-nav">
+    <div class="card-header">
+        <h2 class="break-word"><a href="/tx/{{ item.hash }}" class="text-left">{{ item.hash }}</a></h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 inputs">
+                <span class="caption">Inputs</span>
+                <ul>
+                    {% if item.type == "coinbase" %}
+                        Coinbase
+                    {% else %}
+                        {% for vin in item.vin %}
+                            <li>
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        {% for address in vin.addresses %}
+                                            <a href="/address/{{ address }}">{{ address }}</a><br>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="amount float-right no-break">
+                                        {% if vin.previousOutput.wrapped %}
+                                            {{ vin.value }} wNav
+                                        {% elseif vin.previousOutput.private %}
+                                            {{ vin.value }} xNav
+                                        {% else %}
+                                            {{ vin.value }} Nav
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if vin.previousOutput.multisig %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        <div>MultiSig ({{ vin.previousOutput.multisig.required }}/{{ vin.previousOutput.multisig.total }})</div>
+                                    </div>
+                                    {% if vin.addresses|length == 0 %}
+                                    <div class="amount float-right no-break">
+                                        {% if vin.previousOutput.wrapped %}
+                                            {{ vin.value }} wNav
+                                        {% elseif vin.previousOutput.private %}
+                                            {{ vin.value }} xNav
+                                        {% else %}
+                                            {{ vin.value }} Nav
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-6 outputs">
+                <span class="caption">Outputs</span>
+                <ul>
+                    {% for vout in item.vout %}
+                        <li>
+                            {% if vout.scriptPubKey.addresses == null and vout.scriptPubKey.type == "nonstandard" %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        <div>NonStandard</div>
+                                    </div>
+                                    <div class="amount float-right no-break">
+                                        {% if vout.wrapped %}
+                                            {{ vout.value }} wNav
+                                        {% elseif vout.private %}
+                                            {{ vout.value }} xNav
+                                        {% else %}
+                                            {{ vout.value }} Nav
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        {% for address in vout.scriptPubKey.addresses %}
+                                            <a href="/address/{{ address }}">{{ address }}</a><br/>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="amount float-right no-break">
+                                        {% if vout.wrapped %}
+                                            {{ vout.value }} wNav
+                                        {% elseif vout.private %}
+                                            {{ vout.value }} xNav
+                                        {% else %}
+                                            {{ vout.value }} Nav
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if vout.multisig %}
+                                <div class="address-container">
+                                    <div class="address float-left">
+                                        <div>MultiSig ({{ vout.multisig.required }}/{{ vout.multisig.total }})</div>
+                                    </div>
+                                    {% if vout.scriptPubKey.addresses|length == 0 %}
+                                        <div class="amount float-right no-break">
+                                            {{ vout.value }} Nav
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

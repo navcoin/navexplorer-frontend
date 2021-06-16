@@ -5,12 +5,12 @@ namespace App\Controller;
 use App\Navcoin\Search\Api\SearchApi;
 use App\Navcoin\Search\Exception\SearchResultMissException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SearchController extends Controller
+class SearchController extends AbstractController
 {
     /**
      * @Route("/search")

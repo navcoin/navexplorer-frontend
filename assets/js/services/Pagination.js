@@ -21,20 +21,11 @@ export default class Pagination {
         }
     }
 
-    init(data) {
-        let paginator = data.paginator;
+    init(state) {
+        this.state = state
 
-        this.state = {
-            first: paginator.first,
-            last: paginator.last,
-            page: paginator.current_page,
-            size: paginator.total_pages,
-            totalElements: paginator.total_elements,
-            totalPages: paginator.total_pages,
-        }
-
-        let lastPageSize = (this.state.totalElements % this.state.size);
-        this.state.lastPageElements = (lastPageSize === 0) ? this.state.size : lastPageSize;
+        let lastPageSize = (this.state.total % this.state.size);
+        this.state.last_page_size = (lastPageSize === 0) ? this.state.size : lastPageSize;
 
         this.initialized = true;
 
@@ -124,7 +115,7 @@ export default class Pagination {
 
             let details = $(document.createElement('span'));
             details.addClass('pagination-details');
-            details.html("Showing page " + (pagination.state.page) + " of " + pagination.state.totalPages);
+            details.html("Showing page " + (pagination.state.current_page) + " of " + pagination.state.total_pages);
 
             let buttons = $(document.createElement('span'));
             buttons.addClass('float-right');

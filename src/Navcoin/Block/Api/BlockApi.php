@@ -50,6 +50,9 @@ class BlockApi extends NavcoinApi
     public function getBestBlock(): Block
     {
         $blocks = $this->getBlocks(1);
+        if ($blocks->countElements() == 0) {
+            throw new BlockNotFoundException("The best block could not be found");
+        }
 
         return $blocks->getElement(0);
     }

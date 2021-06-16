@@ -9,56 +9,56 @@
     </tr>
     </thead>
     <tbody>
-    {% for output in transaction.outputs %}
-        {% if output.proposalVote %}
+    {% for vout in transaction.vouts %}
+        {% if vout.proposalVote %}
             <tr>
-                <td data-role="index">{{ output.index }}</td>
-                <td data-role="type">{{ output.type|capitalize|replace({'_': ' '}) }}</td>
+                <td data-role="index">{{ vout.index }}</td>
+                <td data-role="type">{{ vout.type|capitalize|replace({'_': ' '}) }}</td>
                 <td data-role="proposal" colspan="2">
-                    <a class="break-word" href="{{ path('app_communityfund_view', {'hash': output.hash}) }}">{{ output.hash }}</a>
+                    <a class="break-word" href="{{ path('app_communityfund_view', {'hash': vout.hash}) }}">{{ vout.hash }}</a>
                 </td>
             </tr>
-        {% elseif output.paymentRequestVote %}
+        {% elseif vout.paymentRequestVote %}
             <tr>
-                <td data-role="index">{{ output.index }}</td>
-                <td data-role="type">{{ output.type|capitalize|replace({'_': ' '}) }}</td>
+                <td data-role="index">{{ vout.index }}</td>
+                <td data-role="type">{{ vout.type|capitalize|replace({'_': ' '}) }}</td>
                 <td data-role="proposal" colspan="2">
-                    <a class="break-word" href="{{ path('app_communityfund_view', {'hash': output.hash}) }}">{{ output.hash }}</a>
+                    <a class="break-word" href="{{ path('app_communityfund_view', {'hash': vout.hash}) }}">{{ vout.hash }}</a>
                 </td>
             </tr>
-        {% elseif output.consultationVote %}
+        {% elseif vout.consultationVote %}
             <tr>
-                <td data-role="index">{{ output.index }}</td>
-                <td data-role="type">{{ output.type|capitalize|replace({'_': ' '}) }}</td>
+                <td data-role="index">{{ vout.index }}</td>
+                <td data-role="type">{{ vout.type|capitalize|replace({'_': ' '}) }}</td>
                 <td data-role="proposal" colspan="2">
-                    <a class="break-word" href="{{ path('app_dao_answer', {'hash': output.hash}) }}">{{ output.hash }}</a>
+                    <a class="break-word" href="{{ path('app_dao_answer', {'hash': vout.hash}) }}">{{ vout.hash }}</a>
                 </td>
             </tr>
-        {% elseif output.supportVote %}
+        {% elseif vout.supportVote %}
             <tr>
-                <td data-role="index">{{ output.index }}</td>
-                <td data-role="type">{{ output.type|capitalize|replace({'_': ' '}) }}</td>
+                <td data-role="index">{{ vout.index }}</td>
+                <td data-role="type">{{ vout.type|capitalize|replace({'_': ' '}) }}</td>
                 <td data-role="proposal" colspan="2">
-                    <a class="break-word" href="{{ path('app_dao_consultation', {'hash': output.hash}) }}">{{ output.hash }}</a>
+                    <a class="break-word" href="{{ path('app_dao_consultation', {'hash': vout.hash}) }}">{{ vout.hash }}</a>
                 </td>
             </tr>
-        {% elseif output.type == "NONSTANDARD" %}
+        {% elseif vout.type == "nonstandard" %}
             <tr>
-                <td data-role="index">{{ output.index }}</td>
-                <td data-role="type" colspan="3">{{ output.type|capitalize }}</td>
+                <td data-role="index">{{ vout.index }}</td>
+                <td data-role="type" colspan="3">{{ vout.type|capitalize }}</td>
             </tr>
         {% else %}
             <tr>
-                <td data-role="index">{{ output.index }}</td>
-                <td data-role="type">{{ output.type|lower }}</td>
+                <td data-role="index">{{ vout.index }}</td>
+                <td data-role="type">{{ vout.type|lower }}</td>
                 <td data-role="address">
-                    {% if output.address %}
-                        <a class="break-word" href="{{ path('app_address_index', {'hash': output.address}) }}">{{ output.address }}</a>
+                    {% if vout.address %}
+                        <a class="break-word" href="{{ path('app_address_index', {'hash': vout.address}) }}">{{ vout.address }}</a>
                     {% else %}
-                        {{ output.address }}
+                        {{ vout.address }}
                     {% endif %}
                 </td>
-                <td data-role="amount">{{ output.amount|stake_format }}</td>
+                <td data-role="amount">{{ vout.amount|nav }}</td>
             </tr>
         {% endif %}
     {% endfor %}
