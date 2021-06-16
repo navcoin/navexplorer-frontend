@@ -8,7 +8,6 @@ class ExplorerApi {
     }
 
     get(path, options, callback) {
-        console.info(path, options)
         axios.get(this.url + path + (options ? "?" + this._formatParams(options) : ''))
             .then(response => {
                 this._handleResponse(response, callback)

@@ -32,7 +32,7 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * @Route("/txs")
+     * @Route("/txs/{type}/{includes}", defaults={"type"="all","includes"="all"})
      * @Template()
      */
     public function index(): array

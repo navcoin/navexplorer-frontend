@@ -50,7 +50,7 @@ class PageHome {
                 element.short_hash = element.hash.substring(0, 20) + '...' + element.hash.slice(-4)
                 element.age = moment(element.time).utc().fromNow()
                 element.time = moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss');
-                element.height = NumberFormat.format(element.height, false)
+                element.height_formatted = NumberFormat.format(element.height, false)
                 let value = 0;
                 element.vout.forEach(function(output) { value += output.valuesat });
                 element.value = NumberFormat.formatSatNav(value, true, false)

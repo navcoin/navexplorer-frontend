@@ -68,6 +68,12 @@
 @media only screen and (max-width: 575px) {
 
   .table-pagination {
+    overflow: hidden;
+    float: none !important;
+    text-align: left !important;
+  }
+  .table-filters {
+    overflow: hidden;
     float: none !important;
     text-align: left !important;
   }
@@ -265,9 +271,21 @@ thead.loading {
 .table-filters {
   float:left;
   margin-bottom: 0.60rem;
+
+  label {
+    display: block;
+    margin-bottom: 0;
+  }
+  .filter-group {
+    float:left;
+    margin-right: 1rem;
+    margin-bottom: 0.20rem;
+
+    .table-filter {
+      text-transform: capitalize;
+    }
+  }
 }
-
-
 
 .table-total {
   color: $white;

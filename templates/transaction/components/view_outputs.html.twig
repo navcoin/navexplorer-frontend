@@ -31,6 +31,7 @@
                         {% elseif vout.type == "NONSTANDARD" %} NonStandard
                         {% elseif vout.type == "CFUND_CONTRIBUTION" %} CfundContribution
                         {% elseif vout.type == "COLD_STAKING" %} ColdStaking
+                        {% elseif vout.type == "COLD_STAKING_V2" %} ColdStakingV2
                         {% else %}
                             {{ vout.type }}
                         {% endif %}
@@ -53,11 +54,14 @@
                     </td>
 
                     {% if transaction.vouts.hasMultiSig %}
-                        <td data-role="multiSigs">
+                        <td data-role="multiSigs" class="break-word">
                             {% if vout.multisig %}
                                 {% for signature in vout.multisig.signatures %}
                                     {{ signature[0:30] }}...{{ signature[signature|length-6:] }}<br>
+                                {% else %}
                                 {% endfor %}
+                            {% else %}
+                                &nbsp;
                             {% endif %}
                         </td>
                     {% endif %}

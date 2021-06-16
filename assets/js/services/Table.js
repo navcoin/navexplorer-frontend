@@ -49,11 +49,19 @@ class Table {
     }
 
     handleChangeFilters(data) {
+        let that = this
+
         this.filters.forEach(function(item) {
             if (item.field === data.field) {
                 item.filters.forEach(function(filter) {
-                    filter.active = filter.name === data.name
+
+                    if (filter.name === data.name && filter.active) {
+                        that.resetFilter(item.filters)
+                    } else {
+                        filter.active = filter.name === data.name
+                    }
                 })
+
             }
         })
         this.pagination.current_page = 1
@@ -65,6 +73,12 @@ class Table {
         this.pagination.current_page = data.page
 
         this.request()
+    }
+
+    resetFilter(item) {
+        item.forEach(function(filter) {
+            filter.active = filter.default === true
+        })
     }
 
     request() {
@@ -110,7 +124,6 @@ class Table {
     }
 
     renderPagination(pagination) {
-        console.info("Table::renderPagination")
         this.pagination = pagination
         this.selector.find('.table-pagination').html("");
 

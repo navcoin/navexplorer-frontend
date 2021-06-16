@@ -21,12 +21,24 @@ class TransactionIndexPage {
             [
                 {
                     "field": "type",
+                    "name": "Tx Type",
                     "primary": true,
                     "filters": [
-                        {"name": "All", "value": "coinbase|staking|transfer|spend", "active": true},
-                        {"name": "Coinbase", "value": "coinbase"},
-                        {"name": "Staking", "value": "staking"},
-                        {"name": "Transfer", "value": "transfer|spend"},
+                        {"name": "all", "value": "coinbase|staking|cold_staking|cold_staking_v2|transfer|spend", "active": true, default: true},
+                        {"name": "coinbase", "value": "coinbase"},
+                        {"name": "staking", "value": "staking|cold_staking|cold_staking_v2"},
+                        {"name": "transfer", "value": "transfer|spend"},
+                    ]
+                },
+                {
+                    "field": "wOrXNav",
+                    "name": "Includes",
+                    "primary": false,
+                    "filters": [
+                        {"name": "all", "value": "All", active: true, default: true},
+                        {"name": "nav", "value": "Nav"},
+                        {"name": "wNav", "value": "wNav"},
+                        {"name": "xNav", "value": "xNav"},
                     ]
                 }],
             true

@@ -29,6 +29,7 @@
                     {% elseif vin.previousOutput and vin.previousOutput.type == "pubkeyhash" %} PubKeyHash
                     {% elseif vin.previousOutput and vin.previousOutput.type =="nonstandard" %} NonStandard
                     {% elseif vin.previousOutput and vin.previousOutput.type =="cold_staking" %} ColdStaking
+                    {% elseif vin.previousOutput and vin.previousOutput.type =="cold_stakin_v2" %} ColdStakingV2
                     {% elseif vin.previousOutput %} {{ vin.previousOutput.type }}
                     {% endif %}
                 </td>
@@ -43,9 +44,11 @@
                 </td>
 
                 {% if vin.isMultiSig %}
-                    <td data-role="multiSigs">
+                    <td data-role="multiSigs" class="break-word">
                         {% for signature in vin.previousOutput.multisig.signatures %}
                             {{ signature[0:30] }}...{{ signature[signature|length-6:] }}<br>
+                        {% else %}
+                            &nbsp;
                         {% endfor %}
                     </td>
                 {% endif %}
