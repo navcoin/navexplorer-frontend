@@ -9,7 +9,16 @@
                 <span class="caption">Inputs</span>
                 <ul>
                     {% if item.type == "coinbase" %}
-                        <li>Coinbase</li>
+                        <li>
+                            <div class="address-container">
+                                <div class="address float-left">
+                                    Coinbase
+                                </div>
+                                <div class="amount float-right no-break">
+                                    0 Nav
+                                </div>
+                            </div>
+                        </li>
                     {% else %}
                         {% for vin in item.vin %}
                             <li>
