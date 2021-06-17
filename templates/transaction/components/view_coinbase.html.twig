@@ -55,7 +55,7 @@
                     {% if vout.address %}
                         <a class="break-word" href="{{ path('app_address_index', {'hash': vout.address}) }}">{{ vout.address }}</a>
                     {% else %}
-                        {{ vout.address }}
+                        &nbsp;
                     {% endif %}
                 </td>
                 <td data-role="amount">{{ vout.amount|nav }}</td>
