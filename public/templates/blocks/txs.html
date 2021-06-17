@@ -9,15 +9,16 @@
                 <span class="caption">Inputs</span>
                 <ul>
                     {% if item.type == "coinbase" %}
-                        Coinbase
+                        <li>Coinbase</li>
                     {% else %}
                         {% for vin in item.vin %}
                             <li>
                                 <div class="address-container">
                                     <div class="address float-left">
                                         {% for address in vin.addresses %}
-                                            <a href="/address/{{ address }}">{{ address }}</a><br>
+                                            <a href="/address/{{ address }}">{{ address }}</a>
                                         {% endfor %}
+                                        {% if vin.previousOutput.private %}Private{% endif %}
                                     </div>
                                     <div class="amount float-right no-break">
                                         {% if vin.previousOutput.wrapped %}
@@ -60,7 +61,7 @@
                             {% if vout.scriptPubKey.addresses == null and vout.scriptPubKey.type == "nonstandard" %}
                                 <div class="address-container">
                                     <div class="address float-left">
-                                        <div>NonStandard</div>
+                                        <div>{% if vout.private %}Private{% else %}NonStandard{% endif %}</div>
                                     </div>
                                     <div class="amount float-right no-break">
                                         {% if vout.wrapped %}
@@ -76,7 +77,7 @@
                                 <div class="address-container">
                                     <div class="address float-left">
                                         {% for address in vout.scriptPubKey.addresses %}
-                                            <a href="/address/{{ address }}">{{ address }}</a><br/>
+                                            <a href="/address/{{ address }}">{{ address }}</a>
                                         {% endfor %}
                                     </div>
                                     <div class="amount float-right no-break">
