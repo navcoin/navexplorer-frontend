@@ -21,12 +21,14 @@
           }
           .inputs {
             border-bottom: 1px solid rgba(223,215,202,0.75);
-            padding-bottom: 0.75rem;
-            margin-bottom: 0.75rem;
+            padding: 0.3rem 0;
+          }
+          .outputs {
+            padding: 0.3rem 0;
           }
         }
         @media (min-width: 768px) {
-          background: url("../images/arrow-thick-right.svg") 50% 50% no-repeat;
+          background: url("../images/arrow-thick-right.svg") 50% 1px no-repeat;
           background-size: 28px;
 
           span.caption {
@@ -58,7 +60,7 @@
           }
         }
 
-        padding: 0.75rem 1.25rem;
+        padding: 0 1.25rem;
 
         ul {
           list-style: none;
@@ -66,6 +68,7 @@
           margin: 0;
 
           li {
+            padding: 0.3rem 0;
             overflow: hidden;
 
             .address-container {
@@ -75,9 +78,26 @@
 
             .address {
               max-width: 65%;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
+            }
+          }
+        }
+        @media (max-width: 767px) {
+          ul {
+            li {
+              border-bottom: 1px solid $dark-grey;
+              &:last-child{
+                border: 0;
+              }
+              padding: 0.3rem 0;
+              line-height: 14px;
+
+              .address {
+                max-width: 50%;
+                a {
+                  display: block;
+                  padding-bottom: 0.3rem;
+                }
+              }
             }
           }
         }
