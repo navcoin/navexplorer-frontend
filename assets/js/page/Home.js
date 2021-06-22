@@ -31,7 +31,7 @@ class PageHome {
                 element.short_hash = element.hash.substring(0, 20) + '...' + element.hash.slice(-4)
                 element.height = NumberFormat.format(element.height, false)
                 element.age = moment(element.time).utc().fromNow()
-                element.time = moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss');
+                element.time = moment(element.time).utc().format('YYYY-MM-DD HH:mm:ss');
             })
             nunjucks.render("home/latest-blocks.html", {blocks: data.elements, total: data.pagination.total}, function(err, html) {
                 $('#blocks').html(html)
@@ -49,7 +49,7 @@ class PageHome {
             data.elements.forEach(function(element) {
                 element.short_hash = element.hash.substring(0, 20) + '...' + element.hash.slice(-4)
                 element.age = moment(element.time).utc().fromNow()
-                element.time = moment(data.time).utc().format('YYYY-MM-DD HH:mm:ss');
+                element.time = moment(element.time).utc().format('YYYY-MM-DD HH:mm:ss');
                 element.height_formatted = NumberFormat.format(element.height, false)
                 let value = 0;
                 element.vout.forEach(function(output) { value += output.valuesat });
