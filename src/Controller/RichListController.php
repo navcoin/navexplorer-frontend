@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Navcoin\Address\Api\AddressApi;
-use App\Navcoin\Address\Api\RichListApi;
 use App\Navcoin\Block\Api\BlockApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Annotation\Route;

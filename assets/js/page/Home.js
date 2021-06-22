@@ -2,6 +2,9 @@ import NumberFormat from "../services/NumberFormat";
 import * as moment from 'moment';
 import axios from "axios";
 import Chart from "chart.js";
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import nunjucks from "../services/Nunjucks";
 import ExplorerApi from "../services/ExplorerApi";
 
@@ -14,7 +17,8 @@ class PageHome {
         this.getLatestBlocks()
             .getLatestTxs()
 
-        this.populateAddressGroups();
+        this.populateCirculation();
+        // this.populateAddressGroups();
 
         this.populateTicker();
         this.populateMarketChart();
@@ -63,6 +67,43 @@ class PageHome {
         return this
     }
 
+    populateCirculation() {
+        console.info("populateCirculation")
+        axios.get('/supply.json?blocks=1').then(this.loadCirculationData.bind(this));
+    }
+
+    loadCirculationData(response) {
+        let elements = response.data;
+
+        var chart = am4core.create("circulation-chart", am4charts.PieChart);
+        chart.data = [
+            { type: "Public", value: Math.round(elements[0].balance.public/100000000) },
+            { type: "Private", value: Math.round(elements[0].balance.private/100000000) },
+            { type: "Wrapped", value: Math.round(elements[0].balance.wrapped/100000000) },
+        ];
+        chart.radius = am4core.percent(95);
+        chart.innerRadius = am4core.percent(65);
+        chart.startAngle = 180;
+        chart.endAngle = 360;
+
+        var series = chart.series.push(new am4charts.PieSeries());
+        series.dataFields.value = "value";
+        series.dataFields.category = "type";
+
+        series.slices.template.cornerRadius = 0;
+        series.slices.template.innerCornerRadius = 0;
+        series.slices.template.draggable = false;
+        series.slices.template.inert = false;
+        series.labels.template.disabled = true;
+        series.ticks.template.disabled = true;
+
+        series.hiddenState.properties.startAngle = 90;
+        series.hiddenState.properties.endAngle = 90;
+
+        chart.legend = new am4charts.Legend();
+        chart.legend.valueLabels.template.disabled = true;
+        chart.legend.paddingBottom = 20;
+    }
 
     populateAddressGroups() {
         console.info("populateAddressGroups")
