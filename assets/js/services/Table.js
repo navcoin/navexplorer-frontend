@@ -5,21 +5,22 @@ import NumberFormat from "../services/NumberFormat";
 const $ = require('jquery')
 
 class Table {
-    constructor(selector, api_path, dataProcessor, rowTemplate, options, filters, pagination) {
+    constructor(selector, api_path, dataProcessor, rowTemplate, options, filters, sorts, pagination) {
         this.selector = selector
         this.api_path = api_path
         this.dataProcessor = dataProcessor
         this.rowTemplate = rowTemplate
         this.options = options
         this.filters = filters
+        this.sorts = sorts
         this.pagination = pagination
     }
 
     init() {
         this.initFilters()
+            .initSorts()
             .initPagination()
             .initTotal()
-
     }
 
     initFilters() {
@@ -30,6 +31,27 @@ class Table {
         })
 
         return this
+    }
+
+    initSorts() {
+        let table = this
+        table.selector.on("click", ".table-sort", function (event) {
+            event.preventDefault()
+            table.handleChangeSorts({"name": $(event.target).data('name')})
+        })
+
+        return this
+    }
+
+    getActiveSort() {
+        let active = null;
+        this.sorts.forEach(function(sort) {
+            if (sort.active === true) {
+                active = sort;
+            }
+        });
+
+        return active;
     }
 
     initPagination() {
@@ -53,16 +75,27 @@ class Table {
 
         this.filters.forEach(function(item) {
             if (item.field === data.field) {
-                item.filters.forEach(function(filter) {
-
-                    if (filter.name === data.name && filter.active) {
-                        that.resetFilter(item.filters)
-                    } else {
-                        filter.active = filter.name === data.name
-                    }
-                })
-
+                if (item.filters.length === 1) {
+                    item.filters[0].active = !item.filters[0].active
+                } else {
+                    item.filters.forEach(function (filter) {
+                        if (filter.name === data.name && filter.active) {
+                            that.resetFilter(item.filters)
+                        } else {
+                            filter.active = filter.name === data.name
+                        }
+                    })
+                }
             }
+        })
+        this.pagination.current_page = 1
+
+        this.request()
+    }
+
+    handleChangeSorts(data) {
+        this.sorts.forEach(function(item) {
+            item.active = item.name === data.name
         })
         this.pagination.current_page = 1
 
@@ -84,6 +117,7 @@ class Table {
     request() {
         let options = this.options
         options.filters = []
+        options.sorts = []
 
         this.filters.forEach(function(item) {
             item.filters.forEach(function(filter) {
@@ -93,6 +127,14 @@ class Table {
             })
         });
 
+        if (this.sorts) {
+            this.sorts.forEach(function (sort) {
+                if (sort.active === true) {
+                    options.sort = sort.value
+                }
+            });
+        }
+
         options.page = this.pagination.current_page
 
         ExplorerApi.get(this.api_path, this.options, this.render.bind(this))
@@ -101,7 +143,7 @@ class Table {
     render(data) {
         let rowData = []
         data.elements.forEach(function(item) {
-            rowData.push(this.dataProcessor(item))
+            rowData.push(this.dataProcessor(item, this))
         }.bind(this), this)
 
         nunjucks.render(this.rowTemplate, {data: rowData}, function(err, data) {
@@ -109,6 +151,7 @@ class Table {
         }.bind(this))
 
         this.renderFilters()
+            .renderSorts()
             .renderPagination(data.pagination)
             .renderTotal(data.pagination)
     }
@@ -118,6 +161,16 @@ class Table {
 
         nunjucks.render("table/filters.html", {data: this.filters}, function(err, html) {
             $(this.selector).find('.table-filters').html(html)
+        }.bind(this))
+
+        return this
+    }
+
+    renderSorts() {
+        this.selector.find('.table-sorts').html("")
+
+        nunjucks.render("table/sorts.html", {data: this.sorts}, function(err, html) {
+            $(this.selector).find('.table-sorts').html(html)
         }.bind(this))
 
         return this
@@ -151,8 +204,8 @@ class Table {
     }
 }
 
-export default function CreateTable(selector, api_path, dataProcessor, rowTemplate, options, filters, pagination) {
-    let table = new Table(selector, api_path, dataProcessor, rowTemplate, options, filters, pagination)
+export default function CreateTable(selector, api_path, dataProcessor, rowTemplate, options, filters, sorts, pagination) {
+    let table = new Table(selector, api_path, dataProcessor, rowTemplate, options, filters, sorts, pagination)
 
     table.init()
     table.request()
