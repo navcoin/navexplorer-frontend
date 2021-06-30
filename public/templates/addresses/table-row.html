@@ -1,0 +1,22 @@
+{% for item in data %}
+<tr>
+    <td data-role="position">{{ item.rich_list.spendable }}</td>
+    <td data-role="hash">
+        {% if item.multisig %}
+            <span class="break-word">
+                <a href="/address/{{ item.hash }}" class="break-word">{{ item.multisig.hash }}</a><br/>
+                MultiSig ({{ item.multisig.required }}/{{ item.multisig.total }})
+            </span>
+        {% else %}
+            <a href="/address/{{ item.hash }}" class="break-word">{{ item.hash }}</a>
+        {% endif %}
+    </td>
+    <td data-role="spendable">{{ item.spendable }}</td>
+    <td data-role="stakable">{{ item.stakable }}</td>
+    <td data-role="votingWeight">{{ item.voting_weight }}</td>
+    <td data-role="lastSeen">
+        <a href="/block/{{ item.height }}" class="break-word">{{ item.height }}</a>
+    </td>
+</tr>
+{% endfor %}
+

@@ -23,7 +23,7 @@ class PageHome {
 
     getLatestBlocks() {
         ExplorerApi.get("/block", {
-            sort: [{ height: "desc" }],
+            sort: "height:desc",
             size: 5,
             page: 1,
         }, function(data) {
@@ -42,7 +42,7 @@ class PageHome {
     }
 
     getLatestTxs() {
-        let options = {sort: [{ txheight: "desc" }], size: 5, page: 1, filters: []}
+        let options = {sort: "txheight:desc", size: 5, page: 1, filters: []}
         options.filters["type"] = "transfer|spend"
 
         ExplorerApi.get("/tx", options, function(data) {
@@ -53,7 +53,7 @@ class PageHome {
                 element.height_formatted = NumberFormat.format(element.height, false)
                 let value = 0;
                 element.vout.forEach(function(output) { value += output.valuesat });
-                element.value = NumberFormat.formatSatNav(value, true, false)
+                element.value = NumberFormat.formatSatNav(value, 4, false)
             })
             nunjucks.render("home/latest-txs.html", {txs: data.elements, total: data.pagination.total}, function(err, html) {
                 $('#txs').html(html)

@@ -8,18 +8,17 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <h1>Addresses</h1>
+            <div class="col-md-12 col-lg-12">
+                {% include 'address/components/addresses_list.html.twig' %}
             </div>
         </div>
-
-        <div class="row">
-            <div class="order-12 order-sm-12 order-md-1 col-md-12 col-lg-8">
-                {% include 'address/components/top_addresses.html.twig' %}
-            </div>
-            <div class="order-md-12 col-md-6 col-lg-4">
-                {% include 'address/components/wealth_distribution.html.twig' %}
-            </div>
-        </div>
+{#        <div class="row">#}
+{#            <div class="col-sm-12 col-md-6 col-lg-6">#}
+{#                {% include 'address/components/wealth_distribution.html.twig' %}#}
+{#            </div>#}
+{#            <div class="col-sm-12 col-md-6 col-lg-6">#}
+{#                {% include 'address/components/address-groups.html.twig' %}#}
+{#            </div>#}
+{#        </div>#}
     </div>
 {% endblock %}

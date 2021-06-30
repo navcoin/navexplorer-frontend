@@ -210,6 +210,7 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/dao/proposal/{hash}/payment-requests")
+     * @Template()
      */
     public function viewPaymentRequestsAction(Request $request)
     {
@@ -241,6 +242,7 @@ class CommunityFundController extends AbstractController
 
     /**
      * @Route("/dao/payment-request/{hash}")
+     * @Template()
      */
     public function viewPaymentRequestAction(Request $request)
     {

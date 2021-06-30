@@ -11,10 +11,6 @@ class TransactionIndexPage {
             this.getRowData,
             'transactions/table-rows.html',
             {
-                sort: [
-                    { txheight: "desc" },
-                    { index: "asc" },
-                ],
                 size: 20,
                 page: 1,
             },
@@ -41,6 +37,9 @@ class TransactionIndexPage {
                         {"name": "xNav", "value": "xNav"},
                     ]
                 }],
+            [
+                {"name": "Default", "value": "txheight:desc,index:asc", "active": true, default: true},
+            ],
             true
         );
     }

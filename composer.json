@@ -26,7 +26,8 @@
         "symfony/twig-bundle": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.11",
         "symfony/yaml": "5.2.*",
-        "twig/extra-bundle": "^3.3"
+        "twig/extra-bundle": "^3.3",
+        "twig/twig": "^2.10"
     },
     "require-dev": {
         "symfony/dotenv": "5.2.*",

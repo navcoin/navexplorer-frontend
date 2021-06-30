@@ -29,12 +29,7 @@ class ExplorerApi {
 
             switch(option) {
                 case "sort":
-                    if (values.length > 0) {
-                        query += "sort=";
-                        values.forEach((v) => {
-                            query += Object.keys(v)[0] + ":" + v[Object.keys(v)[0]] + ",";
-                        });
-                    }
+                    query += "sort="+values+",";
                     break;
                 case "filters":
                     if (Object.entries(values).length > 0) {

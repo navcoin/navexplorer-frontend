@@ -1,0 +1,3 @@
+{% for item in data %}
+    <div class="btn btn-xs {{ "btn-info" if item.active else "btn-secondary" }} table-sort" data-name="{{item.name}}">{{ item.name }}</div>
+{% endfor %}

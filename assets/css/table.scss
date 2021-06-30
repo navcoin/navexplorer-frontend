@@ -181,6 +181,7 @@
     td[data-role="index"]:before { content: "Index"; }
     td[data-role="inputs"]:before { content: "Inputs"; }
     td[data-role="lastBlock"]:before { content: "Last Block"; }
+    td[data-role="lastSeen"]:before { content: "Last Seen"; }
     td[data-role="multiSigs"]:before { content: "MultiSigs"; }
     td[data-role="navEarned"]:before { content: "NAV Earned"; }
     td[data-role="navRequested"]:before { content: "NAV Requested"; }
@@ -189,6 +190,7 @@
     td[data-role="outputs"]:before { content: "Outputs"; }
     td[data-role="percentageOfCoins"]:before { content: "% of Coins"; }
     td[data-role="previousOutput"]:before { content: "Previous Output"; }
+    td[data-role="position"]:before { content: "Position"; }
     td[data-role="proposal"]:before { content: "Proposal"; }
     td[data-role="rank"]:before { content: "Rank"; }
     td[data-role="redeemedIn"]:before { content: "Redeemed In"; }
@@ -266,6 +268,11 @@
 
 thead.loading {
   display: none;
+}
+
+.table-sorts {
+  clear: both;
+  margin-bottom: 0.60rem;
 }
 
 .table-filters {

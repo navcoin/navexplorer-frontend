@@ -2,26 +2,21 @@
 
 namespace App\Controller;
 
-use App\Navcoin\Address\Api\AddressApi;
-use App\Navcoin\Address\Api\RichListApi;
-use App\Navcoin\Block\Api\BlockApi;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RichListController
+class RichListController extends AbstractController
 {
     /**
      * @Route("/rich-list")
-     * @Template()
      */
-    public function index(AddressApi $addressApi, BlockApi $blockApi)
+    public function index(Request $request)
     {
-        $count = 100;
-
-        return [
-            'count' => $count,
-            'richList' => $addressApi->getAddresses($count),
-            'bestBlock' => $blockApi->getBestBlock()
-        ];
+        return $this->redirectToRoute(
+            "app_address_addresses",
+            ["status" => $request->get("status")],
+            301
+        );
     }
 }

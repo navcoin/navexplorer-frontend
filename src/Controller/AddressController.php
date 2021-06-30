@@ -58,13 +58,7 @@ class AddressController extends AbstractController
      */
     public function addresses(): array
     {
-        $count = 100;
-
-        return [
-            'count' => $count,
-            'richList' => $this->addressApi->getAddresses($count),
-            'bestBlock' => $this->blockApi->getBestBlock()
-        ];
+        return [];
     }
 
     /**
