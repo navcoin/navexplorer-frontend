@@ -39,9 +39,6 @@ class AddressIndexPage {
     }
 
     getRowData(data) {
-
-        console.log(data);
-
         if (data.is_stake) {
             data.type = "staking"
         } else if (data.is_cfund_payout) {
