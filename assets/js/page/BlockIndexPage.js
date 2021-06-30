@@ -12,13 +12,13 @@ class BlockIndexPage {
             this.getRowData,
             'blocks/table-row.html',
             {
-                sort: [
-                    { height: "desc" }
-                ],
                 size: 20,
                 page: 1,
             },
             [],
+            [
+                {"name": "default", "value": "height:desc", "active": true, default: true},
+            ],
             true
         );
     }
