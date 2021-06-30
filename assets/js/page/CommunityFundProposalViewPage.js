@@ -35,7 +35,7 @@ class CommunityFundProposalViewPage {
     }
 
     loadChartData(response) {
-        let elements = response.data.elements;
+        let elements = response.data;
 
         let blocks = [];
         let yes = [];
