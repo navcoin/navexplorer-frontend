@@ -26,7 +26,12 @@
                 </tr>
                 <tr>
                     <th scope="col">Address</th>
-                    <td class="text-right">{{ summary.hash }}</td>
+                    <td class="text-right">
+                        {{ summary.hash }}
+                        {% if address.meta and address.meta.label %}
+                            <br/><small>{{ address.meta.label }}</small>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endif %}
             <tr>

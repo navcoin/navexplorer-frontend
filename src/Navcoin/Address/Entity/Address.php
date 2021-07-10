@@ -30,6 +30,9 @@ class Address
     /** @var RichList */
     private $richList;
 
+    /** @var array */
+    private $meta;
+
     public function __construct(
         string $hash,
         int $height,
@@ -39,7 +42,8 @@ class Address
         DateTime $createdTime,
         int $createdBlock,
         RichList $richList,
-        ?MultiSig $multiSig
+        ?MultiSig $multiSig,
+        ?array $meta
     ) {
         $this->hash = $hash;
         $this->height = $height;
@@ -50,6 +54,7 @@ class Address
         $this->createdBlock = $createdBlock;
         $this->richList = $richList;
         $this->multiSig = $multiSig;
+        $this->meta = $meta;
     }
 
     public function getHash(): string
@@ -101,4 +106,10 @@ class Address
     {
         return $this->multiSig;
     }
+
+    public function getMeta(): ?array
+    {
+        return $this->meta;
+    }
+
 }
