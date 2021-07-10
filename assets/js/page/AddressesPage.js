@@ -30,7 +30,6 @@ class AddressesPage {
                     "primary": true,
                     "filters": [
                         {"name": "Exclude Empty Addresses", "value": "empty", "active": true, default: true},
-                        {"name": "Exclude Known Exchange Addresses", "value": "exchange", "active": false, default: false},
                     ]
                 }
             ],
