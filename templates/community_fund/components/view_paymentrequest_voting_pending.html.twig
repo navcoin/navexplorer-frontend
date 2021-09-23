@@ -2,7 +2,25 @@
     <div class="col-md-6 col-sm-12 margin-bottom">
         <h3>Voting cycle {{ votes.latestCycle.cycle }}</h3>
         {{ paymentRequestVoteProgress(paymentRequest, blockCycle, votes.latestCycle) }}
-        <p class="text-muted">Accept {{ paymentRequest.votesYes }} / Reject {{ paymentRequest.votesNo }} / Abstain {{ paymentRequest.votesAbs }}</p>
+
+        <table class="table table-striped margin-top">
+            <tr>
+                <th>Accept</th>
+                <td class="text-right">{{ votes.latestCycle.yes }} </td>
+            </tr>
+            <tr>
+                <th>Reject</th>
+                <td class="text-right">{{ votes.latestCycle.no }} </td>
+            </tr>
+            <tr>
+                <th>Abstain</th>
+                <td class="text-right">{{ votes.latestCycle.abstain }} </td>
+            </tr>
+            <tr>
+                <th>Excluded</th>
+                <td class="text-right">{{ votes.latestCycle.exclude }} </td>
+            </tr>
+        </table>
     </div>
 
     <div class="col-md-6 col-sm-12">
@@ -12,8 +30,8 @@
 </div>
 
 <div class="row" id="votes">
-    <div class="col-md-4 col-sm-12 margin-bottom">
-        <h4>Voting Yes</h4>
+    <div class="col-md-3 col-sm-12 margin-bottom">
+        <h4>Accept</h4>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -26,7 +44,9 @@
             {% for vote in votes.latestCycle.addresses if vote.yes != 0 %}
                 <tr>
                     <td>
-                        <a href="{{ path('app_address_index', {'hash': vote.address }) }}" class="break-word">{{ vote.address }}</a>
+                        <a href="{{ path('app_address_index', {'hash': vote.address }) }}" class="break-word">
+                            {{ vote.address[0:16] }}...{{ vote.address[vote.address|length-4:] }}
+                        </a>
                     </td>
                     <td class="text-center">{{ vote.yes }}</td>
                 </tr>
@@ -39,8 +59,8 @@
         </table>
     </div>
 
-    <div class="col-md-4 col-sm-12">
-        <h4>Voting No</h4>
+    <div class="col-md-3 col-sm-12">
+        <h4>Reject</h4>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -53,7 +73,9 @@
             {% for vote in votes.latestCycle.addresses if vote.no != 0 %}
                 <tr>
                     <td>
-                        <a href="{{ path('app_address_index', {'hash': vote.address }) }}" class="break-word">{{ vote.address }}</a>
+                        <a href="{{ path('app_address_index', {'hash': vote.address }) }}" class="break-word">
+                            {{ vote.address[0:16] }}...{{ vote.address[vote.address|length-4:] }}
+                        </a>
                     </td>
                     <td class="text-center">{{ vote.no }}</td>
                 </tr>
@@ -66,8 +88,8 @@
         </table>
     </div>
 
-    <div class="col-md-4 col-sm-12">
-        <h4>Voting Abstain</h4>
+    <div class="col-md-3 col-sm-12">
+        <h4>Abstain</h4>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -76,11 +98,42 @@
             </tr>
             </thead>
             <tbody>
-            {{ votes.latestCycle.sortAddressesNoDesc() }}
+            {{ votes.latestCycle.sortAddressesAbstainDesc() }}
             {% for vote in votes.latestCycle.addresses if vote.abstain != 0 %}
                 <tr>
                     <td>
-                        <a href="{{ path('app_address_index', {'hash': vote.address }) }}" class="break-word">{{ vote.address }}</a>
+                        <a href="{{ path('app_address_index', {'hash': vote.address }) }}" class="break-word">
+                            {{ vote.address[0:16] }}...{{ vote.address[vote.address|length-4:] }}
+                        </a>
+                    </td>
+                    <td class="text-center">{{ vote.abstain }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">Nobody has abstained from voting</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-3 col-sm-12">
+        <h4>Exclude</h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Address</th>
+                <th class="text-center">Votes</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ votes.latestCycle.sortAddressesExcludeDesc() }}
+            {% for vote in votes.latestCycle.addresses if vote.abstain != 0 %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_address_index', {'hash': vote.address }) }}" class="break-word">
+                            {{ vote.address[0:16] }}...{{ vote.address[vote.address|length-4:] }}
+                        </a>
                     </td>
                     <td class="text-center">{{ vote.abstain }}</td>
                 </tr>

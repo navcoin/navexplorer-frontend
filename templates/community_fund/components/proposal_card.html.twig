@@ -27,12 +27,13 @@
             </li>
             <li class="list-group-item">
                 {{ proposalVoteProgress(proposal, blockCycle) }}
-                <p class="text-muted">
-                <span class="float-left">
-                    Accept {{ proposal.votesYes }} / Reject {{ proposal.votesNo }} / Abstain {{ proposal.votesAbs }}
-                </span>
-                    <span class="float-right">Cycle: {{ proposal.votingCycle }}</span>
+                <p>
+                    Accept {{ proposal.votesYes|number_format }} /
+                    Reject {{ proposal.votesNo|number_format }} /
+                    Abstain {{ proposal.votesAbs|number_format }} /
+                    Exclude {{ proposal.votesExcluded|number_format }}
                 </p>
+                <p>Voting Cycle: {{ proposal.votingCycle }}</p>
             </li>
             <li class="list-group-item">
                 Status

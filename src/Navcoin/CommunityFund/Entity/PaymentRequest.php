@@ -4,62 +4,48 @@ namespace App\Navcoin\CommunityFund\Entity;
 
 class PaymentRequest
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $version;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $hash;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $blockHash;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $proposalHash;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $description;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $requestedAmount;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $state;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $stateChangedOnBlock;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $status;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $paidOnBlock;
 
     /** @var int */
     private $votesYes;
+
     /** @var int */
     private $votesAbs;
+
     /** @var int */
     private $votesNo;
+
+    /** @var int */
+    private $votesExcluded;
+
     /** @var int */
     private $votingCycle;
 
@@ -76,6 +62,7 @@ class PaymentRequest
         int $votesYes,
         int $votesAbs,
         int $votesNo,
+        int $votesExcluded,
         int $votingCycle
     ) {
         $this->version = $version;
@@ -90,6 +77,7 @@ class PaymentRequest
         $this->votesYes = $votesYes;
         $this->votesAbs = $votesAbs;
         $this->votesNo = $votesNo;
+        $this->votesExcluded = $votesExcluded;
         $this->votingCycle = $votingCycle;
     }
 
@@ -167,6 +155,11 @@ class PaymentRequest
     public function getVotesNo(): int
     {
         return $this->votesNo;
+    }
+
+    public function getVotesExcluded(): int
+    {
+        return $this->votesExcluded;
     }
 
     public function getVotingCycle(): int

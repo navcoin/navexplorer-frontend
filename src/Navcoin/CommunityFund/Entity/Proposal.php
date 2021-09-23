@@ -4,87 +4,63 @@ namespace App\Navcoin\CommunityFund\Entity;
 
 class Proposal
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $version;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $hash;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $blockHash;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $height;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $description;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $requestedAmount;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $notYetPaid;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $userPaidFee;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $paymentAddress;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $proposalDuration;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $state;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $stateChangedOnBlock;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $status;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     private $createdAt;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     private $expiresOn;
 
     /** @var int */
     private $votesYes;
+
     /** @var int */
     private $votesAbs;
+
     /** @var int */
     private $votesNo;
+
+    /** @var int */
+    private $votesExcluded;
+
     /** @var int */
     private $votingCycle;
 
@@ -105,6 +81,7 @@ class Proposal
         int $votesYes,
         int $votesAbs,
         int $votesNo,
+        int $votesExcluded,
         int $votingCycle
     ) {
         $this->version = $version;
@@ -123,6 +100,7 @@ class Proposal
         $this->votesYes = $votesYes;
         $this->votesAbs = $votesAbs;
         $this->votesNo = $votesNo;
+        $this->votesExcluded = $votesExcluded;
         $this->votingCycle = $votingCycle;
     }
 
@@ -268,6 +246,11 @@ class Proposal
     public function getVotesNo(): int
     {
         return $this->votesNo;
+    }
+
+    public function getVotesExcluded(): int
+    {
+        return $this->votesExcluded;
     }
 
     public function getVotingCycle(): int

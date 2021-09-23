@@ -20,11 +20,14 @@
 
             <li class="list-group-item">
                 {{ paymentRequestVoteProgress(paymentRequest, blockCycle) }}
-                <p class="text-muted">
-                <span class="float-left">
-                    Accept {{ paymentRequest.votesYes }} / Reject {{ paymentRequest.votesNo }} / Abstain {{ paymentRequest.votesAbs }}
-                </span>
-                    <span class="float-right">Cycle: {{ paymentRequest.votingCycle }}</span>
+                <p>
+                    Accept {{ paymentRequest.votesYes|number_format }} /
+                    Reject {{ paymentRequest.votesNo|number_format }} /
+                    Abstain {{ paymentRequest.votesAbs|number_format }} /
+                    Exclude {{ paymentRequest.votesExcluded|number_format }}
+                </p>
+                <p>
+                    Voting Cycle: {{ paymentRequest.votingCycle }}
                 </p>
             </li>
 
