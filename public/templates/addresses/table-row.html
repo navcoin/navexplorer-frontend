@@ -10,6 +10,10 @@
         {% else %}
             <a href="/address/{{ item.hash }}" class="break-word">{{ item.hash }}</a>
         {% endif %}
+
+        {% if item.label %}
+            <small> {{ item.label }}</small>
+        {% endif %}
     </td>
     <td data-role="spendable">{{ item.spendable }}</td>
     <td data-role="stakable">{{ item.stakable }}</td>

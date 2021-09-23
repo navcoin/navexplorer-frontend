@@ -24,7 +24,8 @@ class AddressMapper extends BaseMapper
             \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['created_time']),
             $data['created_block'],
             $this->mapRichList($data['rich_list']),
-            $this->mapMultiSig($this->getData("multisig", $data))
+            $this->mapMultiSig($this->getData("multisig", $data)),
+            $this->getData("meta", $data)
         );
 
         return $address;

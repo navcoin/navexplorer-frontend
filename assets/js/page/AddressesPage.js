@@ -43,6 +43,9 @@ class AddressesPage {
     }
 
     getRowData(data) {
+        if (data.meta && data.meta.label) {
+            data.label = data.meta.label
+        }
         data.spendable = NumberFormat.formatSatNav(data.spendable, 8, false, false)
         data.stakable = NumberFormat.formatSatNav(data.stakable, 8, false, false)
         data.voting_weight = NumberFormat.formatSatNav(data.voting_weight, 8, false, false)
