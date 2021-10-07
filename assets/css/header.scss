@@ -79,6 +79,11 @@ header {
   .fa-search:before {
     content: "\f002";
   }
+  @media (min-width: 576px) {
+    display: block !important;
+    margin-top: -120px;
+    width: 370px;
+  }
 }
 
 .testnet {
