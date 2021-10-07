@@ -22,11 +22,11 @@ class AddressGroup implements DateRangeInterface
     /** @var int */
     private $spend;
 
-    public function __construct(DateTime $start, DateTime $end, int $addresses, int $stake, int $spend)
+    public function __construct(DateTime $start, DateTime $end, int $stake, int $spend)
     {
         $this->start = $start;
         $this->end = $end;
-        $this->addresses = $addresses;
+        $this->addresses = 0;
         $this->stake = $stake;
         $this->spend = $spend;
     }

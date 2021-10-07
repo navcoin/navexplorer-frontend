@@ -7,11 +7,12 @@ use App\Navcoin\CommunityFund\Entity\Voters;
 use App\Navcoin\CommunityFund\Exception\CommunityFundPaymentRequestNotFound;
 use App\Navcoin\CommunityFund\Exception\CommunityFundProposalNotFound;
 use GuzzleHttp\Exception\ClientException;
+use http\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
 class VotersApi extends NavcoinApi
 {
-    public function getProposalVotes(String $hash): Voters
+    public function getProposalVotes(string $hash): Voters
     {
         try {
             $response = $this->getClient()->get("/dao/cfund/proposal/{$hash}/votes");
@@ -28,7 +29,7 @@ class VotersApi extends NavcoinApi
         return $this->getMapper()->mapIterator(Voters::class, $data, null);
     }
 
-    public function getPaymentRequestVotes(String $hash): Voters
+    public function getPaymentRequestVotes(string $hash): Voters
     {
         try {
             $response = $this->getClient()->get("/dao/cfund/payment-request/{$hash}/votes");
@@ -43,5 +44,12 @@ class VotersApi extends NavcoinApi
         }
 
         return $this->getMapper()->mapIterator(Voters::class, $data, null);
+    }
+
+    public function getExcludedVotes(int $cycle): int
+    {
+        $response = $this->getClient()->get("/dao/cfund/votes/excluded?cycle=".$cycle);
+
+        return intval($this->getClient()->getBody($response));
     }
 }

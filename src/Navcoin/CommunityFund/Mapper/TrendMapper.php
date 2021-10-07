@@ -15,9 +15,11 @@ class TrendMapper extends BaseMapper
             $data['votes']['yes'],
             $data['votes']['no'],
             $data['votes']['abstain'],
+            $data['votes']['exclude'],
             $data['trend']['yes'],
             $data['trend']['no'],
-            $data['trend']['abstain']
+            $data['trend']['abstain'],
+            $data['trend']['exclude']
         );
     }
 }

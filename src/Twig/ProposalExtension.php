@@ -5,6 +5,7 @@ namespace App\Twig;
 use App\Navcoin\Block\Entity\BlockCycle;
 use App\Navcoin\CommunityFund\Entity\PaymentRequest;
 use App\Navcoin\CommunityFund\Entity\Proposal;
+use App\Navcoin\CommunityFund\Entity\Voter;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -30,9 +31,9 @@ class ProposalExtension extends AbstractExtension
     {
         return '
 <div class="progress">
-    '.$this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($proposal->getStatus(), "yes"), $proposal->getVotesYes()).'
-    '.$this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($proposal->getStatus(), "no"), $proposal->getVotesNo()).'
-    '.$this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($proposal->getStatus(), "abs"), $proposal->getVotesAbs()).'
+    '.$this->getProgressBar($blockCycle->getSize()-$proposal->getVotesExcluded(), $this->getProgressBarClass($proposal->getStatus(), "yes"), $proposal->getVotesYes()).'
+    '.$this->getProgressBar($blockCycle->getSize()-$proposal->getVotesExcluded(), $this->getProgressBarClass($proposal->getStatus(), "no"), $proposal->getVotesNo()).'
+    '.$this->getProgressBar($blockCycle->getSize()-$proposal->getVotesExcluded(), $this->getProgressBarClass($proposal->getStatus(), "abs"), $proposal->getVotesAbs()).'
 </div>';
     }
 
@@ -40,9 +41,9 @@ class ProposalExtension extends AbstractExtension
     {
         return "
 <div class=\"progress\">
-    " . $this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($paymentRequest->getStatus(), "yes"), $paymentRequest->getVotesYes()) . "
-    " . $this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($paymentRequest->getStatus(), "no"), $paymentRequest->getVotesNo()) . "
-    " . $this->getProgressBar($blockCycle->getSize(), $this->getProgressBarClass($paymentRequest->getStatus(), "abs"), $paymentRequest->getVotesAbs(), false) . "
+    " . $this->getProgressBar($blockCycle->getSize()-$paymentRequest->getVotesExcluded(), $this->getProgressBarClass($paymentRequest->getStatus(), "yes"), $paymentRequest->getVotesYes()) . "
+    " . $this->getProgressBar($blockCycle->getSize()-$paymentRequest->getVotesExcluded(), $this->getProgressBarClass($paymentRequest->getStatus(), "no"), $paymentRequest->getVotesNo()) . "
+    " . $this->getProgressBar($blockCycle->getSize()-$paymentRequest->getVotesExcluded(), $this->getProgressBarClass($paymentRequest->getStatus(), "abs"), $paymentRequest->getVotesAbs(), false) . "
 </div>";
     }
 

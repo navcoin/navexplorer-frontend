@@ -24,6 +24,7 @@ class PaymentRequestMapper extends BaseMapper
             $data['votesYes'],
             $data['votesAbs'],
             $data['votesNo'],
+            $data['votesExcluded'],
             $data['votingCycle']
         );
 

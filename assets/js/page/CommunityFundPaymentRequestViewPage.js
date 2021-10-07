@@ -44,9 +44,9 @@ class CommunityFundPaymentRequestViewPage {
 
         for (let i = 0; i < elements.length; i++) {
             blocks[i] = elements[i].end;
-            yes[i] = elements[i].trend_yes;
-            no[i] = elements[i].trend_no;
-            abstain[i] = elements[i].trend_abstain;
+            yes[i] = elements[i].trendYes;
+            no[i] = elements[i].trendNo;
+            abstain[i] = elements[i].trendAbstain;
         }
 
         let ctx = document.getElementById("trendChart");

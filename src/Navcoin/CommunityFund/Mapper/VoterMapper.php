@@ -14,12 +14,13 @@ class VoterMapper extends BaseMapper
             $data['cycle'],
             $data['yes'],
             $data['no'],
-            $data['abstain']
+            $data['abstain'],
+            $data['exclude']
         );
 
         $addresses = [];
         foreach($data['addresses'] as $address) {
-            $addresses[] = new VoterAddress($address['address'], $address['yes'], $address['no'], $address['abstain']);
+            $addresses[] = new VoterAddress($address['address'], $address['yes'], $address['no'], $address['abstain'], $address['exclude']);
         }
         $voter->setAddresses($addresses);
 
