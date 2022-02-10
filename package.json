@@ -2,7 +2,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@symfony/webpack-encore": "^1.1.2",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^10.0.5"
   },
   "dependencies": {
