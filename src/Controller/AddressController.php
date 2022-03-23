@@ -93,6 +93,10 @@ class AddressController extends AbstractController
      */
     public function cold(Request $request, String $hash): Response
     {
+        $data = [];
+
+        $types = ["Staking", "Spending", "Voting"];
+
         try {
             if (strlen($hash) == 61) {
                 $coldStaking = "V1";
@@ -132,7 +136,11 @@ class AddressController extends AbstractController
             $addresses = str_split($decoded, 20);
 
             for ($i = 0; $i < count($addresses); $i++) {
-                $addresses[$i] = $base58_nav->encode($addresses[$i]);
+                $address = $base58_nav->encode($addresses[$i]);
+                $data[$i] =  new \stdClass;
+                $data[$i]->address = $this->addressApi->getAddress($address);
+                $data[$i]->summary = $this->summaryApi->getSummary($address);
+                $data[$i]->type = $types[$i];
             }
         } catch (\Exception $e) {
             return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
@@ -140,7 +148,7 @@ class AddressController extends AbstractController
 
         return $this->render('address/cold.html.twig', [
             'hash' => $hash,
-            'addresses' => $addresses,
+            'data' => $data
         ]);
     }
 
