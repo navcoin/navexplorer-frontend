@@ -134,14 +134,14 @@ class AddressController extends AbstractController
             for ($i = 0; $i < count($addresses); $i++) {
                 $addresses[$i] = $base58_nav->encode($addresses[$i]);
             }
-
-            return $this->render('address/cold.html.twig', [
-                'hash' => $hash,
-                'addresses' => $addresses,
-            ]);
         } catch (\Exception $e) {
             return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
         }
+
+        return $this->render('address/cold.html.twig', [
+            'hash' => $hash,
+            'addresses' => $addresses,
+        ]);
     }
 
     /**
