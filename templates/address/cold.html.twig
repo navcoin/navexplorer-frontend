@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Address {{ hash }}{% endblock %}
+{% block description %}Transaction data for the {{ hash }} address{% endblock %}
+
+{% block page %}page-address-index{% endblock %}
+
+{% block body %}
+    <div class="address" data-hash="{{ hash }}">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Address</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

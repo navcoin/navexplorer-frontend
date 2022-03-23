@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Tuupola\Base58;
 
 class AddressController extends AbstractController
 {
@@ -88,6 +89,62 @@ class AddressController extends AbstractController
     }
 
     /**
+     * @Route("/address/cold/{hash}")
+     */
+    public function cold(Request $request, String $hash): Response
+    {
+        try {
+            if (strlen($hash) == 61) {
+                $coldStaking = "V1";
+            } elseif (strlen($hash) == 89) {
+                $coldStaking = "V2";
+            }
+
+            $version = 53;
+            $coldStakingV1 = 21;
+            $coldStakingV2 = 36;
+
+            if ($this->getParameter('navcoin.network') != 'mainnet') {
+                $version = 111;
+                $coldStakingV1 = 8;
+                $coldStakingV2 = 32;
+            }
+
+            $coldStakingVersion = $coldStakingV1;
+            if ($coldStaking == "V2") {
+                $coldStakingVersion = $coldStakingV2;
+            }
+
+            $base58 = new Base58([
+                "characters" => Base58::BITCOIN,
+                "check" => true,
+                "version" => $coldStakingVersion
+            ]);
+
+            $base58_nav = new Base58([
+                "characters" => Base58::BITCOIN,
+                "check" => true,
+                "version" => $version
+            ]);
+
+            $decoded = $base58->decode($hash);
+
+            $addresses = str_split($decoded, 20);
+
+            for ($i = 0; $i < count($addresses); $i++) {
+                $addresses[$i] = $base58_nav->encode($addresses[$i]);
+            }
+
+            return $this->render('address/cold.html.twig', [
+                'hash' => $hash,
+                'addresses' => $addresses,
+            ]);
+        } catch (\Exception $e) {
+            return $this->render('address/not_valid.html.twig', ['hash' => $hash]);
+        }
+    }
+
+    /**
      * @Route("/address/{hash}/history.json")
      */
     public function history(Request $request, String $hash, SerializerInterface $serializer): Response
@@ -101,7 +158,7 @@ class AddressController extends AbstractController
 
         return new Response($serializer->serialize($history, 'json'), 200, [
             'paginator' => $serializer->serialize($history->getPaginator(), 'json'),
-    ]);
+        ]);
     }
 
     private function getStakingReport(string $hash, string $period): ?StakingGroups

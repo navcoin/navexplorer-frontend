@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Tuupola\Base58;
 
 class SearchController extends AbstractController
 {
@@ -27,6 +28,10 @@ class SearchController extends AbstractController
     public function resultsAction(Request $request, SearchApi $searchApi)
     {
         $hash = $request->get('hash', 'a');
+
+		if (strlen($hash) == 61 || strlen($hash) == 89) {
+			return $this->redirectToRoute('app_address_cold', ['hash' => $hash]);
+		}
 
         try {
             if ($hash !== '') {
