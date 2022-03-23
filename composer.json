@@ -26,6 +26,7 @@
         "symfony/twig-bundle": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.11",
         "symfony/yaml": "5.2.*",
+        "tuupola/base58": "^2.1",
         "twig/extra-bundle": "^3.3",
         "twig/twig": "^2.10"
     },
@@ -39,7 +40,11 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "endroid/installer": true,
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {
