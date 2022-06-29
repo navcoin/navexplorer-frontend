@@ -28,6 +28,10 @@ class SearchController extends AbstractController
     {
         $hash = $request->get('hash', 'a');
 
+        if (strlen($hash) == 61 || strlen($hash) == 89) {
+            return $this->redirectToRoute('app_address_cold', ['hash' => $hash]);
+        }
+
         try {
             if ($hash !== '') {
                 $result = $searchApi->search($request->get('hash', ''));
