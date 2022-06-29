@@ -257,4 +257,9 @@ class Proposal
     {
         return $this->votingCycle;
     }
+
+    public function getIsSuper(): bool
+    {
+        return $this->version == 106;
+    }
 }
