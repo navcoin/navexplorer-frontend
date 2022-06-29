@@ -260,6 +260,6 @@ class Proposal
 
     public function getIsSuper(): bool
     {
-        return $this->version == 106;
+        return $this->version & 1<<6;
     }
 }
