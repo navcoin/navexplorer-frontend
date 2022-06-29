@@ -1,6 +1,6 @@
 <div class="card card-proposal card-nav">
-    <div class="card-header">
-        <h2 class="clamp" data-lines="3">{{ proposal.description|capitalize}}</h2>
+    <div class="card-header" style="{{ proposal.isSuper ? 'background: #4a3a6f !important;  color: #ffffff;' : '' }}">
+        <h2 class="clamp" data-lines="3" style="padding: 0px 10px;">{{ proposal.description|capitalize}}</h2>
     </div>
 
     <div class="card-body">
