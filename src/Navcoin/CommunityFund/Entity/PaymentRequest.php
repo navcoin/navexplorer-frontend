@@ -166,4 +166,9 @@ class PaymentRequest
     {
         return $this->votingCycle;
     }
+
+    public function getIsSuper(): bool
+    {
+        return $this->version & 1<<5;
+    }
 }
