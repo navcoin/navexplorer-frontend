@@ -1,6 +1,6 @@
 <div class="card card-proposal card-nav">
-    <div class="card-header">
-        <h2 class="clamp" data-lines="3">{{ paymentRequest.description|capitalize}}</h2>
+    <div class="card-header" style="{{ paymentRequest.isSuper ? 'background: #4a3a6f !important;  color: #ffffff;' : '' }}">
+        <h2 class="clamp" data-lines="3" style="padding: 0px 10px;">{{ paymentRequest.description|capitalize}}</h2>
     </div>
 
     <div class="card-body">
@@ -34,6 +34,11 @@
             <li class="list-group-item">
                 Status
                 <span class="float-right">{{ paymentRequest.status|title }}</span>
+            </li>
+
+            <li class="list-group-item">
+                Requested from Super proposal
+                <span class="float-right">{{ paymentRequest.isSuper ? 'Yes' : 'No' }}</span>
             </li>
         </ul>
     </div>
