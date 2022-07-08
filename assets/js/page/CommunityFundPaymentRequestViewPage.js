@@ -37,6 +37,8 @@ class CommunityFundPaymentRequestViewPage {
     loadChartData(response) {
         let elements = response.data;
 
+        let isSuper = $('.payment-super').text() == 'Yes';
+
         let blocks = [];
         let yes = [];
         let no = [];
@@ -76,7 +78,7 @@ class CommunityFundPaymentRequestViewPage {
                         type: "line",
                         mode: "horizontal",
                         scaleID: "y-axis-0",
-                        value: 50,
+                        value: isSuper ? 75 : 50,
                         borderColor: "rgb(220,220,220)",
                         borderWidth: 3
                     },
