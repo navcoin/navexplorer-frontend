@@ -5,8 +5,12 @@
     </div>
 
     <div class="col-md-6 col-sm-12">
-        <h2>Progress</h2>
+        <h2>Acceptance</h2>
         {{ proposalVoteProgress(proposal, blockCycle, votes.latestCycle) }}
+        <hr/>
+
+        <h2>Participation</h2>
+        {{ proposalVoteProgressParticipation(proposal, blockCycle, votes.latestCycle) }}
 
         <table class="table table-striped margin-top">
             <tr>

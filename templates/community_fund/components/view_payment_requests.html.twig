@@ -24,7 +24,12 @@
                         </li>
 
                         <li class="list-group-item">
+                            <p>Acceptance</p>
                             {{ paymentRequestVoteProgress(paymentRequest, blockCycle) }}
+
+                            <p>Participation</p>
+                            {{ paymentRequestVoteProgressParticipation(paymentRequest, blockCycle) }}
+
                             <p class="text-muted">
                             <span class="float-left">
                                 Accept {{ paymentRequest.votesYes }} / Reject {{ paymentRequest.votesNo }}

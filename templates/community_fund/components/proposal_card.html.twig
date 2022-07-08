@@ -26,7 +26,12 @@
                 <span class="float-right">{{ proposal.duration }}</span>
             </li>
             <li class="list-group-item">
+                <p>Acceptance</p>
                 {{ proposalVoteProgress(proposal, blockCycle) }}
+
+                <p>Participation</p>
+                {{ proposalVoteProgressParticipation(proposal, blockCycle) }}
+
                 <p>
                     Accept {{ proposal.votesYes|number_format }} /
                     Reject {{ proposal.votesNo|number_format }} /

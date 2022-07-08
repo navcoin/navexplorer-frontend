@@ -19,7 +19,12 @@
             </li>
 
             <li class="list-group-item">
+                <p>Acceptance</p>
                 {{ paymentRequestVoteProgress(paymentRequest, blockCycle) }}
+
+                <p>Participation</p>
+                {{ paymentRequestVoteProgressParticipation(paymentRequest, blockCycle) }}
+
                 <p>
                     Accept {{ paymentRequest.votesYes|number_format }} /
                     Reject {{ paymentRequest.votesNo|number_format }} /
