@@ -1,7 +1,14 @@
 <div class="margin-bottom row">
     <div class="col-md-6 col-sm-12 margin-bottom">
         <h3>Voting cycle {{ votes.latestCycle.cycle }}</h3>
+
+        <h2>Acceptance</h2>
         {{ paymentRequestVoteProgress(paymentRequest, blockCycle, votes.latestCycle) }}
+        <hr/>
+
+        <h2>Participation</h2>
+        {{ paymentRequestVoteProgressParticipation(paymentRequest, blockCycle, votes.latestCycle) }}
+        <hr/>
 
         <table class="table table-striped margin-top">
             <tr>

@@ -16,7 +16,9 @@ class ProposalExtension extends AbstractExtension
     {
         return [
             new TwigFunction('proposalVoteProgress', [$this, 'getProposalVoteProgress'], ['is_safe' => ['html']]),
+            new TwigFunction('proposalVoteProgressParticipation', [$this, 'getProposalVoteProgressParticipation'], ['is_safe' => ['html']]),
             new TwigFunction('paymentRequestVoteProgress', [$this, 'getPaymentRequestVoteProgress'], ['is_safe' => ['html']]),
+            new TwigFunction('paymentRequestVoteProgressParticipation', [$this, 'getPaymentRequestVoteProgressParticipation'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -29,21 +31,43 @@ class ProposalExtension extends AbstractExtension
 
     public function getProposalVoteProgress(Proposal $proposal, BlockCycle $blockCycle): string
     {
+        $size = $proposal->getVotesYes() + $proposal->getVotesNo() + $proposal->getVotesAbs();
         return '
 <div class="progress">
-    '.$this->getProgressBar($blockCycle->getSize()-$proposal->getVotesExcluded(), $this->getProgressBarClass($proposal->getStatus(), "yes"), $proposal->getVotesYes()).'
-    '.$this->getProgressBar($blockCycle->getSize()-$proposal->getVotesExcluded(), $this->getProgressBarClass($proposal->getStatus(), "no"), $proposal->getVotesNo()).'
-    '.$this->getProgressBar($blockCycle->getSize()-$proposal->getVotesExcluded(), $this->getProgressBarClass($proposal->getStatus(), "abs"), $proposal->getVotesAbs()).'
+    '.$this->getProgressBar($size, $this->getProgressBarClass($proposal->getStatus(), "yes"), $proposal->getVotesYes()).'
+    '.$this->getProgressBar($size, $this->getProgressBarClass($proposal->getStatus(), "no"), $proposal->getVotesNo()).'
+    '.$this->getProgressBar($size, $this->getProgressBarClass($proposal->getStatus(), "abs"), $proposal->getVotesAbs()).'
+</div>';
+    }
+
+    public function getProposalVoteProgressParticipation(Proposal $proposal, BlockCycle $blockCycle): string
+    {
+        $votes = $proposal->getVotesYes() + $proposal->getVotesNo() + $proposal->getVotesAbs();
+        $size = $blockCycle->getSize() - $proposal->getVotesExcluded();
+        return '
+<div class="progress">
+    '.$this->getProgressBar($size, $this->getProgressBarClass($proposal->getStatus(), "yes"), $votes).'
 </div>';
     }
 
     public function getPaymentRequestVoteProgress(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
     {
+        $size = $paymentRequest->getVotesYes() + $paymentRequest->getVotesNo() + $paymentRequest->getVotesAbs();
         return "
 <div class=\"progress\">
-    " . $this->getProgressBar($blockCycle->getSize()-$paymentRequest->getVotesExcluded(), $this->getProgressBarClass($paymentRequest->getStatus(), "yes"), $paymentRequest->getVotesYes()) . "
-    " . $this->getProgressBar($blockCycle->getSize()-$paymentRequest->getVotesExcluded(), $this->getProgressBarClass($paymentRequest->getStatus(), "no"), $paymentRequest->getVotesNo()) . "
-    " . $this->getProgressBar($blockCycle->getSize()-$paymentRequest->getVotesExcluded(), $this->getProgressBarClass($paymentRequest->getStatus(), "abs"), $paymentRequest->getVotesAbs(), false) . "
+    " . $this->getProgressBar($size, $this->getProgressBarClass($paymentRequest->getStatus(), "yes"), $paymentRequest->getVotesYes()) . "
+    " . $this->getProgressBar($size, $this->getProgressBarClass($paymentRequest->getStatus(), "no"), $paymentRequest->getVotesNo()) . "
+    " . $this->getProgressBar($size, $this->getProgressBarClass($paymentRequest->getStatus(), "abs"), $paymentRequest->getVotesAbs(), false) . "
+</div>";
+    }
+
+    public function getPaymentRequestVoteProgressParticipation(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
+    {
+        $votes = $paymentRequest->getVotesYes() + $paymentRequest->getVotesNo() + $paymentRequest->getVotesAbs();
+        $size = $blockCycle->getSize() - $paymentRequest->getVotesExcluded();
+        return "
+<div class=\"progress\">
+    " . $this->getProgressBar($size, $this->getProgressBarClass($paymentRequest->getStatus(), "yes"), $votes) . "
 </div>";
     }
 
@@ -60,7 +84,7 @@ class ProposalExtension extends AbstractExtension
             $classes,
             sprintf('width: %s&percnt;', $votesPercent),
             $votes,
-            ($showPercent && $votesPercent > 10 ? sprintf('%s&percnt;', $votesPercent) : null)
+            ($showPercent && $votesPercent > 9 ? sprintf('%s&percnt;', $votesPercent) : null)
         );
     }
 
