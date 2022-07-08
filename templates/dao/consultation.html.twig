@@ -39,7 +39,7 @@
                     <tr>
                         {% if consultation.consensusParameter %}
                             <th>Consensus change for</th>
-                            <td class="text-right break-word">{{ consultation.question|trim('Consensus change for: ', 'left') }}</td>
+                            <td class="text-right break-word">{{ consultation.question|slice(22) }}</td>
                         {% else %}
                             <th>Question</th>
                             <td class="text-right break-word">{{ consultation.question }}</td>
