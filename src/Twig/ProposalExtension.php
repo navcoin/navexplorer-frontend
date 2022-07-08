@@ -6,6 +6,8 @@ use App\Navcoin\Block\Entity\BlockCycle;
 use App\Navcoin\CommunityFund\Entity\PaymentRequest;
 use App\Navcoin\CommunityFund\Entity\Proposal;
 use App\Navcoin\CommunityFund\Entity\Voter;
+use App\Navcoin\CommunityFund\Constants\ProposalState;
+use App\Navcoin\CommunityFund\Constants\PaymentRequestState;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -43,7 +45,7 @@ class ProposalExtension extends AbstractExtension
     public function getProposalVoteProgressParticipation(Proposal $proposal, BlockCycle $blockCycle): string
     {
         $votes = $proposal->getVotesYes() + $proposal->getVotesNo() + $proposal->getVotesAbs();
-        $size = $blockCycle->getSize() - $proposal->getVotesExcluded();
+        $size = ($proposal->getState() == ProposalState::PENDING ? $blockCycle->getIndex() : $blockCycle->getSize()) - $proposal->getVotesExcluded();
         return '
 <div class="progress">
     '.$this->getProgressBar($size, $this->getProgressBarClass($proposal->getStatus(), "yes"), $votes).'
@@ -64,7 +66,7 @@ class ProposalExtension extends AbstractExtension
     public function getPaymentRequestVoteProgressParticipation(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
     {
         $votes = $paymentRequest->getVotesYes() + $paymentRequest->getVotesNo() + $paymentRequest->getVotesAbs();
-        $size = $blockCycle->getSize() - $paymentRequest->getVotesExcluded();
+        $size = ($paymentRequest->getState() == PaymentRequestState::PENDING ? $blockCycle->getIndex() : $blockCycle->getSize()) - $paymentRequest->getVotesExcluded();
         return "
 <div class=\"progress\">
     " . $this->getProgressBar($size, $this->getProgressBarClass($paymentRequest->getStatus(), "yes"), $votes) . "
@@ -78,7 +80,10 @@ class ProposalExtension extends AbstractExtension
 
     private function getProgressBar(int $size, string $classes, int $votes, bool $showPercent = true): string
     {
-        $votesPercent = (int) round(($votes / $size) * 100);
+        $votesPercent = 0;
+        if ($size > 0) {
+            $votesPercent = (int) round(($votes / $size) * 100);
+        }
         return sprintf(
             '<div class="%s" role="progressbar" style="%s" aria-valuenow="%d" aria-valuemin="0" aria-valuemax="100">%s</div>',
             $classes,
