@@ -20,6 +20,11 @@ class VoterMapper extends BaseMapper
 
         $addresses = [];
         foreach($data['addresses'] as $address) {
+            $address['address'] = isset($address['address']) ? $address['address'] : 0;
+            $address['yes'] = isset($address['yes']) ? $address['yes'] : 0;
+            $address['no'] = isset($address['no']) ? $address['no'] : 0;
+            $address['abstain'] = isset($address['abstain']) ? $address['abstain'] : 0;
+            $address['exclude'] = isset($address['exclude']) ? $address['exclude'] : 0;
             $addresses[] = new VoterAddress($address['address'], $address['yes'], $address['no'], $address['abstain'], $address['exclude']);
         }
         $voter->setAddresses($addresses);
