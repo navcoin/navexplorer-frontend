@@ -11,11 +11,11 @@ class VoterMapper extends BaseMapper
     public function mapEntity(array $data): Voter
     {
         $voter = new Voter(
-            $data['cycle'],
-            $data['yes'],
-            $data['no'],
-            $data['abstain'],
-            $data['exclude']
+            isset($data['cycle']) ? $data['cycle'] : null,
+            isset($data['yes']) ? $data['yes'] : null,
+            isset($data['no']) ? $data['no'] : null,
+            isset($data['abstain']) ? $data['abstain'] : null,
+            isset($data['exclude']) ? $data['exclude'] : null
         );
 
         $addresses = [];
