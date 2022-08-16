@@ -81,15 +81,17 @@ class ProposalExtension extends AbstractExtension
     private function getProgressBar(int $size, string $classes, int $votes, bool $showPercent = true): string
     {
         $votesPercent = 0;
+        $votesPercentRounded = 0;
         if ($size > 0) {
-            $votesPercent = (int) round(($votes / $size) * 100);
+            $votesPercent = ($votes / $size) * 100;
+            $votesPercentRounded = round($votesPercent);
         }
         return sprintf(
             '<div class="%s" role="progressbar" style="%s" aria-valuenow="%d" aria-valuemin="0" aria-valuemax="100">%s</div>',
             $classes,
             sprintf('width: %s&percnt;', $votesPercent),
             $votes,
-            ($showPercent && $votesPercent > 9 ? sprintf('%s&percnt;', $votesPercent) : null)
+            ($showPercent && $votesPercent > 9 ? sprintf('%s&percnt;', $votesPercentRounded) : null)
         );
     }
 
