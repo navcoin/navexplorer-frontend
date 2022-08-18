@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
         <title>{% block title %}{% endblock %} - Navcoin - Nav Explorer</title>
         <meta name="description" content="{% block description %}Navcoin Block Explorer. Tracking Nav blocks, transactions, and addresses{% endblock %}">
         <meta http-equiv="content-type" content="text/html"/>
         <meta name="google" content="notranslate">
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% block stylesheets %}
             <link href="https://fonts.googleapis.com/css?family=Patua+One|Roboto+Slab|Raleway|Roboto" rel="stylesheet">
-            <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/sandstone/bootstrap.min.css" />
+            <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.2.1/sandstone/bootstrap.min.css" integrity="sha384-T8Hp0+7hNSzMWfUlwSbmLBVrToSckKSiobfGsr5PL1ezzM/+aTdPnnMBTicJvoib" crossorigin="anonymous"/>
             <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         {% endblock %}
         <link rel="shortcut icon" href="/images/favicon-1.png">
@@ -34,7 +34,7 @@
             <script src="{{ asset('build/js/app.js') }}"></script>
             <script src="//code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-            <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
         {% endblock %}
     </body>
 </html>
