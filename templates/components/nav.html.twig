@@ -1,6 +1,9 @@
 <div class="navbar navbar-expand-sm navbar-dark bg-nav mb-sm-10">
     <div class="container-fluid">
-        <a class="navbar-brand d-xs-block d-sm-none" href="{{ path('app_home_index') }}">NavExplorer</a>
+        <a class="navbar-brand d-xs-block d-sm-none" href="{{ path('app_home_index') }}">
+            <img src="/images/nav-logo-border.svg" width="38px" style="margin-right: 5px" />
+            NavExplorer
+        </a>
 
         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,9 +11,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a href="{{ path('app_home_index') }}" class="nav-link">Home</a>
-                </li>
                 <li class="nav-item">
                     <a href="{{ path('app_block_index') }}" class="nav-link">Blocks</a>
                 </li>

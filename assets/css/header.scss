@@ -14,11 +14,12 @@ header {
   }
 
   h1 {
-    text-transform: inherit;
-    font-size: 3.4em;
+    text-transform: lowercase;
+    font-size: 1.5em;
     margin-top: 0;
     margin-bottom: 12px;
     padding: 0.5rem;
+    color: #141414;
 
     @media (min-width: 576px) {
       padding: 14px 0 2px 0;
@@ -41,12 +42,16 @@ header {
     }
   }
 
+  .navbar-brand {
+      text-transform: lowercase;
+  }
+
   .nav-link:hover {
-    color: $off-white !important;
+    color: #f3f3f3 !important;
   }
 
   .bg-nav {
-    background-color: $purple;
+    background: linear-gradient(75deg,#dc1eb9,#0a87f5);
   }
 }
 
@@ -81,7 +86,6 @@ header {
   }
   @media (min-width: 576px) {
     display: block !important;
-    margin-top: -120px;
     width: 370px;
   }
 }
