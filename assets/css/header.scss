@@ -78,14 +78,5 @@ header {
 }
 
 .header-search {
-  input {
-    margin: 0;
-  }
-  .fa-search:before {
-    content: "\f002";
-  }
-  @media (min-width: 576px) {
-    display: block !important;
-    width: 370px;
-  }
+  width: 100%;
 }
