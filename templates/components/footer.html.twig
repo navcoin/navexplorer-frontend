@@ -7,8 +7,11 @@
                             <i class="darkmode fas fa-moon {{ app.session.get('darkmode') ? 'd-none' : '' }}"></i>
                             <i class="lightmode fas fa-sun {{ app.session.get('darkmode') ? '' : 'd-none' }}"></i>
                         </a>
-                        <a class="btn btn-info" href="http://www.navexplorer.com" {{ network == 'MAINNET' ? 'class="active"' : '' }}>Main Net</a>
-                        <a class="btn btn-info" href="http://testnet.navexplorer.com" {{ network == 'TESTNET' ? 'class="active"' : '' }}>Test Net</a>
+                        {% if network == 'mainnet' %}
+                            <a class="btn btn-info" href="https://testnet.navexplorer.com">Testnet</a>
+                        {% else %}
+                            <a class="btn btn-info" href="https://www.navexplorer.com">Mainnet</a>
+                        {% endif %}
                 </div>
                 <div class="float-right p-1"> All times displayed in UTC </div>
             </div>
