@@ -25,22 +25,22 @@ class ProposalExtension extends AbstractExtension
         ];
     }
 
-    public function getLoaderDots() : string
+    public function getLoaderDots(string $size = 'md') : string
     {
         return '<div>
-            <div class="spinner-grow text-nav1" role="status">
+            <div class="spinner-grow spinner-grow-'.$size.' text-nav1" role="status">
               <span class="sr-only">Loading...</span>
             </div>
-            <div class="spinner-grow text-nav2" role="status">
+            <div class="spinner-grow spinner-grow-'.$size.' text-nav2" role="status">
               <span class="sr-only">Loading...</span>
             </div>
-            <div class="spinner-grow text-nav3" role="status">
+            <div class="spinner-grow spinner-grow-'.$size.' text-nav3" role="status">
               <span class="sr-only">Loading...</span>
             </div>
-            <div class="spinner-grow text-nav4" role="status">
+            <div class="spinner-grow spinner-grow-'.$size.' text-nav4" role="status">
               <span class="sr-only">Loading...</span>
             </div>
-            <div class="spinner-grow text-nav5" role="status">
+            <div class="spinner-grow spinner-grow-'.$size.' text-nav5" role="status">
               <span class="sr-only">Loading...</span>
             </div>
           </div>';

@@ -35,6 +35,8 @@ class PageHome {
             })
             nunjucks.render("home/latest-blocks.html", {blocks: data.elements, total: data.pagination.total}, function(err, html) {
                 $('#blocks').html(html)
+                $('#blocks').show()
+                $('#blocks-loader').hide()
             }.bind(this))
         }.bind(this))
 
@@ -57,6 +59,8 @@ class PageHome {
             })
             nunjucks.render("home/latest-txs.html", {txs: data.elements, total: data.pagination.total}, function(err, html) {
                 $('#txs').html(html)
+                $('#txs').show()
+                $('#txs-loader').hide()
             }.bind(this))
         }.bind(this))
 
@@ -92,7 +96,8 @@ class PageHome {
             start[i] = moment(elements[i].start).utc().format('YYYY-MM-DD');
             spend[i] = elements[i].spend;
         }
-        let ctx = document.getElementById("address-groups-chart");
+        let ctx = $("#address-groups-chart");
+        let loader = $("#address-groups-chart-loader");
 
         var options = {
             responsive: true,
@@ -154,7 +159,9 @@ class PageHome {
             data: data,
             options: options,
         });
-        myLineChart.canvas.parentNode.style.height = '300px';
+
+        ctx.show();
+        loader.hide();
     }
 
     populateMarketChart() {
@@ -188,7 +195,9 @@ class PageHome {
             usdPrice[i] = elements[i]['usd'].toFixed(4);
             btcPrice[i] = elements[i]['btc'];
         }
-        let ctx = document.getElementById("market-chart-chart");
+
+        let ctx = $("#market-chart-chart");
+        let loader = $("#market-chart-chart-loader");
 
         // let minAddresses = Math.ceil(Array.min(addresses) / 1.2);
         // let minStaking = Math.ceil(Array.min(spend) / 1.2);
@@ -274,7 +283,9 @@ class PageHome {
             data: data,
             options: options,
         });
-        myLineChart.canvas.parentNode.style.height = '300px';
+
+        ctx.show();
+        loader.hide();
     }
 
     populateTicker() {

@@ -22,10 +22,12 @@
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6">
                     <h2>Latest Blocks</h2>
+                    <div id="blocks-loader" class="m-5 text-center">{{ loaderDots() }}</div>
                     <div id="blocks" class="zoom"></div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6">
                     <h2>Latest Transactions</h2>
+                    <div id="txs-loader" class="m-5 text-center">{{ loaderDots() }}</div>
                     <div id="txs" class="zoom" data-parent="#block-collapse"></div>
                 </div>
             </div>
