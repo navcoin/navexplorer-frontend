@@ -3,17 +3,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="network" data-network="{{ network }}">
-                    <ul>
-                        <li><a href="http://www.navexplorer.com" {{ network == 'MAINNET' ? 'class="active"' : '' }}>Main Net</a></li>
-                        <li><a href="http://testnet.navexplorer.com" {{ network == 'TESTNET' ? 'class="active"' : '' }}>Test Net</a></li>
-                    </ul>
+                        <a class="btn btn-info" id="blackhole" href="/">
+                            <i class="darkmode fas fa-moon {{ app.session.get('darkmode') ? 'd-none' : '' }}"></i>
+                            <i class="lightmode fas fa-sun {{ app.session.get('darkmode') ? '' : 'd-none' }}"></i>
+                        </a>
+                        <a class="btn btn-info" href="http://www.navexplorer.com" {{ network == 'MAINNET' ? 'class="active"' : '' }}>Main Net</a>
+                        <a class="btn btn-info" href="http://testnet.navexplorer.com" {{ network == 'TESTNET' ? 'class="active"' : '' }}>Test Net</a>
                 </div>
-                <div class="float-right">
-                    <ul>
-{#                        <li><a class=dark-mode-toggle" href="http://www.navexplorer.com">Dark Mode</a></li>#}
-                        <li>All times displayed in UTC</li>
-                    </ul>
-                </div>
+                <div class="float-right p-1"> All times displayed in UTC </div>
             </div>
         </div>
     </div>

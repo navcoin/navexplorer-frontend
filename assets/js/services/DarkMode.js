@@ -1,44 +1,35 @@
 const $ = require('jquery');
 
-import Cookies from "js-cookie";
+import axios from "axios";
 
 class DarkMode {
     constructor() {
-        this.getDarkMode();
-
         this.addListener();
-    };
-
-    getDarkMode() {
-        let dm = Cookies.get("dm");
-
-        if (dm == true) {
-            let body = $("body");
-            body.addClass('dark-mode');
-            console.info("We are in dark mode");
-        } else {
-            Cookies.set("dm", false);
-            console.info("We are in light mode");
-        }
     };
 
     addListener() {
         $(function() {
-            $('.dark-mode-toggle').click(function (event) {
+            $('#blackhole').click(function (event) {
                 console.log("dark mode clicked");
                 event.preventDefault();
 
-                let dm = Cookies.get("dm");
+                // Call the endpoint
+                axios.post('/dark.json', {})
+                    .then(function (res) {
+                    if (!res.data.darkmode) {
+                        $('#blackhole svg.darkmode').removeClass('d-none')
+                        $('#blackhole svg.lightmode').addClass('d-none')
+                        $('body').removeClass('dark')
+                    } else {
+                        $('#blackhole svg.darkmode').addClass('d-none')
+                        $('#blackhole svg.lightmode').removeClass('d-none')
+                        $('body').addClass('dark')
+                    }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
 
-                if (dm == true) {
-                    let body = $("body");
-                    body.removeClass('dark-mode');
-                    Cookies.set("dm", false);
-                } else {
-                    let body = $("body");
-                    body.addClass('dark-mode');
-                    Cookies.set("dm", true);
-                }
+                    });
             });
         });
     }

@@ -1,46 +1,33 @@
-.dark-mode {
+.dark-logo {
+    display: none;
+}
+
+.light-logo {
+    display: inline-block;
+}
+
+.dark {
   background-color: $darkBg !important;
   color: $darkText;
 
-  a {
-    color: $light-blue;
-    text-decoration: underline;
+  .dark-logo {
+    display: inline-block;
   }
 
-  small {
-    color: inherit;
+  .light-logo {
+      display: none;
   }
 
   header {
     a {
       text-decoration: none;
     }
+
     background-color: $darkBg;
 
-    .bg-nav {
-      background-color: $light-black;
+    h1 {
+        color: #ffffff;
     }
-
-    .navbar-dark .navbar-nav {
-      .nav-link {
-        color: $darkText;
-      }
-      .nav-link:hover {
-        color: $light-blue !important;
-      }
-    }
-  }
-
-  footer {
-    background-color: $black;
-    color: $darkText;
-    //.network {
-      color: $light-blue;
-      ul li a {
-        color: $light-blue;
-        text-decoration: underline;
-      }
-    //}
   }
 
   .table th, .table td {
@@ -63,16 +50,15 @@
   }
   .card-nav {
     .card-header {
-      background-color: inherit !important;
-      padding: 0 5px;
+      background-color: #292929 !important;
     }
     .card-body {
       border-top: 2px solid #4a3a6f;
-      background-color: $light-black !important;
-      border-bottom: 1px solid $light-black;
+      background-color: #222222 !important;
+      border-bottom: 1px solid #222222;
     }
     .card-footer {
-      background-color: $light-black !important;
+      background-color: #222222 !important;
     }
   }
 
@@ -91,12 +77,12 @@
 
   .nav-tabs {
     margin-bottom: -1px;
-    border: 1px solid $darkBg;
+    border: 1px solid $darkBorder;
     background-color: $light-black;
   }
 
   #block-collapse {
-    border: 1px solid $light-black;
+    border: 1px solid $darkBorder;
     background-color: $light-black !important;
   }
 
@@ -105,33 +91,33 @@
     background-color: $light-black !important;
   }
 
-  .nav-tabs {
-    border-top: 5px solid #4a3a6f;
-    a.active {
-      color: $darkText;
-      text-decoration: none !important;
-    }
-    a:hover {
-      color: $darkText;
-      text-decoration: underline !important;
-    }
-    .nav-link {
-      padding: 1rem;
-      border-top: 5px solid $light-black !important;
-      background-color: $light-black !important;
-      border-right: 1px solid $light-black;
-      color: $light-blue;
-    }
-
-    .nav-link:hover {
-      border-top: 5px solid $darkText !important;
-    }
-  }
-
   .progress {
-    border: 1px solid $light-black;
-    background-color: $darkBg;
+      border-color: #8d8d8d;
   }
+
+  .nav-tabs {
+      a.active {
+          border-top: 5px solid $purple !important;
+          pointer-events: none;
+      }
+      .nav-item a.nav-link {
+          background-color: inherit;
+          border-color: $darkBorder;
+          color: $darkText;
+      }
+
+      .nav-item a.nav-link {
+          :hover {
+              border-top-color: inherit;
+          }
+      }
+
+      .nav-link:hover {
+          border-top: 5px solid $purple !important;
+          color: $purple;
+      }
+  }
+
 
   .list-group-item {
     border-top: 1px solid #4a3a6f;
@@ -139,12 +125,12 @@
   }
 
   .alert, .badge {
-    color: $darkBg;
+      color: #f1f1f1;
   }
   .alert-info,
   .alert-success,
   .alert-danger {
-    border-color: $darkBg;
+    border-color: #f1f1f1;
   }
 
   .block-links {
@@ -179,7 +165,7 @@
 }
 
 @media only screen and (max-width: 855px) {
-  .dark-mode {
+  .dark {
     table-striped {
       tbody tr:nth-of-type(odd) {
         background-color: $black;
