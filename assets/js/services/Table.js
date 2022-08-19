@@ -137,6 +137,7 @@ class Table {
 
         options.page = this.pagination.current_page
 
+        this.selector.addClass('blink')
         ExplorerApi.get(this.api_path, this.options, this.render.bind(this))
     }
 
@@ -196,6 +197,8 @@ class Table {
     updateTable(data) {
         this.emptyTable()
         this.selector.find('tbody').append(data);
+        this.selector.removeClass('blink')
+        this.selector.find('.table-loader').hide()
     }
 
     emptyTable() {

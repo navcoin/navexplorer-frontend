@@ -6,6 +6,7 @@ import nunjucks from "../services/Nunjucks";
 
 class BlockViewPage {
     constructor() {
+        console.log("TEST")
         let height = $('.block').data('height')
 
         this.loadTxs(height)
@@ -19,9 +20,10 @@ class BlockViewPage {
     }
 
     renderTxs(data) {
-        console.log(data);
         nunjucks.render("blocks/txs.html", {data: data.elements}, function(err, html) {
-            $('.transaction-list').html(html)
+            $('.transaction-list').html(html);
+            $('#transactions-loader').hide();
+
         }.bind(this))
     }
 }

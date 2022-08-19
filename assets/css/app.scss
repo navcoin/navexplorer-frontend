@@ -118,6 +118,10 @@ p {
     color: #ffffff;
 }
 
+.blink {
+      animation: blinker 5s linear infinite;
+}
+
 @keyframes gradient {
     0% {
         background-position: 0% 50%;
@@ -127,6 +131,12 @@ p {
     }
     100% {
         background-position: 0% 50%;
+    }
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
     }
 }
 
