@@ -43,23 +43,6 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/dark.json")
-     */
-    public function dark(SerializerInterface $serializer): Response
-    {
-        // Get an instance of session
-        $session = $this->get('session');
-        // Load current value
-        // Flip it like a pancake
-        $darkmode = $session->get('darkmode') ? false : true;
-
-        // Save it to the session
-        $session->set('darkmode', $darkmode);
-
-        return new Response($serializer->serialize([ 'darkmode' => $darkmode ], 'json'));
-    }
-
-    /**
      * @Route("/ticker.json")
      */
     public  function ticker(SerializerInterface $serializer, CoinGeckoApi $coinApi, DistributionApi $distributionApi): Response

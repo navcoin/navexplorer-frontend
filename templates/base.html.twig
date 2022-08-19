@@ -16,7 +16,7 @@
         <link rel="apple-touch-icon-precomposed" href="/images/nav-square.jpg">
         <script>var EXPLORER_API="{{ explorer.api.url }}";</script>
     </head>
-    <body class="{% if app.session.get('darkmode') == true %}dark {% endif %}{% if network == 'testnet' %}testnet {% endif %}{% block page %}{% endblock %}">
+    <body class="{% if app.request.cookies.get('darkmode') %}dark {% endif %}{% if network == 'testnet' %}testnet {% endif %}{% block page %}{% endblock %}">
         {% block header %}
             {% include "components/header.html.twig" %}
         {% endblock %}
