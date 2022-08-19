@@ -297,6 +297,7 @@ class PageHome {
             $('#public-supply').html(NumberFormat.format(response.data.publicSupply, false) + ' Nav');
             $('#private-supply').html(NumberFormat.format(response.data.privateSupply, false) + ' xNav');
             $('#wrapped-supply').html(NumberFormat.format(response.data.wrappedSupply, false) + ' wNav');
+            $('#total-supply').html(NumberFormat.format(response.data.circulatingSupply, false) + ' Nav');
         });
     }
 
