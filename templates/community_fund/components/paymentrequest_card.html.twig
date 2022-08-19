@@ -1,5 +1,5 @@
 <div class="card card-proposal card-nav">
-    <div class="card-header" style="{{ paymentRequest.isSuper ? 'background: #4a3a6f !important;  color: #ffffff;' : '' }}">
+    <div class="card-header {{ paymentRequest.isSuper ? 'nav-animated-bg' : '' }}">
         <h2 class="clamp" data-lines="3" style="padding: 0px 10px;">{{ paymentRequest.description|capitalize}}</h2>
     </div>
 
@@ -13,6 +13,7 @@
                     </a>
                 </span>
             </li>
+
             <li class="list-group-item">
                 Nav Requested
                 <span class="float-right">{{ paymentRequest.requestedAmount|nav }}</span>
@@ -20,20 +21,27 @@
 
             <li class="list-group-item">
                 <p>Acceptance</p>
-                {{ paymentRequestVoteProgress(paymentRequest, blockCycle) }}
+                <div style="padding: 0.5rem;">{{ paymentRequestVoteProgress(paymentRequest, blockCycle) }}</div>
+                <p class="text-center">
+                  Accept: {{ paymentRequest.votesYes|number_format }} |
+                  Reject: {{ paymentRequest.votesNo|number_format }} |
+                  Abstain: {{ paymentRequest.votesAbs|number_format }}
+                </p>
+            </li>
 
+            <li class="list-group-item">
                 <p>Participation</p>
-                {{ paymentRequestVoteProgressParticipation(paymentRequest, blockCycle) }}
+                <div style="padding: 0.5rem;">{{ paymentRequestVoteProgressParticipation(paymentRequest, blockCycle) }}</div>
+                <p class="text-center">
+                  Voted: {{ (paymentRequest.votesYes + paymentRequest.votesNo + paymentRequest.votesAbs)|number_format }} |
+                  Didn't Vote: {{ (blockCycle.size - (paymentRequest.votesYes + paymentRequest.votesNo + paymentRequest.votesAbs + paymentRequest.votesExcluded) - (paymentRequest.status == 'pending' ? blockCycle.size - blockCycle.index : 0))|number_format }} |
+                  Unmined: {{ (paymentRequest.status == 'pending' ? blockCycle.size - blockCycle.index : 0)|number_format }}
+                </p>
+            </li>
 
-                <p>
-                    Accept {{ paymentRequest.votesYes|number_format }} /
-                    Reject {{ paymentRequest.votesNo|number_format }} /
-                    Abstain {{ paymentRequest.votesAbs|number_format }} /
-                    Exclude {{ paymentRequest.votesExcluded|number_format }}
-                </p>
-                <p>
-                    Voting Cycle: {{ paymentRequest.votingCycle }}
-                </p>
+            <li class="list-group-item">
+                Voting Cycle
+                <span class="float-right">{{ paymentRequest.votingCycle }}</span>
             </li>
 
             <li class="list-group-item">

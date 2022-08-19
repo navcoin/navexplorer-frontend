@@ -91,6 +91,45 @@ p {
   font-weight: normal;
 }
 
+.text-nav1 {
+    color: #dc1eb9;
+}
+
+.text-nav2 {
+    color: #9641cd;
+}
+
+.text-nav3 {
+    color: #7253d7;
+}
+
+.text-nav4 {
+    color: #3e6de6;
+}
+
+.text-nav5 {
+    color: #0a87f5;
+}
+
+.nav-animated-bg {
+    background: linear-gradient(75deg,#dc1eb9,#0a87f5);
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite;
+    color: #ffffff;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 small {
   font-size: 90%;
   color: $grey;

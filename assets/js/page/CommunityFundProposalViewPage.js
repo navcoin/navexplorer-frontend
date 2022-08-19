@@ -51,7 +51,7 @@ class CommunityFundProposalViewPage {
             abstain[i] = elements[i].trendAbstain;
         }
 
-        let ctx = document.getElementById("trendChart");
+        let ctx = $("#trendChart");
         var options = {
             responsive: true,
             maintainAspectRatio: false,
@@ -146,7 +146,9 @@ class CommunityFundProposalViewPage {
             data: data,
             options: options,
         });
-        myLineChart.canvas.parentNode.style.height = '200px';
+
+        $("#trendChartLoader").hide();
+        ctx.show();
     }
 }
 

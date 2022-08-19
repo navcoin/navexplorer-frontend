@@ -51,9 +51,10 @@ class CommunityFundPaymentRequestViewPage {
             abstain[i] = elements[i].trendAbstain;
         }
 
-        let ctx = document.getElementById("trendChart");
+        let ctx = $("#trendChart");
         var options = {
             responsive: true,
+            maintainAspectRatio: false,
             legend: {
                 display: false,
             },
@@ -140,6 +141,9 @@ class CommunityFundPaymentRequestViewPage {
             data: data,
             options: options,
         });
+
+        $("#trendChartLoader").hide();
+        ctx.show();
     }
 }
 

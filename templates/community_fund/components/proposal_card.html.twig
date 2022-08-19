@@ -1,5 +1,5 @@
 <div class="card card-proposal card-nav">
-    <div class="card-header" style="{{ proposal.isSuper ? 'background: #4a3a6f !important;  color: #ffffff;' : '' }}">
+    <div class="card-header {{ proposal.isSuper ? 'nav-animated-bg' : '' }}">
         <h2 class="clamp" data-lines="3" style="padding: 0px 10px;">{{ proposal.description|capitalize}}</h2>
     </div>
 
@@ -13,37 +13,52 @@
                     </a>
                 </span>
             </li>
+
             <li class="list-group-item">
                 Nav Requested
                 <span class="float-right">{{ proposal.requestedAmount|nav }}</span>
             </li>
+
             <li class="list-group-item">
                 Nav Paid
                 <span class="float-right">{{ (proposal.requestedAmount - proposal.notYetPaid)|nav }}</span>
             </li>
+
             <li class="list-group-item">
                 Duration
                 <span class="float-right">{{ proposal.duration }}</span>
             </li>
+
             <li class="list-group-item">
                 <p>Acceptance</p>
-                {{ proposalVoteProgress(proposal, blockCycle) }}
-
-                <p>Participation</p>
-                {{ proposalVoteProgressParticipation(proposal, blockCycle) }}
-
-                <p>
-                    Accept {{ proposal.votesYes|number_format }} /
-                    Reject {{ proposal.votesNo|number_format }} /
-                    Abstain {{ proposal.votesAbs|number_format }} /
-                    Exclude {{ proposal.votesExcluded|number_format }}
+                <div style="padding: 0.5rem;">{{ proposalVoteProgress(proposal, blockCycle) }}</div>
+                <p class="text-center">
+                  Accept: {{ proposal.votesYes|number_format }} |
+                  Reject: {{ proposal.votesNo|number_format }} |
+                  Abstain: {{ proposal.votesAbs|number_format }}
                 </p>
-                <p>Voting Cycle: {{ proposal.votingCycle }}</p>
             </li>
+
+            <li class="list-group-item">
+                <p>Participation</p>
+                <div style="padding: 0.5rem;">{{ proposalVoteProgressParticipation(proposal, blockCycle) }}</div>
+                <p class="text-center">
+                  Voted: {{ (proposal.votesYes + proposal.votesNo + proposal.votesAbs)|number_format }} |
+                  Didn't Vote: {{ (blockCycle.size - (proposal.votesYes + proposal.votesNo + proposal.votesAbs + proposal.votesExcluded) - (proposal.status == 'pending' ? blockCycle.size - blockCycle.index : 0))|number_format }} |
+                  Unmined: {{ (proposal.status == 'pending' ? blockCycle.size - blockCycle.index : 0)|number_format }}
+                </p>
+            </li>
+
+            <li class="list-group-item">
+                Voting Cycle
+                <span class="float-right">{{ proposal.votingCycle }}</span>
+            </li>
+
             <li class="list-group-item">
                 Status
                 <span class="float-right">{{ proposal.status|title }}</span>
             </li>
+
             <li class="list-group-item">
                 Super proposal
                 <span class="float-right">{{ proposal.isSuper ? 'Yes' : 'No' }}</span>

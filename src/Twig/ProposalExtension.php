@@ -21,7 +21,29 @@ class ProposalExtension extends AbstractExtension
             new TwigFunction('proposalVoteProgressParticipation', [$this, 'getProposalVoteProgressParticipation'], ['is_safe' => ['html']]),
             new TwigFunction('paymentRequestVoteProgress', [$this, 'getPaymentRequestVoteProgress'], ['is_safe' => ['html']]),
             new TwigFunction('paymentRequestVoteProgressParticipation', [$this, 'getPaymentRequestVoteProgressParticipation'], ['is_safe' => ['html']]),
+            new TwigFunction('loaderDots', [$this, 'getLoaderDots'], ['is_safe' => ['html']]),
         ];
+    }
+
+    public function getLoaderDots() : string
+    {
+        return '<div>
+            <div class="spinner-grow text-nav1" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-nav2" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-nav3" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-nav4" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-nav5" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>';
     }
 
     public function getFilters(): array
@@ -42,13 +64,20 @@ class ProposalExtension extends AbstractExtension
 </div>';
     }
 
-    public function getProposalVoteProgressParticipation(Proposal $proposal, BlockCycle $blockCycle): string
+    public function getProposalVoteProgressParticipation(Proposal $p, BlockCycle $blockCycle): string
     {
-        $votes = $proposal->getVotesYes() + $proposal->getVotesNo() + $proposal->getVotesAbs();
-        $size = ($proposal->getState() == ProposalState::PENDING ? $blockCycle->getIndex() : $blockCycle->getSize()) - $proposal->getVotesExcluded();
+        $blocks = ($p->getState() == ProposalState::PENDING ? $blockCycle->getIndex() : $blockCycle->getSize());
+        $votes = $p->getVotesYes() + $p->getVotesNo() + $p->getVotesAbs();
+        $excluded = $p->getVotesExcluded();
+        $size = $blocks - $excluded;
+        $uncommited = $size - $votes;
+        $customContents =
+            $this->getProgressBar($size, $this->getProgressBarClass($p->getStatus(), "yes"), $votes).' '.
+            $this->getProgressBar($size, $this->getProgressBarClass($p->getStatus(), ""), $uncommited);
+
         return '
 <div class="progress">
-    '.$this->getProgressBar($size, $this->getProgressBarClass($proposal->getStatus(), "yes"), $votes).'
+    '.$this->getProgressBar($blockCycle->getSize(), "progress", $votes + $uncommited + $excluded, true, $customContents).'
 </div>';
     }
 
@@ -63,14 +92,21 @@ class ProposalExtension extends AbstractExtension
 </div>";
     }
 
-    public function getPaymentRequestVoteProgressParticipation(PaymentRequest $paymentRequest, BlockCycle $blockCycle): string
+    public function getPaymentRequestVoteProgressParticipation(PaymentRequest $p, BlockCycle $blockCycle): string
     {
-        $votes = $paymentRequest->getVotesYes() + $paymentRequest->getVotesNo() + $paymentRequest->getVotesAbs();
-        $size = ($paymentRequest->getState() == PaymentRequestState::PENDING ? $blockCycle->getIndex() : $blockCycle->getSize()) - $paymentRequest->getVotesExcluded();
-        return "
-<div class=\"progress\">
-    " . $this->getProgressBar($size, $this->getProgressBarClass($paymentRequest->getStatus(), "yes"), $votes) . "
-</div>";
+        $blocks = ($p->getState() == PaymentRequestState::PENDING ? $blockCycle->getIndex() : $blockCycle->getSize());
+        $votes = $p->getVotesYes() + $p->getVotesNo() + $p->getVotesAbs();
+        $excluded = $p->getVotesExcluded();
+        $size = $blocks - $excluded;
+        $uncommited = $size - $votes;
+        $customContents =
+            $this->getProgressBar($size, $this->getProgressBarClass($p->getStatus(), "yes"), $votes).' '.
+            $this->getProgressBar($size, $this->getProgressBarClass($p->getStatus(), ""), $uncommited);
+
+        return '
+<div class="progress">
+    '.$this->getProgressBar($blockCycle->getSize(), "progress", $votes + $uncommited + $excluded, true, $customContents).'
+</div>';
     }
 
     public function getProposalStateTitle(String $state): string
@@ -78,7 +114,7 @@ class ProposalExtension extends AbstractExtension
         return preg_replace('/(-|_)/', ' ', $state);
     }
 
-    private function getProgressBar(int $size, string $classes, int $votes, bool $showPercent = true): string
+    private function getProgressBar(int $size, string $classes, int $votes, bool $showPercent = true, string $customContents = ''): string
     {
         $votesPercent = 0;
         $votesPercentRounded = 0;
@@ -91,7 +127,7 @@ class ProposalExtension extends AbstractExtension
             $classes,
             sprintf('width: %s&percnt;', $votesPercent),
             $votes,
-            ($showPercent && $votesPercent > 9 ? sprintf('%s&percnt;', $votesPercentRounded) : null)
+            ($customContents != '' ? $customContents : ($showPercent && $votesPercent > 9 ? sprintf('%s&percnt;', $votesPercentRounded) : null))
         );
     }
 

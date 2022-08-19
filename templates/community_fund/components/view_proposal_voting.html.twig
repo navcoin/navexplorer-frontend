@@ -1,46 +1,68 @@
-<div class="row">
-    <div class="col-12">
+<div class="margin-bottom row">
+    <div class="col-md-12">
         <h3>Voting cycle {{ votes.latestCycle.cycle }}</h3>
         <hr/>
     </div>
 
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-6 col-sm-12 margin-bottom">
         <h2>Acceptance</h2>
-        {{ proposalVoteProgress(proposal, blockCycle, votes.latestCycle) }}
         <hr/>
-
-        <h2>Participation</h2>
-        {{ proposalVoteProgressParticipation(proposal, blockCycle, votes.latestCycle) }}
+        {{ proposalVoteProgress(proposal, blockCycle, votes.latestCycle) }}
 
         <table class="table table-striped margin-top">
             <tr>
                 <th>Accept</th>
-                <td class="text-right">{{ votes.latestCycle.yes }} </td>
+                <td class="text-right">{{ votes.latestCycle.yes|number_format }} </td>
             </tr>
             <tr>
                 <th>Reject</th>
-                <td class="text-right">{{ votes.latestCycle.no }} </td>
+                <td class="text-right">{{ votes.latestCycle.no|number_format }} </td>
             </tr>
             <tr>
                 <th>Abstain</th>
-                <td class="text-right">{{ votes.latestCycle.abstain }} </td>
+                <td class="text-right">{{ votes.latestCycle.abstain|number_format }} </td>
             </tr>
             <tr>
                 <th>Excluded</th>
-                <td class="text-right">{{ votes.latestCycle.exclude }} </td>
+                <td class="text-right">{{ votes.latestCycle.exclude|number_format }} </td>
             </tr>
         </table>
     </div>
 
-    <div class="col-md-6 col-sm-12">
-        <h2>Trend</h2>
-        <div>
-            <canvas id="trendChart"></canvas>
-        </div>
+    <div class="col-md-6 col-sm-12 margin-bottom">
+        <h2>Participation</h2>
+        <hr/>
+        {{ proposalVoteProgressParticipation(proposal, blockCycle, votes.latestCycle) }}
+
+        <table class="table table-striped margin-top">
+            <tr>
+                <th>Voted</th>
+                <td class="text-right">{{ (votes.latestCycle.yes + votes.latestCycle.no + votes.latestCycle.abstain)|number_format }} </td>
+            </tr>
+            <tr>
+                <th>Didn't Vote</th>
+                <td class="text-right">{{ (blockCycle.size - (votes.latestCycle.yes + votes.latestCycle.no + votes.latestCycle.abstain + votes.latestCycle.exclude) - (proposal.status == 'pending' ? blockCycle.size - blockCycle.index : 0))|number_format }} </td>
+            </tr>
+            <tr>
+                <th>Unmined</th>
+                <td class="text-right">{{ (proposal.status == 'pending' ? blockCycle.size - blockCycle.index : 0)|number_format }} </td>
+            </tr>
+            <tr>
+                <th>Excluded</th>
+                <td class="text-right">{{ votes.latestCycle.exclude|number_format }} </td>
+            </tr>
+        </table>
     </div>
 
-    <div class="col-12">
+    <div class="col-md-12">
+        <h3>Voting Trend</h3>
         <hr/>
+        <div id="trendChartLoader" class="text-center margin-top">
+            {{ loaderDots() }}
+        </div>
+        <div style="max-height: 300px;">
+            <canvas id="trendChart" style="display: none;"></canvas>
+        </div>
     </div>
 </div>
 

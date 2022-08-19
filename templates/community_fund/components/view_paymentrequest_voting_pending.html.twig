@@ -1,38 +1,68 @@
 <div class="margin-bottom row">
-    <div class="col-md-6 col-sm-12 margin-bottom">
+    <div class="col-md-12">
         <h3>Voting cycle {{ votes.latestCycle.cycle }}</h3>
+        <hr/>
+    </div>
 
+    <div class="col-md-6 col-sm-12 margin-bottom">
         <h2>Acceptance</h2>
+        <hr/>
         {{ paymentRequestVoteProgress(paymentRequest, blockCycle, votes.latestCycle) }}
-        <hr/>
-
-        <h2>Participation</h2>
-        {{ paymentRequestVoteProgressParticipation(paymentRequest, blockCycle, votes.latestCycle) }}
-        <hr/>
 
         <table class="table table-striped margin-top">
             <tr>
                 <th>Accept</th>
-                <td class="text-right">{{ votes.latestCycle.yes }} </td>
+                <td class="text-right">{{ votes.latestCycle.yes|number_format }} </td>
             </tr>
             <tr>
                 <th>Reject</th>
-                <td class="text-right">{{ votes.latestCycle.no }} </td>
+                <td class="text-right">{{ votes.latestCycle.no|number_format }} </td>
             </tr>
             <tr>
                 <th>Abstain</th>
-                <td class="text-right">{{ votes.latestCycle.abstain }} </td>
+                <td class="text-right">{{ votes.latestCycle.abstain|number_format }} </td>
             </tr>
             <tr>
                 <th>Excluded</th>
-                <td class="text-right">{{ votes.latestCycle.exclude }} </td>
+                <td class="text-right">{{ votes.latestCycle.exclude|number_format }} </td>
             </tr>
         </table>
     </div>
 
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-6 col-sm-12 margin-bottom">
+        <h2>Participation</h2>
+        <hr/>
+        {{ paymentRequestVoteProgressParticipation(paymentRequest, blockCycle, votes.latestCycle) }}
+
+        <table class="table table-striped margin-top">
+            <tr>
+                <th>Voted</th>
+                <td class="text-right">{{ (votes.latestCycle.yes + votes.latestCycle.no + votes.latestCycle.abstain)|number_format }} </td>
+            </tr>
+            <tr>
+                <th>Didn't Vote</th>
+                <td class="text-right">{{ (blockCycle.size - (votes.latestCycle.yes + votes.latestCycle.no + votes.latestCycle.abstain + votes.latestCycle.exclude) - (paymentRequest.status == 'pending' ? blockCycle.size - blockCycle.index : 0))|number_format }} </td>
+            </tr>
+            <tr>
+                <th>Unmined</th>
+                <td class="text-right">{{ (paymentRequest.status == 'pending' ? blockCycle.size - blockCycle.index : 0)|number_format }} </td>
+            </tr>
+            <tr>
+                <th>Excluded</th>
+                <td class="text-right">{{ votes.latestCycle.exclude|number_format }} </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-12">
         <h3>Voting Trend</h3>
-        <canvas id="trendChart" class="margin-top"></canvas>
+        <hr/>
+        <div id="trendChartLoader" class="text-center margin-top">
+            {{ loaderDots() }}
+        </div>
+        <div style="max-height: 300px;">
+            <canvas id="trendChart" style="display: none;"></canvas>
+        </div>
     </div>
 </div>
 
