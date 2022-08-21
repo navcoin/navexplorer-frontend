@@ -4,8 +4,8 @@
             <div class="col-md-12">
                 <div class="network" data-network="{{ network }}">
                         <a class="btn btn-info" id="blackhole" href="/">
-                            <i class="darkmode fas fa-moon {{ app.session.get('darkmode') ? 'd-none' : '' }}"></i>
-                            <i class="lightmode fas fa-sun {{ app.session.get('darkmode') ? '' : 'd-none' }}"></i>
+                            <i class="darkmode fas fa-moon {{ app.request.cookies.get('darkmode') ? 'd-none' : '' }}"></i>
+                            <i class="lightmode fas fa-sun {{ app.request.cookies.get('darkmode') ? '' : 'd-none' }}"></i>
                         </a>
                         {% if network == 'mainnet' %}
                             <a class="btn btn-info" href="https://testnet.navexplorer.com">Testnet</a>
