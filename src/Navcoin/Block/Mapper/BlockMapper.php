@@ -21,7 +21,7 @@ class BlockMapper extends BaseMapper
             $data['height'],
             $data['difficulty'],
             $data['confirmations'],
-            \DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $data['time']),
+            \DateTime::createFromFormat(\DateTimeInterface::W3C, $data['time']),
             $data['stake'],
             $data['fees'],
             $data['spend'],
