@@ -101,7 +101,9 @@ class TransactionMapper extends BaseMapper
                     $this->getData('addresses', $outputData['scriptPubKey'], []),
                     $this->getData('redeemed', $outputData, false),
                     $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['hash'] : null,
-                    $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['height'] : null
+                    $this->hasData('redeemedIn', $outputData) ? $outputData['redeemedIn']['height'] : null,
+                    $this->hasData('tokenId', $outputData) ? $outputData['tokenId'] : null,
+                    $this->hasData('tokenNftId', $outputData) ? $outputData['tokenNftId'] : null,
                 );
 
                 if ($this->hasData("multisig", $outputData)) {

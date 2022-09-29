@@ -34,6 +34,12 @@ class Vout
     /** @var bool */
     private $privateFee;
 
+    /** @var string */
+    private $tokenId;
+
+    /** @var int */
+    private $tokenNftId;
+
     /** @var MultiSig */
     private $multiSig;
 
@@ -43,7 +49,7 @@ class Vout
     /** @var string[] */
     private $wrappedAddresses;
 
-    public function __construct(string $type, int $index, float $amount, array $addresses, bool $redeemed, ?string $redeemedInTransaction, ?int $redeemedInBlock)
+    public function __construct(string $type, int $index, float $amount, array $addresses, bool $redeemed, ?string $redeemedInTransaction, ?int $redeemedInBlock, ?string $tokenId, ?int $tokenNftId)
     {
         $this->type = $type;
         $this->index = $index;
@@ -52,6 +58,8 @@ class Vout
         $this->redeemed = $redeemed;
         $this->redeemedInTransaction = $redeemedInTransaction;
         $this->redeemedInBlock = $redeemedInBlock;
+        $this->tokenId = $tokenId;
+        $this->tokenNftId = $tokenNftId;
     }
 
     public function getType(): string
@@ -118,6 +126,20 @@ class Vout
     public function setPrivate(bool $private): void
     {
         $this->private = $private;
+    }
+
+    public function getPrivateType(): ?string
+    {
+        if (hexdec($this->tokenId) == 0) {
+            return "xNav";
+        } elseif($this->tokenNftId == -1) {
+            return "Private token";
+        }
+        elseif($this->tokenNftId > -1) {
+            return "NFT";
+        }
+
+        return "Private";
     }
 
     public function isPrivateFee(): bool

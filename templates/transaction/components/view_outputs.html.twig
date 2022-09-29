@@ -24,7 +24,7 @@
                     <td data-role="type">
                         {% if vout.isMultiSig %} MultiSig ({{ vout.multisig.required }}/{{ vout.multisig.total }})
                         {% elseif vout.isWrapped %} Wrapped
-                        {% elseif vout.isPrivate %} Private
+                        {% elseif vout.isPrivate %} {{ vout.privateType}}
                         {% elseif vout.isPrivateFee %} Private Fee
                         {% elseif vout.type == "PUBKEY" %} PubKey
                         {% elseif vout.type == "PUBKEYHASH" %} PubKeyHash
