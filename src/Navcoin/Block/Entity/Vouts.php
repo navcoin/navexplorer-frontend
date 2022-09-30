@@ -63,4 +63,14 @@ class Vouts extends IteratorEntity implements IteratorEntityInterface
         }
         return false;
     }
+
+    public function hasPrivateOutputs() {
+        /** @var Vout $output */
+        foreach ($this->getElements() as $output) {
+            if ($output->isPrivate()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

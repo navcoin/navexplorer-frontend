@@ -128,18 +128,30 @@ class Vout
         $this->private = $private;
     }
 
+    public function getTokenId(): ?string
+    {
+        return $this->tokenId;
+    }
+
+    public function getTokenNftId(): ?int
+    {
+        return $this->tokenNftId;
+    }
+
     public function getPrivateType(): ?string
     {
+        if (!$this->private) {
+            return null;
+        }
+
         if (hexdec($this->tokenId) == 0) {
             return "xNav";
-        } elseif($this->tokenNftId == -1) {
-            return "Private token";
+        } elseif($this->tokenNftId == -1 || $this->tokenNftId == null) {
+            return "Private Token";
         }
         elseif($this->tokenNftId > -1) {
             return "NFT";
         }
-
-        return "Private";
     }
 
     public function isPrivateFee(): bool
