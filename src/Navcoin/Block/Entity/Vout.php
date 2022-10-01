@@ -59,7 +59,7 @@ class Vout
         $this->redeemedInTransaction = $redeemedInTransaction;
         $this->redeemedInBlock = $redeemedInBlock;
         $this->tokenId = $tokenId;
-        $this->tokenNftId = $tokenNftId;
+        $this->tokenNftId = $tokenNftId ? $tokenNftId : -1;
     }
 
     public function getType(): string
@@ -146,12 +146,15 @@ class Vout
 
         if (hexdec($this->tokenId) == 0) {
             return "xNav";
-        } elseif($this->tokenNftId == -1 || $this->tokenNftId == null) {
-            return "Private Token";
         }
-        elseif($this->tokenNftId > -1) {
+
+        if ($this->tokenNftId == -1) {
+            return "Private Token";
+        } elseif ($this->tokenNftId > -1) {
             return "NFT";
         }
+
+        return null;
     }
 
     public function isPrivateFee(): bool
