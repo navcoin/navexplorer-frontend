@@ -6,9 +6,9 @@
             <tr>
                 <th style="width: 5%" class="text-center">Index</th>
                 <th style="width: 10%">Type</th>
-                {% if transaction.vouts.hasMultiSig %}
+                {% if (transaction.vouts.hasMultiSig or transaction.vouts.hasPrivateOutputs) %}
                     <th style="width:30%">Address</th>
-                    <th style="width:30%">MultiSig</th>
+                    <th style="width:30%">Details</th>
                     <th style="width:10%">Redeemed&nbsp;In</th>
                 {% else %}
                     <th style="width:40%">Address</th>
@@ -24,7 +24,7 @@
                     <td data-role="type">
                         {% if vout.isMultiSig %} MultiSig ({{ vout.multisig.required }}/{{ vout.multisig.total }})
                         {% elseif vout.isWrapped %} Wrapped
-                        {% elseif vout.isPrivate %} Private
+                        {% elseif vout.isPrivate %} {{ vout.privateType}}
                         {% elseif vout.isPrivateFee %} Private Fee
                         {% elseif vout.type == "PUBKEY" %} PubKey
                         {% elseif vout.type == "PUBKEYHASH" %} PubKeyHash
@@ -53,13 +53,20 @@
                         {% endfor %}
                     </td>
 
-                    {% if transaction.vouts.hasMultiSig %}
+                    {% if (transaction.vouts.hasMultiSig or transaction.vouts.hasPrivateOutputs) %}
                         <td data-role="multiSigs" class="break-word">
                             {% if vout.multisig %}
                                 {% for signature in vout.multisig.signatures %}
                                     {{ signature[0:30] }}...{{ signature[signature|length-6:] }}<br>
                                 {% else %}
                                 {% endfor %}
+                            {% elseif vout.isPrivate %}
+                                {% if vout.privateType == "NFT" %}
+                                    {{ vout.tokenId[0:30] }}...{{ vout.tokenId[vout.tokenId|length-6:] }}
+                                    <br><small>ID <strong>{{ vout.tokenNftId }}</strong></small>
+                                {% elseif vout.privateType == "Private Token" %}
+                                    {{ vout.tokenId[0:30] }}...{{ vout.tokenId[vout.tokenId|length-6:] }}
+                                {% endif %}
                             {% else %}
                                 &nbsp;
                             {% endif %}
