@@ -2,9 +2,28 @@
 
 This is the repository for the frontend of navexplorer.com.
 
-The repository can be ran using
-`./bin/console server:run`
+## Requirements
 
-Contact @prodpeak for access to the backend API.
+- PHP 7.4
+- Composer (latest)
+- Symfony cli (lts, currently 5.*)
 
+## Setup
 
+Install PHP and JS dependencies:
+```sh
+composer install
+yarn install
+```
+
+Build frontend assets:
+```sh
+yarn encore dev
+```
+
+Start the server:
+```sh
+symfony server:start --port 8888
+```
+
+Go to https://localhost:8888 to view the site.
