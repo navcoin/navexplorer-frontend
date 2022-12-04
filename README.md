@@ -19,6 +19,9 @@ yarn install
 Build frontend assets:
 ```sh
 yarn encore dev
+
+# use this command to enable watch mode when developing
+yarn encore dev --watch
 ```
 
 Start the server:
