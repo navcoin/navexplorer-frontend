@@ -1,6 +1,6 @@
-# NavExplorer.com
+# explorer.navcoin.org
 
-This is the repository for the frontend of navexplorer.com.
+This is the repository for the frontend of explorer.navcoin.org.
 
 ## Requirements
 
