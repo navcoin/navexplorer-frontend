@@ -1,4 +1,4 @@
-FROM php:7.4-fpm as builder
+FROM php:8.3.36-fpm AS builder
 
 RUN apt-get update
 RUN apt-get install -y git zlib1g-dev libpng-dev gnupg2 unzip
@@ -10,10 +10,7 @@ RUN sh -c "echo deb https://deb.nodesource.com/node_14.x groovy main > /etc/apt/
 RUN apt-get update
 RUN apt-get install -y nodejs
 
-RUN cd /tmp \
- && curl -OL https://getcomposer.org/download/1.10.20/composer.phar \
- && mv composer.phar /usr/local/bin/composer \
- && chmod u+x /usr/local/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 RUN docker-php-ext-install gd \
  && docker-php-ext-install bcmath
@@ -30,7 +27,7 @@ RUN yarn encore production
 
 ##################################
 
-FROM php:7.4-fpm
+FROM php:8.3.36-fpm
 
 RUN apt-get update
 RUN apt-get install -y zlib1g-dev libpng-dev

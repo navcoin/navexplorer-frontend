@@ -4,7 +4,7 @@ This is the repository for the frontend of explorer.navcoin.org.
 
 ## Requirements
 
-- PHP 7.4
+- PHP 8.3 (>= 8.2.35; older versions are affected by CVE-2026-109618 / CVE-2026-109619)
 - Composer (latest)
 - Symfony cli (lts, currently 5.*)
 
